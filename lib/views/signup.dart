@@ -105,7 +105,7 @@ class _SignUpState extends State<SignUp> {
                     ),
                     SizedBox(height: 16),
                     SignScreenButton(
-                      func: signMeUp(),
+                      func: signMeUp,
                       label: 'Sign Up',
                       colors: kButtonMainGradientColor,
                       textColor: kMainTextColor,
