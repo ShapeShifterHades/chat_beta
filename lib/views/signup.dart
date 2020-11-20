@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:void_chat_beta/services/auth.dart';
+import 'package:void_chat_beta/views/chat_rooms_screen.dart';
 import 'package:void_chat_beta/widgets/appbar.dart';
 import 'package:void_chat_beta/widgets/decorated_textfield.dart';
 import 'package:void_chat_beta/widgets/dont_have_account_yet.dart';
@@ -28,10 +29,12 @@ class _SignUpState extends State<SignUp> {
         isLoading = true;
       });
       try {
-        await authMethods
-            .signUpWithEmailAndPassword(emailTextEditingController.text,
-                passwordTextEditingController.text)
-            .then((value) => print(value));
+        await authMethods.signUpWithEmailAndPassword(
+            emailTextEditingController.text,
+            passwordTextEditingController.text);
+
+        Navigator.pushReplacement(
+            context, MaterialPageRoute(builder: (context) => ChatRoom()));
       } catch (e) {}
     }
   }
