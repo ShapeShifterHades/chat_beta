@@ -5,20 +5,20 @@ class DecoratedTextField extends StatelessWidget {
   final String hintText;
   final TextEditingController controller;
   final validator;
-  final bool obsure;
+  // final bool obsure;
 
   const DecoratedTextField({
     Key key,
     @required this.hintText,
     this.controller,
     this.validator,
-    this.obsure,
+    // this.obsure,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      obscureText: obsure,
+      // obscureText: obsure,
       validator: validator,
       controller: controller,
       style: TextStyle(color: kMainTextColor),

@@ -1,4 +1,3 @@
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:void_chat_beta/services/auth.dart';
 import 'package:void_chat_beta/widgets/appbar.dart';
@@ -29,7 +28,6 @@ class _SignUpState extends State<SignUp> {
         isLoading = true;
       });
       try {
-        await Firebase.initializeApp();
         await authMethods
             .signUpWithEmailAndPassword(emailTextEditingController.text,
                 passwordTextEditingController.text)
@@ -84,7 +82,7 @@ class _SignUpState extends State<SignUp> {
                                     ? null
                                     : 'Password is too short';
                               },
-                              obsure: true,
+                              // obsure: true,
                               hintText: 'password',
                               controller: passwordTextEditingController),
                         ],
