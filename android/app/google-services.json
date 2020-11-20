@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "1053185952968",
+    "firebase_url": "https://voidchatbeta.firebaseio.com",
+    "project_id": "voidchatbeta",
+    "storage_bucket": "voidchatbeta.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1053185952968:android:dbcc3a2c9baf542803e9fd",
+        "android_client_info": {
+          "package_name": "com.voidchatbeta.void_chat_beta"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1053185952968-ncehrqhk9ea2tdm24ut7dfcfcj9j1lb9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDLUWm08RNs5g8EM-WOBZIx81txibW1FaU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1053185952968-ncehrqhk9ea2tdm24ut7dfcfcj9j1lb9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
