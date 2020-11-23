@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:void_chat_beta/helper/helper_functions.dart';
 import 'package:void_chat_beta/services/auth.dart';
 import 'package:void_chat_beta/views/chat_rooms_screen.dart';
 import 'package:void_chat_beta/widgets/appbar.dart';
@@ -7,6 +8,7 @@ import 'package:void_chat_beta/widgets/dont_have_account_yet.dart';
 import 'package:void_chat_beta/widgets/signscreen_button.dart';
 
 import '../constants.dart';
+import '../services/database.dart';
 
 class SignUp extends StatefulWidget {
   final Function toggle;
@@ -20,6 +22,7 @@ class _SignUpState extends State<SignUp> {
   bool isLoading = false;
 
   AuthMethods authMethods = AuthMethods();
+  DatabaseMethods databaseMethods = DatabaseMethods();
 
   final formKey = GlobalKey<FormState>();
   TextEditingController usernameTextEditingController = TextEditingController();
@@ -36,6 +39,17 @@ class _SignUpState extends State<SignUp> {
             emailTextEditingController.text,
             passwordTextEditingController.text);
 
+        Map<String, String> userInfoMap = {
+          'name': usernameTextEditingController.text,
+          'email': emailTextEditingController.text,
+        };
+        await HelperFunctions.saveUserLoggedInSharedPreference(true);
+        await HelperFunctions.saveUserNameSharedPreference(
+            usernameTextEditingController.text);
+        await HelperFunctions.saveUserEmailSharedPreference(
+            emailTextEditingController.text);
+
+        await databaseMethods.uploadUserInfo(userInfoMap);
         Navigator.pushReplacement(
             context, MaterialPageRoute(builder: (context) => ChatRoom()));
       } catch (e) {}
