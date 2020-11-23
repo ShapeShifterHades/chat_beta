@@ -13,9 +13,8 @@ class SearchScreen extends StatefulWidget {
   _SearchScreenState createState() => _SearchScreenState();
 }
 
-TextEditingController searchTextEditingController = TextEditingController();
-
 class _SearchScreenState extends State<SearchScreen> {
+  TextEditingController searchTextEditingController = TextEditingController();
   DatabaseMethods databaseMethods = DatabaseMethods();
 
   QuerySnapshot searchSnapshot;
@@ -31,22 +30,19 @@ class _SearchScreenState extends State<SearchScreen> {
   }
 
   createChatRoomAndStartConversation({String userName}) async {
-    String chatRoomId = await getChatRoomId(userName, Constants.kMyName);
+    if (userName != Constants.kMyName) {
+      String chatRoomId = await getChatRoomId(userName, Constants.kMyName);
 
-    List<String> users = [userName, Constants.kMyName];
-    Map<String, dynamic> chatRoomMap = {
-      'users': users,
-      'chatRoomId': chatRoomId
-    };
+      List<String> users = [userName, Constants.kMyName];
+      Map<String, dynamic> chatRoomMap = {
+        'users': users,
+        'chatRoomId': chatRoomId
+      };
 
-    await DatabaseMethods().createChatRoom(chatRoomId, chatRoomMap);
-    Navigator.push(
-        context, MaterialPageRoute(builder: (context) => ConversationScreen()));
-  }
-
-  @override
-  void initState() {
-    super.initState();
+      await DatabaseMethods().createChatRoom(chatRoomId, chatRoomMap);
+      Navigator.push(context,
+          MaterialPageRoute(builder: (context) => ConversationScreen()));
+    } else {}
   }
 
   @override

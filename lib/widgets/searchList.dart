@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:void_chat_beta/constants.dart';
-import 'package:void_chat_beta/helper/constants.dart';
 
 Widget searchList(QuerySnapshot searchSnapshot, Function func) {
   return searchSnapshot != null
@@ -40,7 +39,8 @@ class SearchTile extends StatelessWidget {
           Spacer(),
           GestureDetector(
             onTap: () {
-              func(context, userName);
+              print(func.toString());
+              func(userName);
             },
             child: Container(
               decoration: BoxDecoration(

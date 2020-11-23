@@ -2,6 +2,9 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:void_chat_beta/constants.dart';
 import 'package:void_chat_beta/helper/authenticate.dart';
+import 'package:void_chat_beta/helper/helper_functions.dart';
+
+import 'views/chat_rooms_screen.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -14,7 +17,22 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  bool userIsLoggedIn;
   final Future<FirebaseApp> _initialization = Firebase.initializeApp();
+
+  @override
+  void initState() {
+    getLoggedInState();
+    super.initState();
+  }
+
+  getLoggedInState() async {
+    await HelperFunctions.getUserLoggedInSharedPreference().then((value) {
+      setState(() {
+        userIsLoggedIn = value;
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +57,7 @@ class _MyAppState extends State<MyApp> {
               scaffoldBackgroundColor: kScaffoldColor,
               visualDensity: VisualDensity.adaptivePlatformDensity,
             ),
-            home: Authenticate(),
+            home: userIsLoggedIn ? ChatRoom() : Authenticate(),
           );
         }
 
