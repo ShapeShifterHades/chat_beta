@@ -6,6 +6,9 @@ import 'package:void_chat_beta/widgets/dont_have_account_yet.dart';
 import 'package:void_chat_beta/widgets/signscreen_button.dart';
 
 class SignIn extends StatefulWidget {
+  final Function toggle;
+  SignIn({this.toggle});
+
   @override
   _SignInState createState() => _SignInState();
 }
@@ -52,9 +55,14 @@ class _SignInState extends State<SignIn> {
                 textColor: kSecondaryTextColor,
               ),
               SizedBox(height: 16),
-              DontHaveAccountYet(
-                text1: 'Don\'t have an account?',
-                text2: 'Register now',
+              GestureDetector(
+                onTap: () {
+                  widget.toggle();
+                },
+                child: DontHaveAccountYet(
+                  text1: 'Don\'t have an account?',
+                  text2: 'Register now',
+                ),
               ),
             ],
           ),

@@ -1,15 +1,19 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:void_chat_beta/constants.dart';
-
-import 'views/signup.dart';
+import 'package:void_chat_beta/helper/authenticate.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   runApp(MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
+  @override
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
   final Future<FirebaseApp> _initialization = Firebase.initializeApp();
 
   @override
@@ -35,7 +39,7 @@ class MyApp extends StatelessWidget {
               scaffoldBackgroundColor: kScaffoldColor,
               visualDensity: VisualDensity.adaptivePlatformDensity,
             ),
-            home: SignUp(),
+            home: Authenticate(),
           );
         }
 

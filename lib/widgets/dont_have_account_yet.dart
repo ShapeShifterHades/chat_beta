@@ -19,17 +19,13 @@ class DontHaveAccountYet extends StatelessWidget {
           text1,
           style: TextStyle(color: kMainTextColor),
         ),
-        FlatButton(
-          padding: EdgeInsets.zero,
-          textColor: kMainTextColor,
-          onPressed: () {},
-          child: Text(
-            text2,
-            style: TextStyle(
-              fontWeight: FontWeight.normal,
-              fontSize: 14,
-              decoration: TextDecoration.underline,
-            ),
+        Text(
+          text2,
+          style: TextStyle(
+            color: kMainTextColor,
+            fontWeight: FontWeight.normal,
+            fontSize: 14,
+            decoration: TextDecoration.underline,
           ),
         ),
       ],
