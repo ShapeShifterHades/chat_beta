@@ -1,20 +1,5 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:void_chat_beta/constants.dart';
-
-Widget searchList(QuerySnapshot searchSnapshot, Function func) {
-  return searchSnapshot != null
-      ? ListView.builder(
-          itemCount: searchSnapshot.docs.length,
-          shrinkWrap: true,
-          itemBuilder: (context, index) {
-            return SearchTile(
-              userName: searchSnapshot.docs[0].get('name').toString(),
-              userEmail: searchSnapshot.docs[0].get('email').toString(),
-            );
-          })
-      : Container();
-}
 
 class SearchTile extends StatelessWidget {
   final Function func;
@@ -39,8 +24,8 @@ class SearchTile extends StatelessWidget {
           Spacer(),
           GestureDetector(
             onTap: () {
-              print(func.toString());
-              func(userName);
+              print(userName);
+              func(userName: userName);
             },
             child: Container(
               decoration: BoxDecoration(
