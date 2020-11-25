@@ -18,6 +18,7 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   bool userIsLoggedIn;
+  HelperFunctions helperFunctions = HelperFunctions();
   final Future<FirebaseApp> _initialization = Firebase.initializeApp();
 
   @override
@@ -27,7 +28,7 @@ class _MyAppState extends State<MyApp> {
   }
 
   getLoggedInState() async {
-    await HelperFunctions.getUserLoggedInSharedPreference().then((value) {
+    await helperFunctions.getUserLoggedInSharedPreference().then((value) {
       setState(() {
         userIsLoggedIn = value;
       });

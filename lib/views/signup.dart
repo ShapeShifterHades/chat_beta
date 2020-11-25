@@ -23,6 +23,7 @@ class _SignUpState extends State<SignUp> {
 
   AuthMethods authMethods = AuthMethods();
   DatabaseMethods databaseMethods = DatabaseMethods();
+  HelperFunctions helperFunctions = HelperFunctions();
 
   final formKey = GlobalKey<FormState>();
   TextEditingController usernameTextEditingController = TextEditingController();
@@ -43,11 +44,11 @@ class _SignUpState extends State<SignUp> {
           'name': usernameTextEditingController.text,
           'email': emailTextEditingController.text,
         };
-        await HelperFunctions.saveUserLoggedInSharedPreference(true);
-        await HelperFunctions.saveUserNameSharedPreference(
-            usernameTextEditingController.text);
-        await HelperFunctions.saveUserEmailSharedPreference(
-            emailTextEditingController.text);
+        await helperFunctions.saveUserLoggedInSharedPreference(true);
+        await helperFunctions
+            .saveUserNameSharedPreference(usernameTextEditingController.text);
+        await helperFunctions
+            .saveUserEmailSharedPreference(emailTextEditingController.text);
 
         await databaseMethods.uploadUserInfo(userInfoMap);
         Navigator.pushReplacement(

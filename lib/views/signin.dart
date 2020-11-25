@@ -23,35 +23,35 @@ class _SignInState extends State<SignIn> {
 
   AuthMethods authMethods = AuthMethods();
   DatabaseMethods databaseMethods = DatabaseMethods();
+  HelperFunctions helperFunctions = HelperFunctions();
   TextEditingController emailTextEditingController = TextEditingController();
   TextEditingController passwordTextEditingController = TextEditingController();
 
   bool isLoading = false;
   QuerySnapshot querySnapshotUserInfo;
 
-  signInWithEmailAndPassword() async {
+  signIn() async {
     if (formKey.currentState.validate()) {
-      await HelperFunctions.saveUserEmailSharedPreference(
-          emailTextEditingController.text);
-
       setState(() {
         isLoading = true;
       });
+      await helperFunctions
+          .saveUserEmailSharedPreference(emailTextEditingController.text);
 
       databaseMethods
           .getUserByUserEmail(emailTextEditingController.text)
           .then((val) {
         querySnapshotUserInfo = val;
-        HelperFunctions.saveUserNameSharedPreference(
+        helperFunctions.saveUserNameSharedPreference(
             querySnapshotUserInfo.docs[0].get('name'));
       });
 
       await authMethods
-          .signUpWithEmailAndPassword(emailTextEditingController.text,
+          .signInWithEmailAndPassword(emailTextEditingController.text,
               passwordTextEditingController.text)
           .then((value) {
         if (value != null) {
-          HelperFunctions.saveUserLoggedInSharedPreference(true);
+          helperFunctions.saveUserLoggedInSharedPreference(true);
           Navigator.pushReplacement(
               context, MaterialPageRoute(builder: (context) => ChatRoom()));
         }
@@ -114,7 +114,7 @@ class _SignInState extends State<SignIn> {
               SizedBox(height: 16),
               GestureDetector(
                 onTap: () {
-                  signInWithEmailAndPassword();
+                  signIn();
                 },
                 child: SignScreenButton(
                   label: 'Sign In',
