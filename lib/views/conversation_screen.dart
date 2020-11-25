@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:void_chat_beta/helper/constants.dart';
-import 'package:void_chat_beta/services/database.dart';
+import 'package:void_chat_beta/services/firebase_data_methods.dart';
 import 'package:void_chat_beta/widgets/appbar.dart';
 
 class ConversationScreen extends StatefulWidget {
@@ -45,14 +45,14 @@ class _ConversationScreenState extends State<ConversationScreen> {
         'sentBy': Constants.kMyName,
         'time': DateTime.now().millisecondsSinceEpoch,
       };
-      databaseMethods.addConversationMessages(widget.chatRoomId, messageMap);
+      databaseMethods.addChatMessages(widget.chatRoomId, messageMap);
       messageController.text = '';
     }
   }
 
   @override
   void initState() {
-    databaseMethods.getConversationMessages(widget.chatRoomId).then((val) {
+    databaseMethods.getChatMessagesStream(widget.chatRoomId).then((val) {
       setState(() {
         chatMessagesStream = val;
       });

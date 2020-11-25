@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:void_chat_beta/helper/authenticate.dart';
 import 'package:void_chat_beta/helper/constants.dart';
 import 'package:void_chat_beta/helper/internal_database_functions.dart';
-import 'package:void_chat_beta/services/auth.dart';
-import 'package:void_chat_beta/services/database.dart';
+import 'package:void_chat_beta/services/firebase_auth.dart';
+import 'package:void_chat_beta/services/firebase_data_methods.dart';
 
 import 'conversation_screen.dart';
 import 'search.dart';
@@ -44,7 +44,7 @@ class _ChatRoomState extends State<ChatRoom> {
   getUserInfo() async {
     Constants.kMyName = await helperFunctions.getUsersName();
 
-    databaseMethods.getChatRooms(Constants.kMyName).then((val) {
+    databaseMethods.getChatRoomsStream(Constants.kMyName).then((val) {
       setState(() {
         chatRoomsStream = val;
       });

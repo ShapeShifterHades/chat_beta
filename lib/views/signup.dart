@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:void_chat_beta/helper/constants.dart';
 import 'package:void_chat_beta/helper/internal_database_functions.dart';
-import 'package:void_chat_beta/services/auth.dart';
+import 'package:void_chat_beta/services/firebase_auth.dart';
 import 'package:void_chat_beta/views/chat_rooms_screen.dart';
 import 'package:void_chat_beta/widgets/appbar.dart';
 import 'package:void_chat_beta/widgets/decorated_textfield.dart';
 import 'package:void_chat_beta/widgets/dont_have_account_yet.dart';
 import 'package:void_chat_beta/widgets/signscreen_button.dart';
 
-import '../services/database.dart';
+import '../services/firebase_data_methods.dart';
 
 class SignUp extends StatefulWidget {
   final Function toggle;

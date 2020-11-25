@@ -29,7 +29,7 @@ class DatabaseMethods {
         .catchError((e) => print(e.toString()));
   }
 
-  addConversationMessages(String chatRoomId, messageMap) {
+  addChatMessages(String chatRoomId, messageMap) {
     FirebaseFirestore.instance
         .collection('ChatRoom')
         .doc(chatRoomId)
@@ -38,7 +38,7 @@ class DatabaseMethods {
         .catchError((e) => print(e.toString()));
   }
 
-  getConversationMessages(String chatRoomId) async {
+  getChatMessagesStream(String chatRoomId) async {
     return await FirebaseFirestore.instance
         .collection('ChatRoom')
         .doc(chatRoomId)
@@ -47,7 +47,7 @@ class DatabaseMethods {
         .snapshots();
   }
 
-  getChatRooms(String userName) async {
+  getChatRoomsStream(String userName) async {
     return await FirebaseFirestore.instance
         .collection('ChatRoom')
         .where('users', arrayContains: userName)
