@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:void_chat_beta/models/user.dart';
 
-class AuthMethods {
+class FirebaseAuthMethods {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
   UserClass _userFromFirebase(User user) {

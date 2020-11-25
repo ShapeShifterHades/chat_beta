@@ -1,6 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:void_chat_beta/helper/authenticate.dart';
+import 'package:void_chat_beta/helper/authentication_helper.dart';
 import 'package:void_chat_beta/helper/internal_database_functions.dart';
 
 import 'helper/constants.dart';
@@ -18,7 +18,7 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   bool userIsLoggedIn;
-  HelperFunctions helperFunctions = HelperFunctions();
+  InternalDbFunctions helperFunctions = InternalDbFunctions();
   final Future<FirebaseApp> _initialization = Firebase.initializeApp();
 
   @override
@@ -58,7 +58,7 @@ class _MyAppState extends State<MyApp> {
               scaffoldBackgroundColor: kScaffoldColor,
               visualDensity: VisualDensity.adaptivePlatformDensity,
             ),
-            home: userIsLoggedIn ? ChatRoom() : Authenticate(),
+            home: userIsLoggedIn ? ChatRoom() : AuthenticationHelper(),
           );
         }
 

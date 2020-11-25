@@ -1,6 +1,6 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
-class HelperFunctions {
+class InternalDbFunctions {
   String isUserLoggedInKey = 'loggedin';
   String userNameKey = 'username';
   String userEmailKey = 'email';

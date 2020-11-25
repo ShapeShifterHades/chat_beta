@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:void_chat_beta/views/signin.dart';
 import 'package:void_chat_beta/views/signup.dart';
 
-class Authenticate extends StatefulWidget {
+class AuthenticationHelper extends StatefulWidget {
   @override
-  _AuthenticateState createState() => _AuthenticateState();
+  _AuthenticationHelperState createState() => _AuthenticationHelperState();
 }
 
-class _AuthenticateState extends State<Authenticate> {
+class _AuthenticationHelperState extends State<AuthenticationHelper> {
   bool showSignIn = true;
 
   void toggleView() {

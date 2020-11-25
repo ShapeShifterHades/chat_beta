@@ -14,7 +14,7 @@ class SearchScreen extends StatefulWidget {
 
 class _SearchScreenState extends State<SearchScreen> {
   TextEditingController searchTextEditingController = TextEditingController();
-  DatabaseMethods databaseMethods = DatabaseMethods();
+  FirebaseDbMethods databaseMethods = FirebaseDbMethods();
 
   QuerySnapshot searchSnapshot;
 
@@ -29,16 +29,17 @@ class _SearchScreenState extends State<SearchScreen> {
   }
 
   createChatRoomAndStartConversation({String userName}) async {
-    if (userName != Constants.kMyName) {
-      String chatRoomId = await getChatRoomId(userName, Constants.kMyName);
+    if (userName != InitiatedConstants.kMyName) {
+      String chatRoomId =
+          await getChatRoomId(userName, InitiatedConstants.kMyName);
 
-      List<String> users = [userName, Constants.kMyName];
+      List<String> users = [userName, InitiatedConstants.kMyName];
       Map<String, dynamic> chatRoomMap = {
         'users': users,
         'chatRoomId': chatRoomId
       };
 
-      await DatabaseMethods().createChatRoom(chatRoomId, chatRoomMap);
+      await FirebaseDbMethods().createChatRoom(chatRoomId, chatRoomMap);
       Navigator.push(
           context,
           MaterialPageRoute(

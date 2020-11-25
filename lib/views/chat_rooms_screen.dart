@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:void_chat_beta/helper/authenticate.dart';
+import 'package:void_chat_beta/helper/authentication_helper.dart';
 import 'package:void_chat_beta/helper/constants.dart';
 import 'package:void_chat_beta/helper/internal_database_functions.dart';
 import 'package:void_chat_beta/services/firebase_auth.dart';
@@ -14,9 +14,9 @@ class ChatRoom extends StatefulWidget {
 }
 
 class _ChatRoomState extends State<ChatRoom> {
-  AuthMethods authMethods = AuthMethods();
-  DatabaseMethods databaseMethods = DatabaseMethods();
-  HelperFunctions helperFunctions = HelperFunctions();
+  FirebaseAuthMethods authMethods = FirebaseAuthMethods();
+  FirebaseDbMethods databaseMethods = FirebaseDbMethods();
+  InternalDbFunctions helperFunctions = InternalDbFunctions();
 
   Stream chatRoomsStream;
 
@@ -33,7 +33,7 @@ class _ChatRoomState extends State<ChatRoom> {
                     userName: snapshot.data.documents[0]['chatRoomId']
                         .toString()
                         .replaceAll('_', '')
-                        .replaceAll(Constants.kMyName, ''),
+                        .replaceAll(InitiatedConstants.kMyName, ''),
                   );
                 })
             : Container(color: Colors.amber);
@@ -42,9 +42,9 @@ class _ChatRoomState extends State<ChatRoom> {
   }
 
   getUserInfo() async {
-    Constants.kMyName = await helperFunctions.getUsersName();
+    InitiatedConstants.kMyName = await helperFunctions.getUsersName();
 
-    databaseMethods.getChatRoomsStream(Constants.kMyName).then((val) {
+    databaseMethods.getChatRoomsStream(InitiatedConstants.kMyName).then((val) {
       setState(() {
         chatRoomsStream = val;
       });
@@ -68,8 +68,10 @@ class _ChatRoomState extends State<ChatRoom> {
           GestureDetector(
             onTap: () {
               authMethods.signOut();
-              Navigator.pushReplacement(context,
-                  MaterialPageRoute(builder: (context) => Authenticate()));
+              Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => AuthenticationHelper()));
             },
             child: Container(
                 padding: EdgeInsets.symmetric(horizontal: 16),

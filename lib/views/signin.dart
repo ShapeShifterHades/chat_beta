@@ -21,9 +21,9 @@ class SignIn extends StatefulWidget {
 class _SignInState extends State<SignIn> {
   final formKey = GlobalKey<FormState>();
 
-  AuthMethods authMethods = AuthMethods();
-  DatabaseMethods databaseMethods = DatabaseMethods();
-  HelperFunctions helperFunctions = HelperFunctions();
+  FirebaseAuthMethods authMethods = FirebaseAuthMethods();
+  FirebaseDbMethods databaseMethods = FirebaseDbMethods();
+  InternalDbFunctions helperFunctions = InternalDbFunctions();
   TextEditingController emailTextEditingController = TextEditingController();
   TextEditingController passwordTextEditingController = TextEditingController();
 

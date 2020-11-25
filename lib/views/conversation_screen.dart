@@ -12,7 +12,7 @@ class ConversationScreen extends StatefulWidget {
 }
 
 class _ConversationScreenState extends State<ConversationScreen> {
-  DatabaseMethods databaseMethods = DatabaseMethods();
+  FirebaseDbMethods databaseMethods = FirebaseDbMethods();
   TextEditingController messageController = TextEditingController();
 
   Stream chatMessagesStream;
@@ -27,7 +27,7 @@ class _ConversationScreenState extends State<ConversationScreen> {
                 itemBuilder: (context, index) {
                   return MessageTile(
                     isSentByMe: snapshot.data.documents[index]['sentBy'] ==
-                        Constants.kMyName,
+                        InitiatedConstants.kMyName,
                     message:
                         snapshot.data.documents[index]['message'].toString(),
                   );
@@ -42,7 +42,7 @@ class _ConversationScreenState extends State<ConversationScreen> {
     if (messageController.text.isNotEmpty) {
       Map<String, dynamic> messageMap = {
         'message': messageController.text,
-        'sentBy': Constants.kMyName,
+        'sentBy': InitiatedConstants.kMyName,
         'time': DateTime.now().millisecondsSinceEpoch,
       };
       databaseMethods.addChatMessages(widget.chatRoomId, messageMap);

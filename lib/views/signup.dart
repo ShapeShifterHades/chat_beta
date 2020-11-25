@@ -21,9 +21,9 @@ class SignUp extends StatefulWidget {
 class _SignUpState extends State<SignUp> {
   bool isLoading = false;
 
-  AuthMethods authMethods = AuthMethods();
-  DatabaseMethods databaseMethods = DatabaseMethods();
-  HelperFunctions helperFunctions = HelperFunctions();
+  FirebaseAuthMethods authMethods = FirebaseAuthMethods();
+  FirebaseDbMethods databaseMethods = FirebaseDbMethods();
+  InternalDbFunctions helperFunctions = InternalDbFunctions();
 
   final formKey = GlobalKey<FormState>();
   TextEditingController usernameTextEditingController = TextEditingController();
