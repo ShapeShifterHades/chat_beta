@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:void_chat_beta/constants.dart';
 import 'package:void_chat_beta/helper/authenticate.dart';
 import 'package:void_chat_beta/helper/constants.dart';
-import 'package:void_chat_beta/helper/helper_functions.dart';
+import 'package:void_chat_beta/helper/internal_database_functions.dart';
 import 'package:void_chat_beta/services/auth.dart';
 import 'package:void_chat_beta/services/database.dart';
 
@@ -43,7 +42,7 @@ class _ChatRoomState extends State<ChatRoom> {
   }
 
   getUserInfo() async {
-    Constants.kMyName = await helperFunctions.getUserNameSharedPreference();
+    Constants.kMyName = await helperFunctions.getUsersName();
 
     databaseMethods.getChatRooms(Constants.kMyName).then((val) {
       setState(() {

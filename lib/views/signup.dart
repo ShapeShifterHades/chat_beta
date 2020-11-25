@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:void_chat_beta/helper/helper_functions.dart';
+import 'package:void_chat_beta/helper/constants.dart';
+import 'package:void_chat_beta/helper/internal_database_functions.dart';
 import 'package:void_chat_beta/services/auth.dart';
 import 'package:void_chat_beta/views/chat_rooms_screen.dart';
 import 'package:void_chat_beta/widgets/appbar.dart';
@@ -7,7 +8,6 @@ import 'package:void_chat_beta/widgets/decorated_textfield.dart';
 import 'package:void_chat_beta/widgets/dont_have_account_yet.dart';
 import 'package:void_chat_beta/widgets/signscreen_button.dart';
 
-import '../constants.dart';
 import '../services/database.dart';
 
 class SignUp extends StatefulWidget {
@@ -44,11 +44,9 @@ class _SignUpState extends State<SignUp> {
           'name': usernameTextEditingController.text,
           'email': emailTextEditingController.text,
         };
-        await helperFunctions.saveUserLoggedInSharedPreference(true);
-        await helperFunctions
-            .saveUserNameSharedPreference(usernameTextEditingController.text);
-        await helperFunctions
-            .saveUserEmailSharedPreference(emailTextEditingController.text);
+        await helperFunctions.saveThatUserIsLoggedIn(true);
+        await helperFunctions.saveUsersName(usernameTextEditingController.text);
+        await helperFunctions.saveUsersEmail(emailTextEditingController.text);
 
         await databaseMethods.uploadUserInfo(userInfoMap);
         Navigator.pushReplacement(

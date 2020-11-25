@@ -5,7 +5,6 @@ import 'package:void_chat_beta/services/database.dart';
 import 'package:void_chat_beta/widgets/appbar.dart';
 import 'package:void_chat_beta/widgets/searchList.dart';
 
-import '../constants.dart';
 import 'conversation_screen.dart';
 
 class SearchScreen extends StatefulWidget {

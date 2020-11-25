@@ -6,34 +6,34 @@ class HelperFunctions {
   String sharedPreferenceUserEmailKey = 'USEREMAILKEY';
 
   // saving data to shared_preference
-  Future<bool> saveThatUserLoggedIn(bool isUserLoggedIn) async {
+  Future<bool> saveThatUserIsLoggedIn(bool isUserLoggedIn) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     return await prefs.setBool(sharedPreferenceUserLoggedInKey, isUserLoggedIn);
   }
 
-  Future<bool> saveUserNameSharedPreference(String userName) async {
+  Future<bool> saveUsersName(String userName) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     return await prefs.setString(sharedPreferenceUserNameKey, userName);
   }
 
-  Future<bool> saveUserEmailSharedPreference(String userEmail) async {
+  Future<bool> saveUsersEmail(String userEmail) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     return await prefs.setString(sharedPreferenceUserEmailKey, userEmail);
   }
 
   // getting the data from the shared_preference
 
-  Future<bool> getUserLoggedInSharedPreference() async {
+  Future<bool> getUsersLoginStatus() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     return prefs.getBool(sharedPreferenceUserLoggedInKey);
   }
 
-  Future<String> getUserNameSharedPreference() async {
+  Future<String> getUsersName() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     return prefs.getString(sharedPreferenceUserNameKey);
   }
 
-  Future<String> getUserEmailSharedPreference() async {
+  Future<String> getUsersEmail() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     return prefs.getString(sharedPreferenceUserEmailKey);
   }

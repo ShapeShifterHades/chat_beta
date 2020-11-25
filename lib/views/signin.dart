@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:void_chat_beta/constants.dart';
-import 'package:void_chat_beta/helper/helper_functions.dart';
+import 'package:void_chat_beta/helper/constants.dart';
+import 'package:void_chat_beta/helper/internal_database_functions.dart';
 import 'package:void_chat_beta/services/auth.dart';
 import 'package:void_chat_beta/services/database.dart';
 import 'package:void_chat_beta/views/chat_rooms_screen.dart';
@@ -35,15 +35,14 @@ class _SignInState extends State<SignIn> {
       setState(() {
         isLoading = true;
       });
-      await helperFunctions
-          .saveUserEmailSharedPreference(emailTextEditingController.text);
+      await helperFunctions.saveUsersEmail(emailTextEditingController.text);
 
       databaseMethods
           .getUserByUserEmail(emailTextEditingController.text)
           .then((val) {
         querySnapshotUserInfo = val;
-        helperFunctions.saveUserNameSharedPreference(
-            querySnapshotUserInfo.docs[0].get('name'));
+        helperFunctions
+            .saveUsersName(querySnapshotUserInfo.docs[0].get('name'));
       });
 
       await authMethods
@@ -51,7 +50,7 @@ class _SignInState extends State<SignIn> {
               passwordTextEditingController.text)
           .then((value) {
         if (value != null) {
-          helperFunctions.saveUserLoggedInSharedPreference(true);
+          helperFunctions.saveThatUserIsLoggedIn(true);
           Navigator.pushReplacement(
               context, MaterialPageRoute(builder: (context) => ChatRoom()));
         }

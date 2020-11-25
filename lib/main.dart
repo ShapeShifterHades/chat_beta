@@ -1,9 +1,9 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:void_chat_beta/constants.dart';
 import 'package:void_chat_beta/helper/authenticate.dart';
-import 'package:void_chat_beta/helper/helper_functions.dart';
+import 'package:void_chat_beta/helper/internal_database_functions.dart';
 
+import 'helper/constants.dart';
 import 'views/chat_rooms_screen.dart';
 
 void main() {
@@ -28,7 +28,7 @@ class _MyAppState extends State<MyApp> {
   }
 
   getLoggedInState() async {
-    await helperFunctions.getUserLoggedInSharedPreference().then((value) {
+    await helperFunctions.getUsersLoginStatus().then((value) {
       setState(() {
         userIsLoggedIn = value;
       });

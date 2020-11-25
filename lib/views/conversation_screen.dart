@@ -1,10 +1,7 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:void_chat_beta/helper/constants.dart';
 import 'package:void_chat_beta/services/database.dart';
 import 'package:void_chat_beta/widgets/appbar.dart';
-
-import '../constants.dart';
 
 class ConversationScreen extends StatefulWidget {
   final String chatRoomId;

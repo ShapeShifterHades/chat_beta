@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import '../constants.dart';
+import 'package:void_chat_beta/helper/constants.dart';
 
 class DontHaveAccountYet extends StatelessWidget {
   final String text1;
