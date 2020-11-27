@@ -1,3 +1,6 @@
+import 'dart:async';
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 
 class AuthForm extends StatefulWidget {
@@ -15,8 +18,6 @@ class AuthForm extends StatefulWidget {
 }
 
 class _AuthFormState extends State<AuthForm> {
-  double target = 300;
-
   final _formKey = GlobalKey<FormState>();
   var _isLogin = true;
   var _userEmail = '';
@@ -36,93 +37,86 @@ class _AuthFormState extends State<AuthForm> {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: TweenAnimationBuilder(
-        duration: const Duration(milliseconds: 200),
-        tween: Tween<double>(begin: 300, end: target),
-        builder: (BuildContext context, dynamic value, Widget child) {
-          return Container(
-            height: value,
-            child: Card(
-              margin: EdgeInsets.all(20),
-              child: SingleChildScrollView(
-                child: Padding(
-                  padding: EdgeInsets.all(16),
-                  child: Form(
-                    key: _formKey,
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: <Widget>[
-                        TextFormField(
-                          key: ValueKey('email'),
-                          validator: (value) {
-                            if (value.isEmpty || !value.contains('@')) {
-                              return 'Please enter a valid email address.';
-                            }
-                            return null;
-                          },
-                          keyboardType: TextInputType.emailAddress,
-                          decoration: InputDecoration(
-                            labelText: 'Email address',
-                          ),
-                          onSaved: (value) {
-                            _userEmail = value;
-                          },
-                        ),
-                        if (!_isLogin)
-                          TextFormField(
-                            key: ValueKey('username'),
-                            validator: (value) {
-                              if (value.isEmpty || value.length < 4) {
-                                return 'Please enter at least 4 characters';
-                              }
-                              return null;
-                            },
-                            decoration: InputDecoration(labelText: 'Username'),
-                            onSaved: (value) {
-                              _userName = value;
-                            },
-                          ),
-                        TextFormField(
-                          key: ValueKey('password'),
-                          validator: (value) {
-                            if (value.isEmpty || value.length < 7) {
-                              return 'Password must be at least 7 characters long.';
-                            }
-                            return null;
-                          },
-                          decoration: InputDecoration(labelText: 'Password'),
-                          obscureText: true,
-                          onSaved: (value) {
-                            _userPassword = value;
-                          },
-                        ),
-                        SizedBox(height: 12),
-                        RaisedButton(
-                          child: Text(_isLogin ? 'Login' : 'Signup'),
-                          onPressed: _trySubmit,
-                        ),
-                        FlatButton(
-                          textColor: Theme.of(context).primaryColor,
-                          child: Text(_isLogin
-                              ? 'Create new account'
-                              : 'I already have an account'),
-                          onPressed: () {
-                            setState(() {
-                              setState(() {
-                                target = target == 300 ? 360 : 300;
-                              });
-                              _isLogin = !_isLogin;
-                            });
-                          },
-                        )
-                      ],
+      child: AnimatedContainer(
+        height: _isLogin ? 300 : 360,
+        duration: Duration(milliseconds: 1500),
+        curve: Curves.elasticOut,
+        child: Card(
+          margin: EdgeInsets.all(20),
+          child: SingleChildScrollView(
+            child: Padding(
+              padding: EdgeInsets.all(16),
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    TextFormField(
+                      key: ValueKey('email'),
+                      validator: (value) {
+                        if (value.isEmpty || !value.contains('@')) {
+                          return 'Please enter a valid email address.';
+                        }
+                        return null;
+                      },
+                      keyboardType: TextInputType.emailAddress,
+                      decoration: InputDecoration(
+                        labelText: 'Email address',
+                      ),
+                      onSaved: (value) {
+                        _userEmail = value;
+                      },
                     ),
-                  ),
+                    if (!_isLogin)
+                      TextFormField(
+                        key: ValueKey('username'),
+                        validator: (value) {
+                          if (value.isEmpty || value.length < 4) {
+                            return 'Please enter at least 4 characters';
+                          }
+                          return null;
+                        },
+                        decoration: InputDecoration(labelText: 'Username'),
+                        onSaved: (value) {
+                          _userName = value;
+                        },
+                      ),
+                    TextFormField(
+                      key: ValueKey('password'),
+                      validator: (value) {
+                        if (value.isEmpty || value.length < 7) {
+                          return 'Password must be at least 7 characters long.';
+                        }
+                        return null;
+                      },
+                      decoration: InputDecoration(labelText: 'Password'),
+                      obscureText: true,
+                      onSaved: (value) {
+                        _userPassword = value;
+                      },
+                    ),
+                    SizedBox(height: 12),
+                    RaisedButton(
+                      child: Text(_isLogin ? 'Login' : 'Signup'),
+                      onPressed: _trySubmit,
+                    ),
+                    FlatButton(
+                      textColor: Theme.of(context).primaryColor,
+                      child: Text(_isLogin
+                          ? 'Create new account'
+                          : 'I already have an account'),
+                      onPressed: () {
+                        setState(() {
+                          _isLogin = !_isLogin;
+                        });
+                      },
+                    )
+                  ],
                 ),
               ),
             ),
-          );
-        },
+          ),
+        ),
       ),
     );
   }
