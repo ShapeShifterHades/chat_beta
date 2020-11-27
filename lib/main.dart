@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'screens/auth_screen.dart';
+import 'widgets/auth/firebase_core_init.dart';
 
 void main() => runApp(MyApp());
 
@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
           ),
         ),
       ),
-      home: AuthScreen(),
+      home: FirebaseCoreInit(),
     );
   }
 }
