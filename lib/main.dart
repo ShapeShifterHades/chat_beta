@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'widgets/auth/firebase_core_init.dart';
 
-void main() => runApp(MyApp());
+void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  runApp(MyApp());
+}
 
 class MyApp extends StatelessWidget {
   @override

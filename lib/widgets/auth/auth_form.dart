@@ -1,13 +1,18 @@
 import 'package:flutter/material.dart';
 
 class AuthForm extends StatefulWidget {
-  AuthForm(this.submitFn);
+  AuthForm(
+    this.submitFn,
+    this.isLoading,
+  );
 
+  final bool isLoading;
   final void Function(
     String email,
     String password,
     String userName,
     bool isLogin,
+    BuildContext ctx,
   ) submitFn;
 
   @override
@@ -27,7 +32,13 @@ class _AuthFormState extends State<AuthForm> {
 
     if (isValid) {
       _formKey.currentState.save();
-      widget.submitFn(_userEmail, _userPassword, _userName, _isLogin);
+      widget.submitFn(
+        _userEmail.trim(),
+        _userPassword.trim(),
+        _userName.trim(),
+        _isLogin,
+        context,
+      );
     }
   }
 
@@ -35,8 +46,9 @@ class _AuthFormState extends State<AuthForm> {
   Widget build(BuildContext context) {
     return Center(
       child: AnimatedContainer(
-        height: _isLogin ? 300 : 360,
-        duration: Duration(milliseconds: 1500),
+        alignment: Alignment.bottomCenter,
+        height: _isLogin ? 340 : 420,
+        duration: Duration(milliseconds: 2500),
         curve: Curves.elasticOut,
         child: Card(
           margin: EdgeInsets.all(20),
@@ -49,6 +61,9 @@ class _AuthFormState extends State<AuthForm> {
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
                     TextFormField(
+                      autocorrect: false,
+                      textCapitalization: TextCapitalization.none,
+                      enableSuggestions: false,
                       key: ValueKey('email'),
                       validator: (value) {
                         if (value.isEmpty || !value.contains('@')) {
@@ -66,6 +81,9 @@ class _AuthFormState extends State<AuthForm> {
                     ),
                     if (!_isLogin)
                       TextFormField(
+                        autocorrect: true,
+                        textCapitalization: TextCapitalization.words,
+                        enableSuggestions: false,
                         key: ValueKey('username'),
                         validator: (value) {
                           if (value.isEmpty || value.length < 4) {
@@ -93,21 +111,24 @@ class _AuthFormState extends State<AuthForm> {
                       },
                     ),
                     SizedBox(height: 12),
-                    RaisedButton(
-                      child: Text(_isLogin ? 'Login' : 'Signup'),
-                      onPressed: _trySubmit,
-                    ),
-                    FlatButton(
-                      textColor: Theme.of(context).primaryColor,
-                      child: Text(_isLogin
-                          ? 'Create new account'
-                          : 'I already have an account'),
-                      onPressed: () {
-                        setState(() {
-                          _isLogin = !_isLogin;
-                        });
-                      },
-                    )
+                    if (widget.isLoading) CircularProgressIndicator(),
+                    if (!widget.isLoading)
+                      RaisedButton(
+                        child: Text(_isLogin ? 'Login' : 'Signup'),
+                        onPressed: _trySubmit,
+                      ),
+                    if (!widget.isLoading)
+                      FlatButton(
+                        textColor: Theme.of(context).primaryColor,
+                        child: Text(_isLogin
+                            ? 'Create new account'
+                            : 'I already have an account'),
+                        onPressed: () {
+                          setState(() {
+                            _isLogin = !_isLogin;
+                          });
+                        },
+                      )
                   ],
                 ),
               ),
