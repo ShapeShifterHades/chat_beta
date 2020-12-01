@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
+
 import 'package:void_chat_beta/widgets/build_app_bar.dart';
-import 'package:hive/hive.dart';
-import 'package:hive_flutter/hive_flutter.dart';
 
 class InternalChatList extends StatefulWidget {
   @override
@@ -9,18 +8,13 @@ class InternalChatList extends StatefulWidget {
 }
 
 class _InternalChatListState extends State<InternalChatList> {
-  var data = 'Lol waddup';
-  setData(String word) async {
-    var box = await Hive.openBox('testbox');
-    box.put('name', word);
-    data = box.get('name');
-    setState(() {});
-  }
-
   @override
   void initState() {
     super.initState();
-    Hive.initFlutter();
+  }
+
+  submitTest() async {
+    // _message.clear();
   }
 
   @override
@@ -29,20 +23,37 @@ class _InternalChatListState extends State<InternalChatList> {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          setData('Fuck this shit i am lhoyt!!');
+          submitTest();
         },
         child: Icon(Icons.local_activity),
       ),
       appBar: buildAppBar(context),
-      body: Container(
-        width: size.width,
-        color: Theme.of(context).primaryColor,
-        child: Column(
-          children: [
-            Text(data),
-          ],
-        ),
-      ),
+      // body: ValueListenableBuilder(
+      //   valueListenable: Hive.box<Message>('messages').listenable(),
+      //   builder: (context, Box<Message> box, _) {
+      //     if (box.values.isEmpty)
+      //       return Center(
+      //         child: Text("There is no conversations yet"),
+      //       );
+      //     return ListView.builder(
+      //       // here comes main part, where we get the data count, and builder for data showcase
+      //       itemCount: box.values.length,
+      //       itemBuilder: (context, index) {
+      //         Message data = box.getAt(
+      //             index); // use simpleton called data of type Todo from a box with current index.
+      //         return ListTile(
+      //             title: Text(data.username == null ? '' : data.username),
+      //             subtitle: Text(data.text == null
+      //                 ? ''
+      //                 : 'here will be part of the last message'),
+      //             leading: Icon(Icons.person_outline),
+      //             onTap: () {
+      //               print('go to chat screen');
+      //             });
+      //       },
+      //     );
+      //   },
+      // ),
     );
   }
 }
