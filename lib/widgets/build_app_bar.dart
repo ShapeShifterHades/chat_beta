@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:void_chat_beta/screens/chatlist_screen.dart';
 import 'package:void_chat_beta/screens/contacts_screen.dart';
 
+import 'auth/firebase_core_init.dart';
+
 AppBar buildAppBar(BuildContext context, {String title = 'Void Chat'}) {
   return AppBar(
     title: Text(title),
@@ -51,9 +53,14 @@ AppBar buildAppBar(BuildContext context, {String title = 'Void Chat'}) {
             value: 'finduser',
           ),
         ],
-        onChanged: (itemidentifier) {
+        onChanged: (itemidentifier) async {
           if (itemidentifier == 'logout') {
-            FirebaseAuth.instance.signOut();
+            await FirebaseAuth.instance.signOut();
+            Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => FirebaseCoreInit(),
+                ));
           }
           if (itemidentifier == 'chatlists') {
             Navigator.push(
