@@ -1,10 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:void_chat_beta/screens/internal_chat_list.dart';
+import 'package:void_chat_beta/screens/chatlist_screen.dart';
+import 'package:void_chat_beta/screens/contacts_screen.dart';
 
-AppBar buildAppBar(BuildContext context) {
+AppBar buildAppBar(BuildContext context, {String title = 'Void Chat'}) {
   return AppBar(
-    title: Text('Chat beta'),
+    title: Text(title),
     actions: [
       DropdownButton(
         underline: Container(),
@@ -37,6 +38,18 @@ AppBar buildAppBar(BuildContext context) {
             ),
             value: 'chatlists',
           ),
+          DropdownMenuItem(
+            child: Container(
+              child: Row(
+                children: [
+                  Icon(Icons.search_sharp),
+                  SizedBox(width: 8),
+                  Text('Find a user'),
+                ],
+              ),
+            ),
+            value: 'finduser',
+          ),
         ],
         onChanged: (itemidentifier) {
           if (itemidentifier == 'logout') {
@@ -44,10 +57,19 @@ AppBar buildAppBar(BuildContext context) {
           }
           if (itemidentifier == 'chatlists') {
             Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => InternalChatList(),
-                ));
+              context,
+              MaterialPageRoute(
+                builder: (context) => ChatlistScreen(),
+              ),
+            );
+          }
+          if (itemidentifier == 'finduser') {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => FindUserScreen(),
+              ),
+            );
           }
         },
       )

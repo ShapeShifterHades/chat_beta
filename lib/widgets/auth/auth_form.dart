@@ -35,7 +35,7 @@ class _AuthFormState extends State<AuthForm> {
       widget.submitFn(
         _userEmail.trim(),
         _userPassword.trim(),
-        _userName.trim(),
+        _userName.trim().toLowerCase(),
         _isLogin,
         context,
       );
