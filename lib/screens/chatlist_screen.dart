@@ -15,7 +15,7 @@ class ChatlistScreen extends StatelessWidget {
       appBar: buildAppBar(context, title: 'Chatlist'),
       body: FutureBuilder(
           future: getName(),
-          builder: (ctx, futureSnapshot) {
+          builder: (context, futureSnapshot) {
             if (futureSnapshot.connectionState == ConnectionState.waiting) {
               return Center(
                 child: CircularProgressIndicator(),
@@ -26,9 +26,8 @@ class ChatlistScreen extends StatelessWidget {
                     .collection('users')
                     .doc(futureSnapshot.data.uid)
                     .collection('chatsList')
-                    // .doc()
                     .snapshots(),
-                builder: (ctx, chatBriefSnapshot) {
+                builder: (context, chatBriefSnapshot) {
                   if (chatBriefSnapshot.connectionState ==
                       ConnectionState.waiting) {
                     return Center(
@@ -38,7 +37,7 @@ class ChatlistScreen extends StatelessWidget {
                   final listItem = chatBriefSnapshot.data.documents;
                   return ListView.builder(
                     itemCount: listItem.length,
-                    itemBuilder: (ctx, index) => Container(
+                    itemBuilder: (context, index) => Container(
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Container(

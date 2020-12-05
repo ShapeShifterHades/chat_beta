@@ -3,6 +3,18 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class NewMessage extends StatefulWidget {
+  final String myId;
+  final String myUsername;
+  final String userId;
+  final String username;
+
+  const NewMessage({
+    Key key,
+    this.myId,
+    this.myUsername,
+    this.userId,
+    this.username,
+  }) : super(key: key);
   @override
   _NewMessageState createState() => _NewMessageState();
 }
@@ -13,18 +25,16 @@ class _NewMessageState extends State<NewMessage> {
 
   void _sendMessage() async {
     FocusScope.of(context).unfocus();
-    final user = FirebaseAuth.instance.currentUser;
-    // TODO store username in internal memory to not fetch it everytime
-    final userData = await FirebaseFirestore.instance
-        .collection('users')
-        .doc(user.uid)
-        .get();
-    FirebaseFirestore.instance.collection('chat').add({
+    FirebaseFirestore.instance
+        .collection('chats')
+        .doc(widget.myId)
+        .collection(widget.userId)
+        .add({
       'text': _enteredMessage,
-      'createdAt': Timestamp.now(),
-      'userId': user.uid,
-      'username': userData['username'],
+      'timestamp': Timestamp.now(),
+      'from': widget.myUsername,
     });
+
     _controller.clear();
   }
 
