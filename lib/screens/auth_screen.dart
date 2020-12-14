@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:void_chat_beta/ui_elements/custom_full_frame_animated.dart';
 import '../widgets/auth/auth_form.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -59,12 +60,32 @@ class _AuthScreenState extends State<AuthScreen> {
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: Theme.of(context).primaryColor,
-      body: AuthForm(
-        _submitAuthForm,
-        _isLoading,
-      ),
+      body: Stack(children: [
+        MediaQuery.of(context).orientation == Orientation.portrait
+            ? Positioned(
+                top: size.width * 0.05 + 30,
+                bottom: size.width * 0.05,
+                left: size.width * 0.05,
+                right: size.width * 0.05,
+                child: CustomFullFrameAnimated(
+                  size: size,
+                ),
+              )
+            : Container(),
+        Container(
+          child: Align(
+            alignment: Alignment.center,
+            child: AuthForm(
+              _submitAuthForm,
+              _isLoading,
+            ),
+          ),
+        ),
+      ]),
     );
   }
 }
