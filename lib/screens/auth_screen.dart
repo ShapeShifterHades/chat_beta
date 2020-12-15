@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:void_chat_beta/ui_elements/custom_full_frame_animated.dart';
 import '../widgets/auth/auth_form.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:keyboard_visibility/keyboard_visibility.dart';
 
 class AuthScreen extends StatefulWidget {
   @override
@@ -12,6 +13,7 @@ class AuthScreen extends StatefulWidget {
 class _AuthScreenState extends State<AuthScreen> {
   final _auth = FirebaseAuth.instance;
   var _isLoading = false;
+  var visibleKbrd = false;
 
   void _submitAuthForm(
     String email,
@@ -58,34 +60,49 @@ class _AuthScreenState extends State<AuthScreen> {
     }
   }
 
+  @protected
+  void initState() {
+    super.initState();
+
+    KeyboardVisibilityNotification().addNewListener(
+      onChange: (bool visible) {
+        visibleKbrd = visible;
+        setState(() {});
+        print(visible);
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: Theme.of(context).primaryColor,
-      body: Stack(children: [
-        MediaQuery.of(context).orientation == Orientation.portrait
-            ? Positioned(
-                top: size.width * 0.05 + 30,
-                bottom: size.width * 0.05,
-                left: size.width * 0.05,
-                right: size.width * 0.05,
-                child: CustomFullFrameAnimated(
-                  size: size,
-                ),
-              )
-            : Container(),
-        Container(
-          child: Align(
-            alignment: Alignment.center,
+      body: Stack(
+        children: [
+          MediaQuery.of(context).orientation == Orientation.portrait
+              ? Positioned(
+                  top: size.width * 0.05 + 30,
+                  bottom: size.width * 0.05,
+                  left: size.width * 0.05,
+                  right: size.width * 0.05,
+                  child: CustomFullFrameAnimated(
+                    size: size,
+                  ),
+                )
+              : Container(),
+          AnimatedAlign(
+            duration: Duration(milliseconds: 400),
+            curve: Curves.easeIn,
+            alignment: visibleKbrd ? Alignment.topCenter : Alignment.center,
             child: AuthForm(
               _submitAuthForm,
               _isLoading,
             ),
           ),
-        ),
-      ]),
+        ],
+      ),
     );
   }
 }

@@ -5,7 +5,7 @@ import '../constants.dart';
 class CustomFullFramePainter extends CustomPainter {
   double animTopVal;
   double animrightVal;
-
+  final Color color = kMainTextColor;
   CustomFullFramePainter({
     this.animTopVal,
     this.animrightVal,
@@ -13,7 +13,7 @@ class CustomFullFramePainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     var _topPaint = Paint()
-      ..color = kStrokeColor
+      ..color = color
       ..strokeWidth = 0.5
       ..strokeCap = StrokeCap.round;
 
@@ -23,7 +23,7 @@ class CustomFullFramePainter extends CustomPainter {
     canvas.drawLine(topStartingPoint, topEndingPoint, _topPaint);
 
     var _bottomPaint = Paint()
-      ..color = kStrokeColor
+      ..color = color
       ..strokeWidth = 0.5
       ..strokeCap = StrokeCap.round;
 
@@ -33,7 +33,7 @@ class CustomFullFramePainter extends CustomPainter {
     canvas.drawLine(bottomStartingPoint, bottomEndingPoint, _bottomPaint);
 
     var _rightPaint = Paint()
-      ..color = kStrokeColor
+      ..color = color
       ..strokeWidth = 0.5
       ..strokeCap = StrokeCap.round;
 
@@ -43,7 +43,7 @@ class CustomFullFramePainter extends CustomPainter {
     canvas.drawLine(rightStartingPoint, rightEndingPoint, _rightPaint);
 
     var _leftPaint = Paint()
-      ..color = kStrokeColor
+      ..color = color
       ..strokeWidth = 0.5
       ..strokeCap = StrokeCap.round;
 
