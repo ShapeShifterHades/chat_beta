@@ -4,14 +4,31 @@ import '../constants.dart';
 
 class CustomFullFramePainter extends CustomPainter {
   double animTopVal;
+  double animBotVal;
   double animrightVal;
+  double animLeftVal;
+  double animAngle;
+
   final Color color = kMainTextColor;
   CustomFullFramePainter({
     this.animTopVal,
     this.animrightVal,
+    this.animBotVal,
+    this.animLeftVal,
+    this.animAngle,
   });
   @override
   void paint(Canvas canvas, Size size) {
+    var _anglePaint = Paint()
+      ..color = color
+      ..strokeWidth = 0.5
+      ..strokeCap = StrokeCap.round;
+
+    Offset angleStartingPoint = Offset(size.width, size.height - animAngle);
+    Offset angleEndingPoint = Offset(size.width - animAngle, size.height);
+
+    canvas.drawLine(angleStartingPoint, angleEndingPoint, _anglePaint);
+
     var _topPaint = Paint()
       ..color = color
       ..strokeWidth = 0.5
@@ -27,8 +44,8 @@ class CustomFullFramePainter extends CustomPainter {
       ..strokeWidth = 0.5
       ..strokeCap = StrokeCap.round;
 
-    Offset bottomStartingPoint = Offset(size.width, size.height);
-    Offset bottomEndingPoint = Offset(size.width - animTopVal, size.height);
+    Offset bottomStartingPoint = Offset(size.width - 30, size.height);
+    Offset bottomEndingPoint = Offset(size.width - animBotVal, size.height);
 
     canvas.drawLine(bottomStartingPoint, bottomEndingPoint, _bottomPaint);
 
@@ -48,7 +65,7 @@ class CustomFullFramePainter extends CustomPainter {
       ..strokeCap = StrokeCap.round;
 
     Offset leftStartingPoint = Offset(0, size.height);
-    Offset leftEndingPoint = Offset(0, size.height - animrightVal);
+    Offset leftEndingPoint = Offset(0, size.height - animLeftVal);
 
     canvas.drawLine(leftStartingPoint, leftEndingPoint, _leftPaint);
   }

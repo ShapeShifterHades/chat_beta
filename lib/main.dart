@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:void_chat_beta/constants.dart';
 
 import 'widgets/auth/firebase_core_init.dart';
 
@@ -31,24 +32,18 @@ class _MyAppState extends State<MyApp> {
         backgroundColor: Color(0xFF10171E),
         accentColor: Colors.indigoAccent,
         accentColorBrightness: Brightness.dark,
-        buttonTheme: ButtonTheme.of(context).copyWith(
-          buttonColor: Colors.white,
-          textTheme: ButtonTextTheme.primary,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(20),
-          ),
-        ),
+        buttonTheme: ButtonTheme.of(context).copyWith(),
         inputDecorationTheme: InputDecorationTheme(
           enabledBorder: OutlineInputBorder(
             borderSide: BorderSide(
-              width: 0.6,
-              color: Color(0xFF8C8E8D),
+              width: 0.4,
+              color: kSecondaryColor,
             ),
           ),
           focusedBorder: OutlineInputBorder(
             borderSide: BorderSide(
               width: 2,
-              color: Color(0xFF8C8E8D),
+              color: kSecondaryColor,
             ),
           ),
           errorBorder: OutlineInputBorder(
