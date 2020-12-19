@@ -1,8 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:void_chat_beta/widgets/contacts/remove_from_contacts_button.dart';
 
 import 'message_friend_button.dart';
+import 'remove_from_contacts_button.dart';
 
 class GetMyContactList extends StatelessWidget {
   final String myId;

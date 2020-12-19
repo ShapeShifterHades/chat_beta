@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:hive/hive.dart';
-import 'package:hive_flutter/hive_flutter.dart';
-import 'package:void_chat_beta/constants.dart';
 
-import 'widgets/auth/firebase_core_init.dart';
+import 'package:void_chat_beta/constants/constants.dart';
 
-void main() async {
+import 'ui/widgets/auth/firebase_core_init.dart';
+
+void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  await Hive.initFlutter();
+
   runApp(MyApp());
 }
 
@@ -17,11 +16,6 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  void dispose() async {
-    Hive.close();
-    super.dispose();
-  }
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(

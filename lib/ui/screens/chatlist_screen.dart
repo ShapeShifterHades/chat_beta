@@ -1,8 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:void_chat_beta/screens/conversation_screen.dart';
-import 'package:void_chat_beta/widgets/build_app_bar.dart';
+import 'package:void_chat_beta/ui/widgets/build_app_bar.dart';
+
+import 'conversation_screen.dart';
 
 class ChatlistScreen extends StatelessWidget {
   Future<User> getName() async {

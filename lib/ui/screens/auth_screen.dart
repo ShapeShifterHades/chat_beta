@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:void_chat_beta/ui_elements/custom_full_frame_animated.dart';
-import '../widgets/auth/auth_form.dart';
+import 'package:provider/provider.dart';
+import 'package:void_chat_beta/provider/auth_ui_provider.dart';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:keyboard_visibility/keyboard_visibility.dart';
+import 'package:void_chat_beta/ui/ui_base_elements/animated_frame/portrait/custom_full_frame_animated.dart';
+
+import 'package:void_chat_beta/ui/widgets/auth/auth_form.dart';
 
 class AuthScreen extends StatefulWidget {
   @override
@@ -96,9 +100,9 @@ class _AuthScreenState extends State<AuthScreen> {
             duration: Duration(milliseconds: 400),
             curve: Curves.easeIn,
             alignment: visibleKbrd ? Alignment.topCenter : Alignment.center,
-            child: AuthForm(
-              _submitAuthForm,
-              _isLoading,
+            child: ChangeNotifierProvider(
+              create: (context) => AuthUiProvider(),
+              child: AuthForm(_submitAuthForm, _isLoading),
             ),
           ),
         ],

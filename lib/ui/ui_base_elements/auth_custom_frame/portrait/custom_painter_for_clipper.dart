@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:void_chat_beta/constants.dart';
+import 'package:void_chat_beta/constants/constants.dart';
 
 class CustomPainterForClipper extends CustomPainter {
   @override

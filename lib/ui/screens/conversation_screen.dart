@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:void_chat_beta/widgets/build_app_bar.dart';
-import 'package:void_chat_beta/widgets/chat/messages.dart';
-import 'package:void_chat_beta/widgets/chat/new_message.dart';
+import 'package:void_chat_beta/ui/widgets/build_app_bar.dart';
+import 'package:void_chat_beta/ui/widgets/chat/messages.dart';
+import 'package:void_chat_beta/ui/widgets/chat/new_message.dart';
 
 class ConversationScreen extends StatelessWidget {
   final String userId;

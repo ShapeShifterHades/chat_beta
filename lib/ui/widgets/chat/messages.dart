@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:void_chat_beta/widgets/chat/message_bubble.dart';
+
 import 'package:firebase_auth/firebase_auth.dart';
+
+import 'message_bubble.dart';
 
 class Messages extends StatelessWidget {
   final String opponentId;

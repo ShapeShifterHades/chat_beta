@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:void_chat_beta/screens/chatlist_screen.dart';
-import 'package:void_chat_beta/screens/contacts_screen.dart';
+import 'package:void_chat_beta/ui/screens/chatlist_screen.dart';
+import 'package:void_chat_beta/ui/screens/contacts_screen.dart';
 
 import 'auth/firebase_core_init.dart';
 

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'custom_full_frame_painter.dart';
+import '../../animated_frame/portrait/custom_full_frame_painter.dart';
 
 class CustomFullFrameAnimated extends StatefulWidget {
   const CustomFullFrameAnimated({

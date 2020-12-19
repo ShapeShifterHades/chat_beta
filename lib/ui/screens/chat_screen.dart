@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:void_chat_beta/widgets/build_app_bar.dart';
-import 'package:void_chat_beta/widgets/chat/message_list.dart';
-
-import 'package:void_chat_beta/widgets/chat/new_message.dart';
+import 'package:void_chat_beta/ui/widgets/build_app_bar.dart';
+import 'package:void_chat_beta/ui/widgets/chat/message_list.dart';
+import 'package:void_chat_beta/ui/widgets/chat/new_message.dart';
 
 class ChatScreen extends StatelessWidget {
   final String myId;

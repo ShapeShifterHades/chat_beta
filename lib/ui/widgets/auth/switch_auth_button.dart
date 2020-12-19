@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import '../../constants.dart';
+import 'package:void_chat_beta/constants/constants.dart';
 
 class SwitchAuthButton extends StatefulWidget {
   const SwitchAuthButton({

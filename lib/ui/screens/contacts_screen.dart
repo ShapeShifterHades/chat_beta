@@ -1,9 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:void_chat_beta/widgets/build_app_bar.dart';
-import 'package:void_chat_beta/widgets/contacts/add_user_button.dart';
-import 'package:void_chat_beta/widgets/contacts/contact_list.dart';
+import 'package:void_chat_beta/ui/widgets/build_app_bar.dart';
+import 'package:void_chat_beta/ui/widgets/contacts/add_user_button.dart';
+import 'package:void_chat_beta/ui/widgets/contacts/contact_list.dart';
 
 class FindUserScreen extends StatefulWidget {
   @override
