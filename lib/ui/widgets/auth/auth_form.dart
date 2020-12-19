@@ -33,7 +33,6 @@ class _AuthFormState extends State<AuthForm> with TickerProviderStateMixin {
   Animation<Offset> _slideInAnimation;
 
   final _formKey = GlobalKey<FormState>();
-  var _isLogin = true;
   var _userEmail = '';
   var _userName = '';
   var _userPassword = '';
@@ -102,7 +101,7 @@ class _AuthFormState extends State<AuthForm> with TickerProviderStateMixin {
       position: _slideInAnimation,
       child: Consumer<AuthUiProvider>(
         builder: (context, value, child) {
-          bool Nigga = value.loginState;
+          bool nigga = value.loginState;
           return Container(
             margin: EdgeInsets.fromLTRB(30, 70, 30, 30),
             color: kMainBgColor,
@@ -135,8 +134,8 @@ class _AuthFormState extends State<AuthForm> with TickerProviderStateMixin {
                                           Container(
                                             alignment: Alignment.center,
                                             child: Text(
-                                              // Nigga.toString(),
-                                              Nigga ? 'REGISTER' : 'LOGIN',
+                                              // nigga.toString(),
+                                              nigga ? 'REGISTER' : 'LOGIN',
                                               style: GoogleFonts.jura(
                                                 letterSpacing: 4,
                                                 fontWeight: FontWeight.w600,
@@ -179,7 +178,7 @@ class _AuthFormState extends State<AuthForm> with TickerProviderStateMixin {
                                                     ),
                                                   ),
                                                   child: SwitchAuthButton(
-                                                      isLogin: !Nigga),
+                                                      isLogin: !nigga),
                                                 ),
                                               );
                                             },
@@ -232,7 +231,7 @@ class _AuthFormState extends State<AuthForm> with TickerProviderStateMixin {
                                       },
                                     ),
                                     SizedBox(height: 20),
-                                    if (Nigga)
+                                    if (nigga)
                                       TextFormField(
                                         textInputAction: TextInputAction.next,
                                         onEditingComplete: () =>
@@ -264,7 +263,7 @@ class _AuthFormState extends State<AuthForm> with TickerProviderStateMixin {
                                           _userName = value;
                                         },
                                       ),
-                                    if (Nigga) SizedBox(height: 20),
+                                    if (nigga) SizedBox(height: 20),
                                     TextFormField(
                                       textInputAction: TextInputAction.send,
                                       obscuringCharacter: '•',
