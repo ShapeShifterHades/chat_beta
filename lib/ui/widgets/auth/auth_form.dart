@@ -22,6 +22,14 @@ class _AuthFormState extends State<AuthForm> with TickerProviderStateMixin {
   void initState() {
     super.initState();
 
+    KeyboardVisibilityNotification().addNewListener(
+      onChange: (bool visible) {
+        visibleKbrd = visible;
+        setState(() {});
+        print(visible);
+      },
+    );
+
     _slideInController = AnimationController(
       duration: const Duration(milliseconds: 300),
       vsync: this,

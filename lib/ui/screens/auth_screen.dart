@@ -4,16 +4,10 @@ import 'package:void_chat_beta/ui/ui_base_elements/animated_frame/portrait/custo
 
 import 'package:void_chat_beta/ui/widgets/auth/auth_form.dart';
 
-class AuthScreen extends StatefulWidget {
-  @override
-  _AuthScreenState createState() => _AuthScreenState();
-}
-
-class _AuthScreenState extends State<AuthScreen> with TickerProviderStateMixin {
+class AuthScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: Theme.of(context).primaryColor,
@@ -27,8 +21,7 @@ class _AuthScreenState extends State<AuthScreen> with TickerProviderStateMixin {
                   right: size.width * 0.05,
                   child: CustomFullFrameAnimated(
                     size: size,
-                  ),
-                )
+                  ))
               : Container(),
           AuthForm(),
         ],
