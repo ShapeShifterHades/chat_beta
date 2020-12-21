@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -14,9 +16,22 @@ class AuthForm extends StatefulWidget {
 }
 
 class _AuthFormState extends State<AuthForm> with TickerProviderStateMixin {
-  var visibleKbrd = false;
+  bool visibleKbrd = false;
   AnimationController _slideInController;
   Animation<Offset> _slideInAnimation;
+  final _formKey = GlobalKey<FormState>();
+  final _auth = FirebaseAuth.instance;
+
+  String _userEmail = '';
+  String _userName = '';
+  String _userPassword = '';
+  bool switcher = false;
+
+  void switcherOut() async {
+    await _slideInController.reverse();
+    context.read<AuthUiProvider>().change();
+    await _slideInController.forward(from: -1.5);
+  }
 
   @override
   void initState() {
@@ -26,7 +41,6 @@ class _AuthFormState extends State<AuthForm> with TickerProviderStateMixin {
       onChange: (bool visible) {
         visibleKbrd = visible;
         setState(() {});
-        print(visible);
       },
     );
 
@@ -46,7 +60,7 @@ class _AuthFormState extends State<AuthForm> with TickerProviderStateMixin {
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       Future.delayed(
-        const Duration(milliseconds: 300),
+        const Duration(milliseconds: 400),
         () => _slideInController.forward().orCancel,
       );
     });
@@ -54,25 +68,56 @@ class _AuthFormState extends State<AuthForm> with TickerProviderStateMixin {
     // _slideInController.forward();
   }
 
+  void trySubmit() async {
+    final isValid = _formKey.currentState.validate();
+    FocusScope.of(context).unfocus();
+
+    if (isValid) {
+      _formKey.currentState.save();
+
+      UserCredential userCredential;
+      try {
+        if (!switcher) {
+          userCredential = await _auth.signInWithEmailAndPassword(
+              email: _userEmail.trim(), password: _userPassword.trim());
+        } else {
+          userCredential = await _auth.createUserWithEmailAndPassword(
+              email: _userEmail.trim(), password: _userPassword.trim());
+          await FirebaseFirestore.instance
+              .collection('users')
+              .doc(userCredential.user.uid)
+              .set({
+            "bio": {
+              "nickname": _userName.trim().toLowerCase(),
+            },
+          });
+        }
+      } catch (err) {
+        var message = 'An error occured, please check your credentials';
+        if (err.message != null) {
+          message = err.message;
+        }
+        // errors are not forwarded to PlatformException
+        Scaffold.of(context).showSnackBar(
+          SnackBar(
+            content: Text(message),
+            backgroundColor: Theme.of(context).errorColor,
+          ),
+        );
+      }
+    }
+  }
+
   @override
   void dispose() {
-    super.dispose();
     _slideInController.dispose();
+    super.dispose();
   }
-
-  void switcherOut() async {
-    await _slideInController.reverse();
-    context.read<AuthUiProvider>().change();
-    await _slideInController.forward(from: -1.5);
-  }
-
-  String _userEmail = '';
-  String _userName = '';
-  String _userPassword = '';
 
   @override
   Widget build(BuildContext context) {
     final node = FocusScope.of(context);
+    switcher = Provider.of<AuthUiProvider>(context).loginState;
     return AnimatedAlign(
       duration: Duration(milliseconds: 400),
       curve: Curves.easeIn,
@@ -86,8 +131,7 @@ class _AuthFormState extends State<AuthForm> with TickerProviderStateMixin {
             child: Padding(
               padding: EdgeInsets.all(12),
               child: Form(
-                key:
-                    Provider.of<AuthUiProvider>(context, listen: false).formKey,
+                key: _formKey,
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
@@ -98,14 +142,7 @@ class _AuthFormState extends State<AuthForm> with TickerProviderStateMixin {
                         child: Column(
                           children: [
                             GestureDetector(
-                              onTap: () => Provider.of<AuthUiProvider>(context,
-                                      listen: false)
-                                  .trySubmit(
-                                ctx: context,
-                                userEmail: _userEmail,
-                                userName: _userName,
-                                userPassword: _userPassword,
-                              ),
+                              onTap: () => trySubmit(),
                               child: Container(
                                 height: 80,
                                 width: double.infinity,
@@ -248,15 +285,7 @@ class _AuthFormState extends State<AuthForm> with TickerProviderStateMixin {
                                   TextFormField(
                                     textInputAction: TextInputAction.send,
                                     obscuringCharacter: '•',
-                                    onEditingComplete: () =>
-                                        Provider.of<AuthUiProvider>(context,
-                                                listen: false)
-                                            .trySubmit(
-                                      ctx: context,
-                                      userEmail: _userEmail,
-                                      userName: _userName,
-                                      userPassword: _userPassword,
-                                    ),
+                                    onEditingComplete: () => trySubmit(),
                                     key: ValueKey('password'),
                                     decoration: InputDecoration(
                                       labelText: 'Password',

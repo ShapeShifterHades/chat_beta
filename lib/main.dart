@@ -23,6 +23,7 @@ class _MyAppState extends State<MyApp> {
       theme: ThemeData(
         primaryColor: Color(0xFF10171E),
         primarySwatch: Colors.grey,
+        scaffoldBackgroundColor: kMainBgColor,
         backgroundColor: Color(0xFF10171E),
         accentColor: Colors.indigoAccent,
         accentColorBrightness: Brightness.dark,
