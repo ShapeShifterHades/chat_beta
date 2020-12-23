@@ -44,6 +44,7 @@ class MenuButtonPainter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     Path path1 = Path();
     Path path2 = Path();
+    Path path3 = Path();
 
     path1.lineTo(0, size.height);
     path1.moveTo(0, 0);
@@ -53,10 +54,13 @@ class MenuButtonPainter extends CustomPainter {
     path2.lineTo(size.width - 8, size.height);
     path2.lineTo(size.width, size.height - 8);
     path2.lineTo(size.width, 0);
-    // path2.lineTo(0, 0);
-    // path2.quadraticBezierTo(0, 0, 0, 10);
 
-    // path2.close();
+    path3.moveTo(size.width * 0.85, 0);
+    path3.lineTo(size.width, 0);
+    path3.lineTo(size.width, size.height * 0.15);
+    path3.moveTo(size.width * 0.15, size.height);
+    path3.lineTo(0, size.height);
+    path3.lineTo(0, size.height * 0.85);
 
     Paint paint1 = Paint()
       ..style = PaintingStyle.stroke
@@ -73,6 +77,14 @@ class MenuButtonPainter extends CustomPainter {
       ..color = kMainFrameColor;
 
     canvas.drawPath(path2, paint2);
+
+    Paint paint3 = Paint()
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 3
+      ..strokeCap = StrokeCap.round
+      ..color = kStrokeColor2;
+
+    canvas.drawPath(path3, paint3);
   }
 
   @override

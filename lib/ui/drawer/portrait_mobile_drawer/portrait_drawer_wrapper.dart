@@ -19,7 +19,7 @@ class PortraitDrawerWrapper extends StatefulWidget {
 class PortraitDrawerWrapperState extends State<PortraitDrawerWrapper>
     with SingleTickerProviderStateMixin {
   static const Duration toggleDuration = Duration(milliseconds: 400);
-  static const double maxSlide = 225;
+  static const double maxSlide = 210;
   static const double minDragStartEdge = 100;
   static const double maxDragStartEdge = maxSlide - 16;
   AnimationController _animationController;
