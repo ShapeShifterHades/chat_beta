@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:void_chat_beta/constants/constants.dart';
+import 'package:void_chat_beta/ui/drawer/mainscreen_menu_frame/drawer_menu_frame.dart';
 
-import 'menu_frame/drawer_menu_frame.dart';
+import 'portrait_mobile_drawer.dart';
 
 class PortraitDrawerWrapper extends StatefulWidget {
   final Widget child;
@@ -18,7 +18,7 @@ class PortraitDrawerWrapper extends StatefulWidget {
 
 class PortraitDrawerWrapperState extends State<PortraitDrawerWrapper>
     with SingleTickerProviderStateMixin {
-  static const Duration toggleDuration = Duration(milliseconds: 250);
+  static const Duration toggleDuration = Duration(milliseconds: 400);
   static const double maxSlide = 225;
   static const double minDragStartEdge = 100;
   static const double maxDragStartEdge = maxSlide - 16;
@@ -68,7 +68,7 @@ class PortraitDrawerWrapperState extends State<PortraitDrawerWrapper>
             final slideAmount = maxSlide * animValue;
             return Stack(
               children: <Widget>[
-                MyDrawer(),
+                DrawerPM(controller: _animationController),
                 Transform(
                   transform: Matrix4.identity()..translate(slideAmount),
                   alignment: Alignment.centerLeft,
@@ -134,45 +134,5 @@ class PortraitDrawerWrapperState extends State<PortraitDrawerWrapper>
     } else {
       open();
     }
-  }
-}
-
-class MyDrawer extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Material(
-      color: kMainBgColor,
-      child: SafeArea(
-        child: Theme(
-          data: ThemeData(brightness: Brightness.dark),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisSize: MainAxisSize.max,
-            children: [
-              ListTile(
-                leading: Icon(Icons.new_releases),
-                title: Text('News'),
-              ),
-              ListTile(
-                leading: Icon(Icons.star),
-                title: Text('Favourites'),
-              ),
-              ListTile(
-                leading: Icon(Icons.map),
-                title: Text('Map'),
-              ),
-              ListTile(
-                leading: Icon(Icons.settings),
-                title: Text('Settings'),
-              ),
-              ListTile(
-                leading: Icon(Icons.person),
-                title: Text('Profile'),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
   }
 }

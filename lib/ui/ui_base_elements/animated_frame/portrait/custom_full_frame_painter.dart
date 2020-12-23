@@ -8,7 +8,7 @@ class CustomFullFramePainter extends CustomPainter {
   double animLeftVal;
   double animAngle;
 
-  final Color color = kMainTextColor;
+  final Color color = kMainFrameColor;
   CustomFullFramePainter({
     this.animTopVal,
     this.animrightVal,
