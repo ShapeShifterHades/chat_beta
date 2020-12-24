@@ -1,25 +1,28 @@
 import 'package:flutter/material.dart';
+import 'package:void_chat_beta/constants/constants.dart';
 import 'package:void_chat_beta/ui/drawer/mainscreen_menu_frame/drawer_menu_frame.dart';
+import 'package:void_chat_beta/ui/ui_base_elements/animated_frame/portrait/custom_full_frame_animated.dart';
 
 import 'portrait_mobile_drawer.dart';
 
-class PortraitDrawerWrapper extends StatefulWidget {
+class PortraitMobileUI extends StatefulWidget {
   final Widget child;
+  final String routeName;
 
-  const PortraitDrawerWrapper({Key key, @required this.child})
+  const PortraitMobileUI({Key key, @required this.child, this.routeName})
       : super(key: key);
 
-  static PortraitDrawerWrapperState of(BuildContext context) =>
-      context.findAncestorStateOfType<PortraitDrawerWrapperState>();
+  static PortraitMobileUIState of(BuildContext context) =>
+      context.findAncestorStateOfType<PortraitMobileUIState>();
 
   @override
-  PortraitDrawerWrapperState createState() => new PortraitDrawerWrapperState();
+  PortraitMobileUIState createState() => new PortraitMobileUIState();
 }
 
-class PortraitDrawerWrapperState extends State<PortraitDrawerWrapper>
+class PortraitMobileUIState extends State<PortraitMobileUI>
     with SingleTickerProviderStateMixin {
   static const Duration toggleDuration = Duration(milliseconds: 400);
-  static const double maxSlide = 210;
+  static const double maxSlide = 226;
   static const double minDragStartEdge = 100;
   static const double maxDragStartEdge = maxSlide - 16;
   AnimationController _animationController;
@@ -30,15 +33,9 @@ class PortraitDrawerWrapperState extends State<PortraitDrawerWrapper>
     super.initState();
     _animationController = AnimationController(
       vsync: this,
-      duration: PortraitDrawerWrapperState.toggleDuration,
+      duration: PortraitMobileUIState.toggleDuration,
     );
   }
-
-  void close() => _animationController.reverse();
-
-  void open() => _animationController.forward();
-
-  void toggleDrawer() => _animationController.isCompleted ? close() : open();
 
   @override
   void dispose() {
@@ -48,6 +45,7 @@ class PortraitDrawerWrapperState extends State<PortraitDrawerWrapper>
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return WillPopScope(
       onWillPop: () async {
         if (_animationController.isCompleted) {
@@ -62,13 +60,31 @@ class PortraitDrawerWrapperState extends State<PortraitDrawerWrapper>
         onHorizontalDragEnd: _onDragEnd,
         child: AnimatedBuilder(
           animation: _animationController,
-          child: widget.child,
+          child: Scaffold(
+            backgroundColor: Colors.transparent,
+            body: Stack(
+              children: [
+                Positioned(
+                  top: size.width * 0.05 + 30,
+                  bottom: size.width * 0.05,
+                  left: size.width * 0.05,
+                  right: size.width * 0.05,
+                  child: Container(
+                    color: kMainBgColor,
+                    child: CustomFullFrameAnimated(
+                      size: size,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
           builder: (context, child) {
             double animValue = _animationController.value;
             final slideAmount = maxSlide * animValue;
             return Stack(
               children: <Widget>[
-                DrawerPM(controller: _animationController),
+                DrawerPM(),
                 Transform(
                   transform: Matrix4.identity()..translate(slideAmount),
                   alignment: Alignment.centerLeft,
@@ -87,6 +103,8 @@ class PortraitDrawerWrapperState extends State<PortraitDrawerWrapper>
                             onHorizontalDragUpdate: _onDragUpdate,
                             onHorizontalDragEnd: _onDragEnd,
                             child: DrawerMenuFrame(
+                                routeName: widget.routeName,
+                                child: widget.child,
                                 controller: _animationController),
                           ),
                         ),
@@ -101,6 +119,12 @@ class PortraitDrawerWrapperState extends State<PortraitDrawerWrapper>
       ),
     );
   }
+
+  void close() => _animationController.reverse();
+
+  void open() => _animationController.forward();
+
+  void toggleDrawer() => _animationController.isCompleted ? close() : open();
 
   void _onDragStart(DragStartDetails details) {
     bool isDragOpenFromLeft = _animationController.isDismissed &&

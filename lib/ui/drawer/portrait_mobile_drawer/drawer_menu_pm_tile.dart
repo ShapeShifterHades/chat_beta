@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:void_chat_beta/constants/constants.dart';
+import 'package:void_chat_beta/ui/ui_screens/chatlist_screen.dart';
 
 class DrawerMenuPMTile extends StatefulWidget {
+  final Widget route;
   final String text;
   final IconData iconData;
 
-  const DrawerMenuPMTile({Key key, this.text, this.iconData}) : super(key: key);
+  const DrawerMenuPMTile({Key key, this.text, this.iconData, this.route})
+      : super(key: key);
 
   @override
   _DrawerMenuPMTileState createState() => _DrawerMenuPMTileState();
@@ -27,6 +30,12 @@ class _DrawerMenuPMTileState extends State<DrawerMenuPMTile> {
         setState(() {
           _pressed = false;
         });
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => widget.route ?? ChatlistScreen(),
+          ),
+        );
       },
       onTapDown: (val) {
         setState(() {

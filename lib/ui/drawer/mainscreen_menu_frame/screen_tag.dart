@@ -4,8 +4,10 @@ import 'package:void_chat_beta/constants/constants.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class ScreenTag extends StatelessWidget {
+  final String routeName;
   const ScreenTag({
     Key key,
+    this.routeName,
   }) : super(key: key);
 
   @override
@@ -18,29 +20,20 @@ class ScreenTag extends StatelessWidget {
           clipper: ScreenTagClipper(),
           child: Container(
             color: kABitBlack,
-            width: 200,
             height: 36,
             child: Material(
               color: Colors.transparent,
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.end,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  Spacer(flex: 4),
-                  Text(
-                    ModalRoute.of(context).settings.name == '/'
-                        ? 'Messages'
-                        : ModalRoute.of(context).settings.name,
-                    style: GoogleFonts.jura(color: kStrokeColor, fontSize: 20),
-                  ),
-                  Spacer(flex: 3),
-                  Center(
-                    child: Icon(
-                      Icons.expand_more,
-                      color: kStrokeColor,
-                      size: 22,
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: Text(
+                      routeName ?? 'fuck you',
+                      style:
+                          GoogleFonts.jura(color: kStrokeColor, fontSize: 20),
                     ),
                   ),
-                  SizedBox(width: 12),
                 ],
               ),
             ),

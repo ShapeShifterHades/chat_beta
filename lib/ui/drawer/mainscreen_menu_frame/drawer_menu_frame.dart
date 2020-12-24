@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:void_chat_beta/ui/drawer/mainscreen_menu_frame/screen_tag.dart';
-
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'menu_button_pm.dart';
 
 class DrawerMenuFrame extends StatefulWidget {
   AnimationController controller;
+  String routeName;
+  Widget child;
   DrawerMenuFrame({
     Key key,
     this.controller,
+    this.child,
+    this.routeName,
   }) : super(key: key);
 
   @override
@@ -44,20 +48,47 @@ class _DrawerMenuFrameState extends State<DrawerMenuFrame>
     _frameController.forward();
     return FadeTransition(
       opacity: _frameAnimation,
-      child: Container(
-        width: size.width * 0.9,
-        height: 40,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            MenuButtonPM(widget: widget),
-            Padding(
-              padding: const EdgeInsets.only(top: 4, left: 4),
-              child: ScreenTag(),
+      child: Column(
+        children: [
+          Container(
+            width: size.width * 0.9,
+            height: 40,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                MenuButtonPM(widget: widget),
+                Padding(
+                  padding: const EdgeInsets.only(top: 4, left: 4),
+                  child: ScreenTag(routeName: widget.routeName),
+                ),
+                SizedBox(width: 0),
+                Material(
+                  color: Colors.transparent,
+                  child: Container(
+                    child: IconButton(
+                        padding: EdgeInsets.only(top: 4, right: 4),
+                        icon: FaIcon(
+                          FontAwesomeIcons.solidEnvelope,
+                          color: Colors.grey,
+                          size: 28,
+                        ),
+                        onPressed: () {
+                          print("Pressed");
+                        }),
+                  ),
+                ),
+              ],
             ),
-            Spacer(),
-          ],
-        ),
+          ),
+          SizedBox(height: 10),
+          Container(
+              color: Colors.amber,
+              width: size.width * 0.8,
+              height: size.height - size.width * 0.1 - 130,
+              child: Scaffold(
+                body: widget.child,
+              ))
+        ],
       ),
     );
   }

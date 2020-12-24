@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:void_chat_beta/ui/screens/chat_screen.dart';
+import 'package:void_chat_beta/ui/ui_screens/chat_screen.dart';
 
 class MessageFriendButton extends StatelessWidget {
   final AsyncSnapshot<dynamic> snapShot;

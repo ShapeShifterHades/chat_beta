@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:provider/provider.dart';
 import 'package:void_chat_beta/provider/auth_ui_provider.dart';
-import 'package:void_chat_beta/ui/screens/auth_screen.dart';
-import 'package:void_chat_beta/ui/screens/chatlist_screen.dart';
-import 'package:void_chat_beta/ui/screens/splash_screen.dart';
+import 'package:void_chat_beta/ui/ui_screens/auth_screen.dart';
+import 'package:void_chat_beta/ui/ui_screens/chatlist_screen.dart';
+import 'package:void_chat_beta/ui/ui_screens/splash_screen.dart';
 
 class FirebaseCoreInit extends StatelessWidget {
   final Future<FirebaseApp> _initialization = Firebase.initializeApp();
