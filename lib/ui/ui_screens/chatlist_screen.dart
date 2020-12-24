@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:void_chat_beta/ui/drawer/portrait_mobile_drawer/portrait_drawer_wrapper.dart';
+import '../portrait_mobile_ui.dart';
 
 class ChatlistScreen extends StatelessWidget {
   @override

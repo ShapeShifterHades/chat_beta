@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import 'package:void_chat_beta/ui/ui_base_elements/animated_frame/portrait/custom_full_frame_animated.dart';
+import 'package:void_chat_beta/ui/main_side/frame/animated_frame/portrait/custom_full_frame_animated.dart';
 
 import 'package:void_chat_beta/ui/widgets/auth/auth_form.dart';
 

@@ -5,8 +5,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:void_chat_beta/constants/constants.dart';
 import 'package:void_chat_beta/provider/auth_ui_provider.dart';
-import 'package:void_chat_beta/ui/ui_base_elements/auth_custom_frame/portrait/custom_clip_path.dart';
-import 'package:void_chat_beta/ui/ui_base_elements/auth_custom_frame/portrait/custom_painter_for_clipper.dart';
+import 'package:void_chat_beta/ui/main_side/frame/auth_custom_frame/portrait/custom_clip_path.dart';
+import 'package:void_chat_beta/ui/main_side/frame/auth_custom_frame/portrait/custom_painter_for_clipper.dart';
 import 'package:void_chat_beta/ui/widgets/auth/switch_auth_button.dart';
 import 'package:keyboard_visibility/keyboard_visibility.dart';
 

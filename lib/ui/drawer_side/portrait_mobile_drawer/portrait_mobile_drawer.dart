@@ -3,7 +3,7 @@ import 'package:void_chat_beta/constants/constants.dart';
 import 'package:void_chat_beta/ui/ui_screens/chatlist_screen.dart';
 import 'package:void_chat_beta/ui/ui_screens/contacts_screen.dart';
 
-import 'drawer_menu_pm_tile.dart';
+import 'widgets/drawer_menu_pm_tile.dart';
 
 class DrawerPM extends StatelessWidget {
   @override

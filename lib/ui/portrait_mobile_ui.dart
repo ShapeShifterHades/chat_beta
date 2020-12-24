@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:void_chat_beta/constants/constants.dart';
-import 'package:void_chat_beta/ui/drawer/mainscreen_menu_frame/drawer_menu_frame.dart';
-import 'package:void_chat_beta/ui/ui_base_elements/animated_frame/portrait/custom_full_frame_animated.dart';
 
-import 'portrait_mobile_drawer.dart';
+import 'drawer_side/portrait_mobile_drawer/portrait_mobile_drawer.dart';
+import 'main_side/frame/animated_frame/portrait/custom_full_frame_animated.dart';
+import 'main_side/mainscreen_menu_frame/drawer_menu_frame.dart';
 
 class PortraitMobileUI extends StatefulWidget {
   final Widget child;
