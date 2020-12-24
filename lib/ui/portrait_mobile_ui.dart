@@ -6,10 +6,10 @@ import 'main_side/frame/animated_frame/portrait/custom_full_frame_animated.dart'
 import 'main_side/mainscreen_menu_frame/drawer_menu_frame.dart';
 
 class PortraitMobileUI extends StatefulWidget {
-  final Widget child;
+  final Widget content;
   final String routeName;
 
-  const PortraitMobileUI({Key key, @required this.child, this.routeName})
+  const PortraitMobileUI({Key key, @required this.content, this.routeName})
       : super(key: key);
 
   static PortraitMobileUIState of(BuildContext context) =>
@@ -60,36 +60,32 @@ class PortraitMobileUIState extends State<PortraitMobileUI>
         onHorizontalDragEnd: _onDragEnd,
         child: AnimatedBuilder(
           animation: _animationController,
-          child: Scaffold(
-            backgroundColor: Colors.transparent,
-            body: Stack(
-              children: [
-                Positioned(
-                  top: size.width * 0.05 + 30,
-                  bottom: size.width * 0.05,
-                  left: size.width * 0.05,
-                  right: size.width * 0.05,
-                  child: Container(
-                    color: kMainBgColor,
-                    child: CustomFullFrameAnimated(
-                      size: size,
-                    ),
+          child: Stack(
+            children: [
+              Positioned(
+                top: size.width * 0.05 + 30,
+                bottom: size.width * 0.05,
+                left: size.width * 0.05,
+                right: size.width * 0.05,
+                child: Container(
+                  color: kMainBgColor,
+                  child: CustomFullFrameAnimated(
+                    size: size,
                   ),
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
           builder: (context, child) {
             double animValue = _animationController.value;
             final slideAmount = maxSlide * animValue;
-            return Stack(
-              children: <Widget>[
-                DrawerPM(),
-                Transform(
-                  transform: Matrix4.identity()..translate(slideAmount),
-                  alignment: Alignment.centerLeft,
-                  child: GestureDetector(
-                    onTap: _animationController.isCompleted ? close : null,
+            return Scaffold(
+              body: Stack(
+                children: <Widget>[
+                  DrawerPM(),
+                  Transform(
+                    transform: Matrix4.identity()..translate(slideAmount),
+                    alignment: Alignment.centerLeft,
                     child: Stack(
                       children: [
                         child,
@@ -98,21 +94,27 @@ class PortraitMobileUIState extends State<PortraitMobileUI>
                           top: MediaQuery.of(context).size.width * 0.05 + 30,
                           child: GestureDetector(
                             onTap:
-                                _animationController.isCompleted ? close : open,
+                                _animationController.isCompleted ? close : null,
                             onHorizontalDragStart: _onDragStart,
                             onHorizontalDragUpdate: _onDragUpdate,
                             onHorizontalDragEnd: _onDragEnd,
                             child: DrawerMenuFrame(
                                 routeName: widget.routeName,
-                                child: widget.child,
-                                controller: _animationController),
+                                // child: widget.content,
+                                animationController: _animationController),
                           ),
                         ),
+                        // Align(
+                        //     alignment: Alignment.centerLeft,
+                        //     child: Text(
+                        //       _animationController.value.toString(),
+                        //       style: TextStyle(color: Colors.white),
+                        //     )),
                       ],
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             );
           },
         ),
@@ -123,8 +125,6 @@ class PortraitMobileUIState extends State<PortraitMobileUI>
   void close() => _animationController.reverse();
 
   void open() => _animationController.forward();
-
-  void toggleDrawer() => _animationController.isCompleted ? close() : open();
 
   void _onDragStart(DragStartDetails details) {
     bool isDragOpenFromLeft = _animationController.isDismissed &&

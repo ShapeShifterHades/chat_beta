@@ -4,12 +4,11 @@ import 'package:void_chat_beta/constants/constants.dart';
 import 'drawer_menu_frame.dart';
 
 class MenuButtonPM extends StatelessWidget {
-  const MenuButtonPM({
+  AnimationController animationController;
+  MenuButtonPM({
     Key key,
-    @required this.widget,
+    @required this.animationController,
   }) : super(key: key);
-
-  final DrawerMenuFrame widget;
 
   @override
   Widget build(BuildContext context) {
@@ -18,20 +17,28 @@ class MenuButtonPM extends StatelessWidget {
       child: ClipPath(
         clipper: MenuButtonClipper(),
         child: Container(
-          color: widget.controller.value > 0
+          color: animationController.value > 0
               ? kABitBlack
               : kStrokeColor.withOpacity(0.75),
           width: 40,
           height: 40,
           padding: EdgeInsets.all(4),
-          child: AnimatedIcon(
-            icon: AnimatedIcons.menu_close,
-            progress: widget.controller,
-            semanticLabel: 'Show menu',
-            size: 28,
-            color: widget.controller.value > 0
-                ? kStrokeColor.withOpacity(0.75)
-                : kABitBlack,
+          child: IconButton(
+            padding: EdgeInsets.all(0),
+            onPressed: () {
+              animationController.isCompleted
+                  ? animationController.reverse()
+                  : animationController.forward();
+            },
+            icon: AnimatedIcon(
+              icon: AnimatedIcons.menu_close,
+              progress: animationController,
+              semanticLabel: 'Show menu',
+              size: 28,
+              color: animationController.value > 0
+                  ? kStrokeColor.withOpacity(0.75)
+                  : kABitBlack,
+            ),
           ),
         ),
       ),

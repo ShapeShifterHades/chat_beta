@@ -7,7 +7,7 @@ class ChatlistScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return PortraitMobileUI(
       routeName: 'Messages',
-      child: Container(
+      content: Container(
         color: Colors.amber.withOpacity(0.4),
         child: Text(
           'MessageList content',

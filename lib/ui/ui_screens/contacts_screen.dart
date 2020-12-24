@@ -7,7 +7,7 @@ class ContactsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return PortraitMobileUI(
       routeName: 'Contacts',
-      child: Container(
+      content: Container(
         color: Colors.amber.withOpacity(0.4),
         child: Text(
           'ContactList content',

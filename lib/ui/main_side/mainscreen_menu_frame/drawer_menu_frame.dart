@@ -5,12 +5,12 @@ import 'screen_tag.dart';
 
 // ignore: must_be_immutable
 class DrawerMenuFrame extends StatefulWidget {
-  AnimationController controller;
+  AnimationController animationController;
   String routeName;
   Widget child;
   DrawerMenuFrame({
     Key key,
-    this.controller,
+    this.animationController,
     this.child,
     this.routeName,
   }) : super(key: key);
@@ -20,7 +20,7 @@ class DrawerMenuFrame extends StatefulWidget {
 }
 
 class _DrawerMenuFrameState extends State<DrawerMenuFrame>
-    with SingleTickerProviderStateMixin {
+    with TickerProviderStateMixin {
   AnimationController _frameController;
   Animation<double> _frameAnimation;
 
@@ -57,7 +57,7 @@ class _DrawerMenuFrameState extends State<DrawerMenuFrame>
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                MenuButtonPM(widget: widget),
+                MenuButtonPM(animationController: widget.animationController),
                 Padding(
                   padding: const EdgeInsets.only(top: 4, left: 4),
                   child: ScreenTag(routeName: widget.routeName),
