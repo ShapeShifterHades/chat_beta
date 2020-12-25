@@ -8,3 +8,11 @@ final Color kMainFrameColor = Color(0xFF8C8E8D);
 final Color kSecondaryColor = Color(0xFFA7F5FF);
 final Color kABitBlack = Color(0xFF100D0E);
 // final Color kSecondaryColor2 = Color(0xFFA5F4FF);
+
+/// Next defined all routing constants used within the app
+
+const String messagesRoute = '/messages';
+const String contactsRoute = '/contacts';
+const String settingsRoute = '/settings';
+const String securityRoute = '/security';
+const String faqRoute = '/faq';

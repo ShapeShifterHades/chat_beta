@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:void_chat_beta/constants/constants.dart';
-import 'package:void_chat_beta/ui/ui_screens/chatlist_screen.dart';
 
 class DrawerMenuPMTile extends StatefulWidget {
   final String route;

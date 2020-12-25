@@ -3,7 +3,7 @@ import 'package:void_chat_beta/constants/constants.dart';
 
 import 'drawer_side/portrait_mobile_drawer/portrait_mobile_drawer.dart';
 import 'main_side/frame/animated_frame/portrait/custom_full_frame_animated.dart';
-import 'main_side/mainscreen_menu_frame/drawer_menu_frame.dart';
+import 'main_side/upside_menu/upside_menu.dart';
 
 class PortraitMobileUI extends StatefulWidget {
   final Widget content;
@@ -98,7 +98,7 @@ class PortraitMobileUIState extends State<PortraitMobileUI>
                             onHorizontalDragStart: _onDragStart,
                             onHorizontalDragUpdate: _onDragUpdate,
                             onHorizontalDragEnd: _onDragEnd,
-                            child: DrawerMenuFrame(
+                            child: UpsideMenu(
                                 routeName: widget.routeName,
                                 child: widget.content,
                                 animationController: _animationController),

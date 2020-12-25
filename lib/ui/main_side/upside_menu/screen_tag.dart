@@ -29,7 +29,7 @@ class ScreenTag extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 20),
                     child: Text(
-                      routeName ?? 'fuck you',
+                      routeName ?? 'Routename argument is not defined',
                       style:
                           GoogleFonts.jura(color: kStrokeColor, fontSize: 20),
                     ),

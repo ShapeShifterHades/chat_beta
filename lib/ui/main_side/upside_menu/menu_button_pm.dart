@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:void_chat_beta/constants/constants.dart';
 
-import 'drawer_menu_frame.dart';
-
+// ignore: must_be_immutable
 class MenuButtonPM extends StatelessWidget {
   AnimationController animationController;
   MenuButtonPM({
@@ -16,28 +15,30 @@ class MenuButtonPM extends StatelessWidget {
       painter: MenuButtonPainter(),
       child: ClipPath(
         clipper: MenuButtonClipper(),
-        child: Container(
-          color: animationController.value > 0
-              ? kABitBlack
-              : kStrokeColor.withOpacity(0.75),
-          width: 40,
-          height: 40,
-          padding: EdgeInsets.all(4),
-          child: IconButton(
-            padding: EdgeInsets.all(0),
-            onPressed: () {
-              animationController.isCompleted
-                  ? animationController.reverse()
-                  : animationController.forward();
-            },
-            icon: AnimatedIcon(
-              icon: AnimatedIcons.menu_close,
-              progress: animationController,
-              semanticLabel: 'Show menu',
-              size: 28,
-              color: animationController.value > 0
-                  ? kStrokeColor.withOpacity(0.75)
-                  : kABitBlack,
+        child: GestureDetector(
+          onTap: () {
+            animationController.isCompleted
+                ? animationController.reverse()
+                : animationController.forward();
+          },
+          child: Container(
+            color: animationController.value > 0
+                ? kABitBlack
+                : kStrokeColor.withOpacity(0.75),
+            width: 40,
+            height: 40,
+            padding: EdgeInsets.all(4),
+            child: Container(
+              margin: EdgeInsets.only(top: 2, left: 2),
+              child: AnimatedIcon(
+                icon: AnimatedIcons.menu_close,
+                progress: animationController,
+                semanticLabel: 'Show menu',
+                size: 24,
+                color: animationController.value > 0
+                    ? kStrokeColor.withOpacity(0.75)
+                    : kABitBlack,
+              ),
             ),
           ),
         ),
