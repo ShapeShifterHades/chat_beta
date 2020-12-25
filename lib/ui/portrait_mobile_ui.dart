@@ -100,7 +100,7 @@ class PortraitMobileUIState extends State<PortraitMobileUI>
                             onHorizontalDragEnd: _onDragEnd,
                             child: DrawerMenuFrame(
                                 routeName: widget.routeName,
-                                // child: widget.content,
+                                child: widget.content,
                                 animationController: _animationController),
                           ),
                         ),

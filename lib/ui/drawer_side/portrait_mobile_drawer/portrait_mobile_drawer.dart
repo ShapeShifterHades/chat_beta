@@ -27,28 +27,39 @@ class DrawerPM extends StatelessWidget {
                   DrawerMenuPMTile(
                     text: 'Messages',
                     iconData: Icons.inbox_outlined,
-                    route: ChatlistScreen(),
+                    route: '/messages',
                   ),
                   SizedBox(height: 30),
                   DrawerMenuPMTile(
                     text: 'Contacts',
                     iconData: Icons.contacts_outlined,
-                    route: ContactsScreen(),
+                    route: '/contacts',
                   ),
                   SizedBox(height: 30),
                   DrawerMenuPMTile(
                     text: 'Settings',
                     iconData: Icons.settings_applications_outlined,
+                    route: '/settings',
                   ),
                   SizedBox(height: 30),
                   DrawerMenuPMTile(
-                    text: 'Account',
+                    text: 'Security',
                     iconData: Icons.account_circle_outlined,
+                    route: '/security',
                   ),
                   SizedBox(height: 30),
                   DrawerMenuPMTile(
                     text: 'FAQ',
                     iconData: Icons.menu_book_outlined,
+                    route: '/faq',
+                  ),
+                  Spacer(
+                    flex: 2,
+                  ),
+                  DrawerMenuPMTile(
+                    text: 'Logout',
+                    iconData: Icons.logout,
+                    route: '/logout',
                   ),
                   Spacer(
                     flex: 2,

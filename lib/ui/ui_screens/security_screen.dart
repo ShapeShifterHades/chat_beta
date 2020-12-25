@@ -2,15 +2,15 @@ import 'package:flutter/material.dart';
 
 import '../portrait_mobile_ui.dart';
 
-class ChatlistScreen extends StatelessWidget {
+class SecurityScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return PortraitMobileUI(
-      routeName: 'Messages',
+      routeName: 'Security',
       content: Container(
         color: Colors.amber.withOpacity(0.4),
         child: Text(
-          ModalRoute.of(context).settings.name ?? 'messages route',
+          ModalRoute.of(context).settings.name ?? 'security route',
           style: TextStyle(color: Colors.white),
         ),
       ),

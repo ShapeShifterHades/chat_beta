@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 
 import 'package:void_chat_beta/constants/constants.dart';
+import 'package:void_chat_beta/ui/ui_screens/faq_screen.dart';
+import 'package:void_chat_beta/ui/ui_screens/security_screen.dart';
+import 'package:void_chat_beta/ui/ui_screens/settings_screen.dart';
 
+import 'ui/ui_screens/contacts_screen.dart';
 import 'ui/widgets/auth/firebase_core_init.dart';
 
 void main() {
@@ -74,7 +78,15 @@ class _MyAppState extends State<MyApp> {
           fillColor: Color(0xFF2f3535),
         ),
       ),
-      home: FirebaseCoreInit(),
+      initialRoute: '/messages',
+      routes: {
+        '/messages': (context) => FirebaseCoreInit(),
+        '/contacts': (context) => ContactsScreen(),
+        '/settings': (context) => SettingsScreen(),
+        '/security': (context) => SecurityScreen(),
+        '/faq': (context) => FaqScreen(),
+        // '/logout': (context) => LogoutScreen(),
+      },
     );
   }
 }

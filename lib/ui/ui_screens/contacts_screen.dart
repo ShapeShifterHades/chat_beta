@@ -10,7 +10,7 @@ class ContactsScreen extends StatelessWidget {
       content: Container(
         color: Colors.amber.withOpacity(0.4),
         child: Text(
-          'ContactList content',
+          ModalRoute.of(context).settings.name ?? 'contacts route',
           style: TextStyle(color: Colors.white),
         ),
       ),

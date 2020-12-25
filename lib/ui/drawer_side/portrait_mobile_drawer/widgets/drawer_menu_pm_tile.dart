@@ -4,7 +4,7 @@ import 'package:void_chat_beta/constants/constants.dart';
 import 'package:void_chat_beta/ui/ui_screens/chatlist_screen.dart';
 
 class DrawerMenuPMTile extends StatefulWidget {
-  final Widget route;
+  final String route;
   final String text;
   final IconData iconData;
 
@@ -30,11 +30,9 @@ class _DrawerMenuPMTileState extends State<DrawerMenuPMTile> {
         setState(() {
           _pressed = false;
         });
-        Navigator.pushReplacement(
+        Navigator.pushNamed(
           context,
-          MaterialPageRoute(
-            builder: (context) => widget.route ?? ChatlistScreen(),
-          ),
+          widget.route ?? '/messages',
         );
       },
       onTapDown: (val) {
