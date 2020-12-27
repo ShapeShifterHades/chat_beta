@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:void_chat_beta/ui/ui_screens/chat_screen.dart';
+import 'package:void_chat_beta/ui/views/chat_view.dart';
 
 class MessageFriendButton extends StatelessWidget {
   final AsyncSnapshot<dynamic> snapShot;
@@ -22,7 +22,7 @@ class MessageFriendButton extends StatelessWidget {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => ChatScreen(
+        builder: (context) => ChatView(
           myId: myId,
           myUsername: myUsername,
           userId: userId,

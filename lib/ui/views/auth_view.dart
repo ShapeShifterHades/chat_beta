@@ -3,7 +3,7 @@ import 'package:void_chat_beta/ui/main_side/frame/animated_frame/portrait/custom
 
 import 'package:void_chat_beta/ui/widgets/auth/auth_form.dart';
 
-class AuthScreen extends StatelessWidget {
+class AuthView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;

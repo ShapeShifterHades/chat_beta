@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:provider/provider.dart';
 import 'package:void_chat_beta/provider/auth_ui_provider.dart';
-import 'package:void_chat_beta/ui/ui_screens/auth_screen.dart';
-import 'package:void_chat_beta/ui/ui_screens/chatlist_screen.dart';
-import 'package:void_chat_beta/ui/ui_screens/splash_screen.dart';
+import 'package:void_chat_beta/ui/views/auth_view.dart';
+import 'package:void_chat_beta/ui/views/chatlist_view.dart';
+import 'package:void_chat_beta/ui/views/splash_view.dart';
 
 class FirebaseCoreInit extends StatelessWidget {
   final Future<FirebaseApp> _initialization = Firebase.initializeApp();
@@ -25,15 +25,15 @@ class FirebaseCoreInit extends StatelessWidget {
               stream: FirebaseAuth.instance.authStateChanges(),
               builder: (ctx, userSnapshot) {
                 if (userSnapshot.connectionState == ConnectionState.waiting) {
-                  return SplashScreen();
+                  return SplashView();
                 }
                 if (userSnapshot.hasData) {
-                  return ChatlistScreen();
+                  return ChatlistView();
                 }
                 return ChangeNotifierProvider(
                     create: (context) => AuthUiProvider(),
                     builder: (context, _) {
-                      return AuthScreen();
+                      return AuthView();
                     });
               });
         }

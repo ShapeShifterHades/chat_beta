@@ -1,8 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-
-import 'package:void_chat_beta/ui/ui_screens/chatlist_screen.dart';
-import 'package:void_chat_beta/ui/ui_screens/contacts_screen.dart';
+import 'package:void_chat_beta/ui/views/chatlist_view.dart';
+import 'package:void_chat_beta/ui/views/contacts_view.dart';
 
 import 'auth/firebase_core_init.dart';
 
@@ -67,7 +66,7 @@ AppBar buildAppBar(BuildContext context, {String title = 'Void Chat'}) {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => ChatlistScreen(),
+                builder: (context) => ChatlistView(),
               ),
             );
           }
@@ -75,7 +74,7 @@ AppBar buildAppBar(BuildContext context, {String title = 'Void Chat'}) {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => ContactsScreen(),
+                builder: (context) => ContactsView(),
               ),
             );
           }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:void_chat_beta/constants/constants.dart';
 
 import 'widgets/drawer_menu_pm_tile.dart';
@@ -19,8 +20,26 @@ class DrawerPM extends StatelessWidget {
                 mainAxisSize: MainAxisSize.max,
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
+                  Spacer(flex: 1),
+                  Container(
+                      child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      SizedBox(width: 10),
+                      Center(
+                          child: Text(
+                        'VoidFrame',
+                        style: GoogleFonts.jura(
+                          fontSize: 32,
+                          color: kSecondaryColor,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      )),
+                    ],
+                  )),
                   Spacer(
-                    flex: 5,
+                    flex: 3,
                   ),
                   DrawerMenuPMTile(
                     text: 'Messages',

@@ -3,10 +3,10 @@ import 'package:void_chat_beta/ui/widgets/build_app_bar.dart';
 import 'package:void_chat_beta/ui/widgets/chat/messages.dart';
 import 'package:void_chat_beta/ui/widgets/chat/new_message.dart';
 
-class ConversationScreen extends StatelessWidget {
+class ConversationView extends StatelessWidget {
   final String userId;
 
-  ConversationScreen({@required this.userId});
+  ConversationView({@required this.userId});
 
   @override
   Widget build(BuildContext context) {

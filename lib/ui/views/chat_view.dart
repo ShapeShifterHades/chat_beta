@@ -3,13 +3,13 @@ import 'package:void_chat_beta/ui/widgets/build_app_bar.dart';
 import 'package:void_chat_beta/ui/widgets/chat/message_list.dart';
 import 'package:void_chat_beta/ui/widgets/chat/new_message.dart';
 
-class ChatScreen extends StatelessWidget {
+class ChatView extends StatelessWidget {
   final String myId;
   final String myUsername;
   final String userId;
   final String username;
 
-  const ChatScreen({
+  const ChatView({
     Key key,
     this.myId,
     this.myUsername,

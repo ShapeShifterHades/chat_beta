@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../portrait_mobile_ui.dart';
 
-class ContactsScreen extends StatelessWidget {
+class ContactsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return PortraitMobileUI(

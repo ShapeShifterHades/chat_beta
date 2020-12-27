@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
 import 'package:void_chat_beta/constants/constants.dart';
-import 'package:void_chat_beta/routes.dart';
-
-import 'routes.dart';
+import 'package:void_chat_beta/routes.dart' as router;
+import 'package:void_chat_beta/service_locator.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
 
+  setupLocator();
   runApp(MyApp());
 }
 
@@ -76,7 +76,8 @@ class _MyAppState extends State<MyApp> {
         ),
       ),
       initialRoute: messagesRoute,
-      onGenerateRoute: CustomRouter.generateRoute,
+      onGenerateRoute: router.Router.generateRoute,
+      // navigatorKey: locator<NavigationService>().navigatorKey,
     );
   }
 }
