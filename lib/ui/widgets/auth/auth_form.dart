@@ -64,8 +64,6 @@ class _AuthFormState extends State<AuthForm> with TickerProviderStateMixin {
         () => _slideInController.forward().orCancel,
       );
     });
-
-    // _slideInController.forward();
   }
 
   void trySubmit() async {
@@ -155,7 +153,6 @@ class _AuthFormState extends State<AuthForm> with TickerProviderStateMixin {
                                         Container(
                                           alignment: Alignment.center,
                                           child: Text(
-                                            // nigga.toString(),
                                             Provider.of<AuthUiProvider>(context)
                                                     .loginState
                                                 ? 'REGISTER'
@@ -169,8 +166,9 @@ class _AuthFormState extends State<AuthForm> with TickerProviderStateMixin {
                                           ),
                                         ),
                                         SizedBox(width: 12),
-                                        Icon(Icons.login,
+                                        Icon(Icons.input,
                                             color: kMainBgColor, size: 36),
+                                        SizedBox(width: 3),
                                       ],
                                     ),
                                     Row(
@@ -212,7 +210,7 @@ class _AuthFormState extends State<AuthForm> with TickerProviderStateMixin {
                             Container(
                               color: kMainBgColor,
                               padding: EdgeInsets.symmetric(
-                                  horizontal: 12, vertical: 24),
+                                  horizontal: 12, vertical: 20),
                               child: Column(
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
@@ -221,6 +219,9 @@ class _AuthFormState extends State<AuthForm> with TickerProviderStateMixin {
                                     onEditingComplete: () => node.nextFocus(),
                                     key: ValueKey('email'),
                                     decoration: InputDecoration(
+                                      isDense: true,
+                                      contentPadding: EdgeInsets.symmetric(
+                                          vertical: 10, horizontal: 12),
                                       labelText: 'Login',
                                       border: InputBorder.none,
                                     ),
@@ -255,6 +256,9 @@ class _AuthFormState extends State<AuthForm> with TickerProviderStateMixin {
                                       onEditingComplete: () => node.nextFocus(),
                                       key: ValueKey('username'),
                                       decoration: InputDecoration(
+                                        isDense: true,
+                                        contentPadding: EdgeInsets.symmetric(
+                                            vertical: 10, horizontal: 12),
                                         labelText: 'Username',
                                       ),
                                       style: GoogleFonts.jura(
@@ -288,6 +292,9 @@ class _AuthFormState extends State<AuthForm> with TickerProviderStateMixin {
                                     onEditingComplete: () => trySubmit(),
                                     key: ValueKey('password'),
                                     decoration: InputDecoration(
+                                      isDense: true,
+                                      contentPadding: EdgeInsets.symmetric(
+                                          vertical: 10, horizontal: 12),
                                       labelText: 'Password',
                                     ),
                                     style: GoogleFonts.jura(
