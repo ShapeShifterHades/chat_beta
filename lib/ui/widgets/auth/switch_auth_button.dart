@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:void_chat_beta/constants/constants.dart';
 
 class SwitchAuthButton extends StatefulWidget {
   const SwitchAuthButton({
@@ -57,13 +56,13 @@ class _SwitchAuthButtonState extends State<SwitchAuthButton>
           Text(
             'SWITCH TO ' + (widget._isLogin ? 'REGISTRATION' : 'LOGIN'),
             style: TextStyle(
-              color: kSecondaryColor,
+              color: Theme.of(context).primaryColor,
               fontSize: 12,
             ),
           ),
           Icon(
             Icons.double_arrow,
-            color: kSecondaryColor,
+            color: Theme.of(context).primaryColor,
           ),
         ],
       ),

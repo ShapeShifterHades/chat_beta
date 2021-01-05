@@ -19,7 +19,7 @@ class ScreenTag extends StatelessWidget {
         child: ClipPath(
           clipper: ScreenTagClipper(),
           child: Container(
-            color: kABitBlack,
+            color: Theme.of(context).accentColor,
             height: 36,
             child: Material(
               color: Colors.transparent,
@@ -30,8 +30,8 @@ class ScreenTag extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(horizontal: 20),
                     child: Text(
                       routeName ?? 'Routename argument is not defined',
-                      style:
-                          GoogleFonts.jura(color: kStrokeColor, fontSize: 20),
+                      style: GoogleFonts.jura(
+                          color: Theme.of(context).primaryColor, fontSize: 20),
                     ),
                   ),
                 ],

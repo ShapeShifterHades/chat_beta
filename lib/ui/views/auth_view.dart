@@ -9,7 +9,7 @@ class AuthView extends StatelessWidget {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      backgroundColor: Theme.of(context).primaryColor,
+      backgroundColor: Theme.of(context).backgroundColor,
       body: Stack(
         children: [
           MediaQuery.of(context).orientation == Orientation.portrait

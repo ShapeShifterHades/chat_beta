@@ -23,8 +23,8 @@ class MenuButtonPM extends StatelessWidget {
           },
           child: Container(
             color: animationController.value > 0
-                ? kABitBlack
-                : kStrokeColor.withOpacity(0.75),
+                ? Theme.of(context).accentColor
+                : Theme.of(context).primaryColor.withOpacity(0.75),
             width: 40,
             height: 40,
             padding: EdgeInsets.all(4),
@@ -36,8 +36,8 @@ class MenuButtonPM extends StatelessWidget {
                 semanticLabel: 'Show menu',
                 size: 24,
                 color: animationController.value > 0
-                    ? kStrokeColor.withOpacity(0.75)
-                    : kABitBlack,
+                    ? Theme.of(context).primaryColor.withOpacity(0.75)
+                    : Theme.of(context).backgroundColor,
               ),
             ),
           ),

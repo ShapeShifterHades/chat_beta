@@ -52,7 +52,7 @@ class _DrawerMenuPMTileState extends State<DrawerMenuPMTile> {
               child: ClipPath(
                 clipper: DrawerMenuPMTileClipper(),
                 child: Container(
-                  color: kABitBlack,
+                  color: Theme.of(context).accentColor,
                   width: 140,
                   height: 32,
                   child: Material(
@@ -64,7 +64,7 @@ class _DrawerMenuPMTileState extends State<DrawerMenuPMTile> {
                         Text(
                           widget.text,
                           style: GoogleFonts.jura(
-                              color: kStrokeColor,
+                              color: Theme.of(context).primaryColor,
                               fontSize: 20,
                               fontWeight: FontWeight.w600),
                         ),
@@ -100,7 +100,7 @@ class MenuItem extends StatelessWidget {
       child: ClipPath(
         clipper: IconMenuPMTileClipper(),
         child: Container(
-          color: kABitBlack,
+          color: Theme.of(context).accentColor,
           width: 32,
           height: 32,
           child: Material(
@@ -108,7 +108,7 @@ class MenuItem extends StatelessWidget {
             child: Center(
               child: Icon(
                 widget.iconData,
-                color: kStrokeColor,
+                color: Theme.of(context).primaryColor,
               ),
             ),
           ),

@@ -117,14 +117,14 @@ class _AuthFormState extends State<AuthForm> with TickerProviderStateMixin {
     final node = FocusScope.of(context);
     switcher = Provider.of<AuthUiProvider>(context).loginState;
     return AnimatedAlign(
-      duration: Duration(milliseconds: 400),
+      duration: Duration(milliseconds: 300),
       curve: Curves.easeIn,
       alignment: visibleKbrd ? Alignment.topCenter : Alignment.center,
       child: SlideTransition(
         position: _slideInAnimation,
         child: Container(
           margin: EdgeInsets.fromLTRB(30, 70, 30, 30),
-          color: kMainBgColor,
+          color: Theme.of(context).backgroundColor,
           child: SingleChildScrollView(
             child: Padding(
               padding: EdgeInsets.all(12),
@@ -144,7 +144,7 @@ class _AuthFormState extends State<AuthForm> with TickerProviderStateMixin {
                               child: Container(
                                 height: 80,
                                 width: double.infinity,
-                                color: kSecondaryColor,
+                                color: Theme.of(context).primaryColor,
                                 child: Column(
                                   children: [
                                     Row(
@@ -167,7 +167,9 @@ class _AuthFormState extends State<AuthForm> with TickerProviderStateMixin {
                                         ),
                                         SizedBox(width: 12),
                                         Icon(Icons.input,
-                                            color: kMainBgColor, size: 36),
+                                            color: Theme.of(context)
+                                                .backgroundColor,
+                                            size: 36),
                                         SizedBox(width: 3),
                                       ],
                                     ),
@@ -188,7 +190,8 @@ class _AuthFormState extends State<AuthForm> with TickerProviderStateMixin {
                                             width: 220,
                                             alignment: Alignment.centerRight,
                                             decoration: BoxDecoration(
-                                              color: kMainBgColor,
+                                              color: Theme.of(context)
+                                                  .backgroundColor,
                                               borderRadius: BorderRadius.only(
                                                 topLeft: Radius.circular(14),
                                               ),
@@ -208,7 +211,7 @@ class _AuthFormState extends State<AuthForm> with TickerProviderStateMixin {
                               ),
                             ),
                             Container(
-                              color: kMainBgColor,
+                              color: Theme.of(context).backgroundColor,
                               padding: EdgeInsets.symmetric(
                                   horizontal: 12, vertical: 20),
                               child: Column(

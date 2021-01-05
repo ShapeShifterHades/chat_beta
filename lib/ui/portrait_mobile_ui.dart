@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:void_chat_beta/constants/constants.dart';
 
 import 'drawer_side/portrait_mobile_drawer/portrait_mobile_drawer.dart';
 import 'main_side/frame/animated_frame/portrait/custom_full_frame_animated.dart';
@@ -68,7 +67,7 @@ class PortraitMobileUIState extends State<PortraitMobileUI>
                 left: size.width * 0.05,
                 right: size.width * 0.05,
                 child: Container(
-                  color: kMainBgColor,
+                  color: Theme.of(context).backgroundColor,
                   child: CustomFullFrameAnimated(
                     size: size,
                   ),
@@ -79,42 +78,40 @@ class PortraitMobileUIState extends State<PortraitMobileUI>
           builder: (context, child) {
             double animValue = _animationController.value;
             final slideAmount = maxSlide * animValue;
-            return Scaffold(
-              body: Stack(
-                children: <Widget>[
-                  DrawerPM(),
-                  Transform(
-                    transform: Matrix4.identity()..translate(slideAmount),
-                    alignment: Alignment.centerLeft,
-                    child: Stack(
-                      children: [
-                        child,
-                        Positioned(
-                          left: MediaQuery.of(context).size.width * 0.05,
-                          top: MediaQuery.of(context).size.width * 0.05 + 30,
-                          child: GestureDetector(
-                            onTap:
-                                _animationController.isCompleted ? close : null,
-                            onHorizontalDragStart: _onDragStart,
-                            onHorizontalDragUpdate: _onDragUpdate,
-                            onHorizontalDragEnd: _onDragEnd,
-                            child: UpsideMenu(
-                                routeName: widget.routeName,
-                                child: widget.content,
-                                animationController: _animationController),
-                          ),
+            return Stack(
+              children: <Widget>[
+                DrawerPM(),
+                Transform(
+                  transform: Matrix4.identity()..translate(slideAmount),
+                  alignment: Alignment.centerLeft,
+                  child: Stack(
+                    children: [
+                      child,
+                      Positioned(
+                        left: MediaQuery.of(context).size.width * 0.05,
+                        top: MediaQuery.of(context).size.width * 0.05 + 30,
+                        child: GestureDetector(
+                          onTap:
+                              _animationController.isCompleted ? close : null,
+                          onHorizontalDragStart: _onDragStart,
+                          onHorizontalDragUpdate: _onDragUpdate,
+                          onHorizontalDragEnd: _onDragEnd,
+                          child: UpsideMenu(
+                              routeName: widget.routeName,
+                              child: widget.content,
+                              animationController: _animationController),
                         ),
-                        // Align(
-                        //     alignment: Alignment.centerLeft,
-                        //     child: Text(
-                        //       _animationController.value.toString(),
-                        //       style: TextStyle(color: Colors.white),
-                        //     )),
-                      ],
-                    ),
+                      ),
+                      // Align(
+                      //     alignment: Alignment.centerLeft,
+                      //     child: Text(
+                      //       _animationController.value.toString(),
+                      //       style: TextStyle(color: Colors.white),
+                      //     )),
+                    ],
                   ),
-                ],
-              ),
+                ),
+              ],
             );
           },
         ),

@@ -8,7 +8,7 @@ class DrawerPM extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: kMainBgColor,
+      color: Theme.of(context).backgroundColor,
       child: SafeArea(
         child: Row(
           children: [
@@ -30,7 +30,7 @@ class DrawerPM extends StatelessWidget {
                       'Yorkee\n v.1.0.0 beta',
                       style: GoogleFonts.jura(
                         fontSize: 26,
-                        color: kSecondaryColor,
+                        color: Theme.of(context).primaryColor,
                         fontWeight: FontWeight.bold,
                       ),
                     )),

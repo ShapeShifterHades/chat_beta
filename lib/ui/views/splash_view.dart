@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:void_chat_beta/constants/constants.dart';
 
 class SplashView extends StatelessWidget {
   @override
@@ -13,7 +12,7 @@ class SplashView extends StatelessWidget {
           style: GoogleFonts.jura(
             fontSize: 36,
             fontWeight: FontWeight.bold,
-            color: kMainBgColor,
+            color: Theme.of(context).backgroundColor,
           ),
         ),
       ),

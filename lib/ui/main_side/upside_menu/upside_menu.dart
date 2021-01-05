@@ -2,7 +2,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:void_chat_beta/constants/constants.dart';
 import 'package:void_chat_beta/ui/widgets/auth/firebase_core_init.dart';
 import 'menu_button_pm.dart';
 import 'screen_tag.dart';
@@ -74,7 +73,7 @@ class _UpsideMenuState extends State<UpsideMenu> with TickerProviderStateMixin {
                           padding: EdgeInsets.only(top: 4, right: 4),
                           icon: FaIcon(
                             FontAwesomeIcons.solidEnvelope,
-                            color: kSecondaryColor,
+                            color: Theme.of(context).primaryColor,
                             size: 28,
                           ),
                           onPressed: () {
@@ -88,16 +87,17 @@ class _UpsideMenuState extends State<UpsideMenu> with TickerProviderStateMixin {
                         width: 22,
                         height: 15,
                         decoration: BoxDecoration(
-                          color: kMainBgColor,
+                          color: Theme.of(context).backgroundColor,
                           borderRadius: BorderRadius.circular(3),
-                          border: Border.all(width: 1, color: kSecondaryColor),
+                          border: Border.all(
+                              width: 1, color: Theme.of(context).primaryColor),
                         ),
                         child: Center(
                           child: Text(
                             '23',
                             textAlign: TextAlign.right,
                             style: GoogleFonts.jura(
-                              color: kSecondaryColor,
+                              color: Theme.of(context).primaryColor,
                               fontSize: 10,
                               fontWeight: FontWeight.bold,
                             ),
@@ -114,7 +114,7 @@ class _UpsideMenuState extends State<UpsideMenu> with TickerProviderStateMixin {
                       padding: EdgeInsets.only(top: 4, right: 4),
                       icon: Icon(
                         Icons.logout,
-                        color: kSecondaryColor,
+                        color: Theme.of(context).primaryColor,
                         size: 28,
                       ),
                       onPressed: () async {
