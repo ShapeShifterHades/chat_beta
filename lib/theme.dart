@@ -15,13 +15,13 @@ ThemeData theme1(BuildContext context) {
       enabledBorder: OutlineInputBorder(
         borderSide: BorderSide(
           width: 0.4,
-          color: Theme.of(context).primaryColor,
+          color: Colors.white,
         ),
       ),
       focusedBorder: OutlineInputBorder(
         borderSide: BorderSide(
-          width: 2,
-          color: Theme.of(context).primaryColor,
+          width: 1,
+          color: Colors.white,
         ),
       ),
       errorBorder: OutlineInputBorder(
@@ -47,7 +47,8 @@ ThemeData theme1(BuildContext context) {
         fontSize: 15,
       ),
       labelStyle: TextStyle(
-          color: Color(0xFF8C8E8D),
+          fontSize: 16,
+          color: Colors.white.withOpacity(0.7),
           fontWeight: FontWeight.w300,
           decoration: TextDecoration.none),
       contentPadding: EdgeInsets.all(12),

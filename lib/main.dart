@@ -1,30 +1,10 @@
+import 'package:authentication_repository/authentication_repository.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'app.dart';
 
-import 'package:void_chat_beta/constants/constants.dart';
-import 'package:void_chat_beta/routes.dart' as router;
-import 'theme.dart';
-
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
-  // setupLocator();
-  runApp(MyApp());
-}
-
-class MyApp extends StatefulWidget {
-  @override
-  _MyAppState createState() => _MyAppState();
-}
-
-class _MyAppState extends State<MyApp> {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: theme1(context),
-      darkTheme: theme1(context),
-      initialRoute: messagesRoute,
-      onGenerateRoute: router.Router.generateRoute,
-      // navigatorKey: locator<NavigationService>().navigatorKey,
-    );
-  }
+  await Firebase.initializeApp();
+  runApp(App(authenticationRepository: AuthenticationRepository()));
 }

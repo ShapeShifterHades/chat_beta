@@ -3,11 +3,9 @@ import 'package:flutter/material.dart';
 class SwitchAuthButton extends StatefulWidget {
   const SwitchAuthButton({
     Key key,
-    @required bool isLogin,
-  })  : _isLogin = isLogin,
-        super(key: key);
-
-  final bool _isLogin;
+    @required this.text,
+  }) : super(key: key);
+  final String text;
 
   @override
   _SwitchAuthButtonState createState() => _SwitchAuthButtonState();
@@ -54,7 +52,7 @@ class _SwitchAuthButtonState extends State<SwitchAuthButton>
         children: [
           SizedBox(width: 2),
           Text(
-            'SWITCH TO ' + (widget._isLogin ? 'REGISTRATION' : 'LOGIN'),
+            widget.text,
             style: TextStyle(
               color: Theme.of(context).primaryColor,
               fontSize: 12,

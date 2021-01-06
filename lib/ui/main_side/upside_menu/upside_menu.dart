@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:void_chat_beta/ui/widgets/auth/firebase_core_init.dart';
+import 'package:void_chat_beta/login/view/login_page.dart';
 import 'menu_button_pm.dart';
 import 'screen_tag.dart';
 
@@ -123,7 +123,7 @@ class _UpsideMenuState extends State<UpsideMenu> with TickerProviderStateMixin {
                         Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => FirebaseCoreInit(),
+                              builder: (context) => LoginPage(),
                             ));
                       }),
                 ),

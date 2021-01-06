@@ -1,9 +1,4 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:void_chat_beta/ui/views/chatlist_view.dart';
-import 'package:void_chat_beta/ui/views/contacts_view.dart';
-
-import 'auth/firebase_core_init.dart';
 
 AppBar buildAppBar(BuildContext context, {String title = 'Void Chat'}) {
   return AppBar(
@@ -55,29 +50,12 @@ AppBar buildAppBar(BuildContext context, {String title = 'Void Chat'}) {
         ],
         onChanged: (itemidentifier) async {
           if (itemidentifier == 'logout') {
-            await FirebaseAuth.instance.signOut();
-            Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => FirebaseCoreInit(),
-                ));
+            // () => context
+            //     .read<AuthenticationBloc>()
+            //     .add(AuthenticationLogoutRequested());
           }
-          if (itemidentifier == 'chatlists') {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => ChatlistView(),
-              ),
-            );
-          }
-          if (itemidentifier == 'finduser') {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => ContactsView(),
-              ),
-            );
-          }
+          if (itemidentifier == 'chatlists') {}
+          if (itemidentifier == 'finduser') {}
         },
       )
     ],

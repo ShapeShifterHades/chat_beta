@@ -33,6 +33,12 @@ dependencies:
   get_it:
   bloc:
   flutter_bloc:
+  formz:
+  meta: ^1.1.8
+  pedantic: ^1.9.0
+  authentication_repository:
+    path: packages/authentication_repository
+  rxdart:
 
 dev_dependencies:
   flutter_test:
