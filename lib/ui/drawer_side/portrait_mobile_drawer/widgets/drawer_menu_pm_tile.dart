@@ -31,7 +31,7 @@ class _DrawerMenuPMTileState extends State<DrawerMenuPMTile> {
         });
         Navigator.pushNamed(
           context,
-          widget.route ?? '/messages',
+          widget.route ?? '/',
         );
       },
       onTapDown: (val) {
@@ -54,7 +54,7 @@ class _DrawerMenuPMTileState extends State<DrawerMenuPMTile> {
                 child: Container(
                   color: Theme.of(context).accentColor,
                   width: 140,
-                  height: 32,
+                  height: 52,
                   child: Material(
                     color: Colors.transparent,
                     child: Row(
@@ -101,8 +101,8 @@ class MenuItem extends StatelessWidget {
         clipper: IconMenuPMTileClipper(),
         child: Container(
           color: Theme.of(context).accentColor,
-          width: 32,
-          height: 32,
+          width: 52,
+          height: 52,
           child: Material(
             color: Colors.transparent,
             child: Center(

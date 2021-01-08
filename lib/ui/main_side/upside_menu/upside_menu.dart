@@ -10,11 +10,10 @@ import 'screen_tag.dart';
 class UpsideMenu extends StatefulWidget {
   AnimationController animationController;
   String routeName;
-  Widget child;
+
   UpsideMenu({
     Key key,
     this.animationController,
-    this.child,
     this.routeName,
   }) : super(key: key);
 
@@ -131,13 +130,6 @@ class _UpsideMenuState extends State<UpsideMenu> with TickerProviderStateMixin {
             ),
           ),
           SizedBox(height: 10),
-          Container(
-              color: Colors.amber,
-              width: size.width * 0.8,
-              height: size.height - size.width * 0.1 - 130,
-              child: Scaffold(
-                body: widget.child,
-              ))
         ],
       ),
     );

@@ -37,7 +37,7 @@ class DrawerPM extends StatelessWidget {
                   ],
                 )),
                 Spacer(
-                  flex: 3,
+                  flex: 9,
                 ),
                 DrawerMenuPMTile(
                   text: 'Messages',

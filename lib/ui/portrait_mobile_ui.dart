@@ -21,7 +21,7 @@ class PortraitMobileUI extends StatefulWidget {
 class PortraitMobileUIState extends State<PortraitMobileUI>
     with SingleTickerProviderStateMixin {
   static const Duration toggleDuration = Duration(milliseconds: 400);
-  static const double maxSlide = 226;
+  static const double maxSlide = 256;
   static const double minDragStartEdge = 100;
   static const double maxDragStartEdge = maxSlide - 16;
   AnimationController _animationController;
@@ -59,21 +59,19 @@ class PortraitMobileUIState extends State<PortraitMobileUI>
         onHorizontalDragEnd: _onDragEnd,
         child: AnimatedBuilder(
           animation: _animationController,
-          child: Stack(
-            children: [
-              Positioned(
-                top: size.width * 0.05 + 30,
-                bottom: size.width * 0.05,
-                left: size.width * 0.05,
-                right: size.width * 0.05,
-                child: Container(
-                  color: Theme.of(context).backgroundColor,
-                  child: CustomFullFrameAnimated(
-                    size: size,
-                  ),
-                ),
-              ),
-            ],
+          child: Container(
+            height: size.height,
+            width: size.width,
+            color: Theme.of(context).backgroundColor,
+            margin: EdgeInsets.fromLTRB(
+              size.width * 0.05,
+              size.width * 0.05 + 30,
+              size.width * 0.05,
+              size.width * 0.05,
+            ),
+            child: CustomFullFrameAnimated(
+              size: size,
+            ),
           ),
           builder: (context, child) {
             double animValue = _animationController.value;
@@ -88,9 +86,10 @@ class PortraitMobileUIState extends State<PortraitMobileUI>
                     children: [
                       child,
                       Positioned(
-                        left: MediaQuery.of(context).size.width * 0.05,
-                        top: MediaQuery.of(context).size.width * 0.05 + 30,
+                        left: size.width * 0.05,
+                        top: size.width * 0.05 + 30,
                         child: GestureDetector(
+                          // This Gestures closes [DrawerPM] when it is opened
                           onTap:
                               _animationController.isCompleted ? close : null,
                           onHorizontalDragStart: _onDragStart,
@@ -98,16 +97,24 @@ class PortraitMobileUIState extends State<PortraitMobileUI>
                           onHorizontalDragEnd: _onDragEnd,
                           child: UpsideMenu(
                               routeName: widget.routeName,
-                              child: widget.content,
                               animationController: _animationController),
                         ),
                       ),
-                      // Align(
-                      //     alignment: Alignment.centerLeft,
-                      //     child: Text(
-                      //       _animationController.value.toString(),
-                      //       style: TextStyle(color: Colors.white),
-                      //     )),
+                      Positioned(
+                        // This is where main page content's scaffold size is defined
+                        top: size.width * 0.05 + 80,
+                        left: size.width * 0.05 + 10,
+                        right: size.width * 0.05 + 10,
+                        bottom: size.width * 0.05 + 70,
+                        child: GestureDetector(
+                            // This Gestures closes [DrawerPM] when it is opened
+                            onTap:
+                                _animationController.isCompleted ? close : null,
+                            onHorizontalDragStart: _onDragStart,
+                            onHorizontalDragUpdate: _onDragUpdate,
+                            onHorizontalDragEnd: _onDragEnd,
+                            child: widget.content),
+                      ),
                     ],
                   ),
                 ),
