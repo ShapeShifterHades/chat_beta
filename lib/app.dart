@@ -1,12 +1,9 @@
 import 'package:authentication_repository/authentication_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:void_chat_beta/router/app_router.dart';
 import 'package:void_chat_beta/theme.dart';
 import 'authentication/authentication.dart';
-import 'login/login.dart';
-import 'splash/splash.dart';
-
-import 'ui/views/home_page.dart';
 
 class App extends StatelessWidget {
   const App({
@@ -38,7 +35,7 @@ class AppView extends StatefulWidget {
 
 class _AppViewState extends State<AppView> {
   final _navigatorKey = GlobalKey<NavigatorState>();
-
+  final AppRouter _appRouter = AppRouter();
   NavigatorState get _navigator => _navigatorKey.currentState;
 
   @override
@@ -51,14 +48,11 @@ class _AppViewState extends State<AppView> {
           listener: (context, state) {
             switch (state.status) {
               case AuthenticationStatus.authenticated:
-                _navigator.pushAndRemoveUntil<void>(
-                  HomePage.route(),
-                  (route) => false,
-                );
+                _navigator.pushNamedAndRemoveUntil<void>('/', (route) => false);
                 break;
               case AuthenticationStatus.unauthenticated:
-                _navigator.pushAndRemoveUntil<void>(
-                  LoginPage.route(),
+                _navigator.pushNamedAndRemoveUntil<void>(
+                  '/login',
                   (route) => false,
                 );
                 break;
@@ -69,7 +63,13 @@ class _AppViewState extends State<AppView> {
           child: child,
         );
       },
-      onGenerateRoute: (_) => SplashPage.route(),
+      onGenerateRoute: _appRouter.onGenerateRoute,
     );
+  }
+
+  @override
+  void dispose() {
+    _appRouter.dispose();
+    super.dispose();
   }
 }

@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:void_chat_beta/ui/portrait_mobile_ui.dart';
 
-import '../portrait_mobile_ui.dart';
-
-class FaqView extends StatelessWidget {
+class SettingsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return PortraitMobileUI(
-      routeName: 'FAQ',
+      routeName: 'Settings',
       content: Container(
         color: Colors.amber.withOpacity(0.4),
         child: Text(
-          ModalRoute.of(context).settings.name ?? 'faq route',
+          ModalRoute.of(context).settings.name ?? 'settings route',
           style: TextStyle(color: Colors.white),
         ),
       ),

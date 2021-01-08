@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:void_chat_beta/constants/constants.dart';
-import 'package:void_chat_beta/login/cubit/ui_cubit.dart';
 import 'package:void_chat_beta/login/login.dart';
 import 'package:void_chat_beta/signup/sign_up.dart';
 import 'package:void_chat_beta/ui/main_side/frame/auth_custom_frame/portrait/custom_clip_path.dart';

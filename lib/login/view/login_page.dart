@@ -2,7 +2,6 @@ import 'package:authentication_repository/authentication_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:void_chat_beta/login/cubit/login_cubit.dart';
-import 'package:void_chat_beta/login/cubit/ui_cubit.dart';
 import 'package:void_chat_beta/login/widgets/login_form.dart';
 import 'package:void_chat_beta/ui/main_side/frame/animated_frame/portrait/custom_full_frame_animated.dart';
 

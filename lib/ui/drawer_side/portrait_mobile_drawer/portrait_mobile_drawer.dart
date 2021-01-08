@@ -42,7 +42,7 @@ class DrawerPM extends StatelessWidget {
                 DrawerMenuPMTile(
                   text: 'Messages',
                   iconData: Icons.inbox_outlined,
-                  route: messagesRoute,
+                  route: homeRoute,
                 ),
                 SizedBox(height: 30),
                 DrawerMenuPMTile(

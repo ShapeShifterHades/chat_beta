@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import '../portrait_mobile_ui.dart';
+import 'package:void_chat_beta/ui/portrait_mobile_ui.dart';
 
 class SecurityView extends StatelessWidget {
   @override

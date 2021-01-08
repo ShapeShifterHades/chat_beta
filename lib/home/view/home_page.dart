@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:void_chat_beta/authentication/bloc/authentication_bloc.dart';
 
-import '../portrait_mobile_ui.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:void_chat_beta/ui/portrait_mobile_ui.dart';
 
 class HomePage extends StatelessWidget {
   static Route route() {
