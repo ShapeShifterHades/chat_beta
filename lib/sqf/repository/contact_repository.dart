@@ -7,7 +7,7 @@ class ContactRepository {
   final contactDao = ContactDao();
 
   Future getAllContacts({String query}) => contactDao.getContacts(query: query);
-  Future insertContact(ContactModel contactModel) =>
+  Future addNewContact(ContactModel contactModel) =>
       contactDao.createContact(contactModel);
   Future updateContact(ContactModel contactModel) =>
       contactDao.updateContact(contactModel);

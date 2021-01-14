@@ -3,12 +3,12 @@ enum ContactStatus { unknown, mutualFriend, iAddedHeDidNot, heAddedIDidNot }
 class ContactModel {
   int id;
   String name;
-  ContactStatus status;
+  String status;
 
   ContactModel({
     this.id,
     this.name,
-    this.status = ContactStatus.unknown,
+    this.status,
   });
 
   factory ContactModel.fromDatabaseJson(Map<String, dynamic> data) =>

@@ -23,8 +23,8 @@ class ContactDatabaseProvider {
   /// Creates database file with given path
   Future<Database> createDatabase() async {
     Directory documentDirectory = await getApplicationDocumentsDirectory();
-    // ReactiveContact.db is a database instance name
-    String path = join(documentDirectory.path, "ReactiveContact");
+    // ContactDB.db is a database instance name
+    String path = join(documentDirectory.path, "ContactDB.db");
 
     var database = await openDatabase(path,
         version: 1, onCreate: initDB, onUpgrade: onUpgrade);
@@ -40,9 +40,9 @@ class ContactDatabaseProvider {
   /// Initiates given database with predefined schema
   void initDB(Database database, int version) async {
     await database.execute("CREATE TABLE $contactTABLE ("
-        "id INTEGER PRIMARY KEY,"
+        "id INTEGER PRIMARY KEY AUTOINCREMENT,"
         "name TEXT,"
-        "status TEXT NOT NULL"
+        "status TEXT"
         ")");
   }
 }
