@@ -1,15 +1,19 @@
+import 'package:equatable/equatable.dart';
+
 enum ContactStatus { unknown, mutualFriend, iAddedHeDidNot, heAddedIDidNot }
 
-class ContactModel {
-  int id;
-  String name;
-  String status;
+class ContactModel extends Equatable {
+  final int id;
+  final String name;
+  final String status;
 
-  ContactModel({
+  const ContactModel({
     this.id,
     this.name,
     this.status,
   });
+
+  static const empty = ContactModel(id: 99, name: '', status: '');
 
   factory ContactModel.fromDatabaseJson(Map<String, dynamic> data) =>
       ContactModel(
@@ -28,4 +32,6 @@ class ContactModel {
         'name': this.name,
         'status': this.status,
       };
+  @override
+  List<Object> get props => [id, name, status];
 }

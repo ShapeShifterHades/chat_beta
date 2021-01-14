@@ -1,71 +1,65 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:void_chat_beta/sqf/bloc/contact_bloc.dart';
-import 'package:void_chat_beta/sqf/bloc/contact_bloc_old.dart';
-import 'package:void_chat_beta/sqf/model/contact_model.dart';
+import 'package:void_chat_beta/sqflite/bloc/contact_bloc.dart';
+import 'package:void_chat_beta/sqflite/model/contact_model.dart';
+
 import 'package:void_chat_beta/ui/portrait_mobile_ui.dart';
 
-ContactModel contactModel1 = ContactModel(name: 'Popka', status: 'boy');
+ContactModel contactModel1 = ContactModel(name: 'Simon', status: 'friend');
 
 class ContactsView extends StatelessWidget {
-  final ContactBlocOld contactBlocOld = ContactBlocOld();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
-        onPressed: () => contactBlocOld.addContact(contactModel1),
+        onPressed: () =>
+            context.read<ContactBloc>().add(ContactAdded(contactModel1)),
+        // context.read<ContactBloc>().add(DeleteAllContacts()),
       ),
       body: PortraitMobileUI(
         routeName: 'Contacts',
-        content: Container(
-          color: Colors.amber.withOpacity(0.2),
-          child: Column(
-            children: [
-              Container(
-                child: StreamBuilder<List<ContactModel>>(
-                  stream: contactBlocOld.contacts,
-                  builder:
-                      (context, AsyncSnapshot<List<ContactModel>> snapshot) {
-                    if (snapshot.hasData) {
-                      return snapshot.data.length > 0
-                          ? Expanded(
-                              child: ListView.builder(
-                                itemCount: snapshot.data.length,
-                                itemBuilder: (context, itemPosition) {
-                                  ContactModel _contact =
-                                      snapshot.data[itemPosition];
-                                  return Text(
-                                    _contact.status +
-                                        ' ' +
+        content: Column(
+          children: [
+            Row(
+              children: [
+                Text('Internal database', style: TextStyle(color: Colors.white))
+              ],
+            ),
+            Expanded(
+              child: Container(
+                // color: Colors.amber.withOpacity(0.2),
+                child: BlocBuilder<ContactBloc, ContactState>(
+                  builder: (context, state) {
+                    return state.status == ContactListStatus.loading
+                        ? Container()
+                        : state.status == ContactListStatus.loadedWithError
+                            ? Container(
+                                child: Text(
+                                  'Error',
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                              )
+                            : Container(
+                                child: ListView.builder(
+                                  itemCount: state.contacts.length,
+                                  itemBuilder: (context, index) {
+                                    ContactModel _contact =
+                                        state.contacts[index];
+                                    return Text(
                                         _contact.id.toString() +
-                                        ' ' +
-                                        _contact.name,
-                                    style: TextStyle(color: Colors.white),
-                                  );
-                                },
-                              ),
-                            )
-                          : Text(
-                              'No data yet',
-                              style: TextStyle(color: Colors.white),
-                            );
-                    } else {
-                      return CircularProgressIndicator();
-                    }
+                                            ' ' +
+                                            _contact.name +
+                                            ' ' +
+                                            _contact.status,
+                                        style: TextStyle(color: Colors.white));
+                                  },
+                                ),
+                              );
                   },
                 ),
               ),
-              BlocBuilder<ContactBloc, ContactState>(
-                builder: (context, state) {
-                  return Container(
-                      child: Text(
-                    context.watch<ContactBloc>().state.props.length.toString(),
-                    style: TextStyle(color: Colors.white),
-                  ));
-                },
-              )
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

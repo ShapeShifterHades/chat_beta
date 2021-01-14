@@ -1,6 +1,6 @@
 import 'dart:async';
-import 'package:void_chat_beta/sqf/database_contact.dart';
 
+import 'database_contact.dart';
 import 'model/contact_model.dart';
 
 /// Contact data from database access object

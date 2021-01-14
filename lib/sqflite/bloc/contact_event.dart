@@ -37,8 +37,8 @@ class ContactDeleted extends ContactEvent {
   String toString() => 'ContactDeleted { id: $id }';
 }
 
-class AllContactsDeleted extends ContactEvent {
-  const AllContactsDeleted();
+class DeleteAllContacts extends ContactEvent {
+  const DeleteAllContacts();
   @override
   List<Object> get props => [];
   @override
