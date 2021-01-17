@@ -16,9 +16,11 @@ class Contact {
   }
 
   @override
+  // ignore: override_on_non_overriding_member
   int get hashcode => id.hashCode ^ name.hashCode;
 
   @override
+  // ignore: hash_and_equals
   bool operator ==(Object other) =>
       identical(this, other) ||
       other is Contact &&

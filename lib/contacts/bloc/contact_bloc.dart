@@ -3,8 +3,7 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
-import 'package:void_chat_beta/sqflite/model/contact_model.dart';
-import 'package:void_chat_beta/sqflite/repository/contact_repository.dart';
+import 'package:sqflite_repository/sqflite_repository.dart';
 
 part 'contact_event.dart';
 part 'contact_state.dart';

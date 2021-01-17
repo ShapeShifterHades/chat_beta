@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:void_chat_beta/sqflite/bloc/contact_bloc.dart';
-import 'package:void_chat_beta/sqflite/model/contact_model.dart';
+import 'package:void_chat_beta/contacts/bloc/contact_bloc.dart';
+import 'package:sqflite_repository/sqflite_repository.dart';
 
 import 'package:void_chat_beta/ui/portrait_mobile_ui.dart';
 

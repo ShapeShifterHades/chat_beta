@@ -2,10 +2,10 @@ import 'package:authentication_repository/authentication_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:void_chat_beta/router/app_router.dart';
-import 'package:void_chat_beta/sqflite/bloc/contact_bloc.dart';
 import 'package:void_chat_beta/theme.dart';
 import 'authentication/authentication.dart';
-import 'sqflite/repository/contact_repository.dart';
+import 'contacts/bloc/contact_bloc.dart';
+import 'package:sqflite_repository/sqflite_repository.dart';
 
 class App extends StatelessWidget {
   const App({
