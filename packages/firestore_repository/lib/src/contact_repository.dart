@@ -1,3 +1,13 @@
 import 'dart:async';
 
-import '../firebase_contact_repository.dart';
+import 'models/models.dart';
+
+abstract class ContactRepository {
+  Future<void> addNewContact(Contact contact);
+
+  Future<void> deleteContact(Contact contact);
+
+  Stream<List<Contact>> contacts();
+
+  Future<void> updateContact(Contact contact);
+}
