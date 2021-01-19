@@ -13,16 +13,13 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final user = context.select((AuthenticationBloc bloc) => bloc.state.user);
-    // final auth = context.watch<AuthenticationRepository>().base;
     return Scaffold(
       body: PortraitMobileUI(
         routeName: 'Messages',
         content: Container(
           color: Colors.white24,
           child: Text(
-            user.id + ' ' + user.email
-            //  + auth.currentUser.displayName ?? 'bull'
-            ,
+            user.email + ' ' + user.username,
             style: TextStyle(color: Colors.white),
           ),
         ),

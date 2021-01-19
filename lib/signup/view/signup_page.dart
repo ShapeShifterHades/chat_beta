@@ -19,28 +19,16 @@ class SignUpPage extends StatelessWidget {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: Theme.of(context).backgroundColor,
-      body: Stack(
-        children: [
-          Positioned(
-              top: size.width * 0.05 + 30,
-              bottom: size.width * 0.05,
-              left: size.width * 0.05,
-              right: size.width * 0.05,
-              child: CustomFullFrameAnimated(
-                size: size,
-              )),
-          MultiBlocProvider(
-            providers: [
-              BlocProvider<SignUpCubit>(
-                create: (_) => SignUpCubit(
-                  context.read<AuthenticationRepository>(),
-                  context.read<FirestoreNewUserRepository>(),
-                ),
-              ),
-            ],
-            child: SignUpForm(),
+      body: MultiBlocProvider(
+        providers: [
+          BlocProvider<SignUpCubit>(
+            create: (_) => SignUpCubit(
+              context.read<AuthenticationRepository>(),
+              context.read<FirestoreNewUserRepository>(),
+            ),
           ),
         ],
+        child: SignUpForm(),
       ),
     );
   }
