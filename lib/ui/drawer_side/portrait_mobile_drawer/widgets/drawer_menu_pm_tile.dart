@@ -54,21 +54,21 @@ class _DrawerMenuPMTileState extends State<DrawerMenuPMTile> {
                 child: Container(
                   color: Theme.of(context).accentColor,
                   width: 140,
-                  height: 52,
+                  height: 38,
                   child: Material(
                     color: Colors.transparent,
                     child: Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
+                      mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        Spacer(flex: 4),
+                        SizedBox(width: 20),
                         Text(
                           widget.text,
                           style: GoogleFonts.jura(
                               color: Theme.of(context).primaryColor,
                               fontSize: 20,
-                              fontWeight: FontWeight.w600),
+                              fontWeight: FontWeight.w800),
+                          textAlign: TextAlign.left,
                         ),
-                        Spacer(flex: 3),
                       ],
                     ),
                   ),
@@ -102,7 +102,7 @@ class MenuItem extends StatelessWidget {
         child: Container(
           color: Theme.of(context).accentColor,
           width: 52,
-          height: 52,
+          height: 38,
           child: Material(
             color: Colors.transparent,
             child: Center(

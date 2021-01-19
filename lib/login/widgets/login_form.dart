@@ -4,7 +4,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:void_chat_beta/constants/constants.dart';
 import 'package:void_chat_beta/login/login.dart';
-import 'package:void_chat_beta/signup/sign_up.dart';
 import 'package:void_chat_beta/ui/main_side/frame/auth_custom_frame/portrait/custom_clip_path.dart';
 import 'package:void_chat_beta/ui/main_side/frame/auth_custom_frame/portrait/custom_painter_for_clipper.dart';
 import 'package:keyboard_visibility/keyboard_visibility.dart';
@@ -51,16 +50,16 @@ class _LoginFormState extends State<LoginForm> with TickerProviderStateMixin {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       Future.delayed(
         const Duration(milliseconds: 400),
-        () => _slideInController.forward().orCancel,
+        () => _slideInController.forward(),
       );
     });
   }
 
-  @override
-  void dispose() {
-    _slideInController.dispose();
-    super.dispose();
-  }
+  // @override
+  // void dispose() {
+  //   _slideInController.dispose();
+  //   super.dispose();
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -161,11 +160,11 @@ class FormTopUi extends StatelessWidget {
               children: [
                 GestureDetector(
                   onTap: () {
-                    Navigator.of(context).push<void>(SignUpPage.route());
+                    Navigator.of(context).pushNamed<void>(signupRoute);
                   },
                   onPanUpdate: (details) {
                     if (details.delta.dx > 0) {
-                      Navigator.of(context).push<void>(SignUpPage.route());
+                      Navigator.of(context).pushNamed<void>(signupRoute);
                     }
                   },
                   child: Container(

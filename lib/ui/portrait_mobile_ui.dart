@@ -60,8 +60,6 @@ class PortraitMobileUIState extends State<PortraitMobileUI>
         child: AnimatedBuilder(
           animation: _animationController,
           child: Container(
-            height: size.height,
-            width: size.width,
             color: Theme.of(context).backgroundColor,
             margin: EdgeInsets.fromLTRB(
               size.width * 0.05,
@@ -77,12 +75,14 @@ class PortraitMobileUIState extends State<PortraitMobileUI>
             double animValue = _animationController.value;
             final slideAmount = maxSlide * animValue;
             return Stack(
+              overflow: Overflow.clip,
               children: <Widget>[
                 DrawerPM(),
                 Transform(
                   transform: Matrix4.identity()..translate(slideAmount),
                   alignment: Alignment.centerLeft,
                   child: Stack(
+                    overflow: Overflow.clip,
                     children: [
                       child,
                       Positioned(

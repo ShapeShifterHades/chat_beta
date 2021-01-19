@@ -6,7 +6,7 @@ import 'contact_repository.dart';
 import 'entities/entities.dart';
 import 'models/models.dart';
 
-class FirebaseContactRepository implements ContactRepository {
+class FirestoreContactRepository implements ContactRepository {
   final contactCollection = FirebaseFirestore.instance.collection('contacts');
 
   @override

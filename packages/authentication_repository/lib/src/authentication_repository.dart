@@ -34,19 +34,27 @@ class AuthenticationRepository {
     });
   }
 
+  // firebase_auth.FirebaseAuth get base {
+  //   return _firebaseAuth;
+  // }
+
   /// Creates a new user with the provided [email] and [password].
   ///
   /// Throws a [SignUpFailure] if an exception occurs.
-  Future<void> signUp({
+  Future<firebase_auth.UserCredential> signUp({
     @required String email,
     @required String password,
+    String displayName,
   }) async {
     assert(email != null && password != null);
     try {
-      await _firebaseAuth.createUserWithEmailAndPassword(
+      firebase_auth.UserCredential resp =
+          await _firebaseAuth.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
+      await resp.user.updateProfile(displayName: displayName);
+      return resp;
     } on Exception {
       throw SignUpFailure();
     }
@@ -87,6 +95,10 @@ class AuthenticationRepository {
 
 extension on firebase_auth.User {
   User get toUser {
-    return User(id: uid, email: email, name: displayName);
+    return User(
+      id: uid,
+      email: email,
+      username: displayName,
+    );
   }
 }

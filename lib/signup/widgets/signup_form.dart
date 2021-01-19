@@ -98,6 +98,8 @@ class _SignUpFormState extends State<SignUpForm> with TickerProviderStateMixin {
                           children: [
                             _EmailInput(),
                             SizedBox(height: 20),
+                            _UsernameInput(),
+                            SizedBox(height: 20),
                             _PasswordInput(),
                             SizedBox(height: 20),
                             _ConfirmPasswordInput(),
@@ -206,7 +208,7 @@ class _EmailInput extends StatelessWidget {
           return TextField(
             textInputAction: TextInputAction.next,
             onEditingComplete: () => FocusScope.of(context).nextFocus(),
-            key: const Key('loginForm_emailInput_textField'),
+            key: const Key('signupForm_emailInput_textField'),
             decoration: InputDecoration(
               isDense: true,
               contentPadding:
@@ -234,6 +236,43 @@ class _EmailInput extends StatelessWidget {
   }
 }
 
+class _UsernameInput extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<SignUpCubit, SignUpState>(
+        buildWhen: (previous, current) => previous.username != current.username,
+        builder: (context, state) {
+          return TextField(
+            textInputAction: TextInputAction.next,
+            onEditingComplete: () => FocusScope.of(context).nextFocus(),
+            key: const Key('signupForm_usernameInput_textField'),
+            decoration: InputDecoration(
+              isDense: true,
+              contentPadding:
+                  EdgeInsets.symmetric(vertical: 10, horizontal: 12),
+              labelText: 'Username',
+              border: InputBorder.none,
+              errorText: state.username.invalid ? 'invalid username' : null,
+            ),
+            cursorColor: Color(0xFF8C8E8D),
+            maxLines: 1,
+            style: GoogleFonts.jura(
+                letterSpacing: 2,
+                color: Colors.white,
+                decoration: TextDecoration.none,
+                fontWeight: FontWeight.w100,
+                fontSize: 22),
+            autocorrect: false,
+            textCapitalization: TextCapitalization.none,
+            enableSuggestions: false,
+            keyboardType: TextInputType.name,
+            onChanged: (username) =>
+                context.read<SignUpCubit>().usernameChanged(username),
+          );
+        });
+  }
+}
+
 class _PasswordInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -243,7 +282,7 @@ class _PasswordInput extends StatelessWidget {
           return TextField(
             textInputAction: TextInputAction.next,
             obscuringCharacter: '•',
-            key: const Key('loginForm_passwordInput_textField'),
+            key: const Key('signupForm_passwordInput_textField'),
             decoration: InputDecoration(
               isDense: true,
               contentPadding:
@@ -280,7 +319,7 @@ class _ConfirmPasswordInput extends StatelessWidget {
         builder: (context, state) {
           return TextFormField(
             textInputAction: TextInputAction.send,
-            key: const Key('loginForm_confirmPasswordInput_textField'),
+            key: const Key('signupForm_confirmPasswordInput_textField'),
             obscuringCharacter: '•',
             decoration: InputDecoration(
               isDense: true,

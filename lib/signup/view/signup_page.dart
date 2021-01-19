@@ -1,4 +1,5 @@
 import 'package:authentication_repository/authentication_repository.dart';
+import 'package:firestore_repository/firestore_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:void_chat_beta/signup/cubit/signup_cubit.dart';
@@ -31,8 +32,10 @@ class SignUpPage extends StatelessWidget {
           MultiBlocProvider(
             providers: [
               BlocProvider<SignUpCubit>(
-                create: (_) =>
-                    SignUpCubit(context.read<AuthenticationRepository>()),
+                create: (_) => SignUpCubit(
+                  context.read<AuthenticationRepository>(),
+                  context.read<FirestoreNewUserRepository>(),
+                ),
               ),
             ],
             child: SignUpForm(),

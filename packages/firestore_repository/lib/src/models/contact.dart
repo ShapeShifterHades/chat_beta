@@ -10,8 +10,8 @@ class Contact {
 
   Contact copyWith({String id, String name}) {
     return Contact(
-      id: this.id,
-      name: this.name,
+      id: id ?? this.id,
+      name: name ?? this.name,
     );
   }
 

@@ -1,4 +1,6 @@
+import 'package:firestore_repository/firestore_repository.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:void_chat_beta/constants/constants.dart';
 import 'package:void_chat_beta/contacts/contacts.dart';
@@ -10,8 +12,8 @@ import 'package:void_chat_beta/settings/settings.dart';
 import 'package:void_chat_beta/signup/sign_up.dart';
 
 class AppRouter {
-  // final ContactRepository contactRepository = ContactRepository();
-
+  final FirestoreNewUserRepository firestoreNewUserRepository =
+      FirestoreNewUserRepository();
   Route onGenerateRoute(RouteSettings routeSettings) {
     switch (routeSettings.name) {
       case '/':
@@ -21,7 +23,12 @@ class AppRouter {
       case loginRoute:
         return MaterialPageRoute(builder: (_) => LoginPage());
       case signupRoute:
-        return MaterialPageRoute(builder: (_) => SignUpPage());
+        return MaterialPageRoute(
+          builder: (_) => RepositoryProvider.value(
+            value: firestoreNewUserRepository,
+            child: SignUpPage(),
+          ),
+        );
       case contactsRoute:
         return MaterialPageRoute(
           builder: (_) =>

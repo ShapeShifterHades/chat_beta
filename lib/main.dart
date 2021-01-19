@@ -5,6 +5,7 @@ import 'app.dart';
 import 'package:sqflite_repository/sqflite_repository.dart';
 
 ContactRepository contactRepository = ContactRepository();
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();

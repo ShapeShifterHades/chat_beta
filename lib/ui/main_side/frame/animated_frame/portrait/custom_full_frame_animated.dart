@@ -94,7 +94,7 @@ class _PainterCustomWidgetTopState extends State<CustomFullFrameAnimated>
     WidgetsBinding.instance.addPostFrameCallback((_) {
       Future.delayed(
         const Duration(milliseconds: 300),
-        () => controller.forward().orCancel,
+        () => controller.forward(),
       );
     });
   }
