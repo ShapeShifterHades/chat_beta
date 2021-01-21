@@ -16,8 +16,6 @@ class AppRouter {
       FirestoreNewUserRepository();
   Route onGenerateRoute(RouteSettings routeSettings) {
     switch (routeSettings.name) {
-      case '/':
-        return MaterialPageRoute(builder: (_) => HomePage());
       case homeRoute:
         return MaterialPageRoute(builder: (_) => HomePage());
       case loginRoute:

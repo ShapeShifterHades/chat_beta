@@ -8,6 +8,8 @@ ThemeData theme1(BuildContext context) {
     // scaffoldBackgroundColor: Colors.white,
     primaryTextTheme: TextTheme(bodyText1: TextStyle(color: Color(0xFF100D0E))),
     primaryColor: Color(0xFFA7F5FF),
+    errorColor: Colors.red,
+    highlightColor: Colors.green,
     accentColor: Color(0xFF100D0E),
     backgroundColor: Color(0xFF10171E),
     scaffoldBackgroundColor: Color(0xFF10171E),

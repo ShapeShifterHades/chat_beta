@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:void_chat_beta/signup/cubit/signup_cubit.dart';
 import 'package:void_chat_beta/signup/widgets/signup_form.dart';
-import 'package:void_chat_beta/ui/main_side/frame/animated_frame/portrait/custom_full_frame_animated.dart';
 
 class SignUpPage extends StatelessWidget {
   const SignUpPage({Key key}) : super(key: key);

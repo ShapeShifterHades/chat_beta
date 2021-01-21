@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
+import 'package:shimmer/shimmer.dart';
 import 'package:void_chat_beta/constants/constants.dart';
+
 import 'package:void_chat_beta/login/login.dart';
 import 'package:void_chat_beta/ui/main_side/frame/auth_custom_frame/portrait/custom_clip_path.dart';
 import 'package:void_chat_beta/ui/main_side/frame/auth_custom_frame/portrait/custom_painter_for_clipper.dart';
 import 'package:keyboard_visibility/keyboard_visibility.dart';
 import 'package:formz/formz.dart';
-import 'package:void_chat_beta/widgets/switch_auth_button.dart';
 
 import '../login.dart';
+import 'form_header.dart';
 
 class LoginForm extends StatefulWidget {
   @override
@@ -55,11 +56,11 @@ class _LoginFormState extends State<LoginForm> with TickerProviderStateMixin {
     });
   }
 
-  // @override
-  // void dispose() {
-  //   _slideInController.dispose();
-  //   super.dispose();
-  // }
+  @override
+  void dispose() {
+    _slideInController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -89,7 +90,46 @@ class _LoginFormState extends State<LoginForm> with TickerProviderStateMixin {
                   clipper: CustomClipPath(),
                   child: Column(
                     children: [
-                      FormTopUi(),
+                      BlocBuilder<LoginCubit, LoginState>(
+                        builder: (context, state) {
+                          if (state.status.isSubmissionFailure) {
+                            return Text(
+                              'SUBMISSION FAILURE',
+                              style: TextStyle(color: Colors.white),
+                            );
+                          } else if (state.status.isSubmissionInProgress) {
+                            return Text(
+                              'SUBMISSION IN PROGRESS',
+                              style: TextStyle(color: Colors.white),
+                            );
+                          } else if (state.status.isValid) {
+                            return Container(
+                              height: 80,
+                              width: double.infinity,
+                              color: Theme.of(context).highlightColor,
+                              child: Center(
+                                child: Shimmer.fromColors(
+                                  baseColor: kMainBgColor,
+                                  highlightColor:
+                                      Theme.of(context).primaryColor,
+                                  direction: ShimmerDirection.ltr,
+                                  loop: 1,
+                                  period: Duration(milliseconds: 600),
+                                  child: Text(
+                                    'AUTHENTICATE',
+                                    style: GoogleFonts.jura(
+                                      color: kMainBgColor,
+                                      fontSize: 26,
+                                      fontWeight: FontWeight.w800,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            );
+                          }
+                          return FormHeader();
+                        },
+                      ),
                       Container(
                         padding:
                             EdgeInsets.symmetric(horizontal: 12, vertical: 20),
@@ -109,84 +149,6 @@ class _LoginFormState extends State<LoginForm> with TickerProviderStateMixin {
               ),
             ),
           ),
-        ),
-      ),
-    );
-  }
-}
-
-class FormTopUi extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: context.watch<LoginCubit>().state.status.isValidated
-          ? () => context.read<LoginCubit>().logInWithCredentials()
-          : null,
-      child: Container(
-        height: 80,
-        width: double.infinity,
-        color: Theme.of(context).primaryColor,
-        child: Column(
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                Container(
-                  alignment: Alignment.center,
-                  child: context
-                          .watch<LoginCubit>()
-                          .state
-                          .status
-                          .isSubmissionInProgress
-                      ? const CircularProgressIndicator()
-                      : Text(
-                          'LOGIN',
-                          style: GoogleFonts.jura(
-                            letterSpacing: 4,
-                            fontWeight: FontWeight.w600,
-                            fontSize: 26,
-                            color: kMainBgColor,
-                          ),
-                        ),
-                ),
-                SizedBox(width: 12),
-                Icon(Icons.input,
-                    color: Theme.of(context).backgroundColor, size: 36),
-                SizedBox(width: 3),
-              ],
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                GestureDetector(
-                  onTap: () {
-                    Navigator.of(context).pushNamed<void>(signupRoute);
-                  },
-                  onPanUpdate: (details) {
-                    if (details.delta.dx > 0) {
-                      Navigator.of(context).pushNamed<void>(signupRoute);
-                    }
-                  },
-                  child: Container(
-                    height: 38,
-                    width: 220,
-                    alignment: Alignment.centerRight,
-                    decoration: BoxDecoration(
-                      color: Theme.of(context).backgroundColor,
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(14),
-                      ),
-                    ),
-                    child: SwitchAuthButton(
-                      text: 'SWITCH TO REGISTRATION',
-                    ),
-                  ),
-                ),
-                SizedBox(width: 4),
-              ],
-            ),
-            SizedBox(height: 2),
-          ],
         ),
       ),
     );

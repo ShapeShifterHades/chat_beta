@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:shimmer/shimmer.dart';
+import 'package:void_chat_beta/constants/constants.dart';
 
-class SwitchAuthButton extends StatefulWidget {
+class SwitchAuthButton extends StatelessWidget {
   const SwitchAuthButton({
     Key key,
     @required this.text,
@@ -8,62 +10,40 @@ class SwitchAuthButton extends StatefulWidget {
   final String text;
 
   @override
-  _SwitchAuthButtonState createState() => _SwitchAuthButtonState();
-}
-
-class _SwitchAuthButtonState extends State<SwitchAuthButton>
-    with TickerProviderStateMixin {
-  AnimationController _controller;
-  Animation<double> _animation;
-
-  initState() {
-    super.initState();
-
-    _controller = AnimationController(
-        duration: const Duration(milliseconds: 4000),
-        vsync: this,
-        value: 0.2,
-        lowerBound: 0.2,
-        upperBound: 0.8);
-    _animation =
-        CurvedAnimation(parent: _controller, curve: Curves.fastOutSlowIn)
-          ..addStatusListener((status) {
-            if (status == AnimationStatus.completed) {
-              _controller.reverse();
-            } else if (status == AnimationStatus.dismissed) {
-              _controller.forward();
-            }
-          });
-    _controller.forward();
-  }
-
-  @override
-  dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    return FadeTransition(
-      opacity: _animation,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          SizedBox(width: 2),
-          Text(
-            widget.text,
-            style: TextStyle(
-              color: Theme.of(context).primaryColor,
-              fontSize: 12,
-            ),
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: [
+        SizedBox(width: 2),
+        Shimmer.fromColors(
+          baseColor: Colors.white,
+          highlightColor: kMainBgColor,
+          loop: 0,
+          period: Duration(milliseconds: 4000),
+          child: Row(
+            children: [
+              Text(
+                text,
+                style: TextStyle(
+                  color: Theme.of(context).primaryColor,
+                  fontSize: 12,
+                ),
+              ),
+              SizedBox(width: 10),
+              Transform.translate(
+                offset: Offset(0.0, 1.5),
+                child: Transform(
+                  transform: Matrix4.diagonal3Values(1, 0.85, 1.2),
+                  child: Icon(
+                    Icons.double_arrow,
+                    color: Theme.of(context).primaryColor,
+                  ),
+                ),
+              ),
+            ],
           ),
-          Icon(
-            Icons.double_arrow,
-            color: Theme.of(context).primaryColor,
-          ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

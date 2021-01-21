@@ -2,25 +2,24 @@ import '../database/databases.dart';
 import '../models/models.dart';
 
 /// Contact data from database access object
-class ContactProvier {
+class MyProfileProvider {
   final dbProvider = ContactDatabaseProvider.contactDatabaseProvider;
 
-  /// Adds new contact record to contactlist
-  Future<int> createContact(ContactModel contactModel) async {
+  /// Adds new MyProfile record to profileTable
+  Future<int> createContact(MyProfile myProfile) async {
     final db = await dbProvider.database;
-    var result = db.insert(contactTABLE, contactModel.toDatabaseJson());
+    var result = db.insert(myprofileTABLE, myProfile.toDatabaseJson());
     return result;
   }
 
-  /// Gets contacts list from database if query was passed
-  Future<List<ContactModel>> getContacts(
-      {List<String> columns, String query}) async {
+  /// Gets MyProfile from database if query was passed
+  Future<MyProfile> getMyProfile({List<String> columns, String query}) async {
     final db = await dbProvider.database;
 
     List<Map<String, dynamic>> result;
     if (query != null) {
       if (query.isNotEmpty)
-        result = await db.query(contactTABLE,
+        result = await db.query(myprofileTABLE,
             columns: columns,
             where: 'description LIKE ?',
             whereArgs: ["%$query%"]);
@@ -28,34 +27,26 @@ class ContactProvier {
       result = await db.query(contactTABLE, columns: columns);
     }
 
-    List<ContactModel> contacts = result.isNotEmpty
-        ? result.map((item) => ContactModel.fromDatabaseJson(item)).toList()
-        : [];
-    return contacts;
+    MyProfile profile = result.isNotEmpty
+        ? result.map((item) => MyProfile.fromDatabaseJson(item))
+        : 'No profile stored';
+    return profile;
   }
 
-  /// Updates contact record by passed contact instance(?)
-  Future<int> updateContact(ContactModel contactModel) async {
+  /// Updates MyProfile record by passed MyProfile instance(?)
+  Future<int> updateMyProfile(MyProfile myProfile) async {
     final db = await dbProvider.database;
 
-    var result = await db.update(contactTABLE, contactModel.toDatabaseJson(),
-        where: "id = ?", whereArgs: [contactModel.id]);
+    var result = await db.update(myprofileTABLE, myProfile.toDatabaseJson(),
+        where: "name = ?", whereArgs: [myProfile.name]);
 
     return result;
   }
 
-  /// Delets contact record by id
-  Future<int> deleteContact(int id) async {
+  /// Delete MyProfile from database
+  Future<int> deleteMyProfile() async {
     final db = await dbProvider.database;
-    var result =
-        await db.delete(contactTABLE, where: 'id = ?', whereArgs: [id]);
-    return result;
-  }
-
-  /// Delete all contacts from database
-  Future<int> deleteAllContacts() async {
-    final db = await dbProvider.database;
-    var result = await db.delete(contactTABLE);
+    var result = await db.delete(myprofileTABLE);
     return result;
   }
 }

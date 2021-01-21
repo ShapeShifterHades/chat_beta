@@ -1,5 +1,5 @@
-import './dataproviders/dataproviders.dart';
 import './models/models.dart';
+import 'dataproviders/my_profile.dart';
 
 /// Contact repository instance
 /// TODO implement here interfering with Firebase data to get latest contact updates

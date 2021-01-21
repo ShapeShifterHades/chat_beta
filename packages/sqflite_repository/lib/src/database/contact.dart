@@ -5,6 +5,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
 
 final contactTABLE = 'contact';
+final myprofileTABLE = 'myprofile';
 
 /// [ContactDatabaseProvider] responds for creation of database instance on device and providing it further
 class ContactDatabaseProvider {
@@ -43,6 +44,9 @@ class ContactDatabaseProvider {
         "id INTEGER PRIMARY KEY AUTOINCREMENT,"
         "name TEXT,"
         "status TEXT"
+        ")");
+    await database.execute("CREATE TABLE $myprofileTABLE ("
+        "name TEXT PRIMARY KEY"
         ")");
   }
 }

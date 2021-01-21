@@ -87,7 +87,7 @@ class SignUpCubit extends Cubit<SignUpState> {
       try {
         await _firestoreNewUserRepository.addNewProfile(Profile(
           uid: credential.user.uid,
-          username: state.username.value ?? credential.user.uid,
+          username: state.username.value,
           bio: '',
         ));
         // print(
