@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:void_chat_beta/constants/constants.dart';
 
 class CustomPainterForClipper extends CustomPainter {
+  final Color color;
+
+  CustomPainterForClipper({this.color = const Color(0xFFA7F5FF)});
   @override
   void paint(Canvas canvas, Size size) {
     Path path2 = Path();
@@ -19,7 +21,7 @@ class CustomPainterForClipper extends CustomPainter {
     Paint paint = Paint()
       ..style = PaintingStyle.stroke
       ..strokeWidth = 0.5
-      ..color = kSecondaryColor;
+      ..color = color;
 
     canvas.drawPath(path2, paint);
   }

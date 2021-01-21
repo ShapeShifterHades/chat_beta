@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:shimmer/shimmer.dart';
+
 import 'package:void_chat_beta/constants/constants.dart';
 
 import 'package:void_chat_beta/login/login.dart';
@@ -11,6 +11,7 @@ import 'package:keyboard_visibility/keyboard_visibility.dart';
 import 'package:formz/formz.dart';
 
 import '../login.dart';
+
 import 'form_header.dart';
 
 class LoginForm extends StatefulWidget {
@@ -84,68 +85,56 @@ class _LoginFormState extends State<LoginForm> with TickerProviderStateMixin {
             margin: EdgeInsets.only(top: 90),
             width: 280,
             child: SingleChildScrollView(
-              child: CustomPaint(
-                painter: CustomPainterForClipper(),
-                child: ClipPath(
-                  clipper: CustomClipPath(),
-                  child: Column(
-                    children: [
-                      BlocBuilder<LoginCubit, LoginState>(
-                        builder: (context, state) {
-                          if (state.status.isSubmissionFailure) {
-                            return Text(
-                              'SUBMISSION FAILURE',
-                              style: TextStyle(color: Colors.white),
-                            );
-                          } else if (state.status.isSubmissionInProgress) {
-                            return Text(
-                              'SUBMISSION IN PROGRESS',
-                              style: TextStyle(color: Colors.white),
-                            );
-                          } else if (state.status.isValid) {
-                            return Container(
-                              height: 80,
-                              width: double.infinity,
-                              color: Theme.of(context).highlightColor,
-                              child: Center(
-                                child: Shimmer.fromColors(
-                                  baseColor: kMainBgColor,
-                                  highlightColor:
-                                      Theme.of(context).primaryColor,
-                                  direction: ShimmerDirection.ltr,
-                                  loop: 1,
-                                  period: Duration(milliseconds: 600),
-                                  child: Text(
-                                    'AUTHENTICATE',
-                                    style: GoogleFonts.jura(
-                                      color: kMainBgColor,
-                                      fontSize: 26,
-                                      fontWeight: FontWeight.w800,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            );
-                          }
-                          return FormHeader();
-                        },
+              child: BlocBuilder<LoginCubit, LoginState>(
+                builder: (context, state) {
+                  return CustomPaint(
+                    painter: CustomPainterForClipper(
+                      color: state.status.isSubmissionFailure
+                          ? Colors.red
+                          : state.status.isValid
+                              ? Colors.green
+                              : state.status.isSubmissionInProgress
+                                  ? Colors.yellow
+                                  : kSecondaryColor,
+                    ),
+                    child: ClipPath(
+                      clipper: CustomClipPath(),
+                      child: Column(
+                        children: [
+                          FormHeader(
+                            bgColor: state.status.isSubmissionFailure
+                                ? Colors.red
+                                : state.status.isValid
+                                    ? Colors.green
+                                    : state.status.isSubmissionInProgress
+                                        ? Colors.yellow
+                                        : kSecondaryColor,
+                            title: state.status.isSubmissionFailure
+                                ? 'FAILURE'
+                                : state.status.isValid
+                                    ? 'SUBMIT'
+                                    : state.status.isSubmissionInProgress
+                                        ? 'CONNECTING...'
+                                        : 'LOGIN FORM',
+                          ),
+                          Container(
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 12, vertical: 20),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                _EmailInput(),
+                                SizedBox(height: 20),
+                                _PasswordInput(),
+                                SizedBox(height: 20),
+                              ],
+                            ),
+                          ),
+                        ],
                       ),
-                      Container(
-                        padding:
-                            EdgeInsets.symmetric(horizontal: 12, vertical: 20),
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            _EmailInput(),
-                            SizedBox(height: 20),
-                            _PasswordInput(),
-                            SizedBox(height: 20),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
+                    ),
+                  );
+                },
               ),
             ),
           ),

@@ -3,14 +3,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:void_chat_beta/constants/constants.dart';
-import 'package:void_chat_beta/login/login.dart';
+
 import 'package:void_chat_beta/ui/main_side/frame/auth_custom_frame/portrait/custom_clip_path.dart';
 import 'package:void_chat_beta/ui/main_side/frame/auth_custom_frame/portrait/custom_painter_for_clipper.dart';
 import 'package:keyboard_visibility/keyboard_visibility.dart';
 import 'package:formz/formz.dart';
-import 'package:void_chat_beta/widgets/switch_auth_button.dart';
 
 import '../sign_up.dart';
+import 'form_header_signup.dart';
 
 class SignUpForm extends StatefulWidget {
   @override
@@ -79,120 +79,67 @@ class _SignUpFormState extends State<SignUpForm> with TickerProviderStateMixin {
         alignment: visibleKbrd ? Alignment.topCenter : Alignment.center,
         child: SlideTransition(
           position: _slideInAnimation,
-          child: Container(
-            margin: EdgeInsets.only(top: 90),
-            width: 280,
-            child: SingleChildScrollView(
-              child: CustomPaint(
-                painter: CustomPainterForClipper(),
-                child: ClipPath(
-                  clipper: CustomClipPath(),
-                  child: Column(
-                    children: [
-                      FormTopUi(() {}),
-                      Container(
-                        padding:
-                            EdgeInsets.symmetric(horizontal: 12, vertical: 20),
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            _EmailInput(),
-                            SizedBox(height: 20),
-                            _UsernameInput(),
-                            SizedBox(height: 20),
-                            _PasswordInput(),
-                            SizedBox(height: 20),
-                            _ConfirmPasswordInput(),
-                            SizedBox(height: 20),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class FormTopUi extends StatelessWidget {
-  const FormTopUi(this.switcherOut);
-  final Function switcherOut;
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: context.watch<SignUpCubit>().state.status.isValidated
-          ? () => context.read<SignUpCubit>().signUpFormSubmitted()
-          : null,
-      child: Container(
-        height: 80,
-        width: double.infinity,
-        color: Theme.of(context).primaryColor,
-        child: Column(
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                Container(
-                  alignment: Alignment.center,
-                  child: context
-                          .watch<SignUpCubit>()
-                          .state
-                          .status
-                          .isSubmissionInProgress
-                      ? const CircularProgressIndicator()
-                      : Text(
-                          'REGISTER',
-                          style: GoogleFonts.jura(
-                            letterSpacing: 4,
-                            fontWeight: FontWeight.w600,
-                            fontSize: 26,
-                            color: kMainBgColor,
+          child: BlocBuilder<SignUpCubit, SignUpState>(
+            builder: (context, state) {
+              return Container(
+                margin: EdgeInsets.only(top: 90),
+                width: 280,
+                child: SingleChildScrollView(
+                  child: CustomPaint(
+                    painter: CustomPainterForClipper(
+                      color: state.status.isSubmissionFailure
+                          ? Colors.red
+                          : state.status.isValid
+                              ? Colors.green
+                              : state.status.isSubmissionInProgress
+                                  ? Colors.yellow
+                                  : kSecondaryColor,
+                    ),
+                    child: ClipPath(
+                      clipper: CustomClipPath(),
+                      child: Column(
+                        children: [
+                          FormHeaderSignUp(
+                            color: state.status.isSubmissionFailure
+                                ? Colors.red
+                                : state.status.isValid
+                                    ? Colors.green
+                                    : state.status.isSubmissionInProgress
+                                        ? Colors.yellow
+                                        : kSecondaryColor,
+                            title: state.status.isSubmissionFailure
+                                ? 'FAILURE'
+                                : state.status.isValid
+                                    ? 'SUBMIT'
+                                    : state.status.isSubmissionInProgress
+                                        ? 'CONNECTING...'
+                                        : 'REGISTRATION',
                           ),
-                        ),
-                ),
-                SizedBox(width: 12),
-                Icon(Icons.input,
-                    color: Theme.of(context).backgroundColor, size: 36),
-                SizedBox(width: 3),
-              ],
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                GestureDetector(
-                  onTap: () =>
-                      Navigator.of(context).push<void>(LoginPage.route()),
-                  onPanUpdate: (details) {
-                    if (details.delta.dx > 0) {
-                      Navigator.of(context).push<void>(LoginPage.route());
-                    }
-                  },
-                  child: Container(
-                    height: 38,
-                    width: 220,
-                    alignment: Alignment.centerRight,
-                    decoration: BoxDecoration(
-                      color: Theme.of(context).backgroundColor,
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(14),
+                          Container(
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 12, vertical: 20),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                _EmailInput(),
+                                SizedBox(height: 20),
+                                _UsernameInput(),
+                                SizedBox(height: 20),
+                                _PasswordInput(),
+                                SizedBox(height: 20),
+                                _ConfirmPasswordInput(),
+                                SizedBox(height: 20),
+                              ],
+                            ),
+                          ),
+                        ],
                       ),
-                    ),
-                    child: SwitchAuthButton(
-                      text: 'SWITCH TO LOGIN',
                     ),
                   ),
                 ),
-                SizedBox(width: 4),
-              ],
-            ),
-            SizedBox(height: 2),
-          ],
+              );
+            },
+          ),
         ),
       ),
     );

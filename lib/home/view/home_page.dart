@@ -1,4 +1,3 @@
-import 'package:authentication_repository/authentication_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:void_chat_beta/authentication/bloc/authentication_bloc.dart';
 
@@ -12,16 +11,19 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final user = context.select((AuthenticationBloc bloc) => bloc.state.user);
     return Scaffold(
       body: PortraitMobileUI(
         routeName: 'Messages',
-        content: Container(
-          color: Colors.white24,
-          child: Text(
-            user.email + ' ' + user.username,
-            style: TextStyle(color: Colors.white),
-          ),
+        content: BlocBuilder<AuthenticationBloc, AuthenticationState>(
+          builder: (context, state) {
+            return Container(
+              color: Colors.white24,
+              child: Text(
+                state.user.email + state.user.username,
+                style: TextStyle(color: Colors.white),
+              ),
+            );
+          },
         ),
       ),
     );

@@ -1,50 +1,51 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:formz/formz.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:void_chat_beta/constants/constants.dart';
 import 'package:void_chat_beta/widgets/switch_auth_button.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:formz/formz.dart';
 
-import 'package:void_chat_beta/login/login.dart';
+import '../sign_up.dart';
 
-class FormHeader extends StatelessWidget {
+class FormHeaderSignUp extends StatelessWidget {
+  final Color color;
   final String title;
-  final Color bgColor;
 
-  const FormHeader({
+  const FormHeaderSignUp({
     Key key,
+    @required this.color,
     @required this.title,
-    @required this.bgColor,
   }) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: context.watch<LoginCubit>().state.status.isValidated
+      onTap: context.watch<SignUpCubit>().state.status.isValidated
           ? () {
               FocusScope.of(context).unfocus();
-              return context.read<LoginCubit>().logInWithCredentials();
+              return context.read<SignUpCubit>().signUpFormSubmitted();
             }
           : null,
       child: Container(
         height: 80,
         width: double.infinity,
-        color: bgColor,
+        color: color,
         child: Column(
           children: [
             Row(
-              mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                Text(
-                  title,
-                  style: GoogleFonts.jura(
-                    letterSpacing: 2,
-                    fontWeight: FontWeight.w600,
-                    fontSize: 26,
-                    color: kMainBgColor,
+                Container(
+                  alignment: Alignment.center,
+                  child: Text(
+                    title,
+                    style: GoogleFonts.jura(
+                      letterSpacing: 2,
+                      fontWeight: FontWeight.w600,
+                      fontSize: 26,
+                      color: kMainBgColor,
+                    ),
                   ),
-                  textWidthBasis: TextWidthBasis.parent,
-                  textAlign: TextAlign.justify,
                 ),
                 SizedBox(width: 12),
                 Icon(Icons.login_outlined,
@@ -56,12 +57,11 @@ class FormHeader extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 GestureDetector(
-                  onTap: () {
-                    Navigator.of(context).pushNamed<void>(signupRoute);
-                  },
+                  onTap: () =>
+                      Navigator.of(context).pushNamed<void>(loginRoute),
                   onPanUpdate: (details) {
                     if (details.delta.dx > 0) {
-                      Navigator.of(context).pushNamed<void>(signupRoute);
+                      Navigator.of(context).pushNamed<void>(loginRoute);
                     }
                   },
                   child: Container(
@@ -75,7 +75,7 @@ class FormHeader extends StatelessWidget {
                       ),
                     ),
                     child: SwitchAuthButton(
-                      text: 'SWITCH TO REGISTRATION',
+                      text: 'SWITCH TO LOGIN',
                     ),
                   ),
                 ),
