@@ -48,7 +48,7 @@ class AppRouter {
         return MaterialPageRoute(builder: (_) => FaqView());
         break;
       default:
-        return null;
+        return MaterialPageRoute(builder: (_) => LoginPage());
     }
   }
 

@@ -109,11 +109,11 @@ class _LoginFormState extends State<LoginForm> with TickerProviderStateMixin {
                                         ? Theme.of(context).highlightColor
                                         : Theme.of(context).primaryColor,
                             title: state.status.isSubmissionFailure
-                                ? 'FAILURE'
+                                ? 'failure'.tr
                                 : state.status.isValid
-                                    ? 'SUBMIT'
+                                    ? 'submit'.tr
                                     : state.status.isSubmissionInProgress
-                                        ? 'CONNECTING...'
+                                        ? 'connecting'.tr
                                         : 'login_form'.tr,
                           ),
                           Container(
@@ -157,9 +157,9 @@ class _EmailInput extends StatelessWidget {
               isDense: true,
               contentPadding:
                   EdgeInsets.symmetric(vertical: 10, horizontal: 12),
-              labelText: 'Email',
+              labelText: 'email'.tr,
               border: InputBorder.none,
-              errorText: state.email.invalid ? 'invalid email' : null,
+              errorText: state.email.invalid ? 'invalid.email'.tr : null,
             ),
             cursorColor: Theme.of(context)
                 .inputDecorationTheme
@@ -202,8 +202,8 @@ class _PasswordInput extends StatelessWidget {
               isDense: true,
               contentPadding:
                   EdgeInsets.symmetric(vertical: 10, horizontal: 12),
-              labelText: 'Password',
-              errorText: state.password.invalid ? 'Invalid password' : null,
+              labelText: 'password'.tr,
+              errorText: state.password.invalid ? 'invalid.password'.tr : null,
             ),
             style: GoogleFonts.jura(
                 letterSpacing: 2,

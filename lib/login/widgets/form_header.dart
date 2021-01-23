@@ -4,6 +4,7 @@ import 'package:void_chat_beta/constants/constants.dart';
 import 'package:void_chat_beta/widgets/switch_auth_button.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
+import 'package:get/get.dart';
 
 import 'package:void_chat_beta/login/login.dart';
 
@@ -80,7 +81,7 @@ class FormHeader extends StatelessWidget {
                       ),
                     ),
                     child: SwitchAuthButton(
-                      text: 'SWITCH TO REGISTRATION',
+                      text: 'switch_to_registration'.tr,
                     ),
                   ),
                 ),

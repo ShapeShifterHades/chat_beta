@@ -1,6 +1,7 @@
 import 'package:authentication_repository/authentication_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get/get.dart';
 import 'package:void_chat_beta/login/cubit/login_cubit.dart';
 import 'package:void_chat_beta/login/widgets/login_form.dart';
 import '../../theme/brightness_cubit.dart';
@@ -13,11 +14,31 @@ class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        child: const Icon(Icons.brightness_6),
-        onPressed: () {
-          context.read<BrightnessCubit>().toggleBrightness();
-        },
+      floatingActionButton: Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          //     SizedBox(width: 40),
+          //     FloatingActionButton(
+          //       key: Key('leftButton'),
+          //       child: const Icon(Icons.my_location_outlined),
+          //       onPressed: () {
+          //         Get.locale.countryCode == 'RU'
+          //             ? Get.updateLocale(Locale('en', 'US'))
+          //             : Get.updateLocale(Locale('ru', 'RU'));
+          //       },
+          //     ),
+          SizedBox(width: 40),
+          FloatingActionButton(
+            key: Key('rightButton'),
+            child: const Icon(Icons.brightness_6),
+            onPressed: () {
+              Get.locale.countryCode == 'RU'
+                  ? Get.updateLocale(Locale('en', 'US'))
+                  : Get.updateLocale(Locale('ru', 'RU'));
+              context.read<BrightnessCubit>().toggleBrightness();
+            },
+          ),
+        ],
       ),
       resizeToAvoidBottomInset: false,
       backgroundColor: Theme.of(context).backgroundColor,
