@@ -2,10 +2,13 @@ import 'package:authentication_repository/authentication_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:void_chat_beta/router/app_router.dart';
-import 'package:void_chat_beta/theme.dart';
+
 import 'authentication/authentication.dart';
 import 'contacts/bloc/contact_bloc.dart';
 import 'package:sqflite_repository/sqflite_repository.dart';
+
+import 'theme/brightness_cubit.dart';
+import 'theme/theme.dart';
 
 class App extends StatelessWidget {
   const App({
@@ -31,7 +34,8 @@ class App extends StatelessWidget {
             create: (_) => AuthenticationBloc(
               authenticationRepository: authenticationRepository,
             ),
-            child: AppView(),
+            child: BlocProvider(
+                create: (context) => BrightnessCubit(), child: AppView()),
           ),
         ),
       ),
@@ -51,30 +55,36 @@ class _AppViewState extends State<AppView> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: theme1(context),
-      navigatorKey: _navigatorKey,
-      builder: (context, child) {
-        return BlocListener<AuthenticationBloc, AuthenticationState>(
-          listener: (context, state) {
-            switch (state.status) {
-              case AuthenticationStatus.authenticated:
-                _navigator.pushNamedAndRemoveUntil<void>('/', (route) => false);
-                break;
-              case AuthenticationStatus.unauthenticated:
-                _navigator.pushNamedAndRemoveUntil<void>(
-                  '/login',
-                  (route) => false,
-                );
-                break;
-              default:
-                break;
-            }
+    return BlocBuilder<BrightnessCubit, Brightness>(
+      builder: (context, brightness) {
+        return MaterialApp(
+          debugShowCheckedModeBanner: false,
+          theme: theme1(context, brightness),
+          navigatorKey: _navigatorKey,
+          builder: (context, child) {
+            return BlocListener<AuthenticationBloc, AuthenticationState>(
+              listener: (context, state) {
+                switch (state.status) {
+                  case AuthenticationStatus.authenticated:
+                    _navigator.pushNamedAndRemoveUntil<void>(
+                        '/', (route) => false);
+                    break;
+                  case AuthenticationStatus.unauthenticated:
+                    _navigator.pushNamedAndRemoveUntil<void>(
+                      '/login',
+                      (route) => false,
+                    );
+                    break;
+                  default:
+                    break;
+                }
+              },
+              child: child,
+            );
           },
-          child: child,
+          onGenerateRoute: _appRouter.onGenerateRoute,
         );
       },
-      onGenerateRoute: _appRouter.onGenerateRoute,
     );
   }
 

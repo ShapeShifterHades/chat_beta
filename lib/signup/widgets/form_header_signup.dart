@@ -27,15 +27,17 @@ class FormHeaderSignUp extends StatelessWidget {
             }
           : null,
       child: Container(
-        height: 80,
+        height: 90,
         width: double.infinity,
         color: color,
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.end,
           children: [
             Row(
-              mainAxisAlignment: MainAxisAlignment.end,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Container(
+                  height: 50,
                   alignment: Alignment.center,
                   child: Text(
                     title,
@@ -43,14 +45,15 @@ class FormHeaderSignUp extends StatelessWidget {
                       letterSpacing: 2,
                       fontWeight: FontWeight.w600,
                       fontSize: 26,
-                      color: kMainBgColor,
+                      color: Theme.of(context).primaryTextTheme.subtitle1.color,
                     ),
                   ),
                 ),
-                SizedBox(width: 12),
-                Icon(Icons.login_outlined,
-                    color: Theme.of(context).backgroundColor, size: 36),
-                SizedBox(width: 3),
+                // SizedBox(width: 12),
+                // Icon(Icons.login_outlined,
+                //     color: Theme.of(context).primaryTextTheme.subtitle1.color,
+                //     size: 36),
+                // SizedBox(width: 3),
               ],
             ),
             Row(
@@ -79,10 +82,10 @@ class FormHeaderSignUp extends StatelessWidget {
                     ),
                   ),
                 ),
-                SizedBox(width: 4),
+                SizedBox(width: 1),
               ],
             ),
-            SizedBox(height: 2),
+            SizedBox(height: 1),
           ],
         ),
       ),

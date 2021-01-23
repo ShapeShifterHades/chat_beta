@@ -41,6 +41,8 @@ dependencies:
   # sqflite:
   # path_provider:
   equatable:
+  hydrated_bloc:
+  get:
 
 dev_dependencies:
   flutter_test:

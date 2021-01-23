@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
-import 'package:void_chat_beta/constants/constants.dart';
 
 class SwitchAuthButton extends StatelessWidget {
   const SwitchAuthButton({
@@ -16,17 +15,21 @@ class SwitchAuthButton extends StatelessWidget {
       children: [
         SizedBox(width: 2),
         Shimmer.fromColors(
-          baseColor: Colors.white,
-          highlightColor: kMainBgColor,
+          baseColor: Theme.of(context)
+              .inputDecorationTheme
+              .enabledBorder
+              .borderSide
+              .color,
+          highlightColor: Theme.of(context).backgroundColor,
           loop: 0,
-          period: Duration(milliseconds: 4000),
+          period: Duration(milliseconds: 3000),
           child: Row(
             children: [
               Text(
                 text,
                 style: TextStyle(
                   color: Theme.of(context).primaryColor,
-                  fontSize: 12,
+                  fontSize: 11,
                 ),
               ),
               SizedBox(width: 10),

@@ -9,12 +9,12 @@ import 'package:void_chat_beta/login/login.dart';
 
 class FormHeader extends StatelessWidget {
   final String title;
-  final Color bgColor;
+  final Color color;
 
   const FormHeader({
     Key key,
     @required this.title,
-    @required this.bgColor,
+    @required this.color,
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -26,30 +26,35 @@ class FormHeader extends StatelessWidget {
             }
           : null,
       child: Container(
-        height: 80,
+        height: 90,
         width: double.infinity,
-        color: bgColor,
+        color: color,
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.end,
           children: [
             Row(
-              mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.end,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(
-                  title,
-                  style: GoogleFonts.jura(
-                    letterSpacing: 2,
-                    fontWeight: FontWeight.w600,
-                    fontSize: 26,
-                    color: kMainBgColor,
+                Container(
+                  height: 50,
+                  alignment: Alignment.center,
+                  child: Text(
+                    title,
+                    style: GoogleFonts.jura(
+                        letterSpacing: 2,
+                        fontWeight: FontWeight.w600,
+                        fontSize: 26,
+                        color:
+                            Theme.of(context).primaryTextTheme.subtitle1.color),
+                    textWidthBasis: TextWidthBasis.parent,
+                    textAlign: TextAlign.justify,
                   ),
-                  textWidthBasis: TextWidthBasis.parent,
-                  textAlign: TextAlign.justify,
                 ),
-                SizedBox(width: 12),
-                Icon(Icons.login_outlined,
-                    color: Theme.of(context).backgroundColor, size: 36),
-                SizedBox(width: 3),
+                // SizedBox(width: 12),
+                // Icon(Icons.login_outlined,
+                //     color: Theme.of(context).primaryTextTheme.subtitle1.color,
+                //     size: 36),
+                // SizedBox(width: 3),
               ],
             ),
             Row(
@@ -79,10 +84,10 @@ class FormHeader extends StatelessWidget {
                     ),
                   ),
                 ),
-                SizedBox(width: 4),
+                SizedBox(width: 1),
               ],
             ),
-            SizedBox(height: 2),
+            SizedBox(height: 1),
           ],
         ),
       ),

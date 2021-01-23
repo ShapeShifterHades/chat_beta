@@ -2,13 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import 'package:void_chat_beta/constants/constants.dart';
-
 import 'package:void_chat_beta/login/login.dart';
 import 'package:void_chat_beta/ui/main_side/frame/auth_custom_frame/portrait/custom_clip_path.dart';
 import 'package:void_chat_beta/ui/main_side/frame/auth_custom_frame/portrait/custom_painter_for_clipper.dart';
 import 'package:keyboard_visibility/keyboard_visibility.dart';
 import 'package:formz/formz.dart';
+import 'package:get/get.dart';
 
 import '../login.dart';
 
@@ -82,7 +81,7 @@ class _LoginFormState extends State<LoginForm> with TickerProviderStateMixin {
         child: SlideTransition(
           position: _slideInAnimation,
           child: Container(
-            margin: EdgeInsets.only(top: 90),
+            margin: EdgeInsets.only(top: 40),
             width: 280,
             child: SingleChildScrollView(
               child: BlocBuilder<LoginCubit, LoginState>(
@@ -90,32 +89,32 @@ class _LoginFormState extends State<LoginForm> with TickerProviderStateMixin {
                   return CustomPaint(
                     painter: CustomPainterForClipper(
                       color: state.status.isSubmissionFailure
-                          ? Colors.red
+                          ? Theme.of(context).errorColor
                           : state.status.isValid
-                              ? Colors.green
+                              ? Theme.of(context).accentColor
                               : state.status.isSubmissionInProgress
-                                  ? Colors.yellow
-                                  : kSecondaryColor,
+                                  ? Theme.of(context).highlightColor
+                                  : Theme.of(context).primaryColor,
                     ),
                     child: ClipPath(
                       clipper: CustomClipPath(),
                       child: Column(
                         children: [
                           FormHeader(
-                            bgColor: state.status.isSubmissionFailure
-                                ? Colors.red
+                            color: state.status.isSubmissionFailure
+                                ? Theme.of(context).errorColor
                                 : state.status.isValid
-                                    ? Colors.green
+                                    ? Theme.of(context).accentColor
                                     : state.status.isSubmissionInProgress
-                                        ? Colors.yellow
-                                        : kSecondaryColor,
+                                        ? Theme.of(context).highlightColor
+                                        : Theme.of(context).primaryColor,
                             title: state.status.isSubmissionFailure
                                 ? 'FAILURE'
                                 : state.status.isValid
                                     ? 'SUBMIT'
                                     : state.status.isSubmissionInProgress
                                         ? 'CONNECTING...'
-                                        : 'LOGIN FORM',
+                                        : 'login_form'.tr,
                           ),
                           Container(
                             padding: EdgeInsets.symmetric(
@@ -162,17 +161,25 @@ class _EmailInput extends StatelessWidget {
               border: InputBorder.none,
               errorText: state.email.invalid ? 'invalid email' : null,
             ),
-            cursorColor: Color(0xFF8C8E8D),
+            cursorColor: Theme.of(context)
+                .inputDecorationTheme
+                .enabledBorder
+                .borderSide
+                .color,
             maxLines: 1,
             style: GoogleFonts.jura(
                 letterSpacing: 2,
-                color: Colors.white,
+                color: Theme.of(context)
+                    .inputDecorationTheme
+                    .enabledBorder
+                    .borderSide
+                    .color,
                 decoration: TextDecoration.none,
                 fontWeight: FontWeight.w100,
                 fontSize: 22),
             autocorrect: false,
             textCapitalization: TextCapitalization.none,
-            enableSuggestions: false,
+            enableSuggestions: true,
             keyboardType: TextInputType.emailAddress,
             onChanged: (email) =>
                 context.read<LoginCubit>().emailChanged(email),
@@ -200,11 +207,19 @@ class _PasswordInput extends StatelessWidget {
             ),
             style: GoogleFonts.jura(
                 letterSpacing: 2,
-                color: Colors.white,
+                color: Theme.of(context)
+                    .inputDecorationTheme
+                    .enabledBorder
+                    .borderSide
+                    .color,
                 decoration: TextDecoration.none,
                 fontWeight: FontWeight.w100,
                 fontSize: 22),
-            cursorColor: Color(0xFF8C8E8D),
+            cursorColor: Theme.of(context)
+                .inputDecorationTheme
+                .enabledBorder
+                .borderSide
+                .color,
             obscureText: true,
             onChanged: (password) =>
                 context.read<LoginCubit>().passwordChanged(password),

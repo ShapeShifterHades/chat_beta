@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'package:void_chat_beta/constants/constants.dart';
 
 import 'package:void_chat_beta/ui/main_side/frame/auth_custom_frame/portrait/custom_clip_path.dart';
 import 'package:void_chat_beta/ui/main_side/frame/auth_custom_frame/portrait/custom_painter_for_clipper.dart';
@@ -82,18 +81,18 @@ class _SignUpFormState extends State<SignUpForm> with TickerProviderStateMixin {
           child: BlocBuilder<SignUpCubit, SignUpState>(
             builder: (context, state) {
               return Container(
-                margin: EdgeInsets.only(top: 90),
+                margin: EdgeInsets.only(top: 40),
                 width: 280,
                 child: SingleChildScrollView(
                   child: CustomPaint(
                     painter: CustomPainterForClipper(
                       color: state.status.isSubmissionFailure
-                          ? Colors.red
+                          ? Theme.of(context).errorColor
                           : state.status.isValid
-                              ? Colors.green
+                              ? Theme.of(context).accentColor
                               : state.status.isSubmissionInProgress
-                                  ? Colors.yellow
-                                  : kSecondaryColor,
+                                  ? Theme.of(context).highlightColor
+                                  : Theme.of(context).primaryColor,
                     ),
                     child: ClipPath(
                       clipper: CustomClipPath(),
@@ -101,12 +100,12 @@ class _SignUpFormState extends State<SignUpForm> with TickerProviderStateMixin {
                         children: [
                           FormHeaderSignUp(
                             color: state.status.isSubmissionFailure
-                                ? Colors.red
+                                ? Theme.of(context).errorColor
                                 : state.status.isValid
-                                    ? Colors.green
+                                    ? Theme.of(context).accentColor
                                     : state.status.isSubmissionInProgress
-                                        ? Colors.yellow
-                                        : kSecondaryColor,
+                                        ? Theme.of(context).highlightColor
+                                        : Theme.of(context).primaryColor,
                             title: state.status.isSubmissionFailure
                                 ? 'FAILURE'
                                 : state.status.isValid
@@ -121,6 +120,8 @@ class _SignUpFormState extends State<SignUpForm> with TickerProviderStateMixin {
                             child: Column(
                               mainAxisSize: MainAxisSize.min,
                               children: [
+                                _TermsTile(),
+                                SizedBox(height: 20),
                                 _EmailInput(),
                                 SizedBox(height: 20),
                                 _UsernameInput(),
@@ -146,6 +147,41 @@ class _SignUpFormState extends State<SignUpForm> with TickerProviderStateMixin {
   }
 }
 
+class _TermsTile extends StatelessWidget {
+  const _TermsTile({
+    Key key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 20,
+      width: double.infinity,
+      alignment: Alignment.centerLeft,
+      child: Row(
+        mainAxisSize: MainAxisSize.max,
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          // SizedBox(width: 10),
+          SizedBox(
+            width: 18,
+            height: 18,
+            child: Checkbox(
+              onChanged: (value) => value,
+              value: false,
+            ),
+          ),
+          SizedBox(width: 18),
+          Text(
+            "I agree with Terms and Conditions",
+            style: Theme.of(context).primaryTextTheme.bodyText2,
+          )
+        ],
+      ),
+    );
+  }
+}
+
 class _EmailInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -164,11 +200,19 @@ class _EmailInput extends StatelessWidget {
               border: InputBorder.none,
               errorText: state.email.invalid ? 'invalid email' : null,
             ),
-            cursorColor: Color(0xFF8C8E8D),
+            cursorColor: Theme.of(context)
+                .inputDecorationTheme
+                .enabledBorder
+                .borderSide
+                .color,
             maxLines: 1,
             style: GoogleFonts.jura(
                 letterSpacing: 2,
-                color: Colors.white,
+                color: Theme.of(context)
+                    .inputDecorationTheme
+                    .enabledBorder
+                    .borderSide
+                    .color,
                 decoration: TextDecoration.none,
                 fontWeight: FontWeight.w100,
                 fontSize: 22),
@@ -201,11 +245,19 @@ class _UsernameInput extends StatelessWidget {
               border: InputBorder.none,
               errorText: state.username.invalid ? 'invalid username' : null,
             ),
-            cursorColor: Color(0xFF8C8E8D),
+            cursorColor: Theme.of(context)
+                .inputDecorationTheme
+                .enabledBorder
+                .borderSide
+                .color,
             maxLines: 1,
             style: GoogleFonts.jura(
                 letterSpacing: 2,
-                color: Colors.white,
+                color: Theme.of(context)
+                    .inputDecorationTheme
+                    .enabledBorder
+                    .borderSide
+                    .color,
                 decoration: TextDecoration.none,
                 fontWeight: FontWeight.w100,
                 fontSize: 22),
@@ -239,11 +291,19 @@ class _PasswordInput extends StatelessWidget {
             ),
             style: GoogleFonts.jura(
                 letterSpacing: 2,
-                color: Colors.white,
+                color: Theme.of(context)
+                    .inputDecorationTheme
+                    .enabledBorder
+                    .borderSide
+                    .color,
                 decoration: TextDecoration.none,
                 fontWeight: FontWeight.w100,
                 fontSize: 22),
-            cursorColor: Color(0xFF8C8E8D),
+            cursorColor: Theme.of(context)
+                .inputDecorationTheme
+                .enabledBorder
+                .borderSide
+                .color,
             obscureText: true,
             onChanged: (password) =>
                 context.read<SignUpCubit>().passwordChanged(password),
@@ -279,11 +339,19 @@ class _ConfirmPasswordInput extends StatelessWidget {
             ),
             style: GoogleFonts.jura(
                 letterSpacing: 2,
-                color: Colors.white,
+                color: Theme.of(context)
+                    .inputDecorationTheme
+                    .enabledBorder
+                    .borderSide
+                    .color,
                 decoration: TextDecoration.none,
                 fontWeight: FontWeight.w100,
                 fontSize: 22),
-            cursorColor: Color(0xFF8C8E8D),
+            cursorColor: Theme.of(context)
+                .inputDecorationTheme
+                .enabledBorder
+                .borderSide
+                .color,
             obscureText: true,
             enableSuggestions: false,
             onChanged: (confirmPassword) => context
