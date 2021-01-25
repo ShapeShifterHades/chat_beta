@@ -46,12 +46,12 @@ class App extends StatelessWidget {
             create: (_) => AuthenticationBloc(
               authenticationRepository: authenticationRepository,
             ),
-            // child: BlocProvider(
-            //   create: (context) => LocaleCubit(),
             child: BlocProvider(
-                create: (context) => BrightnessCubit(), child: AppView()),
+              create: (context) => LocaleCubit(),
+              child: BlocProvider(
+                  create: (context) => BrightnessCubit(), child: AppView()),
+            ),
           ),
-          // ),
         ),
       ),
     );
@@ -66,46 +66,51 @@ class AppView extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<BrightnessCubit, Brightness>(
       builder: (context, brightness) {
-        return GetMaterialApp(
-          locale: Get.deviceLocale,
-          initialRoute: '/',
-          routingCallback: (routing) {
-            if (routing.current == '/') {
-              print('MiddleWare here. Ligh authcheck before page load.');
-            }
-          },
-          getPages: [
-            GetPage(name: '/', page: () => LoginPage()),
-            GetPage(name: homeRoute, page: () => HomePage()),
-            GetPage(name: loginRoute, page: () => LoginPage()),
-            GetPage(name: settingsRoute, page: () => SettingsView()),
-            GetPage(name: securityRoute, page: () => SecurityView()),
-            GetPage(name: faqRoute, page: () => FaqView()),
-            GetPage(name: contactsRoute, page: () => ContactsView()),
-            GetPage(
-              name: signupRoute,
-              page: () => RepositoryProvider.value(
-                  value: firestoreNewUserRepository, child: SignUpPage()),
-            ),
-          ],
-          translations: LoginPageTranslations(),
-          debugShowCheckedModeBanner: false,
-          theme: theme1(context, brightness),
-          builder: (context, child) {
-            return BlocListener<AuthenticationBloc, AuthenticationState>(
-              listener: (context, state) {
-                switch (state.status) {
-                  case AuthenticationStatus.authenticated:
-                    Get.offAllNamed(homeRoute);
-                    break;
-                  case AuthenticationStatus.unauthenticated:
-                    Get.offAllNamed("/");
-                    break;
-                  default:
-                    break;
+        return BlocBuilder<LocaleCubit, String>(
+          builder: (context, locale) {
+            return GetMaterialApp(
+              locale: Locale(context.watch<LocaleCubit>().state ??
+                  Get.deviceLocale.countryCode),
+              initialRoute: '/',
+              routingCallback: (routing) {
+                if (routing.current == '/') {
+                  print('MiddleWare here. Ligh authcheck before page load.');
                 }
               },
-              child: child,
+              getPages: [
+                GetPage(name: '/', page: () => LoginPage()),
+                GetPage(name: homeRoute, page: () => HomePage()),
+                GetPage(name: loginRoute, page: () => LoginPage()),
+                GetPage(name: settingsRoute, page: () => SettingsView()),
+                GetPage(name: securityRoute, page: () => SecurityView()),
+                GetPage(name: faqRoute, page: () => FaqView()),
+                GetPage(name: contactsRoute, page: () => ContactsView()),
+                GetPage(
+                  name: signupRoute,
+                  page: () => RepositoryProvider.value(
+                      value: firestoreNewUserRepository, child: SignUpPage()),
+                ),
+              ],
+              translations: LoginPageTranslations(),
+              debugShowCheckedModeBanner: false,
+              theme: theme1(context, brightness),
+              builder: (context, child) {
+                return BlocListener<AuthenticationBloc, AuthenticationState>(
+                  listener: (context, state) {
+                    switch (state.status) {
+                      case AuthenticationStatus.authenticated:
+                        Get.offAllNamed(homeRoute);
+                        break;
+                      case AuthenticationStatus.unauthenticated:
+                        Get.offAllNamed("/");
+                        break;
+                      default:
+                        break;
+                    }
+                  },
+                  child: child,
+                );
+              },
             );
           },
         );

@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 class LoginPageTranslations extends Translations {
   @override
   Map<String, Map<String, String>> get keys => {
-        'en_US': {
+        'US': {
           'login_form': 'LOGIN FORM',
           'switch_to_registration': 'SWITCH TO REGISTRATION',
           'failure': 'FAILURE',
@@ -14,7 +14,7 @@ class LoginPageTranslations extends Translations {
           'invalid.email': 'Invalid email',
           'invalid.password': 'Invalid password',
         },
-        'ru_RU': {
+        'RU': {
           'login_form': 'АВТОРИЗАЦИЯ',
           'switch_to_registration': 'ПЕРЕЙТИ К РЕГИСТРАЦИИ',
           'failure': 'ОШИБКА',

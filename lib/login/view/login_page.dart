@@ -33,9 +33,10 @@ class LoginPage extends StatelessWidget {
             key: Key('rightButton'),
             child: const Icon(Icons.brightness_6),
             onPressed: () {
-              print(context.read<LocaleCubit>().state);
               context.read<LocaleCubit>().toggleLocale();
-              Get.updateLocale(context.watch<LocaleCubit>().state);
+              print(context.read<LocaleCubit>().state ??
+                  Get.deviceLocale.countryCode);
+              Get.updateLocale(Locale(context.read<LocaleCubit>().state));
               context.read<BrightnessCubit>().toggleBrightness();
             },
           ),

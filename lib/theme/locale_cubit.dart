@@ -1,21 +1,19 @@
-import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 
-class LocaleCubit extends HydratedCubit<Locale> {
-  LocaleCubit() : super(Get.deviceLocale);
+class LocaleCubit extends HydratedCubit<String> {
+  LocaleCubit() : super('US');
 
   void toggleLocale() {
-    emit(state == Locale('RU') ? Locale('US') : Locale('RU'));
+    emit(state == 'US' ? 'RU' : 'US');
   }
 
   @override
-  Locale fromJson(Map<String, dynamic> json) {
-    return Locale(json['locale']);
+  String fromJson(Map<String, dynamic> json) {
+    return json['test3'];
   }
 
   @override
-  Map<String, dynamic> toJson(Locale state) {
-    return <String, String>{'locale': state.countryCode};
+  Map<String, String> toJson(String state) {
+    return <String, String>{'test3': state};
   }
 }
