@@ -4,6 +4,7 @@ import 'package:formz/formz.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:void_chat_beta/constants/constants.dart';
 import 'package:void_chat_beta/widgets/switch_auth_button.dart';
+import 'package:get/get.dart';
 
 import '../sign_up.dart';
 
@@ -49,11 +50,6 @@ class FormHeaderSignUp extends StatelessWidget {
                     ),
                   ),
                 ),
-                // SizedBox(width: 12),
-                // Icon(Icons.login_outlined,
-                //     color: Theme.of(context).primaryTextTheme.subtitle1.color,
-                //     size: 36),
-                // SizedBox(width: 3),
               ],
             ),
             Row(
@@ -78,7 +74,7 @@ class FormHeaderSignUp extends StatelessWidget {
                       ),
                     ),
                     child: SwitchAuthButton(
-                      text: 'SWITCH TO LOGIN',
+                      text: 'switch_to_login'.tr,
                     ),
                   ),
                 ),

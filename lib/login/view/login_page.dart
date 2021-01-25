@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:void_chat_beta/login/cubit/login_cubit.dart';
 import 'package:void_chat_beta/login/widgets/login_form.dart';
 import '../../theme/brightness_cubit.dart';
+import '../../theme/locale_cubit.dart';
 
 class LoginPage extends StatelessWidget {
   static Route route() {
@@ -32,9 +33,9 @@ class LoginPage extends StatelessWidget {
             key: Key('rightButton'),
             child: const Icon(Icons.brightness_6),
             onPressed: () {
-              Get.locale.countryCode == 'RU'
-                  ? Get.updateLocale(Locale('en', 'US'))
-                  : Get.updateLocale(Locale('ru', 'RU'));
+              print(context.read<LocaleCubit>().state);
+              context.read<LocaleCubit>().toggleLocale();
+              Get.updateLocale(context.watch<LocaleCubit>().state);
               context.read<BrightnessCubit>().toggleBrightness();
             },
           ),

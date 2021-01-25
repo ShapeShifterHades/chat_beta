@@ -29,16 +29,7 @@ class AppRouter {
         );
       case contactsRoute:
         return MaterialPageRoute(
-          builder: (_) =>
-              // RepositoryProvider.value(
-              //   value: contactRepository,
-              //   child: BlocProvider(
-              //     create: (_) =>
-              //         ContactBloc(contactRepository)..add(ContactLoaded()),
-              //     child:
-              ContactsView(),
-          //   ),
-          // ),
+          builder: (_) => ContactsView(),
         );
       case settingsRoute:
         return MaterialPageRoute(builder: (_) => SettingsView());
