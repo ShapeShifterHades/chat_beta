@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:void_chat_beta/constants/constants.dart';
 
 class DrawerMenuPMTile extends StatefulWidget {
   final String route;
   final String text;
   final IconData iconData;
+  final BuildContext context;
 
-  const DrawerMenuPMTile({Key key, this.text, this.iconData, this.route})
+  const DrawerMenuPMTile(
+      {Key key, this.context, this.text, this.iconData, this.route})
       : super(key: key);
 
   @override
@@ -29,8 +31,7 @@ class _DrawerMenuPMTileState extends State<DrawerMenuPMTile> {
         setState(() {
           _pressed = false;
         });
-        Navigator.pushNamed(
-          context,
+        Get.toNamed(
           widget.route ?? '/',
         );
       },
@@ -48,11 +49,13 @@ class _DrawerMenuPMTileState extends State<DrawerMenuPMTile> {
             MenuItem(pressed: _pressed, widget: widget),
             SizedBox(width: 20),
             CustomPaint(
-              painter: DrawerMenuPMTilePainter(pressed: _pressed),
+              painter: DrawerMenuPMTilePainter(
+                  pressed: _pressed,
+                  color: Theme.of(context).primaryTextTheme.bodyText1.color),
               child: ClipPath(
                 clipper: DrawerMenuPMTileClipper(),
                 child: Container(
-                  color: Theme.of(context).accentColor,
+                  color: Theme.of(context).primaryColor.withOpacity(0.08),
                   width: 140,
                   height: 38,
                   child: Material(
@@ -64,7 +67,10 @@ class _DrawerMenuPMTileState extends State<DrawerMenuPMTile> {
                         Text(
                           widget.text,
                           style: GoogleFonts.jura(
-                              color: Theme.of(context).primaryColor,
+                              color: Theme.of(context)
+                                  .primaryTextTheme
+                                  .bodyText1
+                                  .color,
                               fontSize: 20,
                               fontWeight: FontWeight.w800),
                           textAlign: TextAlign.left,
@@ -96,11 +102,13 @@ class MenuItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CustomPaint(
-      painter: IconMenuPMTilePainter(pressed: _pressed),
+      painter: IconMenuPMTilePainter(
+          pressed: _pressed,
+          color: Theme.of(context).primaryTextTheme.bodyText1.color),
       child: ClipPath(
         clipper: IconMenuPMTileClipper(),
         child: Container(
-          color: Theme.of(context).accentColor,
+          color: Theme.of(context).primaryColor.withOpacity(0.08),
           width: 52,
           height: 38,
           child: Material(
@@ -108,7 +116,7 @@ class MenuItem extends StatelessWidget {
             child: Center(
               child: Icon(
                 widget.iconData,
-                color: Theme.of(context).primaryColor,
+                color: Theme.of(context).primaryTextTheme.bodyText1.color,
               ),
             ),
           ),
@@ -120,8 +128,9 @@ class MenuItem extends StatelessWidget {
 
 class DrawerMenuPMTilePainter extends CustomPainter {
   final bool pressed;
+  final Color color;
 
-  DrawerMenuPMTilePainter({this.pressed = false});
+  DrawerMenuPMTilePainter({this.color, this.pressed = false});
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -129,7 +138,7 @@ class DrawerMenuPMTilePainter extends CustomPainter {
       ..style = PaintingStyle.stroke
       ..strokeWidth = 2
       ..strokeCap = StrokeCap.round
-      ..color = kStrokeColor.withOpacity(0.7);
+      ..color = color.withOpacity(0.7);
 
     Path path1 = Path();
     path1.lineTo(size.width * 0.15, 0);
@@ -172,9 +181,11 @@ class DrawerMenuPMTileClipper extends CustomClipper<Path> {
 }
 
 class IconMenuPMTilePainter extends CustomPainter {
+  final Color color;
+
   final bool pressed;
 
-  IconMenuPMTilePainter({this.pressed = false});
+  IconMenuPMTilePainter({this.color, this.pressed = false});
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -182,7 +193,7 @@ class IconMenuPMTilePainter extends CustomPainter {
       ..style = PaintingStyle.stroke
       ..strokeWidth = 2
       ..strokeCap = StrokeCap.round
-      ..color = kStrokeColor.withOpacity(0.7);
+      ..color = color.withOpacity(0.7);
 
     Path path1 = Path();
     path1.lineTo(size.width * 0.15, 0);

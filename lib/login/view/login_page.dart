@@ -18,16 +18,6 @@ class LoginPage extends StatelessWidget {
       floatingActionButton: Row(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
-          //     SizedBox(width: 40),
-          //     FloatingActionButton(
-          //       key: Key('leftButton'),
-          //       child: const Icon(Icons.my_location_outlined),
-          //       onPressed: () {
-          //         Get.locale.countryCode == 'RU'
-          //             ? Get.updateLocale(Locale('en', 'US'))
-          //             : Get.updateLocale(Locale('ru', 'RU'));
-          //       },
-          //     ),
           SizedBox(width: 40),
           FloatingActionButton(
             key: Key('rightButton'),

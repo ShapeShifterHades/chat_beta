@@ -74,7 +74,7 @@ class FormHeaderSignUp extends StatelessWidget {
                       ),
                     ),
                     child: SwitchAuthButton(
-                      text: 'switch_to_login'.tr,
+                      text: 'signup_switch_to_login'.tr,
                     ),
                   ),
                 ),

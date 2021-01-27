@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -22,6 +24,7 @@ class _LoginFormState extends State<LoginForm> with TickerProviderStateMixin {
   bool visibleKbrd = false;
   AnimationController _slideInController;
   Animation<Offset> _slideInAnimation;
+  Timer _timer;
 
   @override
   void initState() {
@@ -48,17 +51,16 @@ class _LoginFormState extends State<LoginForm> with TickerProviderStateMixin {
       ),
     );
 
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      Future.delayed(
-        const Duration(milliseconds: 400),
-        () => _slideInController.forward(),
-      );
+    _timer = Timer(Duration(milliseconds: 400), () {
+      _slideInController.forward();
     });
   }
 
   @override
   void dispose() {
     _slideInController.dispose();
+    _timer?.cancel();
+
     super.dispose();
   }
 
@@ -109,12 +111,12 @@ class _LoginFormState extends State<LoginForm> with TickerProviderStateMixin {
                                         ? Theme.of(context).highlightColor
                                         : Theme.of(context).primaryColor,
                             title: state.status.isSubmissionFailure
-                                ? 'failure'.tr
+                                ? 'loginpage_failure'.tr
                                 : state.status.isValid
-                                    ? 'submit'.tr
+                                    ? 'loginpage_submit'.tr
                                     : state.status.isSubmissionInProgress
-                                        ? 'connecting'.tr
-                                        : 'login_form'.tr,
+                                        ? 'loginpage_connecting'.tr
+                                        : 'loginpage_login_form'.tr,
                           ),
                           Container(
                             padding: EdgeInsets.symmetric(
@@ -157,9 +159,10 @@ class _EmailInput extends StatelessWidget {
               isDense: true,
               contentPadding:
                   EdgeInsets.symmetric(vertical: 10, horizontal: 12),
-              labelText: 'email'.tr,
+              labelText: 'loginpage_email'.tr,
               border: InputBorder.none,
-              errorText: state.email.invalid ? 'invalid.email'.tr : null,
+              errorText:
+                  state.email.invalid ? 'loginpage_invalid_email'.tr : null,
             ),
             cursorColor: Theme.of(context)
                 .inputDecorationTheme
@@ -202,8 +205,10 @@ class _PasswordInput extends StatelessWidget {
               isDense: true,
               contentPadding:
                   EdgeInsets.symmetric(vertical: 10, horizontal: 12),
-              labelText: 'password'.tr,
-              errorText: state.password.invalid ? 'invalid.password'.tr : null,
+              labelText: 'loginpage_password'.tr,
+              errorText: state.password.invalid
+                  ? 'loginpage_invalid_password'.tr
+                  : null,
             ),
             style: GoogleFonts.jura(
                 letterSpacing: 2,

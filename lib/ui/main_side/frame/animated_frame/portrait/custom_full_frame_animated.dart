@@ -5,10 +5,12 @@ import '../../animated_frame/portrait/custom_full_frame_painter.dart';
 class CustomFullFrameAnimated extends StatefulWidget {
   const CustomFullFrameAnimated({
     Key key,
+    @required this.context,
     @required this.size,
   }) : super(key: key);
 
   final Size size;
+  final BuildContext context;
 
   @override
   _PainterCustomWidgetTopState createState() => _PainterCustomWidgetTopState();
@@ -33,6 +35,7 @@ class _PainterCustomWidgetTopState extends State<CustomFullFrameAnimated>
   Widget _buildAnimation(BuildContext ctx, Widget child) {
     return CustomPaint(
       painter: CustomFullFramePainter(
+        context: context,
         animTopVal: _topAnimation.value,
         animrightVal: _rightAnimation.value,
         animBotVal: _botAnimation.value,

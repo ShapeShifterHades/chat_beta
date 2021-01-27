@@ -5,9 +5,11 @@ import 'package:google_fonts/google_fonts.dart';
 
 class ScreenTag extends StatelessWidget {
   final String routeName;
+  final BuildContext context;
   const ScreenTag({
     Key key,
     this.routeName,
+    this.context,
   }) : super(key: key);
 
   @override
@@ -19,7 +21,7 @@ class ScreenTag extends StatelessWidget {
         child: ClipPath(
           clipper: ScreenTagClipper(),
           child: Container(
-            color: Theme.of(context).accentColor,
+            color: Theme.of(context).primaryColor.withOpacity(0.08),
             height: 36,
             child: Material(
               color: Colors.transparent,
@@ -31,7 +33,11 @@ class ScreenTag extends StatelessWidget {
                     child: Text(
                       routeName ?? 'Routename argument is not defined',
                       style: GoogleFonts.jura(
-                          color: Theme.of(context).primaryColor, fontSize: 20),
+                          color: Theme.of(context)
+                              .primaryTextTheme
+                              .bodyText1
+                              .color,
+                          fontSize: 20),
                     ),
                   ),
                 ],

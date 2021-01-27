@@ -6,18 +6,23 @@ ThemeData theme1(BuildContext context, Brightness brightness) {
     brightness: brightness,
     primaryTextTheme: TextTheme(
       bodyText1: TextStyle(
-        color: Color(
-          0xFF100D0E,
-        ),
+        color: isDark
+            ? Color(0xFFA7F5FF)
+            : Color(0xFF10171E), // this is used for main drawer menu text
+        fontSize: 13,
       ),
-      subtitle1:
-          TextStyle(color: isDark ? Color(0xFF1C2321) : Color(0xFF1C2321)),
       bodyText2: TextStyle(
         color: isDark ? Color(0xFFFBFBFD) : Color(0xFF1C2321),
         fontSize: 13,
       ),
+      subtitle1:
+          TextStyle(color: isDark ? Color(0xFF1C2321) : Color(0xFF1C2321)),
+
       // headline3: TextStyle(color: )
     ),
+    bottomAppBarColor: isDark
+        ? Color(0xFF071A21)
+        : Color(0xFFF2F2F2), // Used in drawer backgrowndcolor
     primaryColor: isDark ? Color(0xFFA7F5FF) : Color(0xFF1D80BE),
     errorColor: Color(0xFFC83E4D), // Submit fail color
     highlightColor: Color(0xFFF28123), //Submission in progress color

@@ -8,7 +8,7 @@ class DrawerPM extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: Theme.of(context).backgroundColor,
+      color: Theme.of(context).bottomAppBarColor,
       child: SafeArea(
         child: Row(
           children: [
@@ -31,7 +31,10 @@ class DrawerPM extends StatelessWidget {
                         'Yorkee\n v.1.0.0 beta',
                         style: GoogleFonts.jura(
                           fontSize: 26,
-                          color: Theme.of(context).primaryColor,
+                          color: Theme.of(context)
+                              .primaryTextTheme
+                              .bodyText1
+                              .color,
                           fontWeight: FontWeight.bold,
                         ),
                       )),
@@ -42,35 +45,35 @@ class DrawerPM extends StatelessWidget {
                     iconData: Icons.inbox_outlined,
                     route: homeRoute,
                   ),
-                  SizedBox(height: 30),
+                  SizedBox(height: 15),
                   DrawerMenuPMTile(
                     text: 'Contacts',
                     iconData: Icons.contacts_outlined,
                     route: contactsRoute,
                   ),
-                  SizedBox(height: 30),
+                  SizedBox(height: 15),
                   DrawerMenuPMTile(
                       text: 'Settings',
                       iconData: Icons.settings_applications_outlined,
                       route: settingsRoute),
-                  SizedBox(height: 30),
+                  SizedBox(height: 15),
                   DrawerMenuPMTile(
                     text: 'Security',
                     iconData: Icons.account_circle_outlined,
                     route: securityRoute,
                   ),
-                  SizedBox(height: 30),
+                  SizedBox(height: 15),
                   DrawerMenuPMTile(
                     text: 'FAQ',
                     iconData: Icons.menu_book_outlined,
                     route: faqRoute,
                   ),
-                  SizedBox(height: 30),
+                  SizedBox(height: 45),
                   DrawerMenuPMTile(
                     text: 'Logout',
                     iconData: Icons.logout,
-                    route: '/logout',
                   ),
+                  SizedBox(height: 35),
                 ],
               ),
             ),

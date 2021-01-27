@@ -7,9 +7,11 @@ class CustomFullFramePainter extends CustomPainter {
   double animrightVal;
   double animLeftVal;
   double animAngle;
+  BuildContext context;
 
   final Color color = kMainFrameColor;
   CustomFullFramePainter({
+    this.context,
     this.animTopVal,
     this.animrightVal,
     this.animBotVal,
@@ -19,8 +21,8 @@ class CustomFullFramePainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     var _anglePaint = Paint()
-      ..color = color
-      ..strokeWidth = 0.5
+      ..color = Theme.of(context).primaryTextTheme.bodyText1.color
+      ..strokeWidth = 0.2
       ..strokeCap = StrokeCap.round;
 
     Offset angleStartingPoint = Offset(size.width, size.height - animAngle);
@@ -29,8 +31,8 @@ class CustomFullFramePainter extends CustomPainter {
     canvas.drawLine(angleStartingPoint, angleEndingPoint, _anglePaint);
 
     var _topPaint = Paint()
-      ..color = color
-      ..strokeWidth = 0.5
+      ..color = Theme.of(context).primaryTextTheme.bodyText1.color
+      ..strokeWidth = 0.2
       ..strokeCap = StrokeCap.round;
 
     Offset topStartingPoint = Offset(0, 0);
@@ -39,8 +41,8 @@ class CustomFullFramePainter extends CustomPainter {
     canvas.drawLine(topStartingPoint, topEndingPoint, _topPaint);
 
     var _bottomPaint = Paint()
-      ..color = color
-      ..strokeWidth = 0.5
+      ..color = Theme.of(context).primaryTextTheme.bodyText1.color
+      ..strokeWidth = 0.2
       ..strokeCap = StrokeCap.round;
 
     Offset bottomStartingPoint = Offset(size.width - 30, size.height);
@@ -49,8 +51,8 @@ class CustomFullFramePainter extends CustomPainter {
     canvas.drawLine(bottomStartingPoint, bottomEndingPoint, _bottomPaint);
 
     var _rightPaint = Paint()
-      ..color = color
-      ..strokeWidth = 0.5
+      ..color = Theme.of(context).primaryTextTheme.bodyText1.color
+      ..strokeWidth = 0.2
       ..strokeCap = StrokeCap.round;
 
     Offset rightStartingPoint = Offset(size.width, 0);
@@ -59,8 +61,8 @@ class CustomFullFramePainter extends CustomPainter {
     canvas.drawLine(rightStartingPoint, rightEndingPoint, _rightPaint);
 
     var _leftPaint = Paint()
-      ..color = color
-      ..strokeWidth = 0.5
+      ..color = Theme.of(context).primaryTextTheme.bodyText1.color
+      ..strokeWidth = 0.2
       ..strokeCap = StrokeCap.round;
 
     Offset leftStartingPoint = Offset(0, size.height);

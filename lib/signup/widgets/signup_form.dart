@@ -46,13 +46,13 @@ class _SignUpFormState extends State<SignUpForm> with TickerProviderStateMixin {
         curve: Curves.easeOut,
       ),
     );
-    _slideInController.forward();
-    // WidgetsBinding.instance.addPostFrameCallback((_) {
-    //   Future.delayed(
-    //     const Duration(milliseconds: 400),
-    //     () => _slideInController.forward().orCancel,
-    //   );
-    // });
+    // _slideInController.forward();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Future.delayed(
+        const Duration(milliseconds: 400),
+        () => _slideInController.forward().orCancel,
+      );
+    });
   }
 
   @override
@@ -108,12 +108,12 @@ class _SignUpFormState extends State<SignUpForm> with TickerProviderStateMixin {
                                         ? Theme.of(context).highlightColor
                                         : Theme.of(context).primaryColor,
                             title: state.status.isSubmissionFailure
-                                ? 'failure'.tr
+                                ? 'signup_failure'.tr
                                 : state.status.isValid
-                                    ? 'submit'.tr
+                                    ? 'signup_submit'.tr
                                     : state.status.isSubmissionInProgress
-                                        ? 'connecting'.tr
-                                        : 'registration'.tr,
+                                        ? 'signup_connecting'.tr
+                                        : 'signup_registration'.tr,
                           ),
                           Container(
                             padding: EdgeInsets.symmetric(
@@ -163,7 +163,6 @@ class _TermsTile extends StatelessWidget {
         mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          // SizedBox(width: 10),
           SizedBox(
             width: 18,
             height: 18,
@@ -174,7 +173,7 @@ class _TermsTile extends StatelessWidget {
           ),
           SizedBox(width: 18),
           Text(
-            'i_agree'.tr,
+            'signup_i_agree'.tr,
             style: Theme.of(context).primaryTextTheme.bodyText2,
           )
         ],
@@ -197,9 +196,9 @@ class _EmailInput extends StatelessWidget {
               isDense: true,
               contentPadding:
                   EdgeInsets.symmetric(vertical: 10, horizontal: 12),
-              labelText: 'email'.tr,
+              labelText: 'signup_email'.tr,
               border: InputBorder.none,
-              errorText: state.email.invalid ? 'invalid_email' : null,
+              errorText: state.email.invalid ? 'signup_invalid_email'.tr : null,
             ),
             cursorColor: Theme.of(context)
                 .inputDecorationTheme
@@ -242,9 +241,10 @@ class _UsernameInput extends StatelessWidget {
               isDense: true,
               contentPadding:
                   EdgeInsets.symmetric(vertical: 10, horizontal: 12),
-              labelText: 'username'.tr,
+              labelText: 'signup_username'.tr,
               border: InputBorder.none,
-              errorText: state.username.invalid ? 'invalid_username'.tr : null,
+              errorText:
+                  state.username.invalid ? 'signup_invalid_username'.tr : null,
             ),
             cursorColor: Theme.of(context)
                 .inputDecorationTheme
@@ -287,8 +287,9 @@ class _PasswordInput extends StatelessWidget {
               isDense: true,
               contentPadding:
                   EdgeInsets.symmetric(vertical: 10, horizontal: 12),
-              labelText: 'password'.tr,
-              errorText: state.password.invalid ? 'invalid_password'.tr : null,
+              labelText: 'signup_password'.tr,
+              errorText:
+                  state.password.invalid ? 'signup_invalid_password'.tr : null,
             ),
             style: GoogleFonts.jura(
                 letterSpacing: 2,
@@ -333,9 +334,9 @@ class _ConfirmPasswordInput extends StatelessWidget {
               isDense: true,
               contentPadding:
                   EdgeInsets.symmetric(vertical: 10, horizontal: 12),
-              labelText: 'confirm_password'.tr,
+              labelText: 'signup_confirm_password'.tr,
               errorText: state.confirmedPassword.invalid
-                  ? 'invalid_confirm_password'.tr
+                  ? 'signup_invalid_confirm_password'.tr
                   : null,
             ),
             style: GoogleFonts.jura(

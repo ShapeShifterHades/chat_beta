@@ -61,7 +61,10 @@ class _UpsideMenuState extends State<UpsideMenu> with TickerProviderStateMixin {
                 MenuButtonPM(animationController: widget.animationController),
                 Padding(
                   padding: const EdgeInsets.only(top: 4, left: 4),
-                  child: ScreenTag(routeName: widget.routeName),
+                  child: ScreenTag(
+                    routeName: widget.routeName,
+                    context: context,
+                  ),
                 ),
                 SizedBox(width: 0),
                 Stack(

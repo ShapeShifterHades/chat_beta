@@ -5,7 +5,10 @@ import 'main_side/frame/animated_frame/portrait/custom_full_frame_animated.dart'
 import 'main_side/upside_menu/upside_menu.dart';
 
 class PortraitMobileUI extends StatefulWidget {
+  /// [PortraitMobileUI] class combines drawer and slidable content side of UI after user is logged in
+  // content is a Widget, passed to PortraitMobileUI that is a current page's materials
   final Widget content;
+  // This variable is deprecated and to be deleted from here
   final String routeName;
 
   const PortraitMobileUI({Key key, @required this.content, this.routeName})
@@ -64,10 +67,11 @@ class PortraitMobileUIState extends State<PortraitMobileUI>
             margin: EdgeInsets.fromLTRB(
               size.width * 0.05,
               size.width * 0.05 + 30,
-              size.width * 0.05,
-              size.width * 0.05,
+              size.width * 0.01,
+              size.width * 0.01,
             ),
             child: CustomFullFrameAnimated(
+              context: context,
               size: size,
             ),
           ),

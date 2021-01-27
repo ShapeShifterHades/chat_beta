@@ -51,11 +51,6 @@ class FormHeader extends StatelessWidget {
                     textAlign: TextAlign.justify,
                   ),
                 ),
-                // SizedBox(width: 12),
-                // Icon(Icons.login_outlined,
-                //     color: Theme.of(context).primaryTextTheme.subtitle1.color,
-                //     size: 36),
-                // SizedBox(width: 3),
               ],
             ),
             Row(
@@ -81,7 +76,7 @@ class FormHeader extends StatelessWidget {
                       ),
                     ),
                     child: SwitchAuthButton(
-                      text: 'switch_to_registration'.tr,
+                      text: 'loginpage_switch_to_registration'.tr,
                     ),
                   ),
                 ),

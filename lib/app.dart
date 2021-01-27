@@ -20,7 +20,7 @@ import 'security/view/security_view.dart';
 import 'theme/brightness_cubit.dart';
 import 'theme/locale_cubit.dart';
 import 'theme/theme.dart';
-import 'package:get/get.dart';
+import 'package:get/get.dart' as Get;
 
 class App extends StatelessWidget {
   const App({
@@ -49,7 +49,10 @@ class App extends StatelessWidget {
             child: BlocProvider(
               create: (context) => LocaleCubit(),
               child: BlocProvider(
-                  create: (context) => BrightnessCubit(), child: AppView()),
+                  create: (context) => BrightnessCubit(),
+                  child: AppView(
+                    authenticationRepository: authenticationRepository,
+                  )),
             ),
           ),
         ),
@@ -61,6 +64,9 @@ class App extends StatelessWidget {
 class AppView extends StatelessWidget {
   final FirestoreNewUserRepository firestoreNewUserRepository =
       FirestoreNewUserRepository();
+  final AuthenticationRepository authenticationRepository;
+
+  AppView({Key key, this.authenticationRepository}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -68,30 +74,32 @@ class AppView extends StatelessWidget {
       builder: (context, brightness) {
         return BlocBuilder<LocaleCubit, String>(
           builder: (context, locale) {
-            return GetMaterialApp(
+            return Get.GetMaterialApp(
               locale: Locale(context.watch<LocaleCubit>().state ??
-                  Get.deviceLocale.countryCode),
-              initialRoute: '/',
+                  Get.Get.deviceLocale.countryCode),
+              initialRoute: homeRoute,
               routingCallback: (routing) {
                 if (routing.current == '/') {
-                  print('MiddleWare here. Ligh authcheck before page load.');
+                  authenticationRepository.logOut();
+                  print('MiddleWare here. Loggin Out.');
                 }
               },
               getPages: [
-                GetPage(name: '/', page: () => LoginPage()),
-                GetPage(name: homeRoute, page: () => HomePage()),
-                GetPage(name: loginRoute, page: () => LoginPage()),
-                GetPage(name: settingsRoute, page: () => SettingsView()),
-                GetPage(name: securityRoute, page: () => SecurityView()),
-                GetPage(name: faqRoute, page: () => FaqView()),
-                GetPage(name: contactsRoute, page: () => ContactsView()),
-                GetPage(
+                Get.GetPage(name: '/', page: () => LoginPage()),
+                Get.GetPage(name: homeRoute, page: () => HomePage()),
+                Get.GetPage(name: loginRoute, page: () => LoginPage()),
+                Get.GetPage(name: settingsRoute, page: () => SettingsView()),
+                Get.GetPage(name: securityRoute, page: () => SecurityView()),
+                Get.GetPage(name: faqRoute, page: () => FaqView()),
+                Get.GetPage(name: contactsRoute, page: () => ContactsView()),
+                Get.GetPage(
                   name: signupRoute,
                   page: () => RepositoryProvider.value(
                       value: firestoreNewUserRepository, child: SignUpPage()),
                 ),
               ],
-              translations: LoginPageTranslations(),
+              defaultTransition: Get.Transition.cupertino,
+              translations: ContentTranslations(),
               debugShowCheckedModeBanner: false,
               theme: theme1(context, brightness),
               builder: (context, child) {
@@ -99,10 +107,10 @@ class AppView extends StatelessWidget {
                   listener: (context, state) {
                     switch (state.status) {
                       case AuthenticationStatus.authenticated:
-                        Get.offAllNamed(homeRoute);
+                        Get.Get.offAllNamed(homeRoute);
                         break;
                       case AuthenticationStatus.unauthenticated:
-                        Get.offAllNamed("/");
+                        Get.Get.offAllNamed(loginRoute);
                         break;
                       default:
                         break;
