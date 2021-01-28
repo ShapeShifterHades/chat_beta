@@ -51,16 +51,16 @@ class _PainterCustomWidgetTopState extends State<CustomFullFrameAnimated>
     super.initState();
     _angleTween = Tween(begin: 0, end: 30);
 
-    _topTween = Tween(begin: 0, end: widget.size.width * 0.9);
-    _botTween = Tween(begin: 30, end: widget.size.width * 0.9);
-    _leftTween =
-        Tween(begin: 0, end: widget.size.height - widget.size.width * 0.1 - 30);
-    _rightTween =
-        Tween(begin: 0, end: widget.size.height - widget.size.width * 0.1 - 60);
+    _topTween = Tween(begin: 40, end: widget.size.width * 0.92);
+    _botTween = Tween(begin: 30, end: widget.size.width * 0.92);
+    _leftTween = Tween(
+        begin: 0, end: widget.size.height - widget.size.width * 0.06 - 30);
+    _rightTween = Tween(
+        begin: 0, end: widget.size.height - widget.size.width * 0.06 - 60);
 
     controller = AnimationController(
       vsync: this,
-      duration: Duration(milliseconds: 600),
+      duration: Duration(milliseconds: 500),
     );
     _angleAnimation = _angleTween.animate(
       CurvedAnimation(
@@ -83,7 +83,7 @@ class _PainterCustomWidgetTopState extends State<CustomFullFrameAnimated>
     _topAnimation = _topTween.animate(
       CurvedAnimation(
         parent: controller,
-        curve: Interval(0.0, 0.5),
+        curve: Interval(0.1, 0.5),
       ),
     );
     _botAnimation = _botTween.animate(

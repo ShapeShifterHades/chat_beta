@@ -11,7 +11,7 @@ final Color kABitBlack = Color(0xFF100D0E);
 
 /// Next defined all routing constants used within the app
 
-const String homeRoute = '/contacts';
+const String homeRoute = '/messages';
 
 const String loginRoute = '/login';
 const String signupRoute = '/signup';

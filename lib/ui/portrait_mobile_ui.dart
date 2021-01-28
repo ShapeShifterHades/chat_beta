@@ -65,11 +65,12 @@ class PortraitMobileUIState extends State<PortraitMobileUI>
           child: Container(
             color: Theme.of(context).backgroundColor,
             margin: EdgeInsets.fromLTRB(
-              size.width * 0.05,
+              size.width * 0.07,
               size.width * 0.05 + 30,
               size.width * 0.01,
               size.width * 0.01,
             ),
+            // Here Is main content animated frame
             child: CustomFullFrameAnimated(
               context: context,
               size: size,
@@ -109,7 +110,8 @@ class PortraitMobileUIState extends State<PortraitMobileUI>
                         top: size.width * 0.05 + 80,
                         left: size.width * 0.05 + 10,
                         right: size.width * 0.05 + 10,
-                        bottom: size.width * 0.05 + 70,
+                        bottom: size.width * 0.01,
+                        // bottom: size.width * 0.05 + 70,
                         child: GestureDetector(
                             // This Gestures closes [DrawerPM] when it is opened
                             onTap:

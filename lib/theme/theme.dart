@@ -6,9 +6,10 @@ ThemeData theme1(BuildContext context, Brightness brightness) {
     brightness: brightness,
     primaryTextTheme: TextTheme(
       bodyText1: TextStyle(
-        color: isDark
-            ? Color(0xFFA7F5FF)
-            : Color(0xFF10171E), // this is used for main drawer menu text
+        color: isDark ? Color(0xFFA7F5FF) : Color(0xFF10171E),
+        // this is used for main drawer menu text,
+        //[CustomFullFramePainter] main content frame
+        //[ScreenTag] screen tag widget text
         fontSize: 13,
       ),
       bodyText2: TextStyle(
@@ -23,11 +24,13 @@ ThemeData theme1(BuildContext context, Brightness brightness) {
     bottomAppBarColor: isDark
         ? Color(0xFF071A21)
         : Color(0xFFF2F2F2), // Used in drawer backgrowndcolor
+    cardColor: isDark ? Color(0xFF10171E) : Color(0xFFFBFBFD),
     primaryColor: isDark ? Color(0xFFA7F5FF) : Color(0xFF1D80BE),
     errorColor: Color(0xFFC83E4D), // Submit fail color
     highlightColor: Color(0xFFF28123), //Submission in progress color
     accentColor: Color(0xFF4C956C), // Ready to submit color
-    backgroundColor: isDark ? Color(0xFF10171E) : Color(0xFFFBFBFD),
+    backgroundColor:
+        isDark ? Color(0xFF10171E) : Color(0xFFFBFBFD), // main content colorbba
     scaffoldBackgroundColor: Color(0xFF10171E),
     inputDecorationTheme: InputDecorationTheme(
       enabledBorder: OutlineInputBorder(

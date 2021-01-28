@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:void_chat_beta/constants/constants.dart';
 
 // ignore: must_be_immutable
 class MenuButtonPM extends StatelessWidget {
@@ -11,10 +10,10 @@ class MenuButtonPM extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CustomPaint(
-      painter: MenuButtonPainter(),
-      child: ClipPath(
-        clipper: MenuButtonClipper(),
+    return Container(
+      color: Theme.of(context).bottomAppBarColor,
+      child: CustomPaint(
+        painter: MenuButtonPainter(context),
         child: GestureDetector(
           onTap: () {
             animationController.isCompleted
@@ -22,9 +21,7 @@ class MenuButtonPM extends StatelessWidget {
                 : animationController.forward();
           },
           child: Container(
-            color: animationController.value > 0
-                ? Theme.of(context).accentColor
-                : Theme.of(context).primaryColor.withOpacity(0.75),
+            color: Colors.transparent,
             width: 40,
             height: 40,
             padding: EdgeInsets.all(4),
@@ -35,9 +32,7 @@ class MenuButtonPM extends StatelessWidget {
                 progress: animationController,
                 semanticLabel: 'Show menu',
                 size: 24,
-                color: animationController.value > 0
-                    ? Theme.of(context).primaryColor.withOpacity(0.75)
-                    : Theme.of(context).backgroundColor,
+                color: Theme.of(context).primaryTextTheme.bodyText1.color,
               ),
             ),
           ),
@@ -48,11 +43,15 @@ class MenuButtonPM extends StatelessWidget {
 }
 
 class MenuButtonPainter extends CustomPainter {
+  final BuildContext context;
+
+  MenuButtonPainter(this.context);
   @override
   void paint(Canvas canvas, Size size) {
     Path path1 = Path();
     Path path2 = Path();
     Path path3 = Path();
+    Path path4 = Path();
 
     path1.lineTo(0, size.height);
     path1.moveTo(0, 0);
@@ -70,19 +69,31 @@ class MenuButtonPainter extends CustomPainter {
     path3.lineTo(0, size.height);
     path3.lineTo(0, size.height * 0.85);
 
+    path4.moveTo(size.width - 8, size.height);
+    path4.lineTo(size.width, size.height - 8);
+    path4.lineTo(size.width, size.height);
+    path4.lineTo(size.width, size.height);
+    path4.close();
+
+    Paint paint4 = Paint()
+      ..style = PaintingStyle.fill
+      ..color = Theme.of(context).backgroundColor;
+
+    canvas.drawPath(path4, paint4);
+
     Paint paint1 = Paint()
       ..style = PaintingStyle.stroke
-      ..strokeWidth = 1.6
+      ..strokeWidth = 3
       ..strokeCap = StrokeCap.round
-      ..color = kMainBgColor;
+      ..color = Theme.of(context).bottomAppBarColor;
 
     canvas.drawPath(path1, paint1);
 
     Paint paint2 = Paint()
       ..style = PaintingStyle.stroke
-      ..strokeWidth = 0.6
+      ..strokeWidth = 0.4
       ..strokeCap = StrokeCap.round
-      ..color = kMainFrameColor;
+      ..color = Theme.of(context).primaryTextTheme.bodyText1.color;
 
     canvas.drawPath(path2, paint2);
 
@@ -90,7 +101,7 @@ class MenuButtonPainter extends CustomPainter {
       ..style = PaintingStyle.stroke
       ..strokeWidth = 3
       ..strokeCap = StrokeCap.round
-      ..color = kStrokeColor2;
+      ..color = Theme.of(context).primaryTextTheme.bodyText1.color;
 
     canvas.drawPath(path3, paint3);
   }

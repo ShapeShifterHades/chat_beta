@@ -75,7 +75,8 @@ class _UpsideMenuState extends State<UpsideMenu> with TickerProviderStateMixin {
                           padding: EdgeInsets.only(top: 4, right: 4),
                           icon: FaIcon(
                             FontAwesomeIcons.solidEnvelope,
-                            color: Theme.of(context).primaryColor,
+                            color:
+                                Theme.of(context).primaryColor.withOpacity(0.7),
                             size: 28,
                           ),
                           onPressed: () {
@@ -92,14 +93,20 @@ class _UpsideMenuState extends State<UpsideMenu> with TickerProviderStateMixin {
                           color: Theme.of(context).backgroundColor,
                           borderRadius: BorderRadius.circular(3),
                           border: Border.all(
-                              width: 1, color: Theme.of(context).primaryColor),
+                            width: 1,
+                            color:
+                                Theme.of(context).primaryColor.withOpacity(0.7),
+                          ),
                         ),
                         child: Center(
                           child: Text(
                             '23',
                             textAlign: TextAlign.right,
                             style: GoogleFonts.jura(
-                              color: Theme.of(context).primaryColor,
+                              color: Theme.of(context)
+                                  .primaryTextTheme
+                                  .bodyText1
+                                  .color,
                               fontSize: 10,
                               fontWeight: FontWeight.bold,
                             ),
@@ -116,7 +123,11 @@ class _UpsideMenuState extends State<UpsideMenu> with TickerProviderStateMixin {
                       padding: EdgeInsets.only(top: 4, right: 4),
                       icon: Icon(
                         Icons.logout,
-                        color: Theme.of(context).primaryColor,
+                        color: Theme.of(context)
+                            .primaryTextTheme
+                            .bodyText1
+                            .color
+                            .withOpacity(0.7),
                         size: 28,
                       ),
                       onPressed: () async {
