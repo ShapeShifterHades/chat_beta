@@ -5,11 +5,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:void_chat_beta/signup/cubit/signup_cubit.dart';
 import 'package:void_chat_beta/signup/widgets/signup_form.dart';
 
-class SignUpPage extends StatelessWidget {
-  const SignUpPage({Key key}) : super(key: key);
+class SignUpView extends StatelessWidget {
+  const SignUpView({Key key}) : super(key: key);
 
   static Route route() {
-    return MaterialPageRoute<void>(builder: (_) => const SignUpPage());
+    return MaterialPageRoute<void>(builder: (_) => const SignUpView());
   }
 
   @override

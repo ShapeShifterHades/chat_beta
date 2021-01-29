@@ -7,9 +7,9 @@ import 'package:void_chat_beta/login/widgets/login_form.dart';
 import '../../theme/brightness_cubit.dart';
 import '../../theme/locale_cubit.dart';
 
-class LoginPage extends StatelessWidget {
+class LoginView extends StatelessWidget {
   static Route route() {
-    return MaterialPageRoute<void>(builder: (_) => LoginPage());
+    return MaterialPageRoute<void>(builder: (_) => LoginView());
   }
 
   @override

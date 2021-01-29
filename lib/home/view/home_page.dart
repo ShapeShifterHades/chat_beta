@@ -8,7 +8,7 @@ import 'package:void_chat_beta/ui/ui.dart';
 // import 'package:void_chat_beta/theme/brightness_cubit.dart';
 // import 'package:void_chat_beta/theme/locale_cubit.dart';
 
-class HomePage extends StatelessWidget {
+class MessagesView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

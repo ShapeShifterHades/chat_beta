@@ -17,14 +17,14 @@ class AppRouter {
   Route onGenerateRoute(RouteSettings routeSettings) {
     switch (routeSettings.name) {
       case homeRoute:
-        return MaterialPageRoute(builder: (_) => HomePage());
+        return MaterialPageRoute(builder: (_) => MessagesView());
       case loginRoute:
-        return MaterialPageRoute(builder: (_) => LoginPage());
+        return MaterialPageRoute(builder: (_) => LoginView());
       case signupRoute:
         return MaterialPageRoute(
           builder: (_) => RepositoryProvider.value(
             value: firestoreNewUserRepository,
-            child: SignUpPage(),
+            child: SignUpView(),
           ),
         );
       case contactsRoute:
@@ -39,7 +39,7 @@ class AppRouter {
         return MaterialPageRoute(builder: (_) => FaqView());
         break;
       default:
-        return MaterialPageRoute(builder: (_) => LoginPage());
+        return MaterialPageRoute(builder: (_) => LoginView());
     }
   }
 

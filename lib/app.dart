@@ -84,9 +84,9 @@ class AppView extends StatelessWidget {
                 }
               },
               getPages: [
-                Get.GetPage(name: '/', page: () => LoginPage()),
-                Get.GetPage(name: homeRoute, page: () => HomePage()),
-                Get.GetPage(name: loginRoute, page: () => LoginPage()),
+                Get.GetPage(name: '/', page: () => LoginView()),
+                Get.GetPage(name: homeRoute, page: () => MessagesView()),
+                Get.GetPage(name: loginRoute, page: () => LoginView()),
                 Get.GetPage(name: settingsRoute, page: () => SettingsView()),
                 Get.GetPage(name: securityRoute, page: () => SecurityView()),
                 Get.GetPage(name: faqRoute, page: () => FaqView()),
@@ -94,7 +94,7 @@ class AppView extends StatelessWidget {
                 Get.GetPage(
                   name: signupRoute,
                   page: () => RepositoryProvider.value(
-                      value: firestoreNewUserRepository, child: SignUpPage()),
+                      value: firestoreNewUserRepository, child: SignUpView()),
                 ),
               ],
               defaultTransition: Get.Transition.fadeIn,
