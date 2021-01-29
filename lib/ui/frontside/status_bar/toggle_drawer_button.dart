@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 
-// ignore: must_be_immutable
-class MenuButtonPM extends StatelessWidget {
-  AnimationController animationController;
-  MenuButtonPM({
+/// Button, that triggers drawer animation
+class ToggleDrawerButton extends StatelessWidget {
+  /// Controller to trigger animation
+  final AnimationController animationController;
+  ToggleDrawerButton({
     Key key,
     @required this.animationController,
   }) : super(key: key);

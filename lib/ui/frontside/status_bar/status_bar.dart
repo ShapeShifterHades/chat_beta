@@ -1,27 +1,23 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:void_chat_beta/login/view/login_page.dart';
-import 'menu_button_pm.dart';
 import 'screen_tag.dart';
+import 'toggle_drawer_button.dart';
 
 // ignore: must_be_immutable
-class UpsideMenu extends StatefulWidget {
+class StatusBar extends StatefulWidget {
   AnimationController animationController;
-  String routeName;
 
-  UpsideMenu({
+  StatusBar({
     Key key,
     this.animationController,
-    this.routeName,
   }) : super(key: key);
 
   @override
-  _UpsideMenuState createState() => _UpsideMenuState();
+  _StatusBarState createState() => _StatusBarState();
 }
 
-class _UpsideMenuState extends State<UpsideMenu> with TickerProviderStateMixin {
+class _StatusBarState extends State<StatusBar> with TickerProviderStateMixin {
   AnimationController _frameController;
   Animation<double> _frameAnimation;
 
@@ -58,11 +54,11 @@ class _UpsideMenuState extends State<UpsideMenu> with TickerProviderStateMixin {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                MenuButtonPM(animationController: widget.animationController),
+                ToggleDrawerButton(
+                    animationController: widget.animationController),
                 Padding(
                   padding: const EdgeInsets.only(top: 4, left: 4),
                   child: ScreenTag(
-                    routeName: widget.routeName,
                     context: context,
                   ),
                 ),
@@ -117,29 +113,6 @@ class _UpsideMenuState extends State<UpsideMenu> with TickerProviderStateMixin {
                   ],
                 ),
                 Spacer(),
-                Container(
-                  margin: EdgeInsets.only(top: 4),
-                  child: IconButton(
-                      padding: EdgeInsets.only(top: 4, right: 4),
-                      icon: Icon(
-                        Icons.logout,
-                        color: Theme.of(context)
-                            .primaryTextTheme
-                            .bodyText1
-                            .color
-                            .withOpacity(0.7),
-                        size: 28,
-                      ),
-                      onPressed: () async {
-                        print("Log out button was pressed");
-                        await FirebaseAuth.instance.signOut();
-                        Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => LoginPage(),
-                            ));
-                      }),
-                ),
               ],
             ),
           ),

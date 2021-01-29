@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:void_chat_beta/contacts/bloc/contact_bloc.dart';
 import 'package:sqflite_repository/sqflite_repository.dart';
-
-import 'package:void_chat_beta/ui/portrait_mobile_ui.dart';
+import 'package:void_chat_beta/ui/ui.dart';
 
 ContactModel contactModel1 = ContactModel(name: 'Simon', status: 'friend');
 
@@ -14,10 +13,8 @@ class ContactsView extends StatelessWidget {
       floatingActionButton: FloatingActionButton(
         onPressed: () =>
             context.read<ContactBloc>().add(ContactAdded(contactModel1)),
-        // context.read<ContactBloc>().add(DeleteAllContacts()),
       ),
-      body: PortraitMobileUI(
-        routeName: 'Contacts',
+      body: UI(
         content: Column(
           children: [
             Row(
@@ -27,7 +24,6 @@ class ContactsView extends StatelessWidget {
             ),
             Expanded(
               child: Container(
-                // color: Colors.amber.withOpacity(0.2),
                 child: BlocBuilder<ContactBloc, ContactState>(
                   builder: (context, state) {
                     return state.status == ContactListStatus.loading

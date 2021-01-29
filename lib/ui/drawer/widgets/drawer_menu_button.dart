@@ -1,22 +1,33 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class DrawerMenuPMTile extends StatefulWidget {
-  final String route;
-  final String text;
-  final IconData iconData;
+/// Represetation of an animated buttor for a drawer-side main menu.
+class DrawerMenuButton extends StatefulWidget {
+  /// State of a button, that represents current page it is and changes styling
+  final bool isCurrentPage;
+
+  /// Function to use onPress
+  final Function func;
+
+  ///  Text for button label
+  final String label;
+
+  /// Context for dynamic styling
   final BuildContext context;
 
-  const DrawerMenuPMTile(
-      {Key key, this.context, this.text, this.iconData, this.route})
+  const DrawerMenuButton(
+      {Key key,
+      this.context,
+      this.label,
+      this.func,
+      this.isCurrentPage = false})
       : super(key: key);
 
   @override
-  _DrawerMenuPMTileState createState() => _DrawerMenuPMTileState();
+  _DrawerMenuButtonState createState() => _DrawerMenuButtonState();
 }
 
-class _DrawerMenuPMTileState extends State<DrawerMenuPMTile> {
+class _DrawerMenuButtonState extends State<DrawerMenuButton> {
   bool _pressed = false;
 
   @override
@@ -31,9 +42,7 @@ class _DrawerMenuPMTileState extends State<DrawerMenuPMTile> {
         setState(() {
           _pressed = false;
         });
-        Get.toNamed(
-          widget.route ?? '/',
-        );
+        widget.func();
       },
       onTapDown: (val) {
         setState(() {
@@ -46,12 +55,12 @@ class _DrawerMenuPMTileState extends State<DrawerMenuPMTile> {
         child: Row(
           children: [
             SizedBox(width: 10),
-            // // MenuItem(pressed: _pressed, widget: widget),
-            // SizedBox(width: 20),
             CustomPaint(
               painter: DrawerMenuPMTilePainter(
                   pressed: _pressed,
-                  color: Theme.of(context).primaryTextTheme.bodyText1.color),
+                  color: widget.isCurrentPage
+                      ? Colors.white
+                      : Theme.of(context).primaryTextTheme.bodyText1.color),
               child: ClipPath(
                 clipper: DrawerMenuPMTileClipper(),
                 child: Container(
@@ -65,12 +74,14 @@ class _DrawerMenuPMTileState extends State<DrawerMenuPMTile> {
                       children: [
                         SizedBox(width: 20),
                         Text(
-                          widget.text,
+                          widget.label,
                           style: GoogleFonts.jura(
-                              color: Theme.of(context)
-                                  .primaryTextTheme
-                                  .bodyText1
-                                  .color,
+                              color: widget.isCurrentPage
+                                  ? Colors.white
+                                  : Theme.of(context)
+                                      .primaryTextTheme
+                                      .bodyText1
+                                      .color,
                               fontSize: 20,
                               fontWeight: FontWeight.w800),
                           textAlign: TextAlign.left,
@@ -87,44 +98,6 @@ class _DrawerMenuPMTileState extends State<DrawerMenuPMTile> {
     );
   }
 }
-
-// class MenuItem extends StatelessWidget {
-//   const MenuItem({
-//     Key key,
-//     bool pressed,
-//     this.widget,
-//   })  : _pressed = pressed,
-//         super(key: key);
-
-//   final bool _pressed;
-//   final DrawerMenuPMTile widget;
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return CustomPaint(
-//       painter: IconMenuPMTilePainter(
-//           pressed: _pressed,
-//           color: Theme.of(context).primaryTextTheme.bodyText1.color),
-//       child: ClipPath(
-//         clipper: IconMenuPMTileClipper(),
-//         child: Container(
-//           color: Theme.of(context).primaryColor.withOpacity(0.08),
-//           width: 42,
-//           height: 38,
-//           child: Material(
-//             color: Colors.transparent,
-//             child: Center(
-//               child: Icon(
-//                 widget.iconData,
-//                 color: Theme.of(context).primaryTextTheme.bodyText1.color,
-//               ),
-//             ),
-//           ),
-//         ),
-//       ),
-//     );
-//   }
-// }
 
 class DrawerMenuPMTilePainter extends CustomPainter {
   final bool pressed;

@@ -4,6 +4,7 @@ ThemeData theme1(BuildContext context, Brightness brightness) {
   bool isDark = brightness == Brightness.dark;
   return ThemeData(
     brightness: brightness,
+
     primaryTextTheme: TextTheme(
       bodyText1: TextStyle(
         color: isDark ? Color(0xFFA7F5FF) : Color(0xFF10171E),
@@ -31,7 +32,9 @@ ThemeData theme1(BuildContext context, Brightness brightness) {
     accentColor: Color(0xFF4C956C), // Ready to submit color
     backgroundColor:
         isDark ? Color(0xFF10171E) : Color(0xFFFBFBFD), // main content colorbba
-    scaffoldBackgroundColor: Color(0xFF10171E),
+    scaffoldBackgroundColor: isDark
+        ? Color(0xFF071A21)
+        : Color(0xFFF2F2F2), // Used in drawer backgrowndcolor,
     inputDecorationTheme: InputDecorationTheme(
       enabledBorder: OutlineInputBorder(
         borderSide: BorderSide(

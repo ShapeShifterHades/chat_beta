@@ -1,31 +1,36 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
-import 'drawer_side/portrait_mobile_drawer/portrait_mobile_drawer.dart';
-import 'main_side/frame/animated_frame/portrait/custom_full_frame_animated.dart';
-import 'main_side/upside_menu/upside_menu.dart';
+import 'drawer/drawer.dart';
+import 'frontside/frame/animated_frame/custom_full_frame_animated.dart';
+import './frontside/status_bar/status_bar.dart';
+import 'frontside/minimenu/mini_menu.dart';
 
-class PortraitMobileUI extends StatefulWidget {
-  /// [PortraitMobileUI] class combines drawer and slidable content side of UI after user is logged in
+/// [UI] class combines drawer and slidable content side of UI after user is logged in
+class UI extends StatefulWidget {
   // content is a Widget, passed to PortraitMobileUI that is a current page's materials
   final Widget content;
-  // This variable is deprecated and to be deleted from here
-  final String routeName;
 
-  const PortraitMobileUI({Key key, @required this.content, this.routeName})
-      : super(key: key);
+  const UI({
+    Key key,
+    @required this.content,
+  }) : super(key: key);
 
-  static PortraitMobileUIState of(BuildContext context) =>
-      context.findAncestorStateOfType<PortraitMobileUIState>();
+  static UIState of(BuildContext context) =>
+      context.findAncestorStateOfType<UIState>();
 
   @override
-  PortraitMobileUIState createState() => new PortraitMobileUIState();
+  UIState createState() => new UIState();
 }
 
-class PortraitMobileUIState extends State<PortraitMobileUI>
-    with SingleTickerProviderStateMixin {
+class UIState extends State<UI> with SingleTickerProviderStateMixin {
+  // Duraton of drawer slide
   static const Duration toggleDuration = Duration(milliseconds: 400);
-  static const double maxSlide = 256;
+  // Length of the drawer
+  static const double maxSlide = 175;
+  // Minimum edge where slider starts animating
   static const double minDragStartEdge = 100;
+  // On what distance it needs to be dragged
   static const double maxDragStartEdge = maxSlide - 16;
   AnimationController _animationController;
   bool _canBeDragged = false;
@@ -35,7 +40,7 @@ class PortraitMobileUIState extends State<PortraitMobileUI>
     super.initState();
     _animationController = AnimationController(
       vsync: this,
-      duration: PortraitMobileUIState.toggleDuration,
+      duration: UIState.toggleDuration,
     );
   }
 
@@ -47,7 +52,7 @@ class PortraitMobileUIState extends State<PortraitMobileUI>
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
+    Size size = Get.size;
     return WillPopScope(
       onWillPop: () async {
         if (_animationController.isCompleted) {
@@ -62,23 +67,54 @@ class PortraitMobileUIState extends State<PortraitMobileUI>
         onHorizontalDragEnd: _onDragEnd,
         child: AnimatedBuilder(
           animation: _animationController,
-          child: Container(
-            color: Theme.of(context).backgroundColor,
-            margin: EdgeInsets.fromLTRB(
-              size.width * 0.07,
-              size.width * 0.05 + 30,
-              size.width * 0.01,
-              size.width * 0.01,
-            ),
-            // Here Is main content animated frame
-            child: CustomFullFrameAnimated(
-              context: context,
-              size: size,
-            ),
+          // Here starts frontside of drawer-content system, margin defines its base shape
+          child: Stack(
+            overflow: Overflow.clip,
+            children: [
+              Positioned(
+                top: 0,
+                bottom: 0,
+                left: 0,
+                right: 0,
+                child: Container(
+                  color: Theme.of(context).backgroundColor,
+                  margin: EdgeInsets.fromLTRB(
+                    size.width * 0.07,
+                    size.width * 0.05 + 30,
+                    size.width * 0.01,
+                    size.width * 0.01,
+                  ),
+
+                  // Animated frame of main content part of UI
+                  child: CustomFullFrameAnimated(context: context, size: size),
+                ),
+              ),
+              Positioned(
+                // This is where main page content's scaffold size is defined
+                // Below are the
+                top: size.width * 0.05 + 80,
+                left: size.width * 0.05 + 20,
+                right: 20,
+                bottom: 40,
+                child: Container(
+                  child: GestureDetector(
+                      // This Gestures closes [DrawerPM] when it is opened
+                      onTap: _animationController.isCompleted ? close : null,
+                      onHorizontalDragStart: _onDragStart,
+                      onHorizontalDragUpdate: _onDragUpdate,
+                      onHorizontalDragEnd: _onDragEnd,
+                      // Here is the content of the pages
+                      child: widget.content),
+                ),
+              ),
+              // MiniMenu
+              MiniMenu(size: size),
+            ],
           ),
           builder: (context, child) {
             double animValue = _animationController.value;
             final slideAmount = maxSlide * animValue;
+            // This stack defines relations between drawer side and content side
             return Stack(
               overflow: Overflow.clip,
               children: <Widget>[
@@ -100,26 +136,9 @@ class PortraitMobileUIState extends State<PortraitMobileUI>
                           onHorizontalDragStart: _onDragStart,
                           onHorizontalDragUpdate: _onDragUpdate,
                           onHorizontalDragEnd: _onDragEnd,
-                          child: UpsideMenu(
-                              routeName: widget.routeName,
+                          child: StatusBar(
                               animationController: _animationController),
                         ),
-                      ),
-                      Positioned(
-                        // This is where main page content's scaffold size is defined
-                        top: size.width * 0.05 + 80,
-                        left: size.width * 0.05 + 10,
-                        right: size.width * 0.05 + 10,
-                        bottom: size.width * 0.01,
-                        // bottom: size.width * 0.05 + 70,
-                        child: GestureDetector(
-                            // This Gestures closes [DrawerPM] when it is opened
-                            onTap:
-                                _animationController.isCompleted ? close : null,
-                            onHorizontalDragStart: _onDragStart,
-                            onHorizontalDragUpdate: _onDragUpdate,
-                            onHorizontalDragEnd: _onDragEnd,
-                            child: widget.content),
                       ),
                     ],
                   ),
@@ -132,10 +151,13 @@ class PortraitMobileUIState extends State<PortraitMobileUI>
     );
   }
 
+  /// Closes drawer
   void close() => _animationController.reverse();
 
+  /// Opens drawer
   void open() => _animationController.forward();
 
+  /// Handles gesture drawer control starting drawer animation
   void _onDragStart(DragStartDetails details) {
     bool isDragOpenFromLeft = _animationController.isDismissed &&
         details.globalPosition.dx < minDragStartEdge;
@@ -145,12 +167,16 @@ class PortraitMobileUIState extends State<PortraitMobileUI>
     _canBeDragged = isDragOpenFromLeft || isDragCloseFromRight;
   }
 
+  /// Handles gesture drawer control continuing drawer animation
+
   void _onDragUpdate(DragUpdateDetails details) {
     if (_canBeDragged) {
       double delta = details.primaryDelta / maxSlide;
       _animationController.value += delta;
     }
   }
+
+  /// Handles gesture drawer control ending drawer animation
 
   void _onDragEnd(DragEndDetails details) {
     double _kMinFlingVelocity = 365.0;

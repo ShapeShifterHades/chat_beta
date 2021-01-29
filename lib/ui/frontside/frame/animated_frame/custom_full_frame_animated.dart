@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 
-import '../../animated_frame/portrait/custom_full_frame_painter.dart';
+import 'custom_full_frame_painter.dart';
 
 class CustomFullFrameAnimated extends StatefulWidget {
   const CustomFullFrameAnimated({
     Key key,
     @required this.context,
-    @required this.size,
+    this.size,
   }) : super(key: key);
 
-  final Size size;
   final BuildContext context;
+  final Size size;
 
   @override
   _PainterCustomWidgetTopState createState() => _PainterCustomWidgetTopState();
@@ -49,6 +49,7 @@ class _PainterCustomWidgetTopState extends State<CustomFullFrameAnimated>
   @override
   void initState() {
     super.initState();
+
     _angleTween = Tween(begin: 0, end: 30);
 
     _topTween = Tween(begin: 40, end: widget.size.width * 0.92);

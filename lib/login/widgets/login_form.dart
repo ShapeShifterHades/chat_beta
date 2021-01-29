@@ -5,11 +5,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'package:void_chat_beta/login/login.dart';
-import 'package:void_chat_beta/ui/main_side/frame/auth_custom_frame/portrait/custom_clip_path.dart';
-import 'package:void_chat_beta/ui/main_side/frame/auth_custom_frame/portrait/custom_painter_for_clipper.dart';
 import 'package:keyboard_visibility/keyboard_visibility.dart';
 import 'package:formz/formz.dart';
 import 'package:get/get.dart';
+import 'package:void_chat_beta/widgets/auth_custom_frame/custom_clip_path.dart';
+import 'package:void_chat_beta/widgets/auth_custom_frame/custom_painter_for_clipper.dart';
 
 import '../login.dart';
 

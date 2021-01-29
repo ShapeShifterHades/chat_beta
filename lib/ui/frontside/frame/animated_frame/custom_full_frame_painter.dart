@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:void_chat_beta/constants/constants.dart';
 
 class CustomFullFramePainter extends CustomPainter {
   double animTopVal;
@@ -9,7 +8,6 @@ class CustomFullFramePainter extends CustomPainter {
   double animAngle;
   BuildContext context;
 
-  final Color color = kMainFrameColor;
   CustomFullFramePainter({
     this.context,
     this.animTopVal,

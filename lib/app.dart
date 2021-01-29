@@ -3,10 +3,9 @@ import 'package:firestore_repository/firestore_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:void_chat_beta/constants/constants.dart';
-import 'package:void_chat_beta/router/app_router.dart';
-import 'package:void_chat_beta/settings/settings.dart';
-import 'package:void_chat_beta/signup/sign_up.dart';
-import 'package:void_chat_beta/translations/translations.dart';
+import 'settings/settings.dart';
+import 'signup/sign_up.dart';
+import 'translations/translations.dart';
 
 import 'authentication/authentication.dart';
 import 'contacts/bloc/contact_bloc.dart';
@@ -98,7 +97,8 @@ class AppView extends StatelessWidget {
                       value: firestoreNewUserRepository, child: SignUpPage()),
                 ),
               ],
-              defaultTransition: Get.Transition.cupertino,
+              defaultTransition: Get.Transition.fadeIn,
+              transitionDuration: Duration(milliseconds: 400),
               translations: ContentTranslations(),
               debugShowCheckedModeBanner: false,
               theme: theme1(context, brightness),
@@ -107,7 +107,7 @@ class AppView extends StatelessWidget {
                   listener: (context, state) {
                     switch (state.status) {
                       case AuthenticationStatus.authenticated:
-                        Get.Get.offAllNamed(homeRoute);
+                        Get.Get.offAllNamed(homeRoute, arguments: 'Messages');
                         break;
                       case AuthenticationStatus.unauthenticated:
                         Get.Get.offAllNamed(loginRoute);
