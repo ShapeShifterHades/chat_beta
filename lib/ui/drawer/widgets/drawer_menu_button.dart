@@ -54,7 +54,7 @@ class _DrawerMenuButtonState extends State<DrawerMenuButton> {
         opacity: _pressed ? 0.4 : 1,
         child: Row(
           children: [
-            SizedBox(width: 10),
+            SizedBox(width: 0),
             CustomPaint(
               painter: DrawerMenuPMTilePainter(
                   pressed: _pressed,
@@ -83,7 +83,7 @@ class _DrawerMenuButtonState extends State<DrawerMenuButton> {
                                       .bodyText1
                                       .color,
                               fontSize: 20,
-                              fontWeight: FontWeight.w800),
+                              fontWeight: FontWeight.w300),
                           textAlign: TextAlign.left,
                         ),
                       ],
@@ -109,9 +109,9 @@ class DrawerMenuPMTilePainter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     Paint paint1 = Paint()
       ..style = PaintingStyle.stroke
-      ..strokeWidth = 2
+      ..strokeWidth = 0.3
       ..strokeCap = StrokeCap.round
-      ..color = color.withOpacity(0.7);
+      ..color = color.withOpacity(0.8);
 
     Path path1 = Path();
     path1.lineTo(size.width * 0.15, 0);

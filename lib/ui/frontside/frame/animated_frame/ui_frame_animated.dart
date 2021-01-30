@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-import 'custom_full_frame_painter.dart';
+import 'ui_painter.dart';
 
-class CustomFullFrameAnimated extends StatefulWidget {
-  const CustomFullFrameAnimated({
+class UiFullFrameAnimated extends StatefulWidget {
+  const UiFullFrameAnimated({
     Key key,
     @required this.context,
     this.size,
@@ -16,7 +16,7 @@ class CustomFullFrameAnimated extends StatefulWidget {
   _PainterCustomWidgetTopState createState() => _PainterCustomWidgetTopState();
 }
 
-class _PainterCustomWidgetTopState extends State<CustomFullFrameAnimated>
+class _PainterCustomWidgetTopState extends State<UiFullFrameAnimated>
     with TickerProviderStateMixin {
   Animation<double> _angleAnimation;
 
@@ -34,7 +34,7 @@ class _PainterCustomWidgetTopState extends State<CustomFullFrameAnimated>
 
   Widget _buildAnimation(BuildContext ctx, Widget child) {
     return CustomPaint(
-      painter: CustomFullFramePainter(
+      painter: UiPainter(
         context: context,
         animTopVal: _topAnimation.value,
         animrightVal: _rightAnimation.value,
@@ -52,21 +52,21 @@ class _PainterCustomWidgetTopState extends State<CustomFullFrameAnimated>
 
     _angleTween = Tween(begin: 0, end: 30);
 
-    _topTween = Tween(begin: 40, end: widget.size.width * 0.92);
-    _botTween = Tween(begin: 30, end: widget.size.width * 0.92);
+    _topTween = Tween(begin: 40, end: widget.size.width * 0.93);
+    _botTween = Tween(begin: 30, end: widget.size.width * 0.93);
     _leftTween = Tween(
         begin: 0, end: widget.size.height - widget.size.width * 0.06 - 30);
     _rightTween = Tween(
-        begin: 0, end: widget.size.height - widget.size.width * 0.06 - 60);
+        begin: 0, end: widget.size.height - widget.size.width * 0.05 - 60);
 
     controller = AnimationController(
       vsync: this,
-      duration: Duration(milliseconds: 500),
+      duration: Duration(milliseconds: 1000),
     );
     _angleAnimation = _angleTween.animate(
       CurvedAnimation(
         parent: controller,
-        curve: Interval(0.0, 0.1),
+        curve: Interval(0.0, 0.5),
       ),
     );
     _leftAnimation = _leftTween.animate(
@@ -95,12 +95,13 @@ class _PainterCustomWidgetTopState extends State<CustomFullFrameAnimated>
     )..addListener(() {
         setState(() {});
       });
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      Future.delayed(
-        const Duration(milliseconds: 300),
-        () => controller.forward(),
-      );
-    });
+    controller.forward();
+    // WidgetsBinding.instance.addPostFrameCallback((_) {
+    //   Future.delayed(
+    //     const Duration(milliseconds: 300),
+    //     () => controller.forward(),
+    //   );
+    // });
   }
 
   @override

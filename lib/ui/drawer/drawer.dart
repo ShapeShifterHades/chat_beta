@@ -7,9 +7,10 @@ import 'package:void_chat_beta/ui/drawer/widgets/drawer_menu_button.dart';
 class DrawerPM extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    double _width = MediaQuery.of(context).size.width;
     return Row(
       children: [
-        SizedBox(width: MediaQuery.of(context).size.width * 0.05),
+        SizedBox(width: _width * 0.05),
         Container(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,

@@ -20,12 +20,10 @@ class MiniMenuTile extends StatelessWidget {
           color: Theme.of(context).backgroundColor,
           border: Border.symmetric(
             horizontal: BorderSide(
-              color: Theme.of(context)
-                  .primaryTextTheme
-                  .bodyText1
-                  .color
-                  .withOpacity(0.7),
-              width: 0.4,
+              color: isCurrentPage
+                  ? Colors.white
+                  : Theme.of(context).primaryTextTheme.bodyText1.color,
+              width: 0.0,
             ),
           ),
         ),
@@ -41,16 +39,13 @@ class MiniMenuTile extends StatelessWidget {
               color: Theme.of(context).primaryColor.withOpacity(0.08),
               width: 34,
               height: 38,
-              child: Material(
-                color: Colors.transparent,
-                child: Center(
-                  child: Icon(
-                    icon,
-                    color: isCurrentPage
-                        ? Colors.white
-                        : Theme.of(context).primaryTextTheme.bodyText1.color,
-                    size: isCurrentPage ? 28 : 18,
-                  ),
+              child: Center(
+                child: Icon(
+                  icon,
+                  color: isCurrentPage
+                      ? Colors.white
+                      : Theme.of(context).primaryTextTheme.bodyText1.color,
+                  size: isCurrentPage ? 28 : 18,
                 ),
               ),
             ),
@@ -72,9 +67,9 @@ class MiniMenuTilePainter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     Paint paint1 = Paint()
       ..style = PaintingStyle.stroke
-      ..strokeWidth = 2
+      ..strokeWidth = 0.3
       ..strokeCap = StrokeCap.round
-      ..color = color.withOpacity(0.7);
+      ..color = color.withOpacity(0.8);
 
     Path path1 = Path();
     path1.lineTo(size.width * 0.15, 0);

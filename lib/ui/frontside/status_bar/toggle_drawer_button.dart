@@ -27,12 +27,12 @@ class ToggleDrawerButton extends StatelessWidget {
             height: 40,
             padding: EdgeInsets.all(4),
             child: Container(
-              margin: EdgeInsets.only(top: 2, left: 2),
+              margin: EdgeInsets.all(5.5),
               child: AnimatedIcon(
                 icon: AnimatedIcons.menu_close,
                 progress: animationController,
                 semanticLabel: 'Show menu',
-                size: 24,
+                size: 20,
                 color: Theme.of(context).primaryTextTheme.bodyText1.color,
               ),
             ),
@@ -92,7 +92,7 @@ class MenuButtonPainter extends CustomPainter {
 
     Paint paint2 = Paint()
       ..style = PaintingStyle.stroke
-      ..strokeWidth = 0.4
+      ..strokeWidth = 0.3
       ..strokeCap = StrokeCap.round
       ..color = Theme.of(context).primaryTextTheme.bodyText1.color;
 
@@ -100,7 +100,7 @@ class MenuButtonPainter extends CustomPainter {
 
     Paint paint3 = Paint()
       ..style = PaintingStyle.stroke
-      ..strokeWidth = 3
+      ..strokeWidth = 0.3
       ..strokeCap = StrokeCap.round
       ..color = Theme.of(context).primaryTextTheme.bodyText1.color;
 

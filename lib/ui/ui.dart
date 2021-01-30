@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import 'drawer/drawer.dart';
-import 'frontside/frame/animated_frame/custom_full_frame_animated.dart';
+
 import './frontside/status_bar/status_bar.dart';
+import 'frontside/frame/animated_frame/ui_frame_animated.dart';
 import 'frontside/minimenu/mini_menu.dart';
 
 /// [UI] class combines drawer and slidable content side of UI after user is logged in
@@ -27,11 +28,11 @@ class UIState extends State<UI> with SingleTickerProviderStateMixin {
   // Duraton of drawer slide
   static const Duration toggleDuration = Duration(milliseconds: 400);
   // Length of the drawer
-  static const double maxSlide = 175;
+  static const double maxSlide = 170;
   // Minimum edge where slider starts animating
   static const double minDragStartEdge = 100;
   // On what distance it needs to be dragged
-  static const double maxDragStartEdge = maxSlide - 16;
+  static double maxDragStartEdge = maxSlide - 16;
   AnimationController _animationController;
   bool _canBeDragged = false;
 
@@ -81,12 +82,12 @@ class UIState extends State<UI> with SingleTickerProviderStateMixin {
                   margin: EdgeInsets.fromLTRB(
                     size.width * 0.07,
                     size.width * 0.05 + 30,
-                    size.width * 0.01,
-                    size.width * 0.01,
+                    size.width * 0.00,
+                    size.width * 0.00,
                   ),
 
                   // Animated frame of main content part of UI
-                  child: CustomFullFrameAnimated(context: context, size: size),
+                  child: UiFullFrameAnimated(context: context, size: size),
                 ),
               ),
               Positioned(

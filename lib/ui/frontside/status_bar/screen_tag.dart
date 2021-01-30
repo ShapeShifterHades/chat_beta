@@ -34,7 +34,8 @@ class ScreenTag extends StatelessWidget {
                               .primaryTextTheme
                               .bodyText1
                               .color,
-                          fontSize: 20),
+                          fontSize: 20,
+                          fontWeight: FontWeight.w300),
                     ),
                   ),
                 ],
@@ -73,7 +74,7 @@ class ScreenTagPainter extends CustomPainter {
 
     Paint paint2 = Paint()
       ..style = PaintingStyle.stroke
-      ..strokeWidth = 0.5
+      ..strokeWidth = 0.3
       ..color = Theme.of(context).primaryTextTheme.bodyText1.color;
 
     canvas.drawPath(path2, paint2);

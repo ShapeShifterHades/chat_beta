@@ -73,7 +73,7 @@ class MiniMenu extends StatelessWidget {
               },
               icon: Icons.logout,
             ),
-            SizedBox(height: 85),
+            SizedBox(height: 85 + size.width * 0.01),
           ],
         ),
       ),

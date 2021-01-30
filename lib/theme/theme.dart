@@ -23,7 +23,7 @@ ThemeData theme1(BuildContext context, Brightness brightness) {
       // headline3: TextStyle(color: )
     ),
     bottomAppBarColor: isDark
-        ? Color(0xFF071A21)
+        ? Color(0xFF002E3D)
         : Color(0xFFF2F2F2), // Used in drawer backgrowndcolor
     cardColor: isDark ? Color(0xFF10171E) : Color(0xFFFBFBFD),
     primaryColor: isDark ? Color(0xFFA7F5FF) : Color(0xFF1D80BE),
@@ -33,7 +33,7 @@ ThemeData theme1(BuildContext context, Brightness brightness) {
     backgroundColor:
         isDark ? Color(0xFF10171E) : Color(0xFFFBFBFD), // main content colorbba
     scaffoldBackgroundColor: isDark
-        ? Color(0xFF071A21)
+        ? Color(0xFF002E3D)
         : Color(0xFFF2F2F2), // Used in drawer backgrowndcolor,
     inputDecorationTheme: InputDecorationTheme(
       enabledBorder: OutlineInputBorder(
