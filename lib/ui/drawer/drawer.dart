@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:void_chat_beta/authentication/bloc/authentication_bloc.dart';
 import 'package:void_chat_beta/ui/drawer/widgets/drawer_menu_button.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:void_chat_beta/widgets/arctext.dart';
 
 class DrawerPM extends StatelessWidget {
   @override
@@ -10,28 +13,69 @@ class DrawerPM extends StatelessWidget {
     double _width = MediaQuery.of(context).size.width;
     return Row(
       children: [
-        SizedBox(width: _width * 0.05),
+        SizedBox(width: _width * 0.07),
         Container(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: [
+              SizedBox(height: 30),
               Expanded(
                   child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  SizedBox(width: 20),
-                  Center(
-                      child: Text(
-                    'Yorkee\n v.1.0.0 beta',
-                    style: GoogleFonts.jura(
-                      fontSize: 26,
-                      color: Theme.of(context).primaryTextTheme.bodyText1.color,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  )),
+                  SizedBox(width: 2),
+                  Stack(
+                    alignment: Alignment.center,
+                    children: [
+                      Align(
+                        alignment: Alignment.center,
+                        child: Container(
+                          width: 136,
+                          height: 136,
+                          decoration: BoxDecoration(
+                            color: Colors.transparent,
+                            borderRadius: BorderRadius.circular(70),
+                            border: Border.all(width: 0.3, 
+                            color: Theme.of(context).primaryColor,)
+                          ),
+                          // child:,
+                        ),
+                      ),
+                      Align(
+                        alignment: Alignment.center,
+                        child: ArcText(
+                          radius: 52,
+                          text:
+                              'Id:   ${context.watch<AuthenticationBloc>().state.user.id.toLowerCase()}',
+                          textStyle: GoogleFonts.jura(
+                              fontWeight: FontWeight.w500, fontSize: 14,
+                              color: Theme.of(context).primaryColor,),
+                          startAngle: 0,
+                        ),
+                      ),
+                      Align(
+                        alignment: Alignment.center,
+                        child: Container(
+                          width: 102,
+                          height: 102,
+                          clipBehavior: Clip.hardEdge,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(60),
+                          ),
+                          child: Center(child: Image.asset('assets/images/avatar-placeholder.png',
+
+                          color: Theme.of(context).bottomAppBarColor,
+                          colorBlendMode: BlendMode.color,
+                          
+                          ),),
+                        ),
+                      ),
+                       
+                    ],
+                  ),
                 ],
               )),
               DrawerMenuButton(
@@ -80,7 +124,17 @@ class DrawerPM extends StatelessWidget {
                   await FirebaseAuth.instance.signOut();
                 },
               ),
-              SizedBox(height: 125),
+              SizedBox(height: 55),
+              Container(
+                height: 40,
+                width: 170,
+                child: Text('YorKee, android v1.0.1b, 2021', 
+                style: GoogleFonts.jura(color: Theme.of(context)
+                                      .primaryTextTheme
+                                      .bodyText1
+                                      .color,),),
+              ),
+              SizedBox(height: 30),
             ],
           ),
         ),

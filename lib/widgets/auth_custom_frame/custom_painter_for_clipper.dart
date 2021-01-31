@@ -20,7 +20,7 @@ class CustomPainterForClipper extends CustomPainter {
 
     Paint paint = Paint()
       ..style = PaintingStyle.stroke
-      ..strokeWidth = 0.5
+      ..strokeWidth = 0.3
       ..color = color;
 
     canvas.drawPath(path2, paint);

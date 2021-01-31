@@ -38,25 +38,25 @@ ThemeData theme1(BuildContext context, Brightness brightness) {
     inputDecorationTheme: InputDecorationTheme(
       enabledBorder: OutlineInputBorder(
         borderSide: BorderSide(
-          width: 0.4,
+          width: 0.3,
           color: isDark ? Color(0xFFF2F2F2) : Color(0xFF1C2321),
         ),
       ),
       focusedBorder: OutlineInputBorder(
         borderSide: BorderSide(
-          width: 1,
+          width: 0.8,
           color: isDark ? Color(0xFFF2F2F2) : Color(0xFF1C2321),
         ),
       ),
       errorBorder: OutlineInputBorder(
         borderSide: BorderSide(
-          width: 0.5,
+          width: 0.4,
           color: isDark ? Color(0xFFC83E4D) : Colors.red[600],
         ),
       ),
       focusedErrorBorder: OutlineInputBorder(
         borderSide: BorderSide(
-          width: 1,
+          width: 0.8,
           color: isDark ? Color(0xFFC83E4D) : Colors.red[600],
         ),
       ),

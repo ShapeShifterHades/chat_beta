@@ -66,77 +66,66 @@ class _LoginFormState extends State<LoginForm> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<LoginCubit, LoginState>(
-      listener: (context, state) {
-        if (state.status.isSubmissionFailure) {
-          Scaffold.of(context)
-            ..hideCurrentSnackBar()
-            ..showSnackBar(
-              const SnackBar(content: Text('Authentication Failure')),
-            );
-        }
-      },
-      child: AnimatedAlign(
-        duration: Duration(milliseconds: 300),
-        curve: Curves.easeIn,
-        alignment: visibleKbrd ? Alignment.topCenter : Alignment.center,
-        child: SlideTransition(
-          position: _slideInAnimation,
-          child: Container(
-            margin: EdgeInsets.only(top: 40),
-            width: 280,
-            child: SingleChildScrollView(
-              child: BlocBuilder<LoginCubit, LoginState>(
-                builder: (context, state) {
-                  return CustomPaint(
-                    painter: CustomPainterForClipper(
-                      color: state.status.isSubmissionFailure
-                          ? Theme.of(context).errorColor
-                          : state.status.isValid
-                              ? Theme.of(context).accentColor
-                              : state.status.isSubmissionInProgress
-                                  ? Theme.of(context).highlightColor
-                                  : Theme.of(context).primaryColor,
-                    ),
-                    child: ClipPath(
-                      clipper: CustomClipPath(),
-                      child: Column(
-                        children: [
-                          FormHeader(
-                            color: state.status.isSubmissionFailure
-                                ? Theme.of(context).errorColor
-                                : state.status.isValid
-                                    ? Theme.of(context).accentColor
-                                    : state.status.isSubmissionInProgress
-                                        ? Theme.of(context).highlightColor
-                                        : Theme.of(context).primaryColor,
-                            title: state.status.isSubmissionFailure
-                                ? 'loginpage_failure'.tr
-                                : state.status.isValid
-                                    ? 'loginpage_submit'.tr
-                                    : state.status.isSubmissionInProgress
-                                        ? 'loginpage_connecting'.tr
-                                        : 'loginpage_login_form'.tr,
+    return AnimatedAlign(
+      duration: Duration(milliseconds: 300),
+      curve: Curves.easeIn,
+      alignment: visibleKbrd ? Alignment.topCenter : Alignment.center,
+      child: SlideTransition(
+        position: _slideInAnimation,
+        child: Container(
+          margin: EdgeInsets.only(top: 40),
+          width: 280,
+          child: SingleChildScrollView(
+            child: BlocBuilder<LoginCubit, LoginState>(
+              builder: (context, state) {
+                return CustomPaint(
+                  painter: CustomPainterForClipper(
+                    color: state.status.isSubmissionFailure
+                        ? Theme.of(context).errorColor
+                        : state.status.isValid
+                            ? Theme.of(context).accentColor
+                            : state.status.isSubmissionInProgress
+                                ? Theme.of(context).highlightColor
+                                : Theme.of(context).primaryColor,
+                  ),
+                  child: ClipPath(
+                    clipper: CustomClipPath(),
+                    child: Column(
+                      children: [
+                        FormHeader(
+                          color: state.status.isSubmissionFailure
+                              ? Theme.of(context).errorColor
+                              : state.status.isValid
+                                  ? Theme.of(context).accentColor
+                                  : state.status.isSubmissionInProgress
+                                      ? Theme.of(context).highlightColor
+                                      : Theme.of(context).primaryColor,
+                          title: state.status.isSubmissionFailure
+                              ? 'loginpage_failure'.tr
+                              : state.status.isValid
+                                  ? 'loginpage_submit'.tr
+                                  : state.status.isSubmissionInProgress
+                                      ? 'loginpage_connecting'.tr
+                                      : 'loginpage_login_form'.tr,
+                        ),
+                        Container(
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 12, vertical: 20),
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              _EmailInput(),
+                              SizedBox(height: 20),
+                              _PasswordInput(),
+                              SizedBox(height: 20),
+                            ],
                           ),
-                          Container(
-                            padding: EdgeInsets.symmetric(
-                                horizontal: 12, vertical: 20),
-                            child: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                _EmailInput(),
-                                SizedBox(height: 20),
-                                _PasswordInput(),
-                                SizedBox(height: 20),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
-                  );
-                },
-              ),
+                  ),
+                );
+              },
             ),
           ),
         ),

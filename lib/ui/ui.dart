@@ -92,7 +92,6 @@ class UIState extends State<UI> with SingleTickerProviderStateMixin {
               ),
               Positioned(
                 // This is where main page content's scaffold size is defined
-                // Below are the
                 top: size.width * 0.05 + 80,
                 left: size.width * 0.05 + 20,
                 right: 20,

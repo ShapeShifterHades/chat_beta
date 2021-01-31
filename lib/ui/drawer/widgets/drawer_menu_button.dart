@@ -56,13 +56,13 @@ class _DrawerMenuButtonState extends State<DrawerMenuButton> {
           children: [
             SizedBox(width: 0),
             CustomPaint(
-              painter: DrawerMenuPMTilePainter(
+              painter: DrawerMenuButtonPainter(
                   pressed: _pressed,
                   color: widget.isCurrentPage
                       ? Colors.white
                       : Theme.of(context).primaryTextTheme.bodyText1.color),
               child: ClipPath(
-                clipper: DrawerMenuPMTileClipper(),
+                clipper: DrawerMenuButtonClipper(),
                 child: Container(
                   color: Theme.of(context).primaryColor.withOpacity(0.08),
                   width: 140,
@@ -99,11 +99,12 @@ class _DrawerMenuButtonState extends State<DrawerMenuButton> {
   }
 }
 
-class DrawerMenuPMTilePainter extends CustomPainter {
+/// Frame elements for [DrawerMenuButton].
+class DrawerMenuButtonPainter extends CustomPainter {
   final bool pressed;
   final Color color;
 
-  DrawerMenuPMTilePainter({this.color, this.pressed = false});
+  DrawerMenuButtonPainter({this.color, this.pressed = false});
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -136,7 +137,8 @@ class DrawerMenuPMTilePainter extends CustomPainter {
   }
 }
 
-class DrawerMenuPMTileClipper extends CustomClipper<Path> {
+/// Clipper for [DrawerMenuButton].
+class DrawerMenuButtonClipper extends CustomClipper<Path> {
   @override
   Path getClip(Size size) {
     Path path = Path();
