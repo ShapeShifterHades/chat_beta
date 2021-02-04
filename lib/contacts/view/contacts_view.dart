@@ -12,7 +12,7 @@ class ContactsView extends StatelessWidget {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         onPressed: () =>
-            context.read<ContactBloc>().add(ContactAdded(contactModel1)),
+            context.read<ContactBloc>().add(FriendRequestSent()),
       ),
       body: UI(
         content: Column(

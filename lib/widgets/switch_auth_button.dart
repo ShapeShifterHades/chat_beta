@@ -19,10 +19,14 @@ class SwitchAuthButton extends StatelessWidget {
               .inputDecorationTheme
               .enabledBorder
               .borderSide
-              .color,
-          highlightColor: Theme.of(context).backgroundColor,
+              .color.withOpacity(0.35),
+          highlightColor: Theme.of(context)
+              .inputDecorationTheme
+              .enabledBorder
+              .borderSide
+              .color.withOpacity(1),
           loop: 0,
-          period: Duration(milliseconds: 3000),
+          period: Duration(milliseconds: 2500),
           child: Row(
             children: [
               Text(

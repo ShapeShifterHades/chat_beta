@@ -1,48 +1,53 @@
 import '../entities/entities.dart';
 
-class Profile {
+/// Represents a class passed to entity converter
+/// added to Firestore when new user creates account
+class NewProfile {
   final String uid;
   final String username;
-  final String bio;
+  /// Timestamp in milliseconds since epoch shows when account is created
+  // final int createdAt;
 
-  Profile({this.uid, this.username, this.bio});
+  NewProfile({this.uid, this.username});
 
-  Profile copyWith({String uid, String username, String bio}) {
-    return Profile(
-      uid: uid ?? this.uid,
-      username: username ?? this.username,
-      bio: bio ?? this.bio,
-    );
-  }
+  // User cannot chance his acc uid, username and created at timestamp. 
+  //
+  // Profile copyWith({String uid, String username, int createdAt}) {
+  //   return Profile(
+  //     uid: uid ?? this.uid,
+  //     username: username ?? this.username,
+  //     createdAt: createdAt ?? this.createdAt,
+  //   );
+  // }
 
   @override
   // ignore: override_on_non_overriding_member
-  int get hashcode => uid.hashCode ^ username.hashCode ^ bio.hashCode;
+  int get hashcode => uid.hashCode ^ username.hashCode;
 
   @override
   // ignore: hash_and_equals
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is Profile &&
+      other is NewProfile &&
           runtimeType == other.runtimeType &&
           uid == other.uid &&
-          bio == other.bio &&
+          
           username == other.username;
 
   @override
   String toString() {
-    return 'Profile{uid: $uid, username: $username, bio: $bio}';
+    return 'Profile{uid: $uid, username: $username}';
   }
 
-  ProfileEntity toEntity() {
-    return ProfileEntity(uid, username, bio);
+  NewProfileEntity toEntity() {
+    return NewProfileEntity(uid, username);
   }
 
-  static Profile fromEntity(ProfileEntity entity) {
-    return Profile(
+  static NewProfile fromEntity(NewProfileEntity entity) {
+    return NewProfile(
       uid: entity.uid,
       username: entity.username,
-      bio: entity.bio,
+    
     );
   }
 }

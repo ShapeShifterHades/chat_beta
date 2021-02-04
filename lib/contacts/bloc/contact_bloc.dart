@@ -2,34 +2,35 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:firestore_repository/firestore_repository.dart';
 import 'package:meta/meta.dart';
 import 'package:sqflite_repository/sqflite_repository.dart';
 
 part 'contact_event.dart';
 part 'contact_state.dart';
 
-class ContactBloc extends Bloc<ContactEvent, ContactState> {
-  final ContactRepository contactRepository;
-  ContactBloc(this.contactRepository) : super(ContactState.loading());
+class ContactBloc extends Bloc<FriendEvent, ContactState> {
+  final FirestoreContactRepository firestoreContactRepository;
+  ContactBloc(this.firestoreContactRepository) : super(ContactState.loading());
 
   @override
-  Stream<ContactState> mapEventToState(ContactEvent event) async* {
-    if (event is ContactLoaded) {
-      yield* _mapContactLoadedToState();
-    } else if (event is ContactAdded) {
-      yield* _mapContactAddedToState(event);
-    } else if (event is ContactUpdated) {
-      yield* _mapContactUpdatedToState(event);
-    } else if (event is ContactDeleted) {
-      yield* _mapContactDeletedToState(event);
-    } else if (event is DeleteAllContacts) {
-      yield* _mapAllContactsDeletedToState();
+  Stream<ContactState> mapEventToState(FriendEvent event) async* {
+    if (event is FriendListLoaded) {
+      yield* _mapFriendListLoadedToState();
+    } else if (event is FriendRequestAccepted) {
+      yield* _mapFriendRequestAcceptedToState(event);
+    } else if (event is FriendRequestSent) {
+      yield* _mapFriendRequestSentToState(event);
+    } else if (event is FriendRequestRejected) {
+      yield* _mapFriendRequestRejectedToState(event);
+    } else if (event is FriendRemovedFromList) {
+      yield* _mapFriendRemovedFromListToState(event);
     }
   }
 
-  Stream<ContactState> _mapContactLoadedToState() async* {
+  Stream<ContactState> _mapFriendListLoadedToState() async* {
     try {
-      final contacts = await this.contactRepository.getAllContacts();
+      final contacts = this.firestoreContactRepository.contacts();
       // yield ContactLoadSuccess(
       //   contacts.map(ContactModel.fromDatabaseJson(contacts)).toList(),
       // );
@@ -39,41 +40,41 @@ class ContactBloc extends Bloc<ContactEvent, ContactState> {
     }
   }
 
-  Stream<ContactState> _mapContactAddedToState(ContactAdded event) async* {
+  Stream<ContactState> _mapFriendRequestAcceptedToState(FriendRequestAccepted event) async* {
     try {
-      await this.contactRepository.addNewContact(event.contactModel);
-      final contacts = await this.contactRepository.getAllContacts();
-      yield ContactState.loadedSuccessfully(contacts);
+      // await this.firestoreContactRepository.addNewContact(event.contactModel);
+      // final contacts = await this.firestoreContactRepository.getAllContacts();
+      // yield ContactState.loadedSuccessfully(contacts);
     } catch (_) {
       yield ContactState.loadedWithError();
     }
   }
 
-  Stream<ContactState> _mapContactUpdatedToState(ContactUpdated event) async* {
+  Stream<ContactState> _mapFriendRequestSentToState(FriendRequestSent event) async* {
     try {
-      await this.contactRepository.updateContact(event.contactModel);
-      final contacts = await this.contactRepository.getAllContacts();
-      yield ContactState.loadedSuccessfully(contacts);
+      // await this.firestoreContactRepository.updateContact(event.contactModel);
+      // final contacts = await this.firestoreContactRepository.getAllContacts();
+      // yield ContactState.loadedSuccessfully(contacts);
     } catch (_) {
       yield ContactState.loadedWithError();
     }
   }
 
-  Stream<ContactState> _mapContactDeletedToState(ContactDeleted event) async* {
+  Stream<ContactState> _mapFriendRequestRejectedToState(FriendRequestRejected event) async* {
     try {
-      await this.contactRepository.deleteContactById(event.id);
-      final contacts = await this.contactRepository.getAllContacts();
-      yield ContactState.loadedSuccessfully(contacts);
+      // await this.firestoreContactRepository.deleteContactById(event.id);
+      // final contacts = await this.firestoreContactRepository.getAllContacts();
+      // yield ContactState.loadedSuccessfully(contacts);
     } catch (_) {
       yield ContactState.loadedWithError();
     }
   }
 
-  Stream<ContactState> _mapAllContactsDeletedToState() async* {
+  Stream<ContactState> _mapFriendRemovedFromListToState(FriendRemovedFromList event) async* {
     try {
-      await this.contactRepository.deleteAllContacts();
-      final contacts = await this.contactRepository.getAllContacts();
-      yield ContactState.loadedSuccessfully(contacts);
+      // await this.firestoreContactRepository.deleteAllContacts();
+      // final contacts = await this.firestoreContactRepository.getAllContacts();
+      // yield ContactState.loadedSuccessfully(contacts);
     } catch (_) {
       yield ContactState.loadedWithError();
     }
@@ -89,19 +90,19 @@ class ContactBloc extends Bloc<ContactEvent, ContactState> {
 //     ContactEvent event,
 //   ) async* {
 //     if (event is ContactLoaded) {
-//       yield* _mapContactLoadedToState();
+//       yield* _mapFriendListLoadedToState();
 //     } else if (event is ContactAdded) {
-//       yield* _mapContactAddedToState(event);
+//       yield* _mapFriendRequestAcceptedToState(event);
 //     } else if (event is ContactUpdated) {
-//       yield* _mapContactUpdatedToState(event);
+//       yield* _mapFriendRequestSentToState(event);
 //     } else if (event is ContactDeleted) {
-//       yield* _mapContactDeletedToState(event);
+//       yield* _mapFriendRequestRejectedToState(event);
 //     } else if (event is AllContactsDeleted) {
-//       yield* _mapAllContactsDeletedToState();
+//       yield* _mapFriendRemovedFromListToState();
 //     }
 //   }
 
-//   Stream<ContactState> _mapContactLoadedToState() async* {
+//   Stream<ContactState> _mapFriendListLoadedToState() async* {
 //     try {
 //       final contacts = await this.contactRepository.getAllContacts();
 //       // yield ContactLoadSuccess(
@@ -113,7 +114,7 @@ class ContactBloc extends Bloc<ContactEvent, ContactState> {
 //     }
 //   }
 
-//   Stream<ContactState> _mapContactAddedToState(ContactAdded event) async* {
+//   Stream<ContactState> _mapFriendRequestAcceptedToState(ContactAdded event) async* {
 //     try {
 //       final id = await this.contactRepository.addNewContact(event.contactModel);
 //       yield ContactUpdatedSuccess(id);
@@ -122,7 +123,7 @@ class ContactBloc extends Bloc<ContactEvent, ContactState> {
 //     }
 //   }
 
-//   Stream<ContactState> _mapContactUpdatedToState(ContactUpdated event) async* {
+//   Stream<ContactState> _mapFriendRequestSentToState(ContactUpdated event) async* {
 //     try {
 //       final id = await this.contactRepository.updateContact(event.contactModel);
 //       yield ContactUpdatedSuccess(id);
@@ -131,7 +132,7 @@ class ContactBloc extends Bloc<ContactEvent, ContactState> {
 //     }
 //   }
 
-//   Stream<ContactState> _mapContactDeletedToState(ContactDeleted event) async* {
+//   Stream<ContactState> _mapFriendRequestRejectedToState(ContactDeleted event) async* {
 //     try {
 //       final id = await this.contactRepository.deleteContactById(event.id);
 //       yield ContactUpdatedSuccess(id);
@@ -140,7 +141,7 @@ class ContactBloc extends Bloc<ContactEvent, ContactState> {
 //     }
 //   }
 
-//   Stream<ContactState> _mapAllContactsDeletedToState() async* {
+//   Stream<ContactState> _mapFriendRemovedFromListToState() async* {
 //     try {
 //       final result = await this.contactRepository.deleteAllContacts();
 //       yield ContactUpdatedSuccess(result);

@@ -2,10 +2,13 @@ import 'dart:async';
 
 import 'models/models.dart';
 
-abstract class ProfileRepository {
-  Future<void> addNewProfile(Profile profile);
+abstract class NewUserRepository {
+  // Adds batch of documents to Firebase when user created
+  Future<void> addNewUser(NewProfile newProfile);
 
-  Future<void> deleteProfile(Profile profile);
+  // Future<void> addNewProfile(NewProfile newProfile);
 
-  Future<void> updateProfile(Profile update);
+  // Future<void> deleteProfile(NewProfile newProfile);
+
+  // Future<void> updateProfile(NewProfile update);
 }

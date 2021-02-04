@@ -1,42 +1,41 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
 
-class ProfileEntity extends Equatable {
+
+/// Represents class for Firestore that is used when creating a new user
+class NewProfileEntity extends Equatable {
   final String uid;
   final String username;
-  final String bio;
 
-  const ProfileEntity(this.uid, this.username, this.bio);
+  const NewProfileEntity(this.uid, this.username);
 
   Map<String, Object> toJson() {
     return {
       'uid': uid,
       'username': username,
-      'bio': bio,
+
     };
   }
 
   @override
-  List<Object> get props => [uid, username, bio];
+  List<Object> get props => [uid, username];
 
   @override
   String toString() {
-    return 'ProfileEntity { uid: $uid, username: $username, bio: $bio }';
+    return 'ProfileEntity { uid: $uid, username: $username }';
   }
 
-  static ProfileEntity fromJson(Map<String, Object> json) {
-    return ProfileEntity(
+  static NewProfileEntity fromJson(Map<String, Object> json) {
+    return NewProfileEntity(
       json['uid'] as String,
       json['username'] as String,
-      json['bio'] as String,
     );
   }
 
-  static ProfileEntity fromSnapshot(DocumentSnapshot snap) {
-    return ProfileEntity(
+  static NewProfileEntity fromSnapshot(DocumentSnapshot snap) {
+    return NewProfileEntity(
       snap.data()['uid'],
       snap.data()['username'],
-      snap.data()['bio'],
     );
   }
 
@@ -44,7 +43,6 @@ class ProfileEntity extends Equatable {
     return {
       'uid': uid,
       'username': username,
-      'bio': bio,
     };
   }
 }

@@ -24,21 +24,21 @@ import 'package:get/get.dart' as Get;
 class App extends StatelessWidget {
   const App({
     Key key,
-    this.contactRepository,
+    this.firestoreContactRepository,
     @required this.authenticationRepository,
   })  : assert(authenticationRepository != null),
         super(key: key);
 
   final AuthenticationRepository authenticationRepository;
-  final ContactRepository contactRepository;
+  final FirestoreContactRepository firestoreContactRepository;
 
   @override
   Widget build(BuildContext context) {
     return RepositoryProvider.value(
-      value: (context) => contactRepository,
+      value: (context) => firestoreContactRepository,
       child: BlocProvider(
         create: (context) =>
-            ContactBloc(contactRepository)..add(ContactLoaded()),
+            ContactBloc(firestoreContactRepository)..add(FriendListLoaded()),
         child: RepositoryProvider.value(
           value: authenticationRepository,
           child: BlocProvider(

@@ -84,26 +84,14 @@ class SignUpCubit extends Cubit<SignUpState> {
           email: state.email.value,
           password: state.password.value,
           displayName: state.username.value);
+      print('Everything is gucci up until now');
       try {
-        await _firestoreNewUserRepository.addNewProfile(Profile(
+        await _firestoreNewUserRepository.addNewUser(NewProfile(
           uid: credential.user.uid,
           username: state.username.value,
-          bio: '',
         ));
-        // print(
-        //     ' credential.credential.providerId: {$credential.credential.providerId}');
-        // print(
-        //     ' credential.credential.signInMethod: {$credential.credential.signInMethod}');
-        // print(' credential.credential.token: {$credential.credential.token}');
-        // print(
-        //     ' credential.additionalUserInfo.username: {$credential.additionalUserInfo.username}');
-        // print(
-        //     ' credential.user.metadata.creationTime: {$credential.user.metadata.creationTime}');
-        // print(
-        //     ' credential.user.metadata.creationTime: {$credential.user.metadata.creationTime}');
-        // print(
-        //     ' credential.user.metadata.lastSignInTime: {$credential.user.metadata.lastSignInTime}');
       } catch (e) {
+        emit(state.copyWith(status: FormzStatus.submissionFailure));
         print('Shite happend: {$e}');
       }
       emit(state.copyWith(status: FormzStatus.submissionSuccess));

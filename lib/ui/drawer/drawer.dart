@@ -20,7 +20,7 @@ class DrawerPM extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: [
-              SizedBox(height: 30),
+              SizedBox(height: 8),
               Expanded(
                   child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,

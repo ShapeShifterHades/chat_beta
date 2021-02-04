@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:keyboard_visibility/keyboard_visibility.dart';
 import 'package:formz/formz.dart';
 import 'package:get/get.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:void_chat_beta/widgets/auth_custom_frame/custom_clip_path.dart';
 import 'package:void_chat_beta/widgets/auth_custom_frame/custom_painter_for_clipper.dart';
 
@@ -21,6 +22,7 @@ class _SignUpFormState extends State<SignUpForm> with TickerProviderStateMixin {
   bool visibleKbrd = false;
   AnimationController _slideInController;
   Animation<Offset> _slideInAnimation;
+  bool isOk = false;
 
   @override
   void initState() {
@@ -92,7 +94,8 @@ class _SignUpFormState extends State<SignUpForm> with TickerProviderStateMixin {
                           : state.status.isValid
                               ? Theme.of(context).accentColor
                               : state.status.isSubmissionInProgress
-                                  ? Theme.of(context).highlightColor
+                                  ? Theme.of(context).highlightColor :
+                                  state.status.isInvalid? Colors.grey
                                   : Theme.of(context).primaryColor,
                     ),
                     child: ClipPath(
@@ -228,6 +231,9 @@ class _EmailInput extends StatelessWidget {
 }
 
 class _UsernameInput extends StatelessWidget {
+  bool isGood = false;
+
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<SignUpCubit, SignUpState>(
@@ -266,8 +272,25 @@ class _UsernameInput extends StatelessWidget {
             textCapitalization: TextCapitalization.none,
             enableSuggestions: false,
             keyboardType: TextInputType.name,
-            onChanged: (username) =>
-                context.read<SignUpCubit>().usernameChanged(username),
+            onChanged: (username) async {
+              context.read<SignUpCubit>().usernameChanged(username);
+              state.username.valid ? print('GET TO THE CHOPPA!') : null;
+              if (state.username.valid) {
+                Future<bool> usernameCheck(String username) async {
+                  final result = await FirebaseFirestore.instance
+                      .collection('usernames')
+                      // .where('username', isEqualTo: username)
+                      .doc(username)
+                      .get();
+                  return result.exists;
+                }
+
+               isGood = await usernameCheck(username);
+
+              print(isGood);
+              isGood ? context.read<SignUpCubit>().emit(state.copyWith(status: FormzStatus.invalid))  :null;
+              }
+            },
           );
         });
   }

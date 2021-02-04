@@ -7,10 +7,10 @@ class ContactState extends Equatable {
   final contacts;
   const ContactState._(
       {this.status = ContactListStatus.loading,
-      this.contacts = ContactModel.empty});
-
+      this.contacts = Contact});
+// TODO COntact uphere must be changed to Contact.empty
   const ContactState.loading() : this._();
-  const ContactState.loadedSuccessfully(List<ContactModel> contacts)
+  const ContactState.loadedSuccessfully(Stream<List<Contact>> contacts)
       : this._(
             status: ContactListStatus.loadedSuccessfully, contacts: contacts);
   const ContactState.loadedWithError() : this._();

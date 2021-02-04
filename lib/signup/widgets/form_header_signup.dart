@@ -21,7 +21,8 @@ class FormHeaderSignUp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: context.watch<SignUpCubit>().state.status.isValidated
+      onTap: context.watch<SignUpCubit>().state.status.isValidated 
+      
           ? () {
               FocusScope.of(context).unfocus();
               return context.read<SignUpCubit>().signUpFormSubmitted();
