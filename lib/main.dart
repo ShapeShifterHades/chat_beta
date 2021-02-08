@@ -4,7 +4,6 @@ import 'package:firestore_repository/firestore_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'app.dart';
-import 'package:sqflite_repository/sqflite_repository.dart';
 
 
 FirestoreContactRepository _firestoreContactRepository =

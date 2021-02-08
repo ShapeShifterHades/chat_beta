@@ -43,6 +43,8 @@ dependencies:
   equatable:
   hydrated_bloc:
   get:
+  flutter_form_bloc:
+  simple_animations:
 
 dev_dependencies:
   flutter_test:

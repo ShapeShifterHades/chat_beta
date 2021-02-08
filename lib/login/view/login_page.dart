@@ -28,6 +28,7 @@ class LoginView extends StatelessWidget {
                   Get.deviceLocale.countryCode);
               Get.updateLocale(Locale(context.read<LocaleCubit>().state));
               context.read<BrightnessCubit>().toggleBrightness();
+              Get.toNamed('/newSignUp');
             },
           ),
         ],

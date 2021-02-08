@@ -231,7 +231,7 @@ class _EmailInput extends StatelessWidget {
 }
 
 class _UsernameInput extends StatelessWidget {
-  bool isGood = false;
+
 
 
   @override
@@ -285,7 +285,7 @@ class _UsernameInput extends StatelessWidget {
                   return result.exists;
                 }
 
-               isGood = await usernameCheck(username);
+              final isGood = await usernameCheck(username);
 
               print(isGood);
               isGood ? context.read<SignUpCubit>().emit(state.copyWith(status: FormzStatus.invalid))  :null;

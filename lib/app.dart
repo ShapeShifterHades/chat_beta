@@ -3,13 +3,13 @@ import 'package:firestore_repository/firestore_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:void_chat_beta/constants/constants.dart';
+import 'new_signup/view/new_signup_page.dart';
 import 'settings/settings.dart';
 import 'signup/sign_up.dart';
 import 'translations/translations.dart';
 
 import 'authentication/authentication.dart';
 import 'contacts/bloc/contact_bloc.dart';
-import 'package:sqflite_repository/sqflite_repository.dart';
 
 import 'contacts/view/contacts_view.dart';
 import 'faq/view/faq_view.dart';
@@ -91,6 +91,8 @@ class AppView extends StatelessWidget {
                 Get.GetPage(name: securityRoute, page: () => SecurityView()),
                 Get.GetPage(name: faqRoute, page: () => FaqView()),
                 Get.GetPage(name: contactsRoute, page: () => ContactsView()),
+                Get.GetPage(name: '/newSignUp', page: () => RepositoryProvider.value(
+                      value: firestoreNewUserRepository, child: TestLoginForm()),),
                 Get.GetPage(
                   name: signupRoute,
                   page: () => RepositoryProvider.value(
