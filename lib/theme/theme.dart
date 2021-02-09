@@ -26,12 +26,16 @@ ThemeData theme1(BuildContext context, Brightness brightness) {
         ? Color(0xFF002E3D)
         : Color(0xFFF2F2F2), // Used in drawer backgrowndcolor
     cardColor: isDark ? Color(0xFF10171E) : Color(0xFFFBFBFD),
-    primaryColor: isDark ? Color(0xFFA7F5FF) : Color(0xFF1D80BE),
+    primaryColor:
+        isDark ? Color(0xFFA7F5FF) : Color(0xFF858585), // last light 1D80BE
     errorColor: Color(0xFFC83E4D), // Submit fail color
     highlightColor: Color(0xFFF28123), //Submission in progress color
-    accentColor: Color(0xFF4C956C), // Ready to submit color
-    backgroundColor:
-        isDark ? Color(0xFF10171E) : Color(0xFFFBFBFD), // main content colorbba
+    accentColor:
+        isDark ? Color(0xFF002E3D) : Color(0xFFDBDBDB), // FORMS BACKGROUND
+    backgroundColor: isDark
+        ? Color(0xFF000000)
+        : Color(
+            0xFFFBFBFD), // main content colorbba (last version for bg dark - Color(0xFF10171E))
     scaffoldBackgroundColor: isDark
         ? Color(0xFF002E3D)
         : Color(0xFFF2F2F2), // Used in drawer backgrowndcolor,
@@ -39,7 +43,8 @@ ThemeData theme1(BuildContext context, Brightness brightness) {
       enabledBorder: OutlineInputBorder(
         borderSide: BorderSide(
           width: 0.3,
-          color: isDark ? Color(0xFFF2F2F2) : Color(0xFF1C2321),
+          color: isDark ? Colors.transparent : Colors.transparent,
+          // color: isDark ? Color(0xFFF2F2F2) : Color(0xFF1C2321),
         ),
       ),
       focusedBorder: OutlineInputBorder(
@@ -50,8 +55,8 @@ ThemeData theme1(BuildContext context, Brightness brightness) {
       ),
       errorBorder: OutlineInputBorder(
         borderSide: BorderSide(
-          width: 0.4,
-          color: isDark ? Color(0xFFC83E4D) : Colors.red[600],
+          width: 1,
+          color: isDark ? Color(0xFFBF4342) : Colors.red[600],
         ),
       ),
       focusedErrorBorder: OutlineInputBorder(
@@ -61,8 +66,8 @@ ThemeData theme1(BuildContext context, Brightness brightness) {
         ),
       ),
       errorStyle: TextStyle(
-        color: isDark ? Color(0xFFC83E4D) : Colors.red[600],
-        fontWeight: FontWeight.w100,
+        color: isDark ? Color(0xFFBF4342) : Colors.red[600],
+        fontWeight: FontWeight.w300,
         fontSize: 15,
       ),
       hintStyle: TextStyle(
@@ -72,14 +77,16 @@ ThemeData theme1(BuildContext context, Brightness brightness) {
       ),
       labelStyle: TextStyle(
           fontSize: 14,
-          color: isDark ? Color(0xFFF2F2F2) : Color(0xFF1C2321),
+          color: isDark ? Color(0xFFF2F2F2) : Color(0xFFFFFFFF),
           fontWeight: FontWeight.w500,
           decoration: TextDecoration.none),
       contentPadding: EdgeInsets.all(12),
       counterStyle: TextStyle(color: Colors.teal),
       border: InputBorder.none,
       filled: true,
-      fillColor: isDark ? Color(0xFF2f3535) : Color(0xFFF2F2F2),
+      fillColor: isDark
+          ? Color(0xFF002E3D)
+          : Color(0xFFDBDBDB), // light - accent color
     ),
   );
 }

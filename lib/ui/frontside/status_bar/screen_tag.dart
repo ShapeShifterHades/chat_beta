@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 class ScreenTag extends StatelessWidget {
   final BuildContext context;
+
   const ScreenTag({
     Key key,
     this.context,
@@ -14,7 +15,7 @@ class ScreenTag extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(2.0),
       child: CustomPaint(
-        painter: ScreenTagPainter(context),
+        painter: ScreenTagPainter(context: context),
         child: ClipPath(
           clipper: ScreenTagClipper(),
           child: Container(
@@ -50,8 +51,9 @@ class ScreenTag extends StatelessWidget {
 
 class ScreenTagPainter extends CustomPainter {
   final BuildContext context;
+  final Color color;
 
-  ScreenTagPainter(this.context);
+  ScreenTagPainter({this.context, this.color});
   @override
   void paint(Canvas canvas, Size size) {
     Path path1 = Path();
@@ -75,7 +77,7 @@ class ScreenTagPainter extends CustomPainter {
     Paint paint2 = Paint()
       ..style = PaintingStyle.stroke
       ..strokeWidth = 0.3
-      ..color = Theme.of(context).primaryTextTheme.bodyText1.color;
+      ..color = color ?? Theme.of(context).primaryTextTheme.bodyText1.color;
 
     canvas.drawPath(path2, paint2);
   }

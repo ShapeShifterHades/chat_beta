@@ -1,50 +1,19 @@
+import 'package:get/get.dart';
 import 'package:authentication_repository/authentication_repository.dart';
 import 'package:flutter_form_bloc/flutter_form_bloc.dart';
 import 'package:firestore_repository/firestore_repository.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-
 class SignUpFormBloc extends FormBloc<String, String> {
-  SignUpFormBloc(this._authenticationRepository, this._firestoreNewUserRepository) {
-      addFieldBlocs(
-      fieldBlocs: [
-        email,
-        password,
-        confirmPassword,
-        username,
-        showAgreementCheckbox,
-      ],
-    );
-    confirmPassword
-      ..addValidators([_confirmPassword(password)])
-      ..subscribeToFieldBlocs([password]);
-    username
-      ..addAsyncValidators([_checkUsername]);
-  }
-
-
   final AuthenticationRepository _authenticationRepository;
+
   final FirestoreNewUserRepository _firestoreNewUserRepository;
 
   // ignore: close_sinks
-  final username = TextFieldBloc(
-    validators: [
-      FieldBlocValidators.required,      
-    ],
-    asyncValidatorDebounceTime: Duration(milliseconds: 500),
-  );
-
-  // ignore: close_sinks
-  final showAgreementCheckbox = BooleanFieldBloc(validators: [
-    FieldBlocValidators.required,]);
-  // ignore: close_sinks
-  final email = TextFieldBloc(
-      name: 'Email field',
-      initialValue: 'nigga@mm.ru',
-      validators: [
-        FieldBlocValidators.required,
-        FieldBlocValidators.email,
-      ]);
+  final email = TextFieldBloc(name: 'Email field', validators: [
+    FieldBlocValidators.required,
+    FieldBlocValidators.email,
+  ]);
 
   // ignore: close_sinks
   final password = TextFieldBloc(name: 'Password', validators: [
@@ -56,6 +25,35 @@ class SignUpFormBloc extends FormBloc<String, String> {
     FieldBlocValidators.required,
   ]);
 
+  // ignore: close_sinks
+  final username = TextFieldBloc(
+    validators: [
+      FieldBlocValidators.required,
+    ],
+    asyncValidatorDebounceTime: Duration(milliseconds: 500),
+  );
+
+  // ignore: close_sinks
+  final showAgreementCheckbox = BooleanFieldBloc(validators: [
+    FieldBlocValidators.required,
+  ]);
+
+  SignUpFormBloc(
+      this._authenticationRepository, this._firestoreNewUserRepository) {
+    addFieldBlocs(
+      fieldBlocs: [
+        email,
+        password,
+        confirmPassword,
+        username,
+        showAgreementCheckbox,
+      ],
+    );
+    confirmPassword
+      ..addValidators([_confirmPassword(password)])
+      ..subscribeToFieldBlocs([password]);
+    username.addAsyncValidators([_checkUsername]);
+  }
 
   // ignore: unused_element
   // ignore: missing_return
@@ -63,38 +61,39 @@ class SignUpFormBloc extends FormBloc<String, String> {
     UserCredential credential;
     emitLoading();
     try {
-      credential = await _authenticationRepository.signUp(email: email.value, password: password.value,);
+      credential = await _authenticationRepository.signUp(
+        email: email.value,
+        password: password.value,
+      );
       try {
         await _firestoreNewUserRepository.addNewUser(NewProfile(
           uid: credential.user.uid,
           username: username.value,
         ));
-      emitSuccess();
+        emitSuccess();
       } catch (e) {
         print(e);
         emitFailure();
       }
     } catch (e) {
-              print(e);
-        emitFailure();
+      print(e);
+      emitFailure();
     }
-    
   }
+
+  /// Checks Firestore username collection wether [username] exists, blocks validation if it does.
   Future<String> _checkUsername(String username) async {
-      var usersRef = _firestoreNewUserRepository.newUsernameCollection.doc(username);
-      usersRef.get()
-        .then((docSnapshot){
-          if (docSnapshot.exists) {
-            print('It exists');
-            return 'It exists';
-          } else {
-            print('Does not exist');
-            return 'It not exists';
-          }
-      });
+    var usersRef =
+        _firestoreNewUserRepository.newUsernameCollection.doc(username);
+    var result = await usersRef.get();
+    if (result.exists) {
+      return 'signup_this_user_taken'.tr;
+    } else {
+      return null;
+    }
   }
 
-
+  // static String
 
   Validator<String> _confirmPassword(
     TextFieldBloc passwordTextFieldBloc,
@@ -112,8 +111,6 @@ class SignUpFormBloc extends FormBloc<String, String> {
 
   @override
   void onSubmitting() async {
-
-
     if (showSuccessResponse.value) {
       emitSuccess();
     } else {

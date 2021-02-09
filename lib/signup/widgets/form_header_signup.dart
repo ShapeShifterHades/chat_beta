@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-
-
 class FormHeaderSignUp extends StatelessWidget {
   final Color color;
   final String title;
@@ -16,15 +14,13 @@ class FormHeaderSignUp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
+      onTap:
+          // context.watch<SignUpCubit>().state.status.isValidated
 
-      onTap: 
-      // context.watch<SignUpCubit>().state.status.isValidated 
-      
-           () {
-              FocusScope.of(context).unfocus();
-              // return context.read<SignUpCubit>().signUpFormSubmitted();
-            }
-        ,
+          () {
+        FocusScope.of(context).unfocus();
+        // return context.read<SignUpCubit>().signUpFormSubmitted();
+      },
       child: Container(
         height: 30,
         width: double.infinity,
@@ -42,7 +38,7 @@ class FormHeaderSignUp extends StatelessWidget {
                     title,
                     style: GoogleFonts.jura(
                       letterSpacing: 2,
-                      fontWeight: FontWeight.w900,
+                      fontWeight: FontWeight.w500,
                       fontSize: 16,
                       color: Theme.of(context).backgroundColor,
                     ),
