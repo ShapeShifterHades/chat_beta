@@ -22,25 +22,36 @@ class FormHeaderSignUp extends StatelessWidget {
         // return context.read<SignUpCubit>().signUpFormSubmitted();
       },
       child: Container(
-        height: 30,
+        height: 60,
         width: double.infinity,
-        color: Theme.of(context).primaryColor,
+        color: color,
+        alignment: Alignment.center,
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.end,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
+                SizedBox(width: 15),
                 Container(
-                  height: 29,
-                  alignment: Alignment.center,
-                  child: Text(
-                    title,
-                    style: GoogleFonts.jura(
-                      letterSpacing: 2,
-                      fontWeight: FontWeight.w500,
-                      fontSize: 16,
-                      color: Theme.of(context).backgroundColor,
+                  child: Icon(
+                    Icons.settings,
+                    color: Theme.of(context).backgroundColor,
+                    size: 30,
+                  ),
+                ),
+                Expanded(
+                  child: Container(
+                    alignment: Alignment.center,
+                    child: Text(
+                      title,
+                      style: GoogleFonts.jura(
+                        letterSpacing: 2,
+                        fontWeight: FontWeight.w500,
+                        fontSize: 26,
+                        color: Theme.of(context).backgroundColor,
+                      ),
                     ),
                   ),
                 ),

@@ -4,7 +4,6 @@ ThemeData theme1(BuildContext context, Brightness brightness) {
   bool isDark = brightness == Brightness.dark;
   return ThemeData(
     brightness: brightness,
-
     primaryTextTheme: TextTheme(
       bodyText1: TextStyle(
         color: isDark ? Color(0xFFA7F5FF) : Color(0xFF10171E),
@@ -85,8 +84,10 @@ ThemeData theme1(BuildContext context, Brightness brightness) {
       border: InputBorder.none,
       filled: true,
       fillColor: isDark
-          ? Color(0xFF002E3D)
-          : Color(0xFFDBDBDB), // light - accent color
+          ? Colors.transparent
+          : Colors.transparent, // light - accent color
     ),
+    accentIconTheme: IconThemeData(color: Colors.red),
+    primarySwatch: Colors.red,
   );
 }

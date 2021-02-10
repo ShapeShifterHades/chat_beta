@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'app.dart';
 
-
 FirestoreContactRepository _firestoreContactRepository =
     FirestoreContactRepository();
 

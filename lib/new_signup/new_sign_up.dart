@@ -2,10 +2,12 @@ import 'package:authentication_repository/authentication_repository.dart';
 import 'package:firestore_repository/firestore_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 import './view/new_signup_view.dart';
 
 import 'bloc/sign_up_form_bloc.dart';
 
+/// This page will be a replace for old Registration page
 class NewSignUpPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {

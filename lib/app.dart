@@ -1,7 +1,9 @@
 import 'package:authentication_repository/authentication_repository.dart';
 import 'package:firestore_repository/firestore_repository.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_statusbarcolor/flutter_statusbarcolor.dart';
 import 'package:void_chat_beta/constants/constants.dart';
 
 import 'new_signup/new_sign_up.dart';
@@ -32,8 +34,14 @@ class App extends StatelessWidget {
   final AuthenticationRepository authenticationRepository;
   final FirestoreContactRepository firestoreContactRepository;
 
+  setStatusColor(BuildContext context) async {
+    await FlutterStatusbarcolor.setStatusBarColor(
+        Theme.of(context).backgroundColor);
+  }
+
   @override
   Widget build(BuildContext context) {
+    setStatusColor(context);
     return RepositoryProvider.value(
       value: (context) => firestoreContactRepository,
       child: BlocProvider(
@@ -66,6 +74,11 @@ class AppView extends StatelessWidget {
   final AuthenticationRepository authenticationRepository;
 
   AppView({Key key, this.authenticationRepository}) : super(key: key);
+
+  /// Sets up [StatusBar] color to transparent
+  setStatusColor(BuildContext context) async {
+    await FlutterStatusbarcolor.setStatusBarColor(Colors.transparent);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -104,20 +117,34 @@ class AppView extends StatelessWidget {
               debugShowCheckedModeBanner: false,
               theme: theme1(context, brightness),
               builder: (context, child) {
-                return BlocListener<AuthenticationBloc, AuthenticationState>(
-                  listener: (context, state) {
-                    switch (state.status) {
-                      case AuthenticationStatus.authenticated:
-                        Get.Get.offAllNamed(homeRoute, arguments: 'Messages');
-                        break;
-                      case AuthenticationStatus.unauthenticated:
-                        Get.Get.offAllNamed(loginRoute);
-                        break;
-                      default:
-                        break;
-                    }
-                  },
-                  child: child,
+                // Here statusbar color is set to transparent
+                setStatusColor(context);
+                // Sets statusbar text color based on current [BrightnessCubit value].
+                return AnnotatedRegion<SystemUiOverlayStyle>(
+                  value: SystemUiOverlayStyle(
+                    // For Android.
+                    // Use [light] for white status bar and [dark] for black status bar.
+                    statusBarIconBrightness:
+                        context.watch<BrightnessCubit>().state ==
+                                Brightness.light
+                            ? Brightness.dark
+                            : Brightness.light,
+                  ),
+                  child: BlocListener<AuthenticationBloc, AuthenticationState>(
+                    listener: (context, state) {
+                      switch (state.status) {
+                        case AuthenticationStatus.authenticated:
+                          Get.Get.offAllNamed(homeRoute, arguments: 'Messages');
+                          break;
+                        case AuthenticationStatus.unauthenticated:
+                          Get.Get.offAllNamed(loginRoute);
+                          break;
+                        default:
+                          break;
+                      }
+                    },
+                    child: child,
+                  ),
                 );
               },
             );

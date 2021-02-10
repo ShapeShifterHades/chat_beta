@@ -1,7 +1,4 @@
 import 'dart:ui';
-
-import 'package:authentication_repository/authentication_repository.dart';
-import 'package:firestore_repository/firestore_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_bloc/flutter_form_bloc.dart';
 import 'package:get/get.dart';
@@ -9,13 +6,25 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:void_chat_beta/new_signup/bloc/sign_up_form_bloc.dart';
 import 'package:void_chat_beta/signup/widgets/form_header_signup.dart';
+import 'package:void_chat_beta/theme/brightness_cubit.dart';
 import 'package:void_chat_beta/ui/frontside/status_bar/screen_tag.dart';
 import 'package:void_chat_beta/widgets/auth_custom_frame/custom_clip_path.dart';
 import 'package:void_chat_beta/widgets/auth_custom_frame/custom_painter_for_clipper.dart';
 import 'package:simple_animations/simple_animations.dart';
 import 'package:supercharged/supercharged.dart';
 
-enum AniProps { width, height, color }
+enum AniProps {
+  width,
+  form1Height,
+  form2Height,
+  form3Height,
+  form4Height,
+  form5Height,
+  orHeight,
+  color,
+}
+
+enum BgcolorProps { color1, color2, color3 }
 
 class SignUpView extends StatelessWidget {
   const SignUpView({
@@ -37,26 +46,75 @@ class SignUpView extends StatelessWidget {
           Scaffold.of(context)
               .showSnackBar(SnackBar(content: Text(state.failureResponse)));
         },
-        child: Column(
+        child: Stack(
           children: [
-            _buildMainForm(context),
+            Positioned.fill(
+              child: Container(
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomCenter,
+                    colors: context.watch<BrightnessCubit>().state ==
+                            Brightness.dark
+                        ? [
+                            // Color(0xff2f353c),
+                            // Color(0xff181f27),
+                            Color(0xFF2D2E2E),
+                            Color(0xFF141515),
+                          ]
+                        : [
+                            Color(0xffFFF9FB),
+                            Color(0xffFBFBFB),
+                          ],
+                  ),
+                ),
+              ),
+            ),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                _buildMainForm(context),
+              ],
+            ),
           ],
         ),
       ),
     );
   }
 
-//////////////////////////////////////////////////////////////////////////////////////////////////////
+  /// Builds main frame of the screen with forms and buttons
   Container _buildMainForm(BuildContext context) {
     final _tween = TimelineTween<AniProps>()
-      // ..addScene(begin: 0.milliseconds, end: 1000.milliseconds)
-      //     .animate(AniProps.width, tween: 0.0.tweenTo(100.0))
-      // ..addScene(begin: 1000.milliseconds, end: 1500.milliseconds)
-      //     .animate(AniProps.width, tween: 100.0.tweenTo(200.0))
-      ..addScene(begin: 0.milliseconds, duration: 1500.milliseconds)
-          .animate(AniProps.height, tween: 0.0.tweenTo(300.0));
-    // ..addScene(begin: 0.milliseconds, duration: 3.seconds)
-    //     .animate(AniProps.color, tween: Colors.red.tweenTo(Colors.blue));
+
+      /// Adds initial animation for [_buildEmailTextField] that has duration of [duration] and starts at [begin]
+      ///
+      ..addScene(begin: 350.milliseconds, duration: 700.milliseconds)
+          .animate(AniProps.form1Height, tween: 0.0.tweenTo(60.0))
+
+      /// Adds initial animation for [_buildPasswordTextField] that has duration of [duration] and starts at [begin]
+      ///
+      ..addScene(begin: 400.milliseconds, duration: 700.milliseconds)
+          .animate(AniProps.form2Height, tween: 0.0.tweenTo(60.0))
+
+      /// Adds initial animation for [_buildConfirmPasswordTextFied] that has duration of [duration] and starts at [begin]
+      ///
+      ..addScene(begin: 450.milliseconds, duration: 700.milliseconds)
+          .animate(AniProps.form3Height, tween: 0.0.tweenTo(60.0))
+
+      /// Adds initial animation for [_buildUsernameTextField] that has duration of [duration] and starts at [begin]
+      ///
+      ..addScene(begin: 550.milliseconds, duration: 700.milliseconds)
+          .animate(AniProps.form4Height, tween: 0.0.tweenTo(60.0))
+
+      /// Adds initial animation for [_buildLicenseAgreement] that has duration of [duration] and starts at [begin]
+      ///
+      ..addScene(begin: 600.milliseconds, duration: 700.milliseconds)
+          .animate(AniProps.form5Height, tween: 0.0.tweenTo(90.0))
+
+      /// Adds initial animation for [_buildOrLine] that has duration of [duration] and starts at [begin]
+      ///
+      ..addScene(begin: 350.milliseconds, duration: 700.milliseconds)
+          .animate(AniProps.orHeight, tween: 0.0.tweenTo(40.0));
 
     return Container(
       margin: EdgeInsets.only(
@@ -73,13 +131,83 @@ class SignUpView extends StatelessWidget {
         child: ClipPath(
           clipper: CustomClipPath(),
           child: Container(
-            color: Theme.of(context).accentColor, // EXPERIMENTAL COLOR FOR UI
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomCenter,
+                colors:
+                    context.watch<BrightnessCubit>().state == Brightness.dark
+                        ? [
+                            Color(0xff2f353c),
+                            Color(0xff181f27),
+                          ]
+                        : [
+                            Color(0xffFFF9FB),
+                            Color(0xffFBFBFB),
+                          ],
+              ),
+            ),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
                 FormHeaderSignUp(
-                  color: Theme.of(context).backgroundColor,
+                  color: Theme.of(context).primaryColor,
                   title: 'signup_registration'.tr,
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                PlayAnimation<TimelineValue<AniProps>>(
+                  tween: _tween, // Pass in tween
+                  duration: _tween.duration,
+                  builder: (context, child, value) {
+                    return Container(
+                      padding: EdgeInsets.symmetric(horizontal: 10),
+                      height: value.get(AniProps.form1Height),
+                      child: value.get(AniProps.form1Height) > 52
+                          ? _buildEmailTextField(context)
+                          : Container(),
+                    );
+                  },
+                ),
+                PlayAnimation<TimelineValue<AniProps>>(
+                  tween: _tween, // Pass in tween
+                  duration: _tween.duration,
+                  builder: (context, child, value) {
+                    return Container(
+                      padding: EdgeInsets.symmetric(horizontal: 10),
+                      height: value.get(AniProps.form2Height),
+                      child: value.get(AniProps.form2Height) > 52
+                          ? _buildPasswordTextField(context)
+                          : Container(),
+                    );
+                  },
+                ),
+                PlayAnimation<TimelineValue<AniProps>>(
+                  tween: _tween, // Pass in tween
+                  duration: _tween.duration,
+                  builder: (context, child, value) {
+                    return Container(
+                      padding: EdgeInsets.symmetric(horizontal: 10),
+                      height: value.get(AniProps.form3Height),
+                      child: value.get(AniProps.form3Height) > 52
+                          ? _buildConfirmPasswordTextFied(context)
+                          : Container(),
+                    );
+                  },
+                ),
+                PlayAnimation<TimelineValue<AniProps>>(
+                  tween: _tween, // Pass in tween
+                  duration: _tween.duration,
+                  builder: (context, child, value) {
+                    return Container(
+                      padding: EdgeInsets.symmetric(horizontal: 10),
+                      height: value.get(AniProps.form4Height),
+                      child: value.get(AniProps.form4Height) > 52
+                          ? _buildUsernameTextField(context)
+                          : Container(),
+                    );
+                  },
                 ),
                 PlayAnimation<TimelineValue<AniProps>>(
                   tween: _tween, // Pass in tween
@@ -87,29 +215,11 @@ class SignUpView extends StatelessWidget {
 
                   builder: (context, child, value) {
                     return Container(
-                      height: value.get(AniProps.height),
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          value.get(AniProps.height) > 80
-                              ? _buildEmailTextField(context)
-                              : Container(),
-                          value.get(AniProps.height) > 130
-                              ? _buildPasswordTextField(context)
-                              : Container(),
-                          value.get(AniProps.height) > 190
-                              ? _buildConfirmPasswordTextFied(context)
-                              : Container(),
-                          value.get(AniProps.height) > 250
-                              ? _buildUsernameTextField(context)
-                              : Container(),
-                          value.get(AniProps.height) > 295
-                              ? _buildLicenseAgreement(context)
-                              : Container(),
-                        ],
-                      ),
+                      padding: EdgeInsets.symmetric(horizontal: 10),
+                      height: value.get(AniProps.form5Height),
+                      child: value.get(AniProps.form5Height) > 52
+                          ? _buildLicenseAgreement(context)
+                          : Container(),
                     );
                   },
                 ),
@@ -127,35 +237,18 @@ class SignUpView extends StatelessWidget {
                     ],
                   ),
                 ),
-                Container(
-                  color: Colors.transparent,
-                  height: 40,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Expanded(
-                        child: Divider(
-                          color: Theme.of(context).primaryColor,
-                          thickness: 0.4,
-                          indent: 12,
-                          endIndent: 12,
-                        ),
-                      ),
-                      Text(
-                        'signup_or'.tr,
-                        style: GoogleFonts.jura(
-                            fontWeight: FontWeight.bold,
-                            color: Theme.of(context).primaryColor),
-                      ),
-                      Expanded(
-                          child: Divider(
-                        color: Theme.of(context).primaryColor,
-                        thickness: 0.4,
-                        indent: 12,
-                        endIndent: 12,
-                      )),
-                    ],
-                  ),
+                PlayAnimation<TimelineValue<AniProps>>(
+                  tween: _tween, // Pass in tween
+                  duration: _tween.duration,
+
+                  builder: (context, child, value) {
+                    return Container(
+                      height: value.get(AniProps.orHeight),
+                      child: value.get(AniProps.orHeight) > 39
+                          ? _buildOrLine(context)
+                          : Container(),
+                    );
+                  },
                 ),
                 Container(
                   width: 500,
@@ -179,12 +272,45 @@ class SignUpView extends StatelessWidget {
     );
   }
 
+  Container _buildOrLine(BuildContext context) {
+    return Container(
+      color: Colors.transparent,
+      height: 40,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Expanded(
+            child: Divider(
+              color: Theme.of(context).primaryColor,
+              thickness: 0.4,
+              indent: 12,
+              endIndent: 12,
+            ),
+          ),
+          Text(
+            'signup_or'.tr,
+            style: GoogleFonts.jura(
+                fontWeight: FontWeight.bold,
+                color: Theme.of(context).primaryColor),
+          ),
+          Expanded(
+              child: Divider(
+            color: Theme.of(context).primaryColor,
+            thickness: 0.4,
+            indent: 12,
+            endIndent: 12,
+          )),
+        ],
+      ),
+    );
+  }
+
   Padding _buildLicenseAgreement(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 12.0),
       child: CheckboxFieldBlocBuilder(
         checkColor: Theme.of(context).primaryColor,
-        activeColor: Theme.of(context).accentColor,
+        activeColor: Colors.transparent,
         padding: EdgeInsets.all(2),
         booleanFieldBloc: loginFormBloc.showAgreementCheckbox,
         body: Container(
@@ -235,8 +361,8 @@ class SignUpView extends StatelessWidget {
         ),
         labelText: 'signup_username'.tr,
         prefixIcon: Icon(
-          Icons.person_add,
-          color: Theme.of(context).primaryColor.withOpacity(0.5),
+          Icons.person_add_outlined,
+          color: Theme.of(context).primaryColor,
         ),
       ),
     );
@@ -244,10 +370,18 @@ class SignUpView extends StatelessWidget {
 
   TextFieldBlocBuilder _buildConfirmPasswordTextFied(BuildContext context) {
     return TextFieldBlocBuilder(
+      suffixButton: SuffixButton.obscureText,
+      obscureTextFalseIcon: Icon(
+        Icons.visibility_off_outlined,
+        color: Theme.of(context).primaryColor,
+      ),
+      obscureTextTrueIcon: Icon(
+        Icons.visibility_outlined,
+        color: Theme.of(context).primaryColor,
+      ),
       padding: EdgeInsets.all(2),
       isEnabled: true,
       textFieldBloc: loginFormBloc.confirmPassword,
-      suffixButton: SuffixButton.obscureText,
       cursorColor: Theme.of(context).primaryColor,
       cursorWidth: 0.5,
       decoration: InputDecoration(
@@ -257,8 +391,8 @@ class SignUpView extends StatelessWidget {
         ),
         labelText: 'signup_confirm_password'.tr,
         prefixIcon: Icon(
-          Icons.lock,
-          color: Theme.of(context).primaryColor.withOpacity(0.5),
+          Icons.lock_outline,
+          color: Theme.of(context).primaryColor,
         ),
       ),
     );
@@ -269,6 +403,14 @@ class SignUpView extends StatelessWidget {
       padding: EdgeInsets.all(2),
       textFieldBloc: loginFormBloc.password,
       suffixButton: SuffixButton.obscureText,
+      obscureTextFalseIcon: Icon(
+        Icons.visibility_off_outlined,
+        color: Theme.of(context).primaryColor,
+      ),
+      obscureTextTrueIcon: Icon(
+        Icons.visibility_outlined,
+        color: Theme.of(context).primaryColor,
+      ),
       style: GoogleFonts.jura(
           color: Theme.of(context).primaryTextTheme.bodyText1.color),
       cursorColor: Theme.of(context).primaryColor,
@@ -278,8 +420,8 @@ class SignUpView extends StatelessWidget {
         labelStyle: GoogleFonts.jura(color: Theme.of(context).primaryColor),
         labelText: 'signup_password'.tr,
         prefixIcon: Icon(
-          Icons.lock,
-          color: Theme.of(context).primaryColor.withOpacity(0.5),
+          Icons.lock_outline,
+          color: Theme.of(context).primaryColor,
         ),
       ),
     );
@@ -287,6 +429,7 @@ class SignUpView extends StatelessWidget {
 
   TextFieldBlocBuilder _buildEmailTextField(BuildContext context) {
     return TextFieldBlocBuilder(
+      key: Key('signup_email_form_key'),
       padding: EdgeInsets.all(2),
       textFieldBloc: loginFormBloc.email,
       keyboardType: TextInputType.emailAddress,
@@ -299,8 +442,8 @@ class SignUpView extends StatelessWidget {
         labelStyle: GoogleFonts.jura(color: Theme.of(context).primaryColor),
         labelText: 'signup_email'.tr,
         prefixIcon: Icon(
-          Icons.email,
-          color: Theme.of(context).primaryColor.withOpacity(0.5),
+          Icons.mail_outline,
+          color: Theme.of(context).primaryColor,
         ),
       ),
     );
