@@ -87,7 +87,5 @@ ThemeData theme1(BuildContext context, Brightness brightness) {
           ? Colors.transparent
           : Colors.transparent, // light - accent color
     ),
-    accentIconTheme: IconThemeData(color: Colors.red),
-    primarySwatch: Colors.red,
   );
 }
