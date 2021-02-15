@@ -5,28 +5,27 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:keyboard_visibility/keyboard_visibility.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:get/get.dart';
-import 'package:void_chat_beta/constants/constants.dart';
 
-import 'package:void_chat_beta/new_signup/bloc/sign_up_form_bloc.dart';
-import 'package:void_chat_beta/new_signup/widgets/main_form_frame.dart';
+import 'package:void_chat_beta/newlogin/bloc/login_form_bloc.dart';
+import 'package:void_chat_beta/newlogin/widgets/login_main_form_frame.dart';
 
 import 'package:void_chat_beta/theme/brightness_cubit.dart';
 
 import 'package:simple_animations/simple_animations.dart';
 
-class SignUpView extends StatefulWidget {
-  const SignUpView({
+class NewLoginView extends StatefulWidget {
+  const NewLoginView({
     Key key,
     @required this.loginFormBloc,
   }) : super(key: key);
 
-  final SignUpFormBloc loginFormBloc;
+  final LoginFormBloc loginFormBloc;
 
   @override
-  _SignUpViewState createState() => _SignUpViewState();
+  _NewLoginViewState createState() => _NewLoginViewState();
 }
 
-class _SignUpViewState extends State<SignUpView> with AnimationMixin {
+class _NewLoginViewState extends State<NewLoginView> with AnimationMixin {
   bool keyboardIsVisible = false;
 
   @override
@@ -46,31 +45,31 @@ class _SignUpViewState extends State<SignUpView> with AnimationMixin {
     return Scaffold(
       backgroundColor: Theme.of(context).backgroundColor,
       resizeToAvoidBottomInset: false,
-      body: FormBlocListener<SignUpFormBloc, String, String>(
+      body: FormBlocListener<LoginFormBloc, String, String>(
         onSubmitting: (context, state) {
-          Scaffold.of(context).showSnackBar(
-            SnackBar(
-              content: Text('Submitting'),
-            ),
-          );
+          // Scaffold.of(context).showSnackBar(
+          //   SnackBar(
+          //     content: Text('Submitting'),
+          //   ),
+          // );
         },
         onSuccess: (context, state) {
-          Scaffold.of(context).showSnackBar(
-            SnackBar(
-              content: Text(state.successResponse),
-            ),
-          );
+          // Scaffold.of(context).showSnackBar(
+          //   SnackBar(
+          //     content: Text(state.successResponse),
+          //   ),
+          // );
         },
         onFailure: (context, state) {
-          Scaffold.of(context).showSnackBar(
-            SnackBar(
-              content: Text(state.failureResponse),
-            ),
-          );
+          // Scaffold.of(context).showSnackBar(
+          //   SnackBar(
+          //     content: Text(state.failureResponse),
+          //   ),
+          // );
         },
         child: Stack(
           children: [
-            /// [SignupMainFormFrame] with its background and positioning.
+            /// [LoginMainFormFrame] with its background and positioning.
             Positioned.fill(
               child: Container(
                 decoration: BoxDecoration(
@@ -95,7 +94,7 @@ class _SignUpViewState extends State<SignUpView> with AnimationMixin {
                   alignment: keyboardIsVisible
                       ? Alignment.topCenter
                       : Alignment.center,
-                  child: SignupMainFormFrame(
+                  child: LoginMainFormFrame(
                     loginFormBloc: widget.loginFormBloc,
                     keyboardIsVisible: keyboardIsVisible,
                   ),
@@ -111,7 +110,7 @@ class _SignUpViewState extends State<SignUpView> with AnimationMixin {
               child: Center(
                 child: GestureDetector(
                   onTap: () {
-                    Get.toNamed(loginRoute);
+                    Get.toNamed('/newSignUp');
                   },
                   child: Container(
                     child: Shimmer.fromColors(
@@ -121,7 +120,7 @@ class _SignUpViewState extends State<SignUpView> with AnimationMixin {
                       loop: 0,
                       period: Duration(milliseconds: 2500),
                       child: Text(
-                        'signup_switch_to_login'.tr,
+                        'loginpage_switch_to_registration'.tr,
                         style: GoogleFonts.jura(
                           fontWeight: FontWeight.w300,
                           fontSize: 24,

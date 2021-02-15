@@ -2,10 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_form_bloc/flutter_form_bloc.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:shimmer/shimmer.dart';
 import 'package:simple_animations/simple_animations.dart';
-import 'package:void_chat_beta/new_signup/bloc/sign_up_form_bloc.dart';
 import 'package:void_chat_beta/new_signup/widgets/switcher.dart';
+import 'package:void_chat_beta/newlogin/bloc/login_form_bloc.dart';
 import 'package:void_chat_beta/theme/brightness_cubit.dart';
 import 'package:void_chat_beta/theme/locale_cubit.dart';
 import 'package:void_chat_beta/ui/frontside/status_bar/screen_tag.dart';
@@ -15,16 +14,16 @@ import 'package:supercharged/supercharged.dart';
 import 'package:void_chat_beta/widgets/form_header_signup.dart';
 
 /// Widget that represents main part of the Signup View
-class SignupMainFormFrame extends StatefulWidget {
+class LoginMainFormFrame extends StatefulWidget {
   final bool keyboardIsVisible;
-  final SignUpFormBloc loginFormBloc;
-  SignupMainFormFrame({this.keyboardIsVisible, this.loginFormBloc});
+  final LoginFormBloc loginFormBloc;
+  LoginMainFormFrame({this.keyboardIsVisible, this.loginFormBloc});
 
   @override
-  _SignupMainFormFrameState createState() => _SignupMainFormFrameState();
+  _LoginMainFormFrameState createState() => _LoginMainFormFrameState();
 }
 
-class _SignupMainFormFrameState extends State<SignupMainFormFrame>
+class _LoginMainFormFrameState extends State<LoginMainFormFrame>
     with AnimationMixin {
   /// Controller that is taking care of animation, is set to be played after widget first build
   AnimationController formController;
@@ -42,7 +41,7 @@ class _SignupMainFormFrameState extends State<SignupMainFormFrame>
       ..curve(Curves.easeInQuad);
     settingsController = createController();
 
-    formFrameHeight = 0.0.tweenTo(310.0).animatedBy(formController);
+    formFrameHeight = 0.0.tweenTo(200.0).animatedBy(formController);
     settingsFrameHeight = 0.0.tweenTo(160.0).animatedBy(settingsController);
     orLineHeight = 0.0.tweenTo(40.0).animatedBy(formController);
     orLineAlterHeight = 0.0.tweenTo(40.0).animatedBy(settingsController);
@@ -158,24 +157,16 @@ class _SignupMainFormFrameState extends State<SignupMainFormFrame>
                   child: Column(
                     children: [
                       Container(
-                        padding: EdgeInsets.only(left: 5, right: 5, top: 5),
+                        height: 100,
+                        alignment: Alignment.center,
+                        padding: EdgeInsets.only(left: 5, right: 5),
                         child: _buildEmailTextField(context),
                       ),
                       Container(
-                        padding: EdgeInsets.only(left: 5, right: 5, top: 5),
+                        height: 100,
+                        alignment: Alignment.center,
+                        padding: EdgeInsets.only(left: 5, right: 5),
                         child: _buildPasswordTextField(context),
-                      ),
-                      Container(
-                        padding: EdgeInsets.only(left: 5, right: 5, top: 5),
-                        child: _buildConfirmPasswordTextFied(context),
-                      ),
-                      Container(
-                        padding: EdgeInsets.only(left: 5, right: 5, top: 5),
-                        child: _buildUsernameTextField(context),
-                      ),
-                      Container(
-                        padding: EdgeInsets.all(5),
-                        child: _buildLicenseAgreement(context),
                       ),
                     ],
                   ),
@@ -297,101 +288,6 @@ class _SignupMainFormFrameState extends State<SignupMainFormFrame>
     );
   }
 
-  Padding _buildLicenseAgreement(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 2.0),
-      child: CheckboxFieldBlocBuilder(
-        errorBuilder: (context, value) => 'signup_agree'.tr,
-        checkColor: Theme.of(context).primaryColor,
-        activeColor: Colors.transparent,
-        padding: EdgeInsets.all(2),
-        booleanFieldBloc: widget.loginFormBloc.showAgreementCheckbox,
-        body: Container(
-          clipBehavior: Clip.none,
-          child: Row(
-            children: [
-              Text(
-                'signup_i_agree'.tr,
-                style: GoogleFonts.jura(
-                    fontWeight: FontWeight.w300,
-                    fontSize: 12,
-                    color: Theme.of(context)
-                        .primaryTextTheme
-                        .bodyText1
-                        .color
-                        .withOpacity(0.7)),
-              ),
-              FlatButton(
-                padding: EdgeInsets.all(5),
-                onPressed: () {},
-                child: Text(
-                  'signup_with_terms'.tr,
-                  style: GoogleFonts.jura(
-                    fontWeight: FontWeight.w300,
-                    fontSize: 14,
-                    color: Theme.of(context).primaryColor,
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
-  TextFieldBlocBuilder _buildUsernameTextField(BuildContext context) {
-    return TextFieldBlocBuilder(
-      padding: EdgeInsets.only(top: 2, left: 2, right: 2, bottom: 2),
-      isEnabled: true,
-      textFieldBloc: widget.loginFormBloc.username,
-      suffixButton: SuffixButton.asyncValidating,
-      cursorColor: Theme.of(context).primaryColor,
-      cursorWidth: 0.5,
-      decoration: InputDecoration(
-        fillColor: Theme.of(context).backgroundColor.withOpacity(0.3),
-        labelStyle: GoogleFonts.jura(
-          color: Theme.of(context).primaryColor,
-        ),
-        labelText: 'signup_username'.tr,
-        prefixIcon: Icon(
-          Icons.person_add_outlined,
-          color: Theme.of(context).primaryColor,
-        ),
-      ),
-    );
-  }
-
-  TextFieldBlocBuilder _buildConfirmPasswordTextFied(BuildContext context) {
-    return TextFieldBlocBuilder(
-      suffixButton: SuffixButton.obscureText,
-      obscureTextFalseIcon: Icon(
-        Icons.visibility_off_outlined,
-        color: Theme.of(context).primaryColor,
-      ),
-      obscureTextTrueIcon: Icon(
-        Icons.visibility_outlined,
-        color: Theme.of(context).primaryColor,
-      ),
-      padding: EdgeInsets.all(2),
-      isEnabled: true,
-      textFieldBloc: widget.loginFormBloc.confirmPassword,
-      cursorColor: Theme.of(context).primaryColor,
-      cursorWidth: 0.5,
-      decoration: InputDecoration(
-        fillColor: Theme.of(context).backgroundColor.withOpacity(0.3),
-        labelStyle: GoogleFonts.jura(
-          color: Theme.of(context).primaryColor,
-        ),
-        labelText: 'signup_confirm_password'.tr,
-        prefixIcon: Icon(
-          Icons.lock_outline,
-          color: Theme.of(context).primaryColor,
-        ),
-      ),
-    );
-  }
-
   TextFieldBlocBuilder _buildPasswordTextField(BuildContext context) {
     return TextFieldBlocBuilder(
       padding: EdgeInsets.all(2),
@@ -469,55 +365,6 @@ class SimpleButtonOne extends StatelessWidget {
               fontWeight: FontWeight.w300,
               color: Theme.of(context).backgroundColor),
         ),
-      ),
-    );
-  }
-}
-
-class ShimmerTextSwitch extends StatelessWidget {
-  const ShimmerTextSwitch({
-    Key key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Shimmer.fromColors(
-      baseColor: Theme.of(context)
-          .inputDecorationTheme
-          .enabledBorder
-          .borderSide
-          .color
-          .withOpacity(0.35),
-      highlightColor: Theme.of(context)
-          .inputDecorationTheme
-          .enabledBorder
-          .borderSide
-          .color
-          .withOpacity(1),
-      loop: 0,
-      period: Duration(milliseconds: 2500),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text(
-            'Switch to Login',
-            style: TextStyle(
-              color: Theme.of(context).primaryColor,
-              fontSize: 18,
-            ),
-          ),
-          SizedBox(width: 5),
-          Transform.translate(
-            offset: Offset(0.0, 1.5),
-            child: Transform(
-              transform: Matrix4.diagonal3Values(1, 0.85, 1.2),
-              child: Icon(
-                Icons.double_arrow,
-                color: Theme.of(context).primaryColor,
-              ),
-            ),
-          ),
-        ],
       ),
     );
   }

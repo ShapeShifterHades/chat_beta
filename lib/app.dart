@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_statusbarcolor/flutter_statusbarcolor.dart';
 import 'package:void_chat_beta/constants/constants.dart';
+import 'package:void_chat_beta/newlogin/new_login.dart';
 
 import 'new_signup/new_sign_up.dart';
 import 'settings/settings.dart';
@@ -16,7 +17,6 @@ import 'contacts/bloc/contact_bloc.dart';
 import 'contacts/view/contacts_view.dart';
 import 'faq/view/faq_view.dart';
 import 'home/home.dart';
-import 'login/login.dart';
 import 'security/view/security_view.dart';
 import 'theme/brightness_cubit.dart';
 import 'theme/locale_cubit.dart';
@@ -97,9 +97,9 @@ class AppView extends StatelessWidget {
                 }
               },
               getPages: [
-                Get.GetPage(name: '/', page: () => LoginView()),
+                Get.GetPage(name: '/', page: () => NewLoginPage()),
                 Get.GetPage(name: homeRoute, page: () => MessagesView()),
-                Get.GetPage(name: loginRoute, page: () => LoginView()),
+                Get.GetPage(name: loginRoute, page: () => NewLoginPage()),
                 Get.GetPage(name: settingsRoute, page: () => SettingsView()),
                 Get.GetPage(name: securityRoute, page: () => SecurityView()),
                 Get.GetPage(name: faqRoute, page: () => FaqView()),
@@ -111,8 +111,8 @@ class AppView extends StatelessWidget {
                       child: NewSignUpPage()),
                 ),
               ],
-              defaultTransition: Get.Transition.fadeIn,
-              transitionDuration: Duration(milliseconds: 400),
+              defaultTransition: Get.Transition.rightToLeftWithFade,
+              transitionDuration: Duration(milliseconds: 300),
               translations: ContentTranslations(),
               debugShowCheckedModeBanner: false,
               theme: theme1(context, brightness),
@@ -133,13 +133,14 @@ class AppView extends StatelessWidget {
                   child: BlocListener<AuthenticationBloc, AuthenticationState>(
                     listener: (context, state) {
                       switch (state.status) {
-                        case AuthenticationStatus.authenticated:
-                          Get.Get.offAllNamed(homeRoute, arguments: 'Messages');
-                          break;
                         case AuthenticationStatus.unauthenticated:
                           Get.Get.offAllNamed(loginRoute);
                           break;
+                        case AuthenticationStatus.authenticated:
+                          Get.Get.offAllNamed(homeRoute, arguments: 'Messages');
+                          break;
                         default:
+                          Get.Get.offAllNamed(loginRoute);
                           break;
                       }
                     },
