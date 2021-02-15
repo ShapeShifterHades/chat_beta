@@ -94,9 +94,10 @@ class _SignUpFormState extends State<SignUpForm> with TickerProviderStateMixin {
                           : state.status.isValid
                               ? Theme.of(context).accentColor
                               : state.status.isSubmissionInProgress
-                                  ? Theme.of(context).highlightColor :
-                                  state.status.isInvalid? Colors.grey
-                                  : Theme.of(context).primaryColor,
+                                  ? Theme.of(context).highlightColor
+                                  : state.status.isInvalid
+                                      ? Colors.grey
+                                      : Theme.of(context).primaryColor,
                     ),
                     child: ClipPath(
                       clipper: CustomClipPath(),
@@ -231,9 +232,6 @@ class _EmailInput extends StatelessWidget {
 }
 
 class _UsernameInput extends StatelessWidget {
-
-
-
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<SignUpCubit, SignUpState>(
@@ -274,6 +272,7 @@ class _UsernameInput extends StatelessWidget {
             keyboardType: TextInputType.name,
             onChanged: (username) async {
               context.read<SignUpCubit>().usernameChanged(username);
+              // ignore: unnecessary_statements
               state.username.valid ? print('GET TO THE CHOPPA!') : null;
               if (state.username.valid) {
                 Future<bool> usernameCheck(String username) async {
@@ -285,10 +284,16 @@ class _UsernameInput extends StatelessWidget {
                   return result.exists;
                 }
 
-              final isGood = await usernameCheck(username);
+                final isGood = await usernameCheck(username);
 
-              print(isGood);
-              isGood ? context.read<SignUpCubit>().emit(state.copyWith(status: FormzStatus.invalid))  :null;
+                print(isGood);
+                // ignore: invalid_use_of_protected_member
+                // ignore: unnecessary_statements
+                isGood
+                    ? context
+                        .read<SignUpCubit>()
+                        .emit(state.copyWith(status: FormzStatus.invalid))
+                    : null;
               }
             },
           );

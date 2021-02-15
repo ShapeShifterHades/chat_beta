@@ -39,7 +39,9 @@ class SignUpFormBloc extends FormBloc<String, String> {
   ]);
 
   SignUpFormBloc(
-      this._authenticationRepository, this._firestoreNewUserRepository) {
+      this._authenticationRepository, this._firestoreNewUserRepository)
+      : assert(_authenticationRepository != null,
+            _firestoreNewUserRepository != null) {
     addFieldBlocs(
       fieldBlocs: [
         email,
@@ -55,6 +57,8 @@ class SignUpFormBloc extends FormBloc<String, String> {
     username.addAsyncValidators([_checkUsername]);
   }
 
+  // ignore: unused_element
+  // ignore: missing_return
   // ignore: unused_element
   // ignore: missing_return
   Future<String> _signUpFormSubmitted() async {
@@ -111,10 +115,17 @@ class SignUpFormBloc extends FormBloc<String, String> {
 
   @override
   void onSubmitting() async {
-    if (showSuccessResponse.value) {
-      emitSuccess();
-    } else {
-      emitFailure(failureResponse: 'This is an awesome error!');
+    try {
+      _signUpFormSubmitted();
+    } catch (e) {
+      print(e);
+      emitFailure(failureResponse: e.toString());
     }
+    // if (showSuccessResponse.value) {
+    //   _signUpFormSubmitted();
+    //   emitSuccess();
+    // } else {
+    //   emitFailure(failureResponse: 'This is an awesome error!');
+    // }
   }
 }

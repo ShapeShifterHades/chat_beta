@@ -5,24 +5,16 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:simple_animations/simple_animations.dart';
 import 'package:void_chat_beta/new_signup/bloc/sign_up_form_bloc.dart';
+import 'package:void_chat_beta/new_signup/widgets/switcher.dart';
 import 'package:void_chat_beta/signup/widgets/form_header_signup.dart';
 import 'package:void_chat_beta/theme/brightness_cubit.dart';
+import 'package:void_chat_beta/theme/locale_cubit.dart';
 import 'package:void_chat_beta/ui/frontside/status_bar/screen_tag.dart';
 import 'package:void_chat_beta/widgets/auth_custom_frame/custom_clip_path.dart';
-import 'package:void_chat_beta/widgets/auth_custom_frame/custom_painter_for_clipper.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:supercharged/supercharged.dart';
 
-enum FormfieldProps {
-  width,
-  emailFormHeight,
-  passwordFormHeight,
-  confirmPasswordFormHeight,
-  usernameFormHeight,
-  termsFormHeight,
-  orLineHeight,
-}
-
+/// Widget that represents main part of the Signup View
 class SignupMainFormFrame extends StatefulWidget {
   final bool keyboardIsVisible;
   final SignUpFormBloc loginFormBloc;
@@ -34,87 +26,34 @@ class SignupMainFormFrame extends StatefulWidget {
 
 class _SignupMainFormFrameState extends State<SignupMainFormFrame>
     with AnimationMixin {
-  AnimationController emailHeightController;
-  AnimationController passwordHeightController;
-  AnimationController confirmPasswordHeightController;
-  AnimationController usernameHeightController;
-  AnimationController agreeConditionsHeightController;
+  /// Controller that is taking care of animation, is set to be played after widget first build
+  AnimationController formController;
+  AnimationController settingsController;
 
-  Animation<double> emailHeight;
-  Animation<double> passwordHeight;
-  Animation<double> confirmPasswordHeight;
-  Animation<double> usernameHeight;
-  Animation<double> agreeConditionsHeight;
+  Animation<double> formFrameHeight;
+  Animation<double> settingsFrameHeight;
+  Animation<double> orLineHeight;
+  Animation<double> orLineAlterHeight;
 
   @override
   void initState() {
-    emailHeightController = createController()
-      ..mirror(
-          duration: 500
-              .milliseconds); // <-- create controller instance and let it mirror animate
-    passwordHeightController = createController()
-      ..mirror(
-          duration: 500
-              .milliseconds); // <-- create controller instance and let it mirror animate
-    confirmPasswordHeightController = createController()
-      ..mirror(
-          duration: 500
-              .milliseconds); // <-- create controller instance and let it mirror animate
-    usernameHeightController = createController()
-      ..mirror(
-          duration: 500
-              .milliseconds); // <-- create controller instance and let it mirror animate
-    agreeConditionsHeightController = createController()
-      ..mirror(
-          duration: 500
-              .milliseconds); // <-- create controller instance and let it mirror animate
+    formController = createController()
+      ..play(duration: 700.milliseconds)
+      ..curve(Curves.easeInQuad);
+    settingsController = createController();
 
-    emailHeight = 0.0.tweenTo(60.0).animatedBy(
-        emailHeightController); // <-- connect tween with individual controller
-    passwordHeight = 0.0.tweenTo(60.0).animatedBy(
-        passwordHeightController); // <-- connect tween with individual controller
-    confirmPasswordHeight = 0.0.tweenTo(60.0).animatedBy(
-        confirmPasswordHeightController); // <-- connect tween with individual controller
-    usernameHeight = 0.0.tweenTo(60.0).animatedBy(
-        usernameHeightController); // <-- connect tween with individual controller
-    agreeConditionsHeight = 0.0.tweenTo(60.0).animatedBy(
-        agreeConditionsHeightController); // <-- connect tween with individual controller
-
+    formFrameHeight = 0.0.tweenTo(310.0).animatedBy(formController);
+    settingsFrameHeight = 0.0.tweenTo(160.0).animatedBy(settingsController);
+    orLineHeight = 0.0.tweenTo(40.0).animatedBy(formController);
+    orLineAlterHeight = 0.0.tweenTo(40.0).animatedBy(settingsController);
     super.initState();
   }
 
-  final _tween = TimelineTween<FormfieldProps>()
+  _toggleLocale() {
+    context.read<LocaleCubit>().toggleLocale();
+    Get.updateLocale(Locale(context.read<LocaleCubit>().state));
+  }
 
-    /// Adds initial animation for [_buildEmailTextField] that has duration of [duration] and starts at [begin]
-    ///
-    ..addScene(begin: 350.milliseconds, duration: 700.milliseconds)
-        .animate(FormfieldProps.emailFormHeight, tween: 0.0.tweenTo(60.0))
-
-    /// Adds initial animation for [_buildPasswordTextField] that has duration of [duration] and starts at [begin]
-    ///
-    ..addScene(begin: 400.milliseconds, duration: 700.milliseconds)
-        .animate(FormfieldProps.passwordFormHeight, tween: 0.0.tweenTo(60.0))
-
-    /// Adds initial animation for [_buildConfirmPasswordTextFied] that has duration of [duration] and starts at [begin]
-    ///
-    ..addScene(begin: 450.milliseconds, duration: 700.milliseconds).animate(
-        FormfieldProps.confirmPasswordFormHeight,
-        tween: 0.0.tweenTo(60.0))
-
-    /// Adds initial animation for [_buildUsernameTextField] that has duration of [duration] and starts at [begin]
-    ///
-    ..addScene(begin: 550.milliseconds, duration: 700.milliseconds)
-        .animate(FormfieldProps.usernameFormHeight, tween: 0.0.tweenTo(60.0))
-
-    /// Adds initial animation for [_buildLicenseAgreement] that has duration of [duration] and starts at [begin]
-    ///
-    ..addScene(begin: 600.milliseconds, duration: 700.milliseconds)
-        .animate(FormfieldProps.termsFormHeight, tween: 0.0.tweenTo(90.0))
-
-    /// Adds initial animation for [_buildOrLine] that has duration of [duration] and starts at [begin]
-    ///
-    ..addScene(begin: 350.milliseconds, duration: 700.milliseconds)
-        .animate(FormfieldProps.orLineHeight, tween: 0.0.tweenTo(40.0));
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -124,156 +63,201 @@ class _SignupMainFormFrameState extends State<SignupMainFormFrame>
         right: Get.size.width * 0.03,
       ),
       width: Get.size.width * 0.95,
-      child: CustomPaint(
-        painter: CustomPainterForClipper(
-          color: Theme.of(context).primaryColor,
-        ),
-        child: ClipPath(
-          clipper: CustomClipPath(),
-          child: Container(
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topLeft,
-                end: Alignment.bottomCenter,
-                colors:
-                    context.watch<BrightnessCubit>().state == Brightness.dark
+      child: ClipPath(
+        clipper: CustomClipPath(),
+        child: Container(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              widget.keyboardIsVisible
+                  ? Container()
+                  : FormHeaderSignUp(
+                      color: Theme.of(context).primaryColor,
+                      title: 'signup_registration'.tr,
+                      formController: formController,
+                      settingsController: settingsController,
+                    ),
+
+              /// Form part, that is controlled by [settingsController] and its size is defined by [settingsFrameHeight] tween value.
+              ///
+              Container(
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomCenter,
+                    colors: context.watch<BrightnessCubit>().state ==
+                            Brightness.dark
                         ? [
                             Color(0xff2f353c),
                             Color(0xff181f27),
                           ]
                         : [
-                            Color(0xffEBF4FF),
-                            Color(0xffC7D3DD),
+                            Color(0xffC7CCD1),
+                            Color(0xffBCC2C8),
                           ],
+                  ),
+                ),
+                width: Get.size.width * 0.9,
+                height: settingsFrameHeight.value,
+                child: SingleChildScrollView(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      SizedBox(height: 20),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text('Brightness'),
+                          Switcher(
+                            onChange: context
+                                .watch<BrightnessCubit>()
+                                .toggleBrightness,
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 20),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text('Locale'),
+                          Switcher(
+                            onChange: _toggleLocale,
+                          ),
+                          SizedBox(height: 20),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
               ),
-            ),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                widget.keyboardIsVisible
-                    ? Container()
-                    : GestureDetector(
-                        onTap: () {},
-                        child: FormHeaderSignUp(
-                          color: Theme.of(context).primaryColor,
-                          title: 'signup_registration'.tr,
-                        ),
-                      ),
-                SizedBox(
-                  height: 10,
-                ),
-                PlayAnimation<TimelineValue<FormfieldProps>>(
-                  tween: _tween, // Pass in tween
-                  duration: _tween.duration,
-                  builder: (context, child, value) {
-                    return Container(
-                      padding: EdgeInsets.symmetric(horizontal: 10),
-                      height: value.get(FormfieldProps.emailFormHeight),
-                      child: value.get(FormfieldProps.emailFormHeight) > 52
-                          ? _buildEmailTextField(context)
-                          : Container(),
-                    );
-                  },
-                ),
-                PlayAnimation<TimelineValue<FormfieldProps>>(
-                  tween: _tween, // Pass in tween
-                  duration: _tween.duration,
-                  builder: (context, child, value) {
-                    return Container(
-                      padding: EdgeInsets.symmetric(horizontal: 10),
-                      height: value.get(FormfieldProps.passwordFormHeight),
-                      child: value.get(FormfieldProps.passwordFormHeight) > 52
-                          ? _buildPasswordTextField(context)
-                          : Container(),
-                    );
-                  },
-                ),
-                PlayAnimation<TimelineValue<FormfieldProps>>(
-                  tween: _tween, // Pass in tween
-                  duration: _tween.duration,
-                  builder: (context, child, value) {
-                    return Container(
-                      padding: EdgeInsets.symmetric(horizontal: 10),
-                      height:
-                          value.get(FormfieldProps.confirmPasswordFormHeight),
-                      child:
-                          value.get(FormfieldProps.confirmPasswordFormHeight) >
-                                  52
-                              ? _buildConfirmPasswordTextFied(context)
-                              : Container(),
-                    );
-                  },
-                ),
-                PlayAnimation<TimelineValue<FormfieldProps>>(
-                  tween: _tween, // Pass in tween
-                  duration: _tween.duration,
-                  builder: (context, child, value) {
-                    return Container(
-                      padding: EdgeInsets.symmetric(horizontal: 10),
-                      height: value.get(FormfieldProps.usernameFormHeight),
-                      child: value.get(FormfieldProps.usernameFormHeight) > 52
-                          ? _buildUsernameTextField(context)
-                          : Container(),
-                    );
-                  },
-                ),
-                PlayAnimation<TimelineValue<FormfieldProps>>(
-                  tween: _tween, // Pass in tween
-                  duration: _tween.duration,
 
-                  builder: (context, child, value) {
-                    return Container(
-                      padding: EdgeInsets.symmetric(horizontal: 10),
-                      height: value.get(FormfieldProps.termsFormHeight),
-                      child: value.get(FormfieldProps.termsFormHeight) > 52
-                          ? _buildLicenseAgreement(context)
-                          : Container(),
-                    );
-                  },
+              /// Form part, that is controlled by [formController] and its size is defined by [formFrameHeight] tween value.
+              ///
+              Container(
+                height: formFrameHeight.value,
+                width: Get.size.width * 0.9,
+                padding: EdgeInsets.symmetric(horizontal: 5),
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomCenter,
+                    colors: context.watch<BrightnessCubit>().state ==
+                            Brightness.dark
+                        ? [
+                            Color(0xff2f353c),
+                            Color(0xff181f27),
+                          ]
+                        : [
+                            Color(0xffC7CCD1),
+                            Color(0xffBCC2C8),
+                          ],
+                  ),
                 ),
-                Container(
-                  width: double.infinity,
-                  height: 30,
-                  color: Theme.of(context).primaryColor,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                child: SingleChildScrollView(
+                  child: Column(
                     children: [
-                      SimpleButtonOne(
-                        text: 'signup_submit'.tr,
-                        onPressed: widget.loginFormBloc.submit,
+                      Container(
+                        padding: EdgeInsets.only(left: 5, right: 5, top: 5),
+                        child: _buildEmailTextField(context),
+                      ),
+                      Container(
+                        padding: EdgeInsets.only(left: 5, right: 5, top: 5),
+                        child: _buildPasswordTextField(context),
+                      ),
+                      Container(
+                        padding: EdgeInsets.only(left: 5, right: 5, top: 5),
+                        child: _buildConfirmPasswordTextFied(context),
+                      ),
+                      Container(
+                        padding: EdgeInsets.only(left: 5, right: 5, top: 5),
+                        child: _buildUsernameTextField(context),
+                      ),
+                      Container(
+                        padding: EdgeInsets.all(5),
+                        child: _buildLicenseAgreement(context),
                       ),
                     ],
                   ),
                 ),
-                PlayAnimation<TimelineValue<FormfieldProps>>(
-                  tween: _tween, // Pass in tween
-                  duration: _tween.duration,
-
-                  builder: (context, child, value) {
-                    return Container(
-                      height: value.get(FormfieldProps.orLineHeight),
-                      child: value.get(FormfieldProps.orLineHeight) > 39
-                          ? _buildOrLine(context)
-                          : Container(),
-                    );
-                  },
+              ),
+              Container(
+                width: double.infinity,
+                height: 30,
+                color: Theme.of(context).primaryColor,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SimpleButtonOne(
+                      text: 'signup_submit'.tr,
+                      onPressed: widget.loginFormBloc.submit,
+                    ),
+                  ],
                 ),
-                Container(
-                  width: 500,
-                  clipBehavior: Clip.none,
-                  height: 30,
-                  color: Theme.of(context).primaryColor,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      SimpleButtonOne(
-                        text: 'signup_with_google'.tr,
-                      ),
-                    ],
+              ),
+
+              /// orAlterLine part, that is built to replace [_buildOrLine], controlled by [settingsController] and its size is defined by [orLineAlterHeight] tween value.
+              ///
+              Container(
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomCenter,
+                    colors: context.watch<BrightnessCubit>().state ==
+                            Brightness.dark
+                        ? [
+                            Color(0xff2f353c),
+                            Color(0xff181f27),
+                          ]
+                        : [
+                            Color(0xffC7CCD1),
+                            Color(0xffBCC2C8),
+                          ],
                   ),
                 ),
-              ],
-            ),
+                width: Get.size.width * 0.9,
+                height: orLineAlterHeight.value,
+              ),
+
+              /// orLine part, that is built by [_buildOrLine], controlled by [formController] and its size is defined by [orLineHeight] tween value.
+              ///
+              Container(
+                width: Get.size.width * 0.9,
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomCenter,
+                    colors: context.watch<BrightnessCubit>().state ==
+                            Brightness.dark
+                        ? [
+                            Color(0xff2f353c),
+                            Color(0xff181f27),
+                          ]
+                        : [
+                            Color(0xffC7CCD1),
+                            Color(0xffBCC2C8),
+                          ],
+                  ),
+                ),
+                height: orLineHeight.value,
+                child: SingleChildScrollView(child: _buildOrLine(context)),
+              ),
+              Container(
+                width: 500,
+                clipBehavior: Clip.none,
+                height: 30,
+                color: Theme.of(context).primaryColor,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SimpleButtonOne(
+                      text: 'signup_with_google'.tr,
+                      onPressed: formController.value == 0.0 ? null : () {},
+                    ),
+                  ],
+                ),
+              ),
+            ],
           ),
         ),
       ),
@@ -315,13 +299,15 @@ class _SignupMainFormFrameState extends State<SignupMainFormFrame>
 
   Padding _buildLicenseAgreement(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 12.0),
+      padding: const EdgeInsets.symmetric(horizontal: 2.0),
       child: CheckboxFieldBlocBuilder(
+        errorBuilder: (context, value) => 'signup_agree'.tr,
         checkColor: Theme.of(context).primaryColor,
         activeColor: Colors.transparent,
         padding: EdgeInsets.all(2),
         booleanFieldBloc: widget.loginFormBloc.showAgreementCheckbox,
         body: Container(
+          clipBehavior: Clip.none,
           child: Row(
             children: [
               Text(
@@ -459,12 +445,14 @@ class _SignupMainFormFrameState extends State<SignupMainFormFrame>
 }
 
 class SimpleButtonOne extends StatelessWidget {
+  final bool enabled;
   final String text;
   final Function onPressed;
   const SimpleButtonOne({
     Key key,
     @required this.text,
     this.onPressed,
+    this.enabled,
   }) : super(key: key);
 
   @override
@@ -472,6 +460,7 @@ class SimpleButtonOne extends StatelessWidget {
     return ClipPath(
       clipper: ScreenTagClipper(),
       child: MaterialButton(
+        disabledColor: Theme.of(context).backgroundColor,
         onPressed: onPressed ?? () {},
         highlightColor: Theme.of(context).backgroundColor.withOpacity(0.14),
         child: Text(
@@ -517,7 +506,7 @@ class ShimmerTextSwitch extends StatelessWidget {
               fontSize: 18,
             ),
           ),
-          SizedBox(width: 10),
+          SizedBox(width: 5),
           Transform.translate(
             offset: Offset(0.0, 1.5),
             child: Transform(

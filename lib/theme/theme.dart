@@ -25,8 +25,9 @@ ThemeData theme1(BuildContext context, Brightness brightness) {
         ? Color(0xFF002E3D)
         : Color(0xFFF2F2F2), // Used in drawer backgrowndcolor
     cardColor: isDark ? Color(0xFF10171E) : Color(0xFFFBFBFD),
-    primaryColor:
-        isDark ? Color(0xFFA7F5FF) : Color(0xFF858585), // last light 1D80BE
+    primaryColor: isDark
+        ? Color(0xFFA7F5FF) // old but good color = 0xFF393E41
+        : Color(0xFF00363D), // last light 1D80BE Color(0xFF858585),
     errorColor: Color(0xFFC83E4D), // Submit fail color
     highlightColor: Color(0xFFF28123), //Submission in progress color
     accentColor:
@@ -34,7 +35,7 @@ ThemeData theme1(BuildContext context, Brightness brightness) {
     backgroundColor: isDark
         ? Color(0xFF000000)
         : Color(
-            0xFFFBFBFD), // main content colorbba (last version for bg dark - Color(0xFF10171E))
+            0xFFFCF7FF), // main content colorbba (last version for bg dark - Color(0xFF10171E))
     scaffoldBackgroundColor: isDark
         ? Color(0xFF002E3D)
         : Color(0xFFF2F2F2), // Used in drawer backgrowndcolor,

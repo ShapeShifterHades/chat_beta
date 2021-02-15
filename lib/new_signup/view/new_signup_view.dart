@@ -1,7 +1,10 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_bloc/flutter_form_bloc.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:keyboard_visibility/keyboard_visibility.dart';
+import 'package:shimmer/shimmer.dart';
+import 'package:get/get.dart';
 
 import 'package:void_chat_beta/new_signup/bloc/sign_up_form_bloc.dart';
 import 'package:void_chat_beta/new_signup/widgets/main_form_frame.dart';
@@ -9,17 +12,6 @@ import 'package:void_chat_beta/new_signup/widgets/main_form_frame.dart';
 import 'package:void_chat_beta/theme/brightness_cubit.dart';
 
 import 'package:simple_animations/simple_animations.dart';
-import 'package:supercharged/supercharged.dart';
-
-enum FormfieldProps {
-  width,
-  emailFormHeight,
-  passwordFormHeight,
-  confirmPasswordFormHeight,
-  usernameFormHeight,
-  termsFormHeight,
-  orLineHeight,
-}
 
 class SignUpView extends StatefulWidget {
   const SignUpView({
@@ -54,15 +46,30 @@ class _SignUpViewState extends State<SignUpView> with AnimationMixin {
       backgroundColor: Theme.of(context).backgroundColor,
       resizeToAvoidBottomInset: false,
       body: FormBlocListener<SignUpFormBloc, String, String>(
-        onSubmitting: (context, state) {},
-        onSuccess: (context, state) {},
-        onFailure: (context, state) {
-          Scaffold.of(context)
-              .showSnackBar(SnackBar(content: Text(state.failureResponse)));
+        onSubmitting: (context, state) {
+          Scaffold.of(context).showSnackBar(
+            SnackBar(
+              content: Text('Submitting'),
+            ),
+          );
         },
-        // Stack is not really nessesary here so it should be deleted soon
+        onSuccess: (context, state) {
+          Scaffold.of(context).showSnackBar(
+            SnackBar(
+              content: Text(state.successResponse),
+            ),
+          );
+        },
+        onFailure: (context, state) {
+          Scaffold.of(context).showSnackBar(
+            SnackBar(
+              content: Text(state.failureResponse),
+            ),
+          );
+        },
         child: Stack(
           children: [
+            /// [SignupMainFormFrame] with its background and positioning.
             Positioned.fill(
               child: Container(
                 decoration: BoxDecoration(
@@ -76,8 +83,8 @@ class _SignUpViewState extends State<SignUpView> with AnimationMixin {
                             Color(0xFF141515),
                           ]
                         : [
-                            Color(0xffFFF9FB),
-                            Color(0xffFBFBFB),
+                            Color(0xffF4F5F6),
+                            Color(0xffFFFFFF),
                           ],
                   ),
                 ),
@@ -94,6 +101,30 @@ class _SignUpViewState extends State<SignUpView> with AnimationMixin {
                 ),
               ),
             ),
+
+            /// Button for switchichg between [SignUp] and [Login] forms.
+            Positioned(
+              bottom: 40,
+              left: 0,
+              right: 0,
+              child: Center(
+                child: Container(
+                  child: Shimmer.fromColors(
+                    baseColor: Theme.of(context).primaryColor.withOpacity(0.5),
+                    highlightColor: Theme.of(context).primaryColor,
+                    loop: 0,
+                    period: Duration(milliseconds: 2500),
+                    child: Text(
+                      'signup_switch_to_login'.tr,
+                      style: GoogleFonts.jura(
+                        fontWeight: FontWeight.w300,
+                        fontSize: 24,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            )
           ],
         ),
       ),

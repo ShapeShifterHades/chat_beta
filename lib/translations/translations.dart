@@ -33,6 +33,7 @@ class ContentTranslations extends Translations {
           'signup_or': 'OR',
           'signup_with_google': 'SIGNUP WITH GOOGLE AUTH',
           'signup_this_user_taken': 'This user already exist',
+          'signup_agree': '   Check to continue'
         },
         'RU': {
           // LoginPage Translations: starts with loginpage_
@@ -64,6 +65,7 @@ class ContentTranslations extends Translations {
           'signup_or': 'ИЛИ',
           'signup_with_google': 'РЕГЕСТРИРОВАТЬСЯ ЧЕРЕЗ GOOGLE AUTH',
           'signup_this_user_taken': 'Такой пользователь уже существует',
+          'signup_agree': '   Необходимо согласие'
         }
       };
 }
