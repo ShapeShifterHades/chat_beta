@@ -37,11 +37,11 @@ class _LoginMainFormFrameState extends State<LoginMainFormFrame>
   @override
   void initState() {
     formController = createController()
-      ..play(duration: 700.milliseconds)
+      ..play(duration: 400.milliseconds)
       ..curve(Curves.easeInQuad);
     settingsController = createController();
 
-    formFrameHeight = 0.0.tweenTo(200.0).animatedBy(formController);
+    formFrameHeight = 0.0.tweenTo(180.0).animatedBy(formController);
     settingsFrameHeight = 0.0.tweenTo(160.0).animatedBy(settingsController);
     orLineHeight = 0.0.tweenTo(40.0).animatedBy(formController);
     orLineAlterHeight = 0.0.tweenTo(40.0).animatedBy(settingsController);
@@ -91,8 +91,8 @@ class _LoginMainFormFrameState extends State<LoginMainFormFrame>
                             Color(0xff181f27),
                           ]
                         : [
-                            Color(0xffC7CCD1),
-                            Color(0xffBCC2C8),
+                            Color(0xffE0E0E0),
+                            Color(0xffEBEBEB),
                           ],
                   ),
                 ),
@@ -148,8 +148,8 @@ class _LoginMainFormFrameState extends State<LoginMainFormFrame>
                             Color(0xff181f27),
                           ]
                         : [
-                            Color(0xffC7CCD1),
-                            Color(0xffBCC2C8),
+                            Color(0xffE0E0E0),
+                            Color(0xffEBEBEB),
                           ],
                   ),
                 ),
@@ -163,8 +163,8 @@ class _LoginMainFormFrameState extends State<LoginMainFormFrame>
                         child: _buildEmailTextField(context),
                       ),
                       Container(
-                        height: 100,
-                        alignment: Alignment.center,
+                        height: 80,
+                        alignment: Alignment.topCenter,
                         padding: EdgeInsets.only(left: 5, right: 5),
                         child: _buildPasswordTextField(context),
                       ),
@@ -201,8 +201,8 @@ class _LoginMainFormFrameState extends State<LoginMainFormFrame>
                             Color(0xff181f27),
                           ]
                         : [
-                            Color(0xffC7CCD1),
-                            Color(0xffBCC2C8),
+                            Color(0xffE0E0E0),
+                            Color(0xffEBEBEB),
                           ],
                   ),
                 ),
@@ -225,8 +225,8 @@ class _LoginMainFormFrameState extends State<LoginMainFormFrame>
                             Color(0xff181f27),
                           ]
                         : [
-                            Color(0xffC7CCD1),
-                            Color(0xffBCC2C8),
+                            Color(0xffE0E0E0),
+                            Color(0xffEBEBEB),
                           ],
                   ),
                 ),
