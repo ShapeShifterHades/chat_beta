@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_form_bloc/flutter_form_bloc.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:shimmer/shimmer.dart';
 import 'package:simple_animations/simple_animations.dart';
 import 'package:void_chat_beta/new_signup/bloc/sign_up_form_bloc.dart';
 import 'package:void_chat_beta/new_signup/widgets/switcher.dart';
@@ -159,7 +158,9 @@ class _SignupMainFormFrameState extends State<SignupMainFormFrame>
                     children: [
                       Container(
                         padding: EdgeInsets.only(left: 5, right: 5, top: 5),
-                        child: _buildEmailTextField(context),
+                        child: ClipPath(
+                            clipper: ScreenTagClipper(),
+                            child: _buildEmailTextField(context)),
                       ),
                       Container(
                         padding: EdgeInsets.only(left: 5, right: 5, top: 5),
@@ -315,11 +316,7 @@ class _SignupMainFormFrameState extends State<SignupMainFormFrame>
                 style: GoogleFonts.jura(
                     fontWeight: FontWeight.w300,
                     fontSize: 12,
-                    color: Theme.of(context)
-                        .primaryTextTheme
-                        .bodyText1
-                        .color
-                        .withOpacity(0.7)),
+                    color: Theme.of(context).primaryTextTheme.bodyText1.color),
               ),
               FlatButton(
                 padding: EdgeInsets.all(5),
@@ -349,7 +346,7 @@ class _SignupMainFormFrameState extends State<SignupMainFormFrame>
       cursorColor: Theme.of(context).primaryColor,
       cursorWidth: 0.5,
       decoration: InputDecoration(
-        fillColor: Theme.of(context).backgroundColor.withOpacity(0.3),
+        fillColor: Theme.of(context).backgroundColor,
         labelStyle: GoogleFonts.jura(
           color: Theme.of(context).primaryColor,
         ),
@@ -379,7 +376,7 @@ class _SignupMainFormFrameState extends State<SignupMainFormFrame>
       cursorColor: Theme.of(context).primaryColor,
       cursorWidth: 0.5,
       decoration: InputDecoration(
-        fillColor: Theme.of(context).backgroundColor.withOpacity(0.3),
+        fillColor: Theme.of(context).backgroundColor,
         labelStyle: GoogleFonts.jura(
           color: Theme.of(context).primaryColor,
         ),
@@ -410,7 +407,7 @@ class _SignupMainFormFrameState extends State<SignupMainFormFrame>
       cursorColor: Theme.of(context).primaryColor,
       cursorWidth: 0.5,
       decoration: InputDecoration(
-        fillColor: Theme.of(context).backgroundColor.withOpacity(0.3),
+        fillColor: Theme.of(context).backgroundColor,
         labelStyle: GoogleFonts.jura(color: Theme.of(context).primaryColor),
         labelText: 'signup_password'.tr,
         prefixIcon: Icon(
@@ -432,7 +429,7 @@ class _SignupMainFormFrameState extends State<SignupMainFormFrame>
       cursorColor: Theme.of(context).primaryColor,
       cursorWidth: 0.5,
       decoration: InputDecoration(
-        fillColor: Theme.of(context).backgroundColor.withOpacity(0.3),
+        fillColor: Theme.of(context).backgroundColor,
         labelStyle: GoogleFonts.jura(color: Theme.of(context).primaryColor),
         labelText: 'signup_email'.tr,
         prefixIcon: Icon(
@@ -469,55 +466,6 @@ class SimpleButtonOne extends StatelessWidget {
               fontWeight: FontWeight.w300,
               color: Theme.of(context).backgroundColor),
         ),
-      ),
-    );
-  }
-}
-
-class ShimmerTextSwitch extends StatelessWidget {
-  const ShimmerTextSwitch({
-    Key key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Shimmer.fromColors(
-      baseColor: Theme.of(context)
-          .inputDecorationTheme
-          .enabledBorder
-          .borderSide
-          .color
-          .withOpacity(0.35),
-      highlightColor: Theme.of(context)
-          .inputDecorationTheme
-          .enabledBorder
-          .borderSide
-          .color
-          .withOpacity(1),
-      loop: 0,
-      period: Duration(milliseconds: 2500),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text(
-            'Switch to Login',
-            style: TextStyle(
-              color: Theme.of(context).primaryColor,
-              fontSize: 18,
-            ),
-          ),
-          SizedBox(width: 5),
-          Transform.translate(
-            offset: Offset(0.0, 1.5),
-            child: Transform(
-              transform: Matrix4.diagonal3Values(1, 0.85, 1.2),
-              child: Icon(
-                Icons.double_arrow,
-                color: Theme.of(context).primaryColor,
-              ),
-            ),
-          ),
-        ],
       ),
     );
   }

@@ -17,11 +17,13 @@ class MiniMenuTile extends StatelessWidget {
       onTap: func,
       child: Container(
         decoration: BoxDecoration(
-          color: Theme.of(context).backgroundColor,
+          color: isCurrentPage
+              ? Theme.of(context).primaryColor
+              : Theme.of(context).backgroundColor,
           border: Border.symmetric(
             horizontal: BorderSide(
               color: isCurrentPage
-                  ? Colors.white
+                  ? Theme.of(context).backgroundColor
                   : Theme.of(context).primaryTextTheme.bodyText1.color,
               width: 0.0,
             ),

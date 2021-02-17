@@ -149,7 +149,7 @@ class _LoginMainFormFrameState extends State<LoginMainFormFrame>
                           ]
                         : [
                             Color(0xffE0E0E0),
-                            Color(0xffEBEBEB),
+                            Color(0xffE0E0E0),
                           ],
                   ),
                 ),
@@ -306,7 +306,7 @@ class _LoginMainFormFrameState extends State<LoginMainFormFrame>
       cursorColor: Theme.of(context).primaryColor,
       cursorWidth: 0.5,
       decoration: InputDecoration(
-        fillColor: Theme.of(context).backgroundColor.withOpacity(0.3),
+        fillColor: Theme.of(context).backgroundColor,
         labelStyle: GoogleFonts.jura(color: Theme.of(context).primaryColor),
         labelText: 'signup_password'.tr,
         prefixIcon: Icon(
@@ -328,7 +328,7 @@ class _LoginMainFormFrameState extends State<LoginMainFormFrame>
       cursorColor: Theme.of(context).primaryColor,
       cursorWidth: 0.5,
       decoration: InputDecoration(
-        fillColor: Theme.of(context).backgroundColor.withOpacity(0.3),
+        fillColor: Theme.of(context).backgroundColor,
         labelStyle: GoogleFonts.jura(color: Theme.of(context).primaryColor),
         labelText: 'signup_email'.tr,
         prefixIcon: Icon(

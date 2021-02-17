@@ -57,11 +57,7 @@ class SignUpFormBloc extends FormBloc<String, String> {
     username.addAsyncValidators([_checkUsername]);
   }
 
-  // ignore: unused_element
-  // ignore: missing_return
-  // ignore: unused_element
-  // ignore: missing_return
-  Future<String> _signUpFormSubmitted() async {
+  Future<void> _signUpFormSubmitted() async {
     UserCredential credential;
     emitLoading();
     try {
@@ -70,6 +66,8 @@ class SignUpFormBloc extends FormBloc<String, String> {
         password: password.value,
       );
       try {
+        print(credential.user.uid);
+        print(username.value);
         await _firestoreNewUserRepository.addNewUser(NewProfile(
           uid: credential.user.uid,
           username: username.value,

@@ -3,29 +3,25 @@ service cloud.firestore {
   match /databases/{database}/documents {
 
     match /users/{uid} {
-      // Allow read and create [uid] document if logged in and if current user id (uid) is 
-      // the same as data in [uid] field of a document with name as in username field from request
-      // in [usernames] collection 
-      allow read, create: if request.auth != null && request.auth.uid == uid;
-      // allow read, create: if request.auth != null && request.auth.uid == uid && ;
 
-      // allow read, create: if request.auth != null && request.auth.uid == uid && request.auth.uid == getAfter(/databases/{database}/documents/usernames/$(request.resource.data.username)).data.uid;
-      // allow delete, update: if request.auth != null && request.auth.uid == resource.data.owner;
+       allow read, create: if request.auth != null && request.auth.uid == uid && request.resource.data.username != null && exists(/databases/$(database)/documents/users/$(request.resource.data.username)) == false;
     }
 
     match /usernames/{username} {
-      // 1) user is authenticated
-      // 2) user creates document with pointer to his uid document that will be created soon
-      // 3) user yet do not have his record in users collection (prevent user from having multiple usernames)
-      // 4) TODO: user possiply can create multiple username records before creating record in users collection
-      allow create, read: if true; 
-      
-      // getAfter(
-      //   /databases/{database}/documents/usernames/$(request.auth.uid)
-      //   ).data.username != null && getAfter(
-      //     /databases/{database}/documents/usernames/$(request.resource.data.username)
-      //     ).data.uid != null;
-      // allow create: if request.auth != null && request.auth.uid == request.resource.data.uid && get(/databases/{database}/documents/users/$(request.auth.uid)).data == null && getAfter(/databases/{database}/documents/users/$(request.auth.uid)).data != null;
+
+      allow read: if true;
+      allow create: if request.auth != null && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.username == username && request.resource.data.uid == request.auth.uid;
+    }
+
+    match /users/{uid}/contacts/{contact} {
+      // TODO: make may be sent requests list to help manage outgoing requests.
+      // owner of contact list can change status of a friend to [friend], [blocked], [pending] and add/remove himself from other contact list with status [pending](create)[pending, friend](delete and create)
+      allow read, update: if request.auth != null && request.auth.uid == uid;
+      allow read: if request.auth != null && request.auth.uid != uid;
+
+      // 
+      allow create: if request.auth != null && request.auth.uid != uid && request.auth.uid == contact && request.resource.data.status == 'pending';
+      allow delete: if request.auth != null && request.auth.uid != uid && request.auth.uid == contact && (request.resource.data.status == 'pending' || request.resource.data.status == 'friend');
     }
   }
 }

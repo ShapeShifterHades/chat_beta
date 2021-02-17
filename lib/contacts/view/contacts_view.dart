@@ -11,46 +11,25 @@ class ContactsView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
-        onPressed: () =>
-            context.read<ContactBloc>().add(FriendRequestSent()),
+        onPressed: () => context.read<ContactBloc>().add(ContactRequestSent(
+            contactId: 'JBFVeK2jaFBB7VPYmgZZ',
+            message: 'Please add me for fuck sake!')),
       ),
       body: UI(
         content: Column(
           children: [
             Row(
               children: [
-                Text('Internal database', style: TextStyle(color: Colors.white))
+                Text(
+                  'Internal database',
+                )
               ],
             ),
             Expanded(
               child: Container(
                 child: BlocBuilder<ContactBloc, ContactState>(
                   builder: (context, state) {
-                    return state.status == ContactListStatus.loading
-                        ? Container()
-                        : state.status == ContactListStatus.loadedWithError
-                            ? Container(
-                                child: Text(
-                                  'Error',
-                                  style: TextStyle(color: Colors.white),
-                                ),
-                              )
-                            : Container(
-                                child: ListView.builder(
-                                  itemCount: state.contacts.length,
-                                  itemBuilder: (context, index) {
-                                    ContactModel _contact =
-                                        state.contacts[index];
-                                    return Text(
-                                        _contact.id.toString() +
-                                            ' ' +
-                                            _contact.name +
-                                            ' ' +
-                                            _contact.status,
-                                        style: TextStyle(color: Colors.white));
-                                  },
-                                ),
-                              );
+                    return Text(state.contacts.length.toString());
                   },
                 ),
               ),
@@ -61,3 +40,29 @@ class ContactsView extends StatelessWidget {
     );
   }
 }
+
+// state.status == ContactListStatus.loading
+//                         ? Container()
+//                         : state.status == ContactListStatus.loadedWithError
+//                             ? Container(
+//                                 child: Text(
+//                                   'Error',
+//                                   style: TextStyle(color: Colors.white),
+//                                 ),
+//                               )
+//                             : Container(
+//                                 child: ListView.builder(
+//                                   itemCount: state.contacts.length,
+//                                   itemBuilder: (context, index) {
+//                                     ContactModel _contact =
+//                                         state.contacts[index];
+//                                     return Text(
+//                                         _contact.id.toString() +
+//                                             ' ' +
+//                                             _contact.name +
+//                                             ' ' +
+//                                             _contact.status,
+//                                         style: TextStyle(color: Colors.white));
+//                                   },
+//                                 ),
+//                               )

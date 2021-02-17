@@ -3,7 +3,7 @@ import 'dart:async';
 import 'models/models.dart';
 
 abstract class ContactRepository {
-  Future<void> addNewContact(Contact contact);
+  Future<void> sendRequest(String contactId, String uid);
 
   Future<void> deleteContact(Contact contact);
 

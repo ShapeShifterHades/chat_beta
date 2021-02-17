@@ -27,13 +27,13 @@ ThemeData theme1(BuildContext context, Brightness brightness) {
     cardColor: isDark ? Color(0xFF10171E) : Color(0xFFFBFBFD),
     primaryColor: isDark
         ? Color(0xFFA7F5FF) // old but good color = 0xFF393E41
-        : Color(0xFF00363D), // last light 1D80BE Color(0xFF858585),
+        : Color(0xFF57756E), // last light 1D80BE Color(0xFF858585),
     errorColor: Color(0xFFC83E4D), // Submit fail color
     highlightColor: Color(0xFFF28123), //Submission in progress color
     accentColor:
         isDark ? Color(0xFF002E3D) : Color(0xFFDBDBDB), // FORMS BACKGROUND
     backgroundColor: isDark
-        ? Color(0xFF000000)
+        ? Color(0xFF282929)
         : Color(
             0xFFFCF7FF), // main content colorbba (last version for bg dark - Color(0xFF10171E))
     scaffoldBackgroundColor: isDark
@@ -55,13 +55,13 @@ ThemeData theme1(BuildContext context, Brightness brightness) {
       ),
       errorBorder: OutlineInputBorder(
         borderSide: BorderSide(
-          width: 1,
+          width: 0.01,
           color: isDark ? Color(0xFFBF4342) : Colors.red[600],
         ),
       ),
       focusedErrorBorder: OutlineInputBorder(
         borderSide: BorderSide(
-          width: 0.8,
+          width: 0.21,
           color: isDark ? Color(0xFFC83E4D) : Colors.red[600],
         ),
       ),

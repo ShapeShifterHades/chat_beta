@@ -53,9 +53,11 @@ class AuthenticationRepository {
         email: email,
         password: password,
       );
-      await resp.user.updateProfile(displayName: displayName);
       return resp;
     } on Exception {
+      throw SignUpFailure();
+    } catch (e) {
+      print(e);
       throw SignUpFailure();
     }
   }

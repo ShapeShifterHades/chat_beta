@@ -64,7 +64,9 @@ class _DrawerMenuButtonState extends State<DrawerMenuButton> {
               child: ClipPath(
                 clipper: DrawerMenuButtonClipper(),
                 child: Container(
-                  color: Theme.of(context).primaryColor.withOpacity(0.08),
+                  color: widget.isCurrentPage
+                      ? Theme.of(context).primaryColor
+                      : Theme.of(context).primaryColor.withOpacity(0.08),
                   width: 140,
                   height: 38,
                   child: Material(

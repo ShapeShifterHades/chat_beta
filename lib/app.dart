@@ -45,21 +45,23 @@ class App extends StatelessWidget {
     return RepositoryProvider.value(
       value: (context) => firestoreContactRepository,
       child: BlocProvider(
-        create: (context) =>
-            ContactBloc(firestoreContactRepository)..add(FriendListLoaded()),
-        child: RepositoryProvider.value(
-          value: authenticationRepository,
-          child: BlocProvider(
-            create: (_) => AuthenticationBloc(
-              authenticationRepository: authenticationRepository,
-            ),
+        create: (context) => AuthenticationBloc(
+          authenticationRepository: authenticationRepository,
+        ),
+        child: BlocProvider(
+          create: (context) => ContactBloc(
+              firestoreContactRepository, context.read<AuthenticationBloc>())
+            ..add(ContactListLoaded()),
+          child: RepositoryProvider.value(
+            value: authenticationRepository,
             child: BlocProvider(
               create: (context) => LocaleCubit(),
               child: BlocProvider(
-                  create: (context) => BrightnessCubit(),
-                  child: AppView(
-                    authenticationRepository: authenticationRepository,
-                  )),
+                create: (context) => BrightnessCubit(),
+                child: AppView(
+                  authenticationRepository: authenticationRepository,
+                ),
+              ),
             ),
           ),
         ),

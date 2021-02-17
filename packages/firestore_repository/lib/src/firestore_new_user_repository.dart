@@ -4,19 +4,28 @@ import 'profile_repository.dart';
 
 class FirestoreNewUserRepository implements NewUserRepository {
   final newUserCollection = FirebaseFirestore.instance.collection('users');
-  final newUsernameCollection = FirebaseFirestore.instance.collection('usernames');
+  final newUsernameCollection =
+      FirebaseFirestore.instance.collection('usernames');
 
   @override
+
   /// Commits a batch of two documents to users collection and Username collection
   /// with a given [newProfile] on user creation
-  Future<void> addNewUser(NewProfile newProfile) {
-
-    return newUsernameCollection.doc(newProfile.uid).set({"username": newProfile.username})
-    ;
+  Future<void> addNewUser(NewProfile newProfile) async {
+    try {
+      await newUserCollection
+          .doc(newProfile.uid)
+          .set({"username": newProfile.username});
+      await newUsernameCollection
+          .doc(newProfile.username)
+          .set({"uid": newProfile.uid});
+    } catch (e) {
+      print(e);
+    }
   }
   // @override
   // Future<void> addNewProfile(NewProfile profile) {
-    
+
   //   return newUserCollection
   //       .doc(profile.uid)
   //       .set(profile.toEntity().toDocument());

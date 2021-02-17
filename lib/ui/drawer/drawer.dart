@@ -11,134 +11,157 @@ class DrawerPM extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double _width = MediaQuery.of(context).size.width;
-    return Row(
-      children: [
-        SizedBox(width: _width * 0.07),
-        Container(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.start,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              SizedBox(height: 8),
-              Expanded(
-                  child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  SizedBox(width: 2),
-                  Stack(
-                    alignment: Alignment.center,
-                    children: [
-                      Align(
-                        alignment: Alignment.center,
-                        child: Container(
-                          width: 136,
-                          height: 136,
-                          decoration: BoxDecoration(
-                            color: Colors.transparent,
-                            borderRadius: BorderRadius.circular(70),
-                            border: Border.all(width: 0.3, 
-                            color: Theme.of(context).primaryColor,)
-                          ),
-                          // child:,
+    return SafeArea(
+      child: Row(
+        children: [
+          SizedBox(width: _width * 0.04),
+          Container(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.end,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                SizedBox(height: 32),
+                Expanded(
+                  child: Container(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        SizedBox(width: 15),
+                        Stack(
+                          alignment: Alignment.center,
+                          children: [
+                            Align(
+                              alignment: Alignment.center,
+                              child: Container(
+                                width: 136,
+                                height: 136,
+                                decoration: BoxDecoration(
+                                    color: Colors.transparent,
+                                    borderRadius: BorderRadius.circular(70),
+                                    border: Border.all(
+                                      width: 0.3,
+                                      color: Theme.of(context).primaryColor,
+                                    )),
+                                // child:,
+                              ),
+                            ),
+                            Align(
+                              alignment: Alignment.center,
+                              child: ArcText(
+                                radius: 52,
+                                text:
+                                    'Id:   ${context.watch<AuthenticationBloc>().state.user.id.toLowerCase()}',
+                                textStyle: GoogleFonts.jura(
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 14,
+                                  color: Theme.of(context).primaryColor,
+                                ),
+                                startAngle: 0,
+                              ),
+                            ),
+                            Align(
+                              alignment: Alignment.center,
+                              child: Container(
+                                width: 102,
+                                height: 102,
+                                clipBehavior: Clip.hardEdge,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(60),
+                                ),
+                                child: Center(
+                                  child: Image.asset(
+                                    'assets/images/avatar-placeholder.png',
+                                    color: Theme.of(context).bottomAppBarColor,
+                                    colorBlendMode: BlendMode.color,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
-                      ),
-                      Align(
-                        alignment: Alignment.center,
-                        child: ArcText(
-                          radius: 52,
-                          text:
-                              'Id:   ${context.watch<AuthenticationBloc>().state.user.id.toLowerCase()}',
-                          textStyle: GoogleFonts.jura(
-                              fontWeight: FontWeight.w500, fontSize: 14,
-                              color: Theme.of(context).primaryColor,),
-                          startAngle: 0,
-                        ),
-                      ),
-                      Align(
-                        alignment: Alignment.center,
-                        child: Container(
-                          width: 102,
-                          height: 102,
-                          clipBehavior: Clip.hardEdge,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(60),
-                          ),
-                          child: Center(child: Image.asset('assets/images/avatar-placeholder.png',
-
-                          color: Theme.of(context).bottomAppBarColor,
-                          colorBlendMode: BlendMode.color,
-                          
-                          ),),
-                        ),
-                      ),
-                       
-                    ],
+                      ],
+                    ),
                   ),
-                ],
-              )),
-              DrawerMenuButton(
-                isCurrentPage: Get.arguments == 'Messages',
-                label: 'Messages',
-                func: () {
-                  Get.toNamed("/messages", arguments: 'Messages');
-                },
-              ),
-              SizedBox(height: 15),
-              DrawerMenuButton(
-                isCurrentPage: Get.arguments == 'Contacts',
-                label: 'Contacts',
-                func: () {
-                  Get.toNamed("/contacts", arguments: 'Contacts');
-                },
-              ),
-              SizedBox(height: 15),
-              DrawerMenuButton(
-                isCurrentPage: Get.arguments == 'Settings',
-                label: 'Settings',
-                func: () {
-                  Get.toNamed("/settings", arguments: 'Settings');
-                },
-              ),
-              SizedBox(height: 15),
-              DrawerMenuButton(
-                isCurrentPage: Get.arguments == 'Security',
-                label: 'Security',
-                func: () {
-                  Get.toNamed("/security", arguments: 'Security');
-                },
-              ),
-              SizedBox(height: 15),
-              DrawerMenuButton(
-                isCurrentPage: Get.arguments == 'FAQ',
-                label: 'FAQ',
-                func: () {
-                  Get.toNamed("/faq", arguments: 'FAQ');
-                },
-              ),
-              SizedBox(height: 45),
-              DrawerMenuButton(
-                label: 'Logout',
-                func: () async {
-                  await FirebaseAuth.instance.signOut();
-                },
-              ),
-              SizedBox(height: 55),
-              Container(
-                height: 40,
-                width: 170,
-                child: Text('YorKee, android v1.0.1b, 2021', 
-                style: GoogleFonts.jura(color: Theme.of(context)
-                                      .primaryTextTheme
-                                      .bodyText1
-                                      .color,),),
-              ),
-              SizedBox(height: 30),
-            ],
+                ),
+                Container(
+                  child: SingleChildScrollView(
+                    child: Column(
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        DrawerMenuButton(
+                          isCurrentPage: Get.arguments == 'Messages',
+                          label: 'Messages',
+                          func: () {
+                            Get.toNamed("/messages", arguments: 'Messages');
+                          },
+                        ),
+                        SizedBox(height: 15),
+                        DrawerMenuButton(
+                          isCurrentPage: Get.arguments == 'Contacts',
+                          label: 'Contacts',
+                          func: () {
+                            Get.toNamed("/contacts", arguments: 'Contacts');
+                          },
+                        ),
+                        SizedBox(height: 15),
+                        DrawerMenuButton(
+                          isCurrentPage: Get.arguments == 'Settings',
+                          label: 'Settings',
+                          func: () {
+                            Get.toNamed("/settings", arguments: 'Settings');
+                          },
+                        ),
+                        SizedBox(height: 15),
+                        DrawerMenuButton(
+                          isCurrentPage: Get.arguments == 'Security',
+                          label: 'Security',
+                          func: () {
+                            Get.toNamed("/security", arguments: 'Security');
+                          },
+                        ),
+                        SizedBox(height: 15),
+                        DrawerMenuButton(
+                          isCurrentPage: Get.arguments == 'FAQ',
+                          label: 'FAQ',
+                          func: () {
+                            Get.toNamed("/faq", arguments: 'FAQ');
+                          },
+                        ),
+                        SizedBox(height: 45),
+                        DrawerMenuButton(
+                          label: 'Logout',
+                          func: () async {
+                            await FirebaseAuth.instance.signOut();
+                          },
+                        ),
+                        SizedBox(height: 55),
+                        Container(
+                          padding: EdgeInsets.only(left: 15),
+                          height: 40,
+                          width: 170,
+                          child: Text(
+                            'YorKee, android v1.0.1b, 2021',
+                            style: GoogleFonts.jura(
+                              color: Theme.of(context)
+                                  .primaryTextTheme
+                                  .bodyText1
+                                  .color,
+                            ),
+                          ),
+                        ),
+                        SizedBox(height: 30),
+                      ],
+                    ),
+                  ),
+                )
+              ],
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }
