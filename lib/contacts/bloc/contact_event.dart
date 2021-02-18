@@ -9,11 +9,11 @@ abstract class ContactEvent extends Equatable {
 }
 
 /// Sends to another user a friend request with a greeting message.
-class ContactRequestSent extends ContactEvent {
+class SendContactRequest extends ContactEvent {
   final String contactId;
   final String uid;
   final String message;
-  ContactRequestSent({this.contactId, this.uid, this.message});
+  SendContactRequest({this.contactId, this.uid, this.message});
   @override
   List<Object> get props => [contactId, uid];
   @override
@@ -21,10 +21,10 @@ class ContactRequestSent extends ContactEvent {
 }
 
 /// Adds to friends another user, who already sent you a request with status 'pending'.
-class ContactAcceptedRequest extends ContactEvent {
+class AcceptContactRequest extends ContactEvent {
   final String contactId;
   final String uid;
-  ContactAcceptedRequest({this.contactId, this.uid});
+  AcceptContactRequest({this.contactId, this.uid});
   @override
   List<Object> get props => [contactId, uid];
   @override
@@ -32,10 +32,10 @@ class ContactAcceptedRequest extends ContactEvent {
 }
 
 /// Removes from another users list document with users id, if status of a user not 'blocked' (by firestore security rules).
-class ContactRemovedRequest extends ContactEvent {
+class RemoveContactRequest extends ContactEvent {
   final String contactId;
   final String uid;
-  ContactRemovedRequest({this.contactId, this.uid});
+  RemoveContactRequest({this.contactId, this.uid});
   @override
   List<Object> get props => [contactId, uid];
   @override
@@ -43,10 +43,10 @@ class ContactRemovedRequest extends ContactEvent {
 }
 
 /// Sets status of user with [contactId] to 'pending' from 'friend' or 'blocked'.
-class ContactRejectedRequest extends ContactEvent {
+class RejectContactRequest extends ContactEvent {
   final String contactId;
   final String uid;
-  ContactRejectedRequest({this.contactId, this.uid});
+  RejectContactRequest({this.contactId, this.uid});
   @override
   List<Object> get props => [contactId, uid];
   @override
@@ -54,10 +54,10 @@ class ContactRejectedRequest extends ContactEvent {
 }
 
 /// Sets status of user with [contactId] to 'blocked' from 'pending', 'friend', 'blocked'.
-class ContactBlocked extends ContactEvent {
+class BlockContact extends ContactEvent {
   final String contactId;
   final String uid;
-  ContactBlocked({this.contactId, this.uid});
+  BlockContact({this.contactId, this.uid});
   @override
   List<Object> get props => [contactId, uid];
   @override
@@ -65,23 +65,23 @@ class ContactBlocked extends ContactEvent {
 }
 
 // Event, that triggers loading of contact list
-class ContactListLoaded extends ContactEvent {
+class LoadContacts extends ContactEvent {
   final String uid;
 
-  ContactListLoaded({this.uid});
+  LoadContacts({this.uid});
 
   @override
   List<Object> get props => [uid];
 }
 
 class ContactsUpdated extends ContactEvent {
-  final Contact contact;
+  final List<Contact> contacts;
 
-  ContactsUpdated(this.contact);
-
-  @override
-  List<Object> get props => [contact];
+  ContactsUpdated(this.contacts);
 
   @override
-  String toString() => 'Contact list updated: {contact: $contact}';
+  List<Object> get props => [contacts];
+
+  @override
+  String toString() => 'Contact list updated: {contact: $contacts}';
 }

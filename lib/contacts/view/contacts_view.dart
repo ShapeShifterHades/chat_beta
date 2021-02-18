@@ -11,7 +11,7 @@ class ContactsView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
-        onPressed: () => context.read<ContactBloc>().add(ContactRequestSent(
+        onPressed: () => context.read<ContactBloc>().add(SendContactRequest(
             contactId: 'JBFVeK2jaFBB7VPYmgZZ',
             message: 'Please add me for fuck sake!')),
       ),
@@ -27,9 +27,22 @@ class ContactsView extends StatelessWidget {
             ),
             Expanded(
               child: Container(
-                child: BlocBuilder<ContactBloc, ContactState>(
+                child: BlocBuilder<ContactBloc, ContactsState>(
                   builder: (context, state) {
-                    return Text(state.contacts.length.toString());
+                    final contact = (state as ContactsLoaded)
+                        .contacts
+                        .firstWhere((contact) => contact.id == id,
+                            orElse: () => null);
+                    return contact == null
+                        ? Container()
+                        : Padding(
+                            padding: EdgeInsets.all(8),
+                            child: Container(
+                              width: 50,
+                              height: 50,
+                              color: Colors.purple[900],
+                            ),
+                          );
                   },
                 ),
               ),
