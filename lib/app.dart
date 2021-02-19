@@ -49,9 +49,10 @@ class App extends StatelessWidget {
           authenticationRepository: authenticationRepository,
         ),
         child: BlocProvider(
-          create: (context) => ContactBloc(
+          create: (context) => ContactsBloc(
               firestoreContactRepository, context.read<AuthenticationBloc>())
-            ..add(LoadContacts()),
+            ..add(LoadContacts(
+                uid: context.read<AuthenticationBloc>().state.user.id)),
           child: RepositoryProvider.value(
             value: authenticationRepository,
             child: BlocProvider(

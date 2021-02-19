@@ -4,20 +4,22 @@ import '../entities/entities.dart';
 @immutable
 class Contact {
   final String id;
-  final String name;
+  final String username;
+  final String status;
 
-  Contact({this.id, this.name});
+  Contact({this.id, this.username, this.status});
 
-  Contact copyWith({String id, String name}) {
+  Contact copyWith({String id, String username, String status}) {
     return Contact(
       id: id ?? this.id,
-      name: name ?? this.name,
+      username: username ?? this.username,
+      status: status ?? this.status,
     );
   }
 
   @override
   // ignore: override_on_non_overriding_member
-  int get hashcode => id.hashCode ^ name.hashCode;
+  int get hashcode => id.hashCode ^ username.hashCode ^ status.hashCode;
 
   @override
   // ignore: hash_and_equals
@@ -26,21 +28,23 @@ class Contact {
       other is Contact &&
           runtimeType == other.runtimeType &&
           id == other.id &&
-          name == other.name;
+          username == other.username &&
+          status == other.status;
 
   @override
   String toString() {
-    return 'Contact{id: $id, name: $name}';
+    return 'Contact{id: $id, username: $username, status: $status}';
   }
 
   ContactEntity toEntity() {
-    return ContactEntity(id, name);
+    return ContactEntity(id, username, status);
   }
 
   static Contact fromEntity(ContactEntity entity) {
     return Contact(
       id: entity.id,
-      name: entity.name,
+      username: entity.username,
+      status: entity.status,
     );
   }
 }

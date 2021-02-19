@@ -9,17 +9,19 @@ import 'package:void_chat_beta/authentication/authentication.dart';
 part 'contact_event.dart';
 part 'contact_state.dart';
 
-class ContactBloc extends Bloc<ContactEvent, ContactsState> {
+class ContactsBloc extends Bloc<ContactEvent, ContactsState> {
   final AuthenticationBloc _authenticationBloc;
   final FirestoreContactRepository _firestoreContactRepository;
   StreamSubscription _contactSubscription;
 
-  ContactBloc(
-    this._firestoreContactRepository,
-    this._authenticationBloc,
-  )   : assert(_authenticationBloc != null),
-        assert(_firestoreContactRepository != null),
-        super(ContactsLoading());
+  ContactsBloc(
+    FirestoreContactRepository firestoreContactRepository,
+    AuthenticationBloc authenticationBloc,
+  )   : assert(authenticationBloc != null),
+        assert(firestoreContactRepository != null),
+        _firestoreContactRepository = firestoreContactRepository,
+        _authenticationBloc = authenticationBloc,
+        super(ContactsAreLoading());
 
   @override
   Stream<ContactsState> mapEventToState(ContactEvent event) async* {
@@ -42,7 +44,9 @@ class ContactBloc extends Bloc<ContactEvent, ContactsState> {
 
   Stream<ContactsState> _mapLoadContactsToState() async* {
     _contactSubscription?.cancel();
-    _contactSubscription = _firestoreContactRepository.contacts().listen(
+    _contactSubscription = _firestoreContactRepository
+        .contacts(uid: _authenticationBloc.state.user.id)
+        .listen(
           (contacts) => add(ContactsUpdated(contacts)),
         );
     // try {
@@ -75,7 +79,7 @@ class ContactBloc extends Bloc<ContactEvent, ContactsState> {
       RemoveContactRequest event) async* {
     await this._firestoreContactRepository.removeRequest(
           contactId: event.contactId,
-          uid: _authenticationBloc.state.user.id,
+          uid: event.uid,
         );
   }
 

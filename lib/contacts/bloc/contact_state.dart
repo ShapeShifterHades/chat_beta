@@ -7,12 +7,13 @@ abstract class ContactsState extends Equatable {
   List<Object> get props => [];
 }
 
-class ContactsLoading extends ContactsState {}
+class ContactsAreLoading extends ContactsState {}
 
 class ContactsLoaded extends ContactsState {
   final List<Contact> contacts;
 
-  const ContactsLoaded([this.contacts = const []]);
+  // const ContactsLoaded([this.contacts = const []]);
+  const ContactsLoaded(this.contacts);
 
   @override
   List<Object> get props => [contacts];
