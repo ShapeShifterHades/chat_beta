@@ -27,18 +27,22 @@ class ContactsBloc extends Bloc<ContactEvent, ContactsState> {
   Stream<ContactsState> mapEventToState(ContactEvent event) async* {
     if (event is LoadContacts) {
       yield* _mapLoadContactsToState();
-    } else if (event is SendContactRequest) {
-      yield* _mapSendContactRequestToState(event);
-    } else if (event is AcceptContactRequest) {
-      yield* _mapAcceptContactRequestToState(event);
+    } else if (event is SendFriendshipRequest) {
+      yield* _mapSendFriendshipRequestToState(event);
+    } else if (event is AcceptFriendshipRequest) {
+      yield* _mapAcceptFriendshipRequestToState(event);
     } else if (event is RemoveContactRequest) {
       yield* _mapRemoveContactRequestToState(event);
-    } else if (event is RejectContactRequest) {
-      yield* _mapRejectContactRequestToState(event);
-    } else if (event is BlockContact) {
-      yield* _mapBlockContactToState(event);
+    } else if (event is AddToBlocklist) {
+      yield* _mapAddToBlocklistToState(event);
+    } else if (event is RemoveFromBlocklist) {
+      yield* _mapRemoveFromBlocklistToState(event);
     } else if (event is ContactsUpdated) {
       yield* _mapContactsUpdatedToState(event);
+    } else if (event is FindIdByUsername) {
+      yield* _mapFindIdByUsernameToState(event);
+    } else if (event is FindUsernameById) {
+      yield* _mapFindUsernameByIdTpState(event);
     }
   }
 
@@ -49,26 +53,18 @@ class ContactsBloc extends Bloc<ContactEvent, ContactsState> {
         .listen(
           (contacts) => add(ContactsUpdated(contacts)),
         );
-    // try {
-    //   final contacts = await this
-    //       .firestoreContactRepository
-    //       .contacts(uid: _authenticationBloc.state.user.id);
-    //   yield ContactsState.loadedSuccessfully(contacts);
-    // } catch (_) {
-    //   yield ContactsState.loadedWithError();
-    // }
   }
 
-  Stream<ContactsState> _mapSendContactRequestToState(
-      SendContactRequest event) async* {
+  Stream<ContactsState> _mapSendFriendshipRequestToState(
+      SendFriendshipRequest event) async* {
     await this._firestoreContactRepository.sendRequest(
         contactId: event.contactId,
         uid: _authenticationBloc.state.user.id,
         message: event.message);
   }
 
-  Stream<ContactsState> _mapAcceptContactRequestToState(
-      AcceptContactRequest event) async* {
+  Stream<ContactsState> _mapAcceptFriendshipRequestToState(
+      AcceptFriendshipRequest event) async* {
     await this._firestoreContactRepository.acceptRequest(
           contactId: event.contactId,
           uid: _authenticationBloc.state.user.id,
@@ -83,15 +79,15 @@ class ContactsBloc extends Bloc<ContactEvent, ContactsState> {
         );
   }
 
-  Stream<ContactsState> _mapRejectContactRequestToState(
-      RejectContactRequest event) async* {
-    await this._firestoreContactRepository.rejectContact(
+  Stream<ContactsState> _mapRemoveFromBlocklistToState(
+      RemoveFromBlocklist event) async* {
+    await this._firestoreContactRepository.removeFromBlocklist(
           contactId: event.contactId,
           uid: _authenticationBloc.state.user.id,
         );
   }
 
-  Stream<ContactsState> _mapBlockContactToState(BlockContact event) async* {
+  Stream<ContactsState> _mapAddToBlocklistToState(AddToBlocklist event) async* {
     await this._firestoreContactRepository.blockContact(
           contactId: event.contactId,
           uid: _authenticationBloc.state.user.id,
@@ -102,6 +98,18 @@ class ContactsBloc extends Bloc<ContactEvent, ContactsState> {
   Stream<ContactsState> _mapContactsUpdatedToState(
       ContactsUpdated event) async* {
     yield ContactsLoaded(event.contacts);
+  }
+
+  Stream<ContactsState> _mapFindIdByUsernameToState(
+      FindIdByUsername event) async* {
+    var result =
+        await this._firestoreContactRepository.findIdByUsername(event.username);
+    print(result);
+  }
+
+  Stream<ContactsState> _mapFindUsernameByIdTpState(
+      FindUsernameById event) async* {
+    await this._firestoreContactRepository.findUsernameById(event.contactId);
   }
 
   @override

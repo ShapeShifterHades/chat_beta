@@ -8,6 +8,30 @@ abstract class ContactEvent extends Equatable {
   List<Object> get props => [];
 }
 
+class FindUsernameById extends ContactEvent {
+  final contactId;
+
+  FindUsernameById(this.contactId);
+
+  @override
+  List<Object> get props => [contactId];
+
+  @override
+  String toString() => 'Initiating username search query for user: $contactId}';
+}
+
+class FindIdByUsername extends ContactEvent {
+  final String username;
+
+  FindIdByUsername(this.username);
+
+  @override
+  List<Object> get props => [username];
+
+  @override
+  String toString() => 'Initiating username search query for user: $username}';
+}
+
 /// Sends to users [contactId] contacts collection a friend request with a
 /// greeting [message] and status: 'pending'.
 ///
@@ -15,7 +39,7 @@ abstract class ContactEvent extends Equatable {
 /// ```
 /// context
 ///   .read<ContactsBloc>()
-///   .add(SendContactRequest(contactId: contactId, 
+///   .add(SendContactRequest(contactId: contactId,
 ///                             uid: context.read<AuthenticationBloc>().state.user.id));
 /// ```
 /// NOTE: usage of [uid] named parameter is temporary option and will be
@@ -24,11 +48,11 @@ abstract class ContactEvent extends Equatable {
 /// of a document only if there is no document with [uid] already.
 /// TOIMPLEMENT: Atomically create a document in [uid] contact collection
 /// document [contactId] with status 'pending', if there is no doc with such [contactId].
-class SendContactRequest extends ContactEvent {
+class SendFriendshipRequest extends ContactEvent {
   final String contactId;
   final String uid;
   final String message;
-  SendContactRequest(
+  SendFriendshipRequest(
       {@required this.contactId, @required this.uid, this.message = ''});
   @override
   List<Object> get props => [contactId, uid];
@@ -38,12 +62,12 @@ class SendContactRequest extends ContactEvent {
 
 /// Changes status of user[contactId] in contacts collection of user [uid]
 /// to status: 'friend' from 'pending' or 'blocked'.
-/// 
+///
 /// Usage in scope of [ContactsBloc] provider:
 /// ```
 /// context
 ///   .read<ContactsBloc>()
-///   .add(AcceptContactRequest(contactId: contactId, 
+///   .add(AcceptContactRequest(contactId: contactId,
 ///                             uid: context.read<AuthenticationBloc>().state.user.id));
 /// ```
 /// NOTE: usage of [uid] named parameter is temporary option and will be
@@ -51,10 +75,10 @@ class SendContactRequest extends ContactEvent {
 /// TO IMPLEMENT: Must send in response (atomic) creation of document [uid] with
 /// status: 'friend' with check if [uid] in his contacts collection has changed
 /// [contactId] to status: 'friend'.
-class AcceptContactRequest extends ContactEvent { 
+class AcceptFriendshipRequest extends ContactEvent {
   final String contactId;
   final String uid;
-  AcceptContactRequest({
+  AcceptFriendshipRequest({
     @required this.contactId,
     @required this.uid,
   });
@@ -67,12 +91,12 @@ class AcceptContactRequest extends ContactEvent {
 /// Removes from contacts collection of user [contactId] a document with
 /// users [uid], if status of a user not 'blocked'
 /// (by firestore security rules).
-/// 
+///
 /// Usage in scope of [ContactsBloc] provider:
 /// ```
 /// context
 ///   .read<ContactsBloc>()
-///   .add(RemoveContactRequest(contactId: contactId, 
+///   .add(RemoveContactRequest(contactId: contactId,
 ///                             uid: context.read<AuthenticationBloc>().state.user.id));
 /// ```
 /// NOTE: usage of [uid] named parameter is temporary option and will be
@@ -92,20 +116,20 @@ class RemoveContactRequest extends ContactEvent {
 
 /// Sets request status of user [contactId] in contacts collection of user [uid]
 /// to status:'rejected' from 'pending', 'friend' or 'blocked'.
-/// 
+///
 /// Usage in scope of [ContactsBloc] provider:
 /// ```
 /// context
 ///   .read<ContactsBloc>()
-///   .add(RejectContactRequest(contactId: contactId, 
+///   .add(RejectContactRequest(contactId: contactId,
 ///                             uid: context.read<AuthenticationBloc>().state.user.id));
 /// ```
 /// NOTE: usage of [uid] named parameter is temporary option and will be
 /// removed since [ContactsBloc] handles passing it to [FirestoreContactRepository].
-class RejectContactRequest extends ContactEvent {
+class RemoveFromBlocklist extends ContactEvent {
   final String contactId;
   final String uid;
-  RejectContactRequest({
+  RemoveFromBlocklist({
     @required this.contactId,
     @required this.uid,
   });
@@ -115,22 +139,22 @@ class RejectContactRequest extends ContactEvent {
   String toString() => 'Contact rejected { contact: $contactId }';
 }
 
-/// Sets status of user with [contactId] in contacts collection of user [uid] 
+/// Sets status of user with [contactId] in contacts collection of user [uid]
 /// to 'blocked' from status: 'rejected', 'pending' or 'friend'.
 ///
 /// Usage in scope of [ContactsBloc] provider:
 /// ```
 /// context
 ///   .read<ContactsBloc>()
-///   .add(BlockContact(contactId: contactId, 
+///   .add(BlockContact(contactId: contactId,
 ///                             uid: context.read<AuthenticationBloc>().state.user.id));
 /// ```
 /// NOTE: usage of [uid] named parameter is temporary option and will be
 /// removed since [ContactsBloc] handles passing it to [FirestoreContactRepository].
-class BlockContact extends ContactEvent {
+class AddToBlocklist extends ContactEvent {
   final String contactId;
   final String uid;
-  BlockContact({
+  AddToBlocklist({
     @required this.contactId,
     @required this.uid,
   });

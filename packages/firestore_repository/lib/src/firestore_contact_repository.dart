@@ -6,27 +6,80 @@ import 'package:firestore_repository/src/models/contact.dart';
 
 class FirestoreContactRepository {
   final usersCollection = FirebaseFirestore.instance.collection('users');
+  final usernamesCollection =
+      FirebaseFirestore.instance.collection('usernames');
+  final contactsCollectionOf = (uid) => FirebaseFirestore.instance
+      .collection('users')
+      .doc(uid)
+      .collection('contacts');
+  final blocklistCollectionOf = (uid) => FirebaseFirestore.instance
+      .collection('users')
+      .doc(uid)
+      .collection('blocklist');
 
-  /// Sends to another user a friend request with a greeting message.
+  Future<String> findIdByUsername(String username) async {
+    try {
+      DocumentSnapshot documentSnapshot =
+          await usernamesCollection.doc(username).get();
+
+      if (documentSnapshot.exists) {
+        print('Document exists on the database');
+        return documentSnapshot.data()['uid'].toString();
+      } else {
+        return 'No username found!';
+      }
+    } catch (e) {
+      return e;
+    }
+  }
+
+  Future<String> findUsernameById(String id) async {
+    QuerySnapshot documentSnapshot =
+        await usernamesCollection.where("uid", isEqualTo: id).get();
+    return documentSnapshot.docs[0].exists ? documentSnapshot.docs[0].id : null;
+    // try {
+    //   QuerySnapshot documentSnapshot =
+    //       await usernamesCollection.where("uid", isEqualTo: id).get();
+
+    //   if (documentSnapshot.docs.isNotEmpty) {
+    //     // print('Document exists on the database');
+    //     // documentSnapshot.docs.forEach((element) => print(element.id));
+    //     // print();
+
+    //     result = documentSnapshot.docs[0].id;
+    //   } else {
+    //     result = 'No username found!';
+    //   }
+    // } catch (e) {
+    //   print(e.toString());
+    // }
+    // return result ?? '';
+  }
+
+  /// Sends to user [contactId] a friend request with a greeting message.
   ///
   /// TODO: implement getting and wrighting a username.
   Future<void> sendRequest(
       {String contactId, String uid, String message}) async {
-    try {
-      var batch = FirebaseFirestore.instance.batch();
-      var path1 =
-          usersCollection.doc(contactId).collection('contacts').doc(uid);
-      var path2 =
-          usersCollection.doc(uid).collection('contacts').doc(contactId);
+    final batch = FirebaseFirestore.instance.batch();
 
-      batch.set(path1, {
+    var username1 = await findUsernameById(uid);
+    var username2 = await findUsernameById(contactId);
+    try {
+      batch.set(contactsCollectionOf(contactId).doc(uid), {
         "id": uid,
+        "requestFrom": uid,
+        "requestTo": contactId,
+        "username": username1, // Here we need a username getter.
         "status": "pending",
         "message": message,
         "requestSentAt": FieldValue.serverTimestamp()
       });
-      batch.set(path2, {
+      batch.set(contactsCollectionOf(uid).doc(contactId), {
         "id": contactId,
+        "requestFrom": uid,
+        "requestTo": contactId,
+        "username": username2, // Here we need a username getter #2.
         "status": "pending",
         "message": message,
         "requestSentAt": FieldValue.serverTimestamp()
@@ -37,59 +90,99 @@ class FirestoreContactRepository {
     }
   }
 
-  /// Adds to friends another user, who already sent you a request with status 'pending'.
+  /// Changes status in documents of both users to 'friends' from 'pending'
+  /// if friend request was not initiated by [uid].
+  ///
+  /// SECURITY RULES:
+  /// update if request.auth != null && resource.data.initiatedBy != request.auth.uid &&
+  /// resource.data.status == 'pending' && getAfter(resource).data.status == 'friend'
+  /// && request.data.initiatedBy == null
   Future<void> acceptRequest({String contactId, String uid}) async {
+    final batch = FirebaseFirestore.instance.batch();
+
     try {
-      await usersCollection.doc(uid).collection('contacts').doc(contactId).set(
-          {"status": "friend", "friendAddedAt": FieldValue.serverTimestamp()});
+      batch.set(
+          contactsCollectionOf(contactId).doc(uid),
+          {
+            "status": "friend",
+            "friendAcceptedAt": FieldValue.serverTimestamp()
+          },
+          SetOptions(merge: true));
+      batch.set(
+          contactsCollectionOf(uid).doc(contactId),
+          {
+            "status": "friend",
+            "friendAcceptedAt": FieldValue.serverTimestamp()
+          },
+          SetOptions(merge: true));
+      batch.commit();
     } catch (e) {
       throw (e);
     }
   }
 
-  /// Removes from another users list document with users id, if status of a user not 'blocked' (by firestore security rules).
+  /// Removes document [contactId] from contacts collection of user [uid]
+  /// and document [uid] in contacts collection of user [contactId]. if
+  /// document status != 'blocked' (by firestore security rules). (deprecated)
+  ///
+  /// SECURITY RULES:
+  /// match /users/{uid}/contacts/{contact}
+  /// allow delete: if request.auth.uid == contact || request.auth.uid == uid
   Future<void> removeRequest({String contactId, String uid}) async {
+    final batch = FirebaseFirestore.instance.batch();
+
     try {
-      var batch = FirebaseFirestore.instance.batch();
-      var path1 =
-          usersCollection.doc(contactId).collection('contacts').doc(uid);
-      var path2 =
-          usersCollection.doc(uid).collection('contacts').doc(contactId);
-      batch.delete(path1);
-      batch.delete(path2);
+      batch.delete(contactsCollectionOf(contactId).doc(uid));
+      batch.delete(contactsCollectionOf(uid).doc(contactId));
       await batch.commit();
     } catch (e) {
       throw (e);
     }
   }
 
-  /// Sets status of user with [contactId] to 'pending' from 'friend' or 'blocked'.
-  Future<void> rejectContact({String contactId, String uid}) async {
-    try {
-      await usersCollection.doc(uid).collection('contacts').doc(contactId).set(
-          {"status": "pending", "rejectedAt": FieldValue.serverTimestamp()});
-    } catch (e) {
-      throw (e);
-    }
-  }
-
-  /// Sets status of user with [contactId] to 'blocked' from 'pending', 'friend', 'blocked'.
+  /// Creates new document with id [contactId] in blocklist collection of user [uid].
+  ///
+  /// Blocked [contactId] must have no permission to send messages, friend requests.
+  /// TODO: 1st check if exists a contacts collection document ? removes it : proceeds,
+  /// creates blocked document that in security rules checks if there will be no
+  /// such [contactId] document in contacts by 'getAfter'.
+  /// SECURITY RULES:
+  /// match /users/{uid}/blocklist/{contact}
+  /// allow create: if request.auth.uid == uid || request.response.data.contactId == contact;
+  /// allow delete: if request.auth.uid == uid;
   Future<void> blockContact({String contactId, String uid}) async {
     try {
-      await usersCollection.doc(uid).collection('contacts').doc(contactId).set(
-          {"status": "blocked", "blockedAt": FieldValue.serverTimestamp()});
+      await removeRequest(contactId: contactId, uid: uid);
+    } catch (e) {
+      print(e);
+    } finally {
+      await blocklistCollectionOf(uid).doc(contactId).set(
+        {
+          "blockedAt": FieldValue.serverTimestamp(),
+          "contactId": contactId,
+          "username": contactId, // Implement username getter function
+        },
+      );
+    }
+  }
+
+  /// Removes [contactId] document in blocklist collection of user [uid]
+  ///
+  /// SECURITY RULES:
+  /// match /users/{uid}/blocklist/{contact}
+  /// allow create: if request.auth.uid == uid || request.response.data.contactId == contact;
+  /// allow delete: if request.auth.uid == uid;
+  Future<void> removeFromBlocklist({String contactId, String uid}) async {
+    try {
+      await blocklistCollectionOf(uid).doc(contactId).delete();
     } catch (e) {
       throw (e);
     }
   }
 
-  /// Gets a stream of snapshots of users contact list.
+  /// Gets a stream of snapshots of user [uid] contacts collection.
   Stream<List<Contact>> contacts({String uid}) {
-    return usersCollection
-        .doc(uid)
-        .collection('contacts')
-        .snapshots()
-        .map((snapshot) {
+    return contactsCollectionOf(uid).snapshots().map((snapshot) {
       return snapshot.docs
           .map((doc) => Contact.fromEntity(ContactEntity.fromSnapshot(doc)))
           .toList();
