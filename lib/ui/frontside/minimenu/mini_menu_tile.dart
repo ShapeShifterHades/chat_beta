@@ -18,7 +18,7 @@ class MiniMenuTile extends StatelessWidget {
       child: Container(
         decoration: BoxDecoration(
           color: isCurrentPage
-              ? Theme.of(context).primaryColor
+              ? Theme.of(context).backgroundColor
               : Theme.of(context).backgroundColor,
           border: Border.symmetric(
             horizontal: BorderSide(

@@ -25,7 +25,7 @@ class ToggleDrawerButton extends StatelessWidget {
             color: Colors.transparent,
             width: 40,
             height: 40,
-            padding: EdgeInsets.all(4),
+            padding: EdgeInsets.all(4.5),
             child: Container(
               margin: EdgeInsets.all(5.5),
               child: AnimatedIcon(

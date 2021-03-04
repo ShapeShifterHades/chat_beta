@@ -12,7 +12,6 @@ class ContactsAreLoading extends ContactsState {}
 class ContactsLoaded extends ContactsState {
   final List<Contact> contacts;
 
-  // const ContactsLoaded([this.contacts = const []]);
   const ContactsLoaded(this.contacts);
 
   @override

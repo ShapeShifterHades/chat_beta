@@ -143,7 +143,7 @@ class DrawerPM extends StatelessWidget {
                           height: 40,
                           width: 170,
                           child: Text(
-                            'YorKee, android v1.0.1b, 2021',
+                            'YorKee - leave the choice to yourself.',
                             style: GoogleFonts.jura(
                               color: Theme.of(context)
                                   .primaryTextTheme

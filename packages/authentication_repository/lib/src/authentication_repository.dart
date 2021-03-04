@@ -93,6 +93,11 @@ class AuthenticationRepository {
       throw LogOutFailure();
     }
   }
+
+  Future<bool> isAuthenticated() async {
+    final currentUser = _firebaseAuth.currentUser;
+    return currentUser != null;
+  }
 }
 
 extension on firebase_auth.User {

@@ -46,6 +46,7 @@ dependencies:
   flutter_form_bloc:
   simple_animations:
   flutter_statusbarcolor:
+  flutter_slidable:
 
 
 dev_dependencies:

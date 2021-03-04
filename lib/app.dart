@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_statusbarcolor/flutter_statusbarcolor.dart';
+import 'package:void_chat_beta/blocs/contactlist/contactlist_bloc.dart';
 import 'package:void_chat_beta/constants/constants.dart';
 import 'package:void_chat_beta/newlogin/new_login.dart';
 
@@ -41,20 +42,20 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    setStatusColor(context);
     return RepositoryProvider.value(
-      value: (context) => firestoreContactRepository,
-      child: BlocProvider(
-        create: (context) => AuthenticationBloc(
-          authenticationRepository: authenticationRepository,
-        ),
+      value: authenticationRepository,
+      child: RepositoryProvider.value(
+        value: (context) => firestoreContactRepository,
         child: BlocProvider(
-          create: (context) => ContactsBloc(
-              firestoreContactRepository, context.read<AuthenticationBloc>())
-            ..add(LoadContacts(
-                uid: context.read<AuthenticationBloc>().state.user.id)),
-          child: RepositoryProvider.value(
-            value: authenticationRepository,
+          create: (context) => AuthenticationBloc(
+            authenticationRepository: authenticationRepository,
+          ),
+          child: BlocProvider(
+            lazy: true,
+            create: (context) => ContactsBloc(
+                firestoreContactRepository, context.read<AuthenticationBloc>())
+              ..add(LoadContacts(
+                  uid: context.read<AuthenticationBloc>().state.user.id)),
             child: BlocProvider(
               create: (context) => LocaleCubit(),
               child: BlocProvider(
@@ -92,7 +93,7 @@ class AppView extends StatelessWidget {
             return Get.GetMaterialApp(
               locale: Locale(context.watch<LocaleCubit>().state ??
                   Get.Get.deviceLocale.countryCode),
-              initialRoute: homeRoute,
+              initialRoute: loginRoute,
               routingCallback: (routing) {
                 if (routing.current == '/') {
                   authenticationRepository.logOut();
@@ -106,7 +107,14 @@ class AppView extends StatelessWidget {
                 Get.GetPage(name: settingsRoute, page: () => SettingsView()),
                 Get.GetPage(name: securityRoute, page: () => SecurityView()),
                 Get.GetPage(name: faqRoute, page: () => FaqView()),
-                Get.GetPage(name: contactsRoute, page: () => ContactsView()),
+                Get.GetPage(
+                  name: contactsRoute,
+                  page: () => BlocProvider<ContactlistBloc>(
+                    create: (context) =>
+                        ContactlistBloc(context.read<ContactsBloc>()),
+                    child: ContactsView(),
+                  ),
+                ),
                 Get.GetPage(
                   name: '/newSignUp',
                   page: () => RepositoryProvider.value(
@@ -114,7 +122,7 @@ class AppView extends StatelessWidget {
                       child: NewSignUpPage()),
                 ),
               ],
-              defaultTransition: Get.Transition.rightToLeftWithFade,
+              defaultTransition: Get.Transition.size,
               transitionDuration: Duration(milliseconds: 300),
               translations: ContentTranslations(),
               debugShowCheckedModeBanner: false,
@@ -142,7 +150,7 @@ class AppView extends StatelessWidget {
                         case AuthenticationStatus.authenticated:
                           Get.Get.offAllNamed(homeRoute, arguments: 'Messages');
                           break;
-                        default:
+                        case AuthenticationStatus.unknown:
                           Get.Get.offAllNamed(loginRoute);
                           break;
                       }

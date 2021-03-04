@@ -10,11 +10,13 @@ import 'frontside/minimenu/mini_menu.dart';
 /// [UI] class combines drawer and slidable content side of UI after user is logged in
 class UI extends StatefulWidget {
   // content is a Widget, passed to PortraitMobileUI that is a current page's materials
-  final Widget content;
+  final Widget body;
+  final Widget statusBar;
 
   const UI({
     Key key,
-    @required this.content,
+    @required this.body,
+    this.statusBar,
   }) : super(key: key);
 
   static UIState of(BuildContext context) =>
@@ -70,20 +72,14 @@ class UIState extends State<UI> with SingleTickerProviderStateMixin {
           animation: _animationController,
           // Here starts frontside of drawer-content system, margin defines its base shape
           child: Stack(
-            overflow: Overflow.clip,
+            // overflow: Overflow.clip,
             children: [
-              Positioned(
-                top: 0,
-                bottom: 0,
-                left: 0,
-                right: 0,
+              Positioned.fill(
                 child: Container(
                   color: Theme.of(context).backgroundColor,
-                  margin: EdgeInsets.fromLTRB(
-                    size.width * 0.07,
-                    size.width * 0.05 + 30,
-                    size.width * 0.00,
-                    size.width * 0.00,
+                  margin: EdgeInsets.only(
+                    left: size.width * 0.07,
+                    top: size.width * 0.05 + 30,
                   ),
 
                   // Animated frame of main content part of UI
@@ -92,11 +88,12 @@ class UIState extends State<UI> with SingleTickerProviderStateMixin {
               ),
               Positioned(
                 // This is where main page content's scaffold size is defined
-                top: size.width * 0.05 + 80,
-                left: size.width * 0.05 + 20,
-                right: 20,
-                bottom: 40,
+                top: size.width * 0.05 + 30,
+                left: size.width * 0.05,
+                right: 12,
+                bottom: 00,
                 child: Container(
+                  // color: Colors.brown.withOpacity(0.1),
                   child: GestureDetector(
                       // This Gestures closes [DrawerPM] when it is opened
                       onTap: _animationController.isCompleted ? close : null,
@@ -104,7 +101,7 @@ class UIState extends State<UI> with SingleTickerProviderStateMixin {
                       onHorizontalDragUpdate: _onDragUpdate,
                       onHorizontalDragEnd: _onDragEnd,
                       // Here is the content of the pages
-                      child: widget.content),
+                      child: widget.body),
                 ),
               ),
               // MiniMenu
@@ -136,8 +133,9 @@ class UIState extends State<UI> with SingleTickerProviderStateMixin {
                           onHorizontalDragStart: _onDragStart,
                           onHorizontalDragUpdate: _onDragUpdate,
                           onHorizontalDragEnd: _onDragEnd,
-                          child: StatusBar(
-                              animationController: _animationController),
+                          child: widget.statusBar ??
+                              StatusBar(
+                                  animationController: _animationController),
                         ),
                       ),
                     ],

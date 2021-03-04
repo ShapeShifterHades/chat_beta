@@ -25,62 +25,6 @@ class StatusBar extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               ToggleDrawerButton(animationController: animationController),
-              Padding(
-                padding: const EdgeInsets.only(top: 4, left: 4),
-                child: ScreenTag(
-                  context: context,
-                ),
-              ),
-              SizedBox(width: 0),
-              Stack(
-                children: [
-                  Container(
-                    margin: EdgeInsets.only(top: 4, left: 4),
-                    child: IconButton(
-                        padding: EdgeInsets.only(top: 4, right: 4),
-                        icon: FaIcon(
-                          FontAwesomeIcons.solidEnvelope,
-                          color:
-                              Theme.of(context).primaryColor.withOpacity(0.7),
-                          size: 24,
-                        ),
-                        onPressed: () {
-                          print("New messages button was pressed");
-                        }),
-                  ),
-                  Positioned(
-                    bottom: 2,
-                    right: 2,
-                    child: Container(
-                      width: 22,
-                      height: 15,
-                      decoration: BoxDecoration(
-                        color: Theme.of(context).backgroundColor,
-                        borderRadius: BorderRadius.circular(3),
-                        border: Border.all(
-                          width: 0.3,
-                          color:
-                              Theme.of(context).primaryColor.withOpacity(0.7),
-                        ),
-                      ),
-                      child: Center(
-                        child: Text(
-                          '23',
-                          textAlign: TextAlign.right,
-                          style: GoogleFonts.jura(
-                            color: Theme.of(context)
-                                .primaryTextTheme
-                                .bodyText1
-                                .color,
-                            fontSize: 10,
-                            fontWeight: FontWeight.w300,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
               Spacer(),
             ],
           ),

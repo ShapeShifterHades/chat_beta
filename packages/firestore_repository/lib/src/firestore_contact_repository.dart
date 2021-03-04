@@ -36,7 +36,9 @@ class FirestoreContactRepository {
   Future<String> findUsernameById(String id) async {
     QuerySnapshot documentSnapshot =
         await usernamesCollection.where("uid", isEqualTo: id).get();
-    return documentSnapshot.docs[0].exists ? documentSnapshot.docs[0].id : null;
+    return documentSnapshot.docs.isNotEmpty
+        ? documentSnapshot.docs[0].id
+        : null;
     // try {
     //   QuerySnapshot documentSnapshot =
     //       await usernamesCollection.where("uid", isEqualTo: id).get();

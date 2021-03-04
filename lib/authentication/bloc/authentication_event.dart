@@ -7,6 +7,11 @@ abstract class AuthenticationEvent extends Equatable {
   List<Object> get props => [];
 }
 
+// class AppStarted extends AuthenticationEvent {
+//   @override
+//   List<Object> get props => [];
+// }
+
 class AuthenticationUserChanged extends AuthenticationEvent {
   const AuthenticationUserChanged(this.user);
 

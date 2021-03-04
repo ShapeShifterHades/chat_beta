@@ -1,110 +1,101 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:void_chat_beta/authentication/authentication.dart';
-import 'package:void_chat_beta/contacts/bloc/contact_bloc.dart';
-import 'package:sqflite_repository/sqflite_repository.dart';
+import 'package:flutter_form_bloc/flutter_form_bloc.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
+import 'package:void_chat_beta/blocs/contactlist/contactlist_bloc.dart';
+import 'package:void_chat_beta/contacts/widgets/contact_page_tabs.dart';
+
+import 'package:void_chat_beta/contacts/widgets/friendlist_content.dart';
+import 'package:void_chat_beta/contacts/widgets/pendinglist_content.dart';
 import 'package:void_chat_beta/ui/ui.dart';
 
-ContactModel contactModel1 = ContactModel(name: 'Simon', status: 'friend');
+class ContactsView extends StatefulWidget {
+  @override
+  _ContactsViewState createState() => _ContactsViewState();
+}
 
-class ContactsView extends StatelessWidget {
+class _ContactsViewState extends State<ContactsView> {
+  bool inFindUserMode;
+
+  @override
+  void initState() {
+    inFindUserMode = false;
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: UI(
-        content: BlocBuilder<ContactsBloc, ContactsState>(
-          builder: (context, state) {
-            final isLoading = (state == ContactsAreLoading());
-            final contact =
-                isLoading ? null : (state as ContactsLoaded).contacts.toList();
-            return isLoading
-                ? CircularProgressIndicator()
-                : contact == null
-                    ? Container(
-                        child: Text('No data'),
-                      )
-                    : Column(
+        body: BlocBuilder<ContactlistBloc, ContactlistState>(
+            builder: (context, state) {
+          return Container(
+            child: Column(
+              children: [
+                ContactPageTabs(),
+                Expanded(
+                  child: SingleChildScrollView(
+                    child: Container(
+                      width: double.infinity,
+                      margin: EdgeInsets.only(left: 32, top: 18),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
                         children: [
-                          ButtonsX(),
-                          Container(
+                          AnimatedContainer(
+                            duration: Duration(milliseconds: 500),
                             width: double.infinity,
-                            height: 300,
-                            child: ListView.builder(
-                              itemCount: contact.length,
-                              itemBuilder: (context, index) {
-                                return ListTile(
-                                  title: GestureDetector(
-                                    onTap: () {
-                                      print('pressed on ${contact[index].id}');
-                                      return context.read<ContactsBloc>().add(
-                                            RemoveContactRequest(
-                                              // message: 'Add me mah boy',
-                                              contactId: context
-                                                  .read<AuthenticationBloc>()
-                                                  .state
-                                                  .user
-                                                  .id,
-                                              uid: contact[index].id,
-                                            ),
-                                          );
-                                    },
-                                    child: Column(
-                                      children: [
-                                        Text('Friend $index'),
-                                        Text(
-                                            'name: ${contact[index].username}'),
-                                        Text('id: ${contact[index].id}'),
-                                        Text(
-                                            'status: ${contact[index].status}'),
-                                        Divider(),
-                                      ],
-                                    ),
-                                  ),
-                                );
-                              },
-                            ),
+                            height: inFindUserMode ? 160 : 80,
+                            color: inFindUserMode ? Colors.yellow : Colors.pink,
                           ),
+                          state is FriendlistState
+                              ? FriendlistContent()
+                              : Container(),
+                          state is PendinglistState
+                              ? PendinglistContent()
+                              : Container(),
                         ],
-                      );
-          },
-        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          );
+        }),
       ),
     );
   }
 }
 
-class ButtonsX extends StatelessWidget {
-  const ButtonsX({
-    Key key,
-  }) : super(key: key);
+class AsyncValidationSearchUser extends FormBloc<String, String> {
+  final username = TextFieldBloc(
+    validators: [],
+    asyncValidatorDebounceTime: Duration(milliseconds: 300),
+  );
+
+  AsyncValidationSearchUser() {
+    addFieldBlocs(fieldBlocs: [username]);
+    username.addAsyncValidators(
+      [_checkUsername],
+    );
+  }
+
+  static String _min5Char(String username) {
+    if (username.length < 5) return 'Username must have at least 5 characters';
+    return null;
+  }
+
+  Future<String> _checkUsername(String username) async {
+    await Future.delayed(Duration(microseconds: 300));
+  }
 
   @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: [
-        MaterialButton(
-          onPressed: () => context.read<ContactsBloc>().add(
-                SendFriendshipRequest(
-                  message: 'Add me mah boy',
-                  contactId: '54lsIRYehTQecNGEdc95EOvjVnv2',
-                  uid: context.read<AuthenticationBloc>().state.user.id,
-                ),
-              ),
-          child: Text('add'),
-          color: Colors.green,
-        ),
-        MaterialButton(
-          onPressed: () => context.read<ContactsBloc>().add(
-                AcceptFriendshipRequest(
-                  contactId: '54lsIRYehTQecNGEdc95EOvjVnv2',
-                  uid: context.read<AuthenticationBloc>().state.user.id,
-                ),
-              ),
-          child: Text('friend'),
-          color: Colors.yellowAccent,
-        ),
-      ],
-    );
+  void onSubmitting() async {
+    try {
+      // Emmit here bloc ... found user
+    } catch (e) {
+      print(e);
+    }
   }
 }

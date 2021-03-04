@@ -27,7 +27,7 @@ class MessagesView extends StatelessWidget {
       //   ],
       // ),
       body: UI(
-        content: BlocBuilder<AuthenticationBloc, AuthenticationState>(
+        body: BlocBuilder<AuthenticationBloc, AuthenticationState>(
           builder: (context, state) {
             return Container(
                 // child: Text(
