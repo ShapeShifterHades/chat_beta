@@ -1,20 +1,13 @@
-import 'package:firestore_repository/src/models/contact.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:void_chat_beta/authentication/authentication.dart';
-import 'package:void_chat_beta/blocs/contactlist/contactlist_bloc.dart';
+
 import 'package:void_chat_beta/contacts/bloc/contact_bloc.dart';
-import 'package:void_chat_beta/contacts/widgets/contact_tile.dart';
-import 'package:void_chat_beta/ui/frontside/status_bar/screen_tag.dart';
+import 'package:void_chat_beta/contacts/widgets/contact_item/contact_item_initial.dart';
 
-class FriendlistContent extends StatefulWidget {
-  @override
-  _FriendlistContentState createState() => _FriendlistContentState();
-}
+enum AniProps { offset, containerOneHeight, containerTwoHeight }
 
-class _FriendlistContentState extends State<FriendlistContent> {
+class FriendlistContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(mainAxisSize: MainAxisSize.min, children: [
@@ -71,68 +64,6 @@ class _FriendlistContentState extends State<FriendlistContent> {
         ),
       ),
     ]);
-  }
-}
-
-class ContactItem extends StatelessWidget {
-  const ContactItem({
-    Key key,
-    @required this.sorted,
-    @required this.index,
-  }) : super(key: key);
-
-  final List<Contact> sorted;
-  final int index;
-
-  @override
-  Widget build(BuildContext context) {
-    return ContactTile(
-      id: 'ID: ${sorted[index].id.toUpperCase()}',
-      child: Container(
-        width: 300,
-        height: 70,
-        child: Row(
-          children: [
-            Container(
-              alignment: Alignment.center,
-              // width: 70,
-              height: 90,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(80),
-              ),
-              child: Center(
-                child: Image.asset(
-                  'assets/images/avatar-placeholder.png',
-                  colorBlendMode: BlendMode.color,
-                ),
-              ),
-            ),
-            SizedBox(width: 10),
-            Container(
-              alignment: Alignment.center,
-              padding: EdgeInsets.only(bottom: 20),
-              child: Text(
-                '${sorted[index].username}',
-                style: GoogleFonts.jura(fontSize: 16, color: Colors.white),
-              ),
-            ),
-            Spacer(),
-            Container(
-              width: 60,
-              padding: EdgeInsets.only(bottom: 20),
-              child: IconButton(
-                  icon: Icon(
-                    Icons.fingerprint,
-                    size: 34,
-                    color: Theme.of(context).primaryColor,
-                  ),
-                  onPressed: () {}),
-            ),
-          ],
-        ),
-      ),
-      // ),28
-    );
   }
 }
 

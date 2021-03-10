@@ -17,24 +17,17 @@ class MiniMenuTile extends StatelessWidget {
       onTap: func,
       child: Container(
         decoration: BoxDecoration(
-          color: isCurrentPage
-              ? Theme.of(context).backgroundColor
-              : Theme.of(context).backgroundColor,
+          color: Theme.of(context).backgroundColor,
           border: Border.symmetric(
             horizontal: BorderSide(
-              color: isCurrentPage
-                  ? Theme.of(context).backgroundColor
-                  : Theme.of(context).primaryTextTheme.bodyText1.color,
-              width: 0.0,
+              color: Theme.of(context).primaryColor,
+              width: 0.04,
             ),
           ),
         ),
         child: CustomPaint(
           painter: MiniMenuTilePainter(
-              pressed: null,
-              color: isCurrentPage
-                  ? Colors.white
-                  : Theme.of(context).primaryTextTheme.bodyText1.color),
+              pressed: null, color: Theme.of(context).primaryColor),
           child: ClipPath(
             clipper: MiniMenuTileClipper(),
             child: Container(
@@ -45,8 +38,8 @@ class MiniMenuTile extends StatelessWidget {
                 child: Icon(
                   icon,
                   color: isCurrentPage
-                      ? Colors.white
-                      : Theme.of(context).primaryTextTheme.bodyText1.color,
+                      ? Theme.of(context).primaryColor
+                      : Theme.of(context).primaryColor.withOpacity(0.7),
                   size: isCurrentPage ? 28 : 18,
                 ),
               ),

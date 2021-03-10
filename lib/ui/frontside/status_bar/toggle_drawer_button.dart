@@ -12,7 +12,7 @@ class ToggleDrawerButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Theme.of(context).bottomAppBarColor,
+      color: Theme.of(context).scaffoldBackgroundColor,
       child: CustomPaint(
         painter: MenuButtonPainter(context),
         child: GestureDetector(
@@ -33,7 +33,7 @@ class ToggleDrawerButton extends StatelessWidget {
                 progress: animationController,
                 semanticLabel: 'Show menu',
                 size: 20,
-                color: Theme.of(context).primaryTextTheme.bodyText1.color,
+                color: Theme.of(context).primaryColor,
               ),
             ),
           ),
@@ -86,7 +86,7 @@ class MenuButtonPainter extends CustomPainter {
       ..style = PaintingStyle.stroke
       ..strokeWidth = 3
       ..strokeCap = StrokeCap.round
-      ..color = Theme.of(context).bottomAppBarColor;
+      ..color = Theme.of(context).scaffoldBackgroundColor;
 
     canvas.drawPath(path1, paint1);
 
@@ -94,7 +94,7 @@ class MenuButtonPainter extends CustomPainter {
       ..style = PaintingStyle.stroke
       ..strokeWidth = 0.3
       ..strokeCap = StrokeCap.round
-      ..color = Theme.of(context).primaryTextTheme.bodyText1.color;
+      ..color = Theme.of(context).primaryColor;
 
     canvas.drawPath(path2, paint2);
 
@@ -102,7 +102,7 @@ class MenuButtonPainter extends CustomPainter {
       ..style = PaintingStyle.stroke
       ..strokeWidth = 0.3
       ..strokeCap = StrokeCap.round
-      ..color = Theme.of(context).primaryTextTheme.bodyText1.color;
+      ..color = Theme.of(context).primaryColor;
 
     canvas.drawPath(path3, paint3);
   }

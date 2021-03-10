@@ -12,11 +12,11 @@ class ContactPageTabs extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.end,
+      mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        SizedBox(width: 32),
+        SizedBox(width: 50),
         Padding(
-          padding: EdgeInsets.only(top: 8),
+          padding: EdgeInsets.only(top: 0),
           child: ScreenTag(
             child: GestureDetector(
               onTap: () {
@@ -28,8 +28,8 @@ class ContactPageTabs extends StatelessWidget {
                 width: 80,
                 height: 32,
                 color: context.watch<ContactlistBloc>().state is FriendlistState
-                    ? Theme.of(context).primaryColor.withOpacity(0.3)
-                    : Colors.transparent,
+                    ? Theme.of(context).backgroundColor
+                    : Theme.of(context).primaryColor,
                 child: Center(
                   child: Text(
                     'Friends',
@@ -39,7 +39,7 @@ class ContactPageTabs extends StatelessWidget {
                       color: context.watch<ContactlistBloc>().state
                               is FriendlistState
                           ? Theme.of(context).primaryColor
-                          : Theme.of(context).primaryColor,
+                          : Theme.of(context).backgroundColor,
                     ),
                   ),
                 ),
@@ -49,7 +49,7 @@ class ContactPageTabs extends StatelessWidget {
         ),
         SizedBox(width: 8),
         Padding(
-          padding: EdgeInsets.only(top: 8),
+          padding: EdgeInsets.only(top: 0),
           child: ScreenTag(
             child: GestureDetector(
               onTap: () {
@@ -60,15 +60,19 @@ class ContactPageTabs extends StatelessWidget {
                 height: 32,
                 color:
                     context.watch<ContactlistBloc>().state is PendinglistState
-                        ? Theme.of(context).primaryColor.withOpacity(0.3)
-                        : Colors.transparent,
+                        ? Theme.of(context).backgroundColor
+                        : Theme.of(context).primaryColor,
                 child: Center(
                   child: Text(
                     'Pending',
                     style: GoogleFonts.jura(
-                        fontWeight: FontWeight.w300,
-                        fontSize: 18,
-                        color: Theme.of(context).primaryColor),
+                      fontWeight: FontWeight.w300,
+                      fontSize: 18,
+                      color: context.watch<ContactlistBloc>().state
+                              is PendinglistState
+                          ? Theme.of(context).primaryColor
+                          : Theme.of(context).backgroundColor,
+                    ),
                   ),
                 ),
               ),
@@ -77,7 +81,7 @@ class ContactPageTabs extends StatelessWidget {
         ),
         SizedBox(width: 8),
         Padding(
-          padding: const EdgeInsets.only(top: 8),
+          padding: const EdgeInsets.only(top: 0),
           child: ScreenTag(
             child: GestureDetector(
               onTap: () {
@@ -87,15 +91,19 @@ class ContactPageTabs extends StatelessWidget {
                 width: 80,
                 height: 32,
                 color: context.watch<ContactlistBloc>().state is BlocklistState
-                    ? Theme.of(context).primaryColor.withOpacity(0.3)
-                    : Colors.transparent,
+                    ? Theme.of(context).backgroundColor
+                    : Theme.of(context).primaryColor,
                 child: Center(
                   child: Text(
                     'Blocked',
                     style: GoogleFonts.jura(
-                        fontWeight: FontWeight.w300,
-                        fontSize: 18,
-                        color: Theme.of(context).primaryColor),
+                      fontWeight: FontWeight.w300,
+                      fontSize: 18,
+                      color: context.watch<ContactlistBloc>().state
+                              is BlocklistState
+                          ? Theme.of(context).primaryColor
+                          : Theme.of(context).backgroundColor,
+                    ),
                   ),
                 ),
               ),

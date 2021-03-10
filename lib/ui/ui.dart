@@ -88,12 +88,11 @@ class UIState extends State<UI> with SingleTickerProviderStateMixin {
               ),
               Positioned(
                 // This is where main page content's scaffold size is defined
-                top: size.width * 0.05 + 30,
+                top: size.width * 0.05 + 25,
                 left: size.width * 0.05,
                 right: 12,
                 bottom: 00,
                 child: Container(
-                  // color: Colors.brown.withOpacity(0.1),
                   child: GestureDetector(
                       // This Gestures closes [DrawerPM] when it is opened
                       onTap: _animationController.isCompleted ? close : null,

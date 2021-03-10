@@ -5,7 +5,6 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
 import 'package:pedantic/pedantic.dart';
-import 'package:void_chat_beta/authentication/authentication.dart';
 
 part 'authentication_event.dart';
 part 'authentication_state.dart';

@@ -58,15 +58,14 @@ class _DrawerMenuButtonState extends State<DrawerMenuButton> {
             CustomPaint(
               painter: DrawerMenuButtonPainter(
                   pressed: _pressed,
-                  color: widget.isCurrentPage
-                      ? Colors.white
-                      : Theme.of(context).primaryTextTheme.bodyText1.color),
+                  color: Theme.of(context).primaryColor,
+                  current: widget.isCurrentPage),
               child: ClipPath(
                 clipper: DrawerMenuButtonClipper(),
                 child: Container(
-                  color: widget.isCurrentPage
-                      ? Theme.of(context).primaryColor
-                      : Theme.of(context).primaryColor.withOpacity(0.08),
+                  // color: widget.isCurrentPage
+                  //     ? Theme.of(context).primaryColor
+                  //     : Theme.of(context).primaryColor.withOpacity(0.08),
                   width: 140,
                   height: 38,
                   child: Material(
@@ -78,12 +77,7 @@ class _DrawerMenuButtonState extends State<DrawerMenuButton> {
                         Text(
                           widget.label,
                           style: GoogleFonts.jura(
-                              color: widget.isCurrentPage
-                                  ? Colors.white
-                                  : Theme.of(context)
-                                      .primaryTextTheme
-                                      .bodyText1
-                                      .color,
+                              color: Theme.of(context).primaryColor,
                               fontSize: 20,
                               fontWeight: FontWeight.w300),
                           textAlign: TextAlign.left,
@@ -105,14 +99,16 @@ class _DrawerMenuButtonState extends State<DrawerMenuButton> {
 class DrawerMenuButtonPainter extends CustomPainter {
   final bool pressed;
   final Color color;
+  final bool current;
 
-  DrawerMenuButtonPainter({this.color, this.pressed = false});
+  DrawerMenuButtonPainter(
+      {this.color, this.pressed = false, this.current = false});
 
   @override
   void paint(Canvas canvas, Size size) {
     Paint paint1 = Paint()
       ..style = PaintingStyle.stroke
-      ..strokeWidth = 0.3
+      ..strokeWidth = current ? 1.5 : 0.3
       ..strokeCap = StrokeCap.round
       ..color = color.withOpacity(0.8);
 

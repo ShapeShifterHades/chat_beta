@@ -53,8 +53,8 @@ class ContactTilePainter extends CustomPainter {
         Offset(0.0, 0.0),
         Offset(size.width, size.height),
         [
-          Colors.white,
-          Theme.of(context).primaryTextTheme.bodyText1.color,
+          Theme.of(context).primaryColor,
+          Theme.of(context).primaryColor.withOpacity(0.5),
         ],
       )
       ..color = color ?? Theme.of(context).primaryTextTheme.bodyText1.color;
@@ -81,8 +81,8 @@ class ContactTilePainter extends CustomPainter {
         Offset(0.0, 0.0),
         Offset(size.width, size.height),
         [
-          Colors.white,
-          Theme.of(context).primaryTextTheme.bodyText1.color,
+          Theme.of(context).primaryColor,
+          Theme.of(context).primaryColor.withOpacity(0.5),
         ],
       )
       ..color = color ?? Theme.of(context).primaryTextTheme.bodyText1.color;
@@ -91,10 +91,9 @@ class ContactTilePainter extends CustomPainter {
 
     final textStyle = GoogleFonts.jura(
         color: Theme.of(context).backgroundColor,
-        // color: Colors.white,
-        fontSize: 11,
+        fontSize: 12,
         fontStyle: FontStyle.italic,
-        fontWeight: FontWeight.bold);
+        fontWeight: FontWeight.normal);
     final idSpan = TextSpan(
       text: id,
       style: textStyle,

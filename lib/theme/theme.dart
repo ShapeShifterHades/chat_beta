@@ -1,15 +1,31 @@
 import 'package:flutter/material.dart';
+// MainUI:
+//
+// backgroundColor - content background[UI],
+// primaryColor - contrasting with bg
+// scaffoldBackgroundColor
 
 ThemeData theme1(BuildContext context, Brightness brightness) {
   bool isDark = brightness == Brightness.dark;
-  return ThemeData(
+
+  ThemeData darkTheme = ThemeData(
+    brightness: brightness,
+    primarySwatch: Colors.grey,
+    primaryColor: Color(0xFFE6E8EB),
+    accentColor: Color(0xFF002E3D), // Unused?
+    backgroundColor: Color(0xFF282929),
+    scaffoldBackgroundColor: Color(0xFF3B3B3B),
+    highlightColor: Color(0xFFF28123),
+  );
+  ThemeData lightTheme = ThemeData();
+
+  return isDark ? darkTheme : lightTheme;
+
+  ThemeData(
     brightness: brightness,
     primaryTextTheme: TextTheme(
       bodyText1: TextStyle(
-        color: isDark ? Color(0xFFA7F5FF) : Color(0xFF10171E),
-        // this is used for main drawer menu text,
-        //[CustomFullFramePainter] main content frame
-        //[ScreenTag] screen tag widget text
+        color: isDark ? Color(0xFFE6E8EB) : Color(0xFF10171E),
         fontSize: 13,
       ),
       bodyText2: TextStyle(
@@ -18,33 +34,20 @@ ThemeData theme1(BuildContext context, Brightness brightness) {
       ),
       subtitle1:
           TextStyle(color: isDark ? Color(0xFF1C2321) : Color(0xFF1C2321)),
-
-      // headline3: TextStyle(color: )
     ),
-    bottomAppBarColor: isDark
-        ? Color(0xFF002E3D)
-        : Color(0xFFF2F2F2), // Used in drawer backgrowndcolor
+    bottomAppBarColor: isDark ? Color(0xFF002E3D) : Color(0xFFF2F2F2),
     cardColor: isDark ? Color(0xFF10171E) : Color(0xFFFBFBFD),
-    primaryColor: isDark
-        ? Color(0xFFA7F5FF) // old but good color = 0xFF393E41
-        : Color(0xFF57756E), // last light 1D80BE Color(0xFF858585),
-    errorColor: Color(0xFFC83E4D), // Submit fail color
-    highlightColor: Color(0xFFF28123), //Submission in progress color
-    accentColor:
-        isDark ? Color(0xFF002E3D) : Color(0xFFDBDBDB), // FORMS BACKGROUND
-    backgroundColor: isDark
-        ? Color(0xFF282929)
-        : Color(
-            0xFFFCF7FF), // main content colorbba (last version for bg dark - Color(0xFF10171E))
-    scaffoldBackgroundColor: isDark
-        ? Color(0xFF002E3D)
-        : Color(0xFFF2F2F2), // Used in drawer backgrowndcolor,
+    primaryColor: isDark ? Color(0xFFA7F5FF) : Color(0xFF57756E),
+    errorColor: Color(0xFFC83E4D),
+    highlightColor: Color(0xFFF28123),
+    accentColor: isDark ? Color(0xFF002E3D) : Color(0xFFDBDBDB),
+    backgroundColor: isDark ? Color(0xFF282929) : Color(0xFFFCF7FF),
+    scaffoldBackgroundColor: isDark ? Color(0xFF3B3B3B) : Color(0xFFF2F2F2),
     inputDecorationTheme: InputDecorationTheme(
       enabledBorder: OutlineInputBorder(
         borderSide: BorderSide(
           width: 0.3,
           color: isDark ? Colors.transparent : Colors.transparent,
-          // color: isDark ? Color(0xFFF2F2F2) : Color(0xFF1C2321),
         ),
       ),
       focusedBorder: OutlineInputBorder(
@@ -84,9 +87,7 @@ ThemeData theme1(BuildContext context, Brightness brightness) {
       counterStyle: TextStyle(color: Colors.teal),
       border: InputBorder.none,
       filled: true,
-      fillColor: isDark
-          ? Colors.transparent
-          : Colors.transparent, // light - accent color
+      fillColor: isDark ? Colors.transparent : Colors.transparent,
     ),
   );
 }
