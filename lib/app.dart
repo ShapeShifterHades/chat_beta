@@ -52,7 +52,7 @@ class App extends StatelessWidget {
           ),
           child: BlocProvider(
             lazy: true,
-            create: (context) => ContactsBloc(
+            create: (context) => ContactBloc(
                 firestoreContactRepository, context.read<AuthenticationBloc>())
               ..add(LoadContacts(
                   uid: context.read<AuthenticationBloc>().state.user.id)),
@@ -111,7 +111,7 @@ class AppView extends StatelessWidget {
                   name: contactsRoute,
                   page: () => BlocProvider<ContactlistBloc>(
                     create: (context) =>
-                        ContactlistBloc(context.read<ContactsBloc>()),
+                        ContactlistBloc(context.read<ContactBloc>()),
                     child: ContactsView(),
                   ),
                 ),

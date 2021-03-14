@@ -3,7 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'package:void_chat_beta/contacts/bloc/contact_bloc.dart';
-import 'package:void_chat_beta/contacts/widgets/contact_item/contact_item_initial.dart';
+
+import 'contact_item_initial.dart';
 
 enum AniProps { offset, containerOneHeight, containerTwoHeight }
 
@@ -13,7 +14,7 @@ class FriendlistContent extends StatelessWidget {
     return Column(mainAxisSize: MainAxisSize.min, children: [
       Container(
         width: double.infinity,
-        child: BlocBuilder<ContactsBloc, ContactsState>(
+        child: BlocBuilder<ContactBloc, ContactsState>(
           builder: (context, state) {
             if (state is ContactsAreLoading)
               return CircularProgressIndicator();
@@ -38,10 +39,7 @@ class FriendlistContent extends StatelessWidget {
                         SizedBox(width: 20),
                       ],
                     ),
-                    Divider(
-                      color: Theme.of(context).primaryColor,
-                      thickness: 0.2,
-                    ),
+                    SizedBox(height: 20),
                     ListView.builder(
                       padding: EdgeInsets.all(0),
                       shrinkWrap: true,

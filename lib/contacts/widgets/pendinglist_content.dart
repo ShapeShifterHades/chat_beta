@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:void_chat_beta/authentication/authentication.dart';
-import 'package:void_chat_beta/blocs/contactlist/contactlist_bloc.dart';
 import 'package:void_chat_beta/contacts/bloc/contact_bloc.dart';
 
 class PendinglistContent extends StatelessWidget {
@@ -12,7 +11,7 @@ class PendinglistContent extends StatelessWidget {
       Container(
         height: 500,
         width: double.infinity,
-        child: BlocBuilder<ContactsBloc, ContactsState>(
+        child: BlocBuilder<ContactBloc, ContactsState>(
           builder: (context, state) {
             if (state is ContactsAreLoading)
               return CircularProgressIndicator();
@@ -87,7 +86,7 @@ class ButtonsX extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
         MaterialButton(
-          onPressed: () => context.read<ContactsBloc>().add(
+          onPressed: () => context.read<ContactBloc>().add(
                 SendFriendshipRequest(
                   message: 'Add me mah boy',
                   contactId: '54lsIRYehTQecNGEdc95EOvjVnv2',
@@ -98,7 +97,7 @@ class ButtonsX extends StatelessWidget {
           color: Colors.green,
         ),
         MaterialButton(
-          onPressed: () => context.read<ContactsBloc>().add(
+          onPressed: () => context.read<ContactBloc>().add(
                 AcceptFriendshipRequest(
                   contactId: '54lsIRYehTQecNGEdc95EOvjVnv2',
                   uid: context.read<AuthenticationBloc>().state.user.id,

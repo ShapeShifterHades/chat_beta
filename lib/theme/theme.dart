@@ -17,7 +17,15 @@ ThemeData theme1(BuildContext context, Brightness brightness) {
     scaffoldBackgroundColor: Color(0xFF3B3B3B),
     highlightColor: Color(0xFFF28123),
   );
-  ThemeData lightTheme = ThemeData();
+  ThemeData lightTheme = ThemeData(
+    brightness: brightness,
+    primarySwatch: Colors.grey,
+    primaryColor: Color(0xFF57756E),
+    accentColor: Color(0xFFDBDBDB),
+    backgroundColor: Color(0xFFFCF7FF),
+    scaffoldBackgroundColor: Color(0xFFF2F2F2),
+    highlightColor: Color(0xFFF28123),
+  );
 
   return isDark ? darkTheme : lightTheme;
 

@@ -10,7 +10,7 @@ part 'contactlist_event.dart';
 part 'contactlist_state.dart';
 
 class ContactlistBloc extends Bloc<ContactlistEvent, ContactlistState> {
-  final ContactsBloc _contactsBloc;
+  final ContactBloc _contactsBloc;
   StreamSubscription contactsSubscription;
   ContactlistBloc(this._contactsBloc)
       : contactsSubscription = _contactsBloc.listen((state) {
@@ -21,6 +21,7 @@ class ContactlistBloc extends Bloc<ContactlistEvent, ContactlistState> {
         super(FriendlistState(fullContactlist: []));
 
   @override
+  // ignore: override_on_non_overriding_member
   ContactlistState get initialState {
     return _contactsBloc.state is ContactsLoaded
         ? FriendlistState(

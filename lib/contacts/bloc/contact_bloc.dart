@@ -9,12 +9,12 @@ import 'package:void_chat_beta/authentication/authentication.dart';
 part 'contact_event.dart';
 part 'contact_state.dart';
 
-class ContactsBloc extends Bloc<ContactEvent, ContactsState> {
+class ContactBloc extends Bloc<ContactEvent, ContactsState> {
   final AuthenticationBloc _authenticationBloc;
   final FirestoreContactRepository _firestoreContactRepository;
   StreamSubscription _contactSubscription;
 
-  ContactsBloc(
+  ContactBloc(
     FirestoreContactRepository firestoreContactRepository,
     AuthenticationBloc authenticationBloc,
   )   : assert(authenticationBloc != null),

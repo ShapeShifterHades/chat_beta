@@ -35,7 +35,7 @@ class FindIdByUsername extends ContactEvent {
 /// Sends to users [contactId] contacts collection a friend request with a
 /// greeting [message] and status: 'pending'.
 ///
-/// Usage in scope of [ContactsBloc] provider:
+/// Usage in scope of [ContactBloc] provider:
 /// ```
 /// context
 ///   .read<ContactsBloc>()
@@ -43,7 +43,7 @@ class FindIdByUsername extends ContactEvent {
 ///                             uid: context.read<AuthenticationBloc>().state.user.id));
 /// ```
 /// NOTE: usage of [uid] named parameter is temporary option and will be
-/// removed since [ContactsBloc] handles passing it to [FirestoreContactRepository].
+/// removed since [ContactBloc] handles passing it to [FirestoreContactRepository].
 /// TOIMPLEMENT: Firestore security rules has to check and allow creation
 /// of a document only if there is no document with [uid] already.
 /// TOIMPLEMENT: Atomically create a document in [uid] contact collection
@@ -63,7 +63,7 @@ class SendFriendshipRequest extends ContactEvent {
 /// Changes status of user[contactId] in contacts collection of user [uid]
 /// to status: 'friend' from 'pending' or 'blocked'.
 ///
-/// Usage in scope of [ContactsBloc] provider:
+/// Usage in scope of [ContactBloc] provider:
 /// ```
 /// context
 ///   .read<ContactsBloc>()
@@ -71,7 +71,7 @@ class SendFriendshipRequest extends ContactEvent {
 ///                             uid: context.read<AuthenticationBloc>().state.user.id));
 /// ```
 /// NOTE: usage of [uid] named parameter is temporary option and will be
-/// removed since [ContactsBloc] handles passing it to [FirestoreContactRepository].
+/// removed since [ContactBloc] handles passing it to [FirestoreContactRepository].
 /// TO IMPLEMENT: Must send in response (atomic) creation of document [uid] with
 /// status: 'friend' with check if [uid] in his contacts collection has changed
 /// [contactId] to status: 'friend'.
@@ -92,7 +92,7 @@ class AcceptFriendshipRequest extends ContactEvent {
 /// users [uid], if status of a user not 'blocked'
 /// (by firestore security rules).
 ///
-/// Usage in scope of [ContactsBloc] provider:
+/// Usage in scope of [ContactBloc] provider:
 /// ```
 /// context
 ///   .read<ContactsBloc>()
@@ -100,7 +100,7 @@ class AcceptFriendshipRequest extends ContactEvent {
 ///                             uid: context.read<AuthenticationBloc>().state.user.id));
 /// ```
 /// NOTE: usage of [uid] named parameter is temporary option and will be
-/// removed since [ContactsBloc] handles passing it to [FirestoreContactRepository].
+/// removed since [ContactBloc] handles passing it to [FirestoreContactRepository].
 class RemoveContactRequest extends ContactEvent {
   final String contactId;
   final String uid;
@@ -117,7 +117,7 @@ class RemoveContactRequest extends ContactEvent {
 /// Sets request status of user [contactId] in contacts collection of user [uid]
 /// to status:'rejected' from 'pending', 'friend' or 'blocked'.
 ///
-/// Usage in scope of [ContactsBloc] provider:
+/// Usage in scope of [ContactBloc] provider:
 /// ```
 /// context
 ///   .read<ContactsBloc>()
@@ -125,7 +125,7 @@ class RemoveContactRequest extends ContactEvent {
 ///                             uid: context.read<AuthenticationBloc>().state.user.id));
 /// ```
 /// NOTE: usage of [uid] named parameter is temporary option and will be
-/// removed since [ContactsBloc] handles passing it to [FirestoreContactRepository].
+/// removed since [ContactBloc] handles passing it to [FirestoreContactRepository].
 class RemoveFromBlocklist extends ContactEvent {
   final String contactId;
   final String uid;
@@ -142,7 +142,7 @@ class RemoveFromBlocklist extends ContactEvent {
 /// Sets status of user with [contactId] in contacts collection of user [uid]
 /// to 'blocked' from status: 'rejected', 'pending' or 'friend'.
 ///
-/// Usage in scope of [ContactsBloc] provider:
+/// Usage in scope of [ContactBloc] provider:
 /// ```
 /// context
 ///   .read<ContactsBloc>()
@@ -150,7 +150,7 @@ class RemoveFromBlocklist extends ContactEvent {
 ///                             uid: context.read<AuthenticationBloc>().state.user.id));
 /// ```
 /// NOTE: usage of [uid] named parameter is temporary option and will be
-/// removed since [ContactsBloc] handles passing it to [FirestoreContactRepository].
+/// removed since [ContactBloc] handles passing it to [FirestoreContactRepository].
 class AddToBlocklist extends ContactEvent {
   final String contactId;
   final String uid;
