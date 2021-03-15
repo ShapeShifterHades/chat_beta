@@ -47,7 +47,8 @@ dependencies:
   simple_animations:
   flutter_statusbarcolor:
   flutter_slidable:
-
+  mockito:
+  cloud_firestore:
 
 dev_dependencies:
   flutter_test:

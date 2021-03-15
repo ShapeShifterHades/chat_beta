@@ -12,6 +12,7 @@ class MessagesView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       // floatingActionButton: Row(
       //   children: [
       //     SizedBox(width: 50),

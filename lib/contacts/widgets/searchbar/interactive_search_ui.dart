@@ -3,9 +3,10 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:void_chat_beta/contacts/widgets/searchbar/search_bloc.dart';
 import 'package:form_bloc/form_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:firestore_repository/firestore_repository.dart';
 
 class InteractiveSearchUi extends StatelessWidget {
-  const InteractiveSearchUi({
+  InteractiveSearchUi({
     Key key,
     @required FocusNode focusNode,
     this.response = 'Enter valid username',
@@ -17,6 +18,9 @@ class InteractiveSearchUi extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    FirestoreContactRepository _firestoreContactRepository =
+        FirestoreContactRepository();
+
     return AnimatedContainer(
       margin: EdgeInsets.only(bottom: 20),
       duration: Duration(milliseconds: 400),
@@ -28,33 +32,50 @@ class InteractiveSearchUi extends StatelessWidget {
           context,
           _focusNode,
         ),
-        child: Center(
-          child: context.watch<SearchUserFormBloc>().username.value.length > 5
-              ? MaterialButton(
-                  color: Theme.of(context).primaryColor,
-                  onPressed: context.watch<SearchUserFormBloc>().submit,
-                  child: Text(
-                    'FIND USER',
-                    style: GoogleFonts.jura(
-                        color: Theme.of(context).backgroundColor),
-                  ),
-                )
-              : Text(
-                  response,
-                  style: GoogleFonts.jura(
-                    fontWeight: FontWeight.w300,
-                    backgroundColor: Theme.of(context).backgroundColor,
-                    color: context
-                                    .watch<SearchUserFormBloc>()
-                                    .username
-                                    .value
-                                    .length ==
-                                0 ||
-                            context.watch<SearchUserFormBloc>().state.isValid()
-                        ? Theme.of(context).primaryColor
-                        : Colors.red[800],
-                  ),
-                ),
+        child: Column(
+          children: [
+            Center(
+              child:
+                  context.watch<SearchUserFormBloc>().username.value.length > 5
+                      ? MaterialButton(
+                          color: Theme.of(context).primaryColor,
+                          onPressed: context.watch<SearchUserFormBloc>().submit,
+                          child: Text(
+                            'FIND USER',
+                            style: GoogleFonts.jura(
+                                color: Theme.of(context).backgroundColor),
+                          ),
+                        )
+                      : Text(
+                          response,
+                          style: GoogleFonts.jura(
+                            fontWeight: FontWeight.w300,
+                            backgroundColor: Theme.of(context).backgroundColor,
+                            color: context
+                                            .watch<SearchUserFormBloc>()
+                                            .username
+                                            .value
+                                            .length ==
+                                        0 ||
+                                    context
+                                        .watch<SearchUserFormBloc>()
+                                        .state
+                                        .isValid()
+                                ? Theme.of(context).primaryColor
+                                : Colors.red[800],
+                          ),
+                        ),
+            ),
+            FutureBuilder(
+              initialData: Text('Nigger initial'),
+              future: _firestoreContactRepository.findIdByUsername(
+                  context.watch<SearchUserFormBloc>().username.value),
+              builder: (context, snapshot) {
+                if (!snapshot.hasData) return Text('Loading');
+                return Text('Result ' + snapshot.data);
+              },
+            )
+          ],
         ),
       ),
     );
