@@ -51,7 +51,7 @@ class App extends StatelessWidget {
             authenticationRepository: authenticationRepository,
           ),
           child: BlocProvider(
-            lazy: true,
+            lazy: false,
             create: (context) => ContactBloc(
                 firestoreContactRepository, context.read<AuthenticationBloc>())
               ..add(LoadContacts(
@@ -62,6 +62,7 @@ class App extends StatelessWidget {
                 create: (context) => BrightnessCubit(),
                 child: AppView(
                   authenticationRepository: authenticationRepository,
+                  firestoreContactRepository: firestoreContactRepository,
                 ),
               ),
             ),
@@ -73,11 +74,12 @@ class App extends StatelessWidget {
 }
 
 class AppView extends StatelessWidget {
-  final FirestoreNewUserRepository firestoreNewUserRepository =
-      FirestoreNewUserRepository();
+  final FirestoreContactRepository firestoreContactRepository;
   final AuthenticationRepository authenticationRepository;
 
-  AppView({Key key, this.authenticationRepository}) : super(key: key);
+  AppView(
+      {Key key, this.authenticationRepository, this.firestoreContactRepository})
+      : super(key: key);
 
   /// Sets up [StatusBar] color to transparent
   setStatusColor(BuildContext context) async {
@@ -93,15 +95,35 @@ class AppView extends StatelessWidget {
             return Get.GetMaterialApp(
               locale: Locale(context.watch<LocaleCubit>().state ??
                   Get.Get.deviceLocale.countryCode),
-              initialRoute: loginRoute,
+              initialRoute: '/',
               routingCallback: (routing) {
                 if (routing.current == '/') {
-                  authenticationRepository.logOut();
-                  print('MiddleWare here. Loggin Out.');
+                  // authenticationRepository.logOut();
+                  print('MiddleWare here. Suppose to ;loggin Out.');
                 }
               },
               getPages: [
-                Get.GetPage(name: '/', page: () => NewLoginPage()),
+                Get.GetPage(
+                    name: '/',
+                    page: () {
+                      return BlocBuilder<AuthenticationBloc,
+                          AuthenticationState>(
+                        builder: (context, state) {
+                          if (state.status ==
+                              AuthenticationStatus.authenticated) {
+                            // context.read<ContactBloc>().add(LoadContacts(
+                            //     uid: context
+                            //         .watch<AuthenticationBloc>()
+                            //         .state
+                            //         .user
+                            //         .id));
+                            return MessagesView();
+                          } else {
+                            return NewLoginPage();
+                          }
+                        },
+                      );
+                    }),
                 Get.GetPage(name: homeRoute, page: () => MessagesView()),
                 Get.GetPage(name: loginRoute, page: () => NewLoginPage()),
                 Get.GetPage(name: settingsRoute, page: () => SettingsView()),
@@ -118,7 +140,7 @@ class AppView extends StatelessWidget {
                 Get.GetPage(
                   name: '/newSignUp',
                   page: () => RepositoryProvider.value(
-                      value: firestoreNewUserRepository,
+                      value: FirestoreNewUserRepository(),
                       child: NewSignUpPage()),
                 ),
               ],
