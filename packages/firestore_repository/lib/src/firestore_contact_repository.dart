@@ -17,16 +17,34 @@ class FirestoreContactRepository {
       .doc(uid)
       .collection('blocklist');
 
-  Future<String> findIdByUsername(String username) async {
+  /// Gets [Contact] by its username
+  ///
+  ///
+  Future<Contact> findIdByUsername(String username, String selfId) async {
     try {
-      DocumentSnapshot documentSnapshot =
+      DocumentSnapshot idDocumentSnapshot =
           await usernamesCollection.doc(username).get();
 
-      if (documentSnapshot.exists) {
+      if (idDocumentSnapshot.exists) {
         print('Document exists on the database');
-        return documentSnapshot.data()['uid'].toString();
+        var uid = idDocumentSnapshot.data()['uid'].toString();
+        var status;
+
+        try {
+          DocumentSnapshot contactDocumentSnapshot =
+              await contactsCollectionOf(selfId)?.doc(uid)?.get();
+
+          if (contactDocumentSnapshot.exists) {
+            status = contactDocumentSnapshot.data()['status'];
+          } else {
+            status = 'Not in contacts';
+          }
+        } catch (e) {}
+
+        return Contact(
+            id: uid, status: status ?? 'Not in contacts', username: username);
       } else {
-        return 'No username found!';
+        return null;
       }
     } catch (e) {
       return e;
@@ -39,23 +57,6 @@ class FirestoreContactRepository {
     return documentSnapshot.docs.isNotEmpty
         ? documentSnapshot.docs[0].id
         : null;
-    // try {
-    //   QuerySnapshot documentSnapshot =
-    //       await usernamesCollection.where("uid", isEqualTo: id).get();
-
-    //   if (documentSnapshot.docs.isNotEmpty) {
-    //     // print('Document exists on the database');
-    //     // documentSnapshot.docs.forEach((element) => print(element.id));
-    //     // print();
-
-    //     result = documentSnapshot.docs[0].id;
-    //   } else {
-    //     result = 'No username found!';
-    //   }
-    // } catch (e) {
-    //   print(e.toString());
-    // }
-    // return result ?? '';
   }
 
   /// Sends to user [contactId] a friend request with a greeting message.
@@ -69,7 +70,6 @@ class FirestoreContactRepository {
     var username2 = await findUsernameById(contactId);
     try {
       batch.set(contactsCollectionOf(contactId).doc(uid), {
-        "id": uid,
         "requestFrom": uid,
         "requestTo": contactId,
         "username": username1, // Here we need a username getter.
@@ -78,7 +78,6 @@ class FirestoreContactRepository {
         "requestSentAt": FieldValue.serverTimestamp()
       });
       batch.set(contactsCollectionOf(uid).doc(contactId), {
-        "id": contactId,
         "requestFrom": uid,
         "requestTo": contactId,
         "username": username2, // Here we need a username getter #2.

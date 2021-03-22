@@ -6,11 +6,13 @@ class ContactModel extends Equatable {
   final int id;
   final String name;
   final String status;
+  final DateTime requestSentAt;
 
   const ContactModel({
     this.id,
     this.name,
     this.status,
+    this.requestSentAt,
   });
 
   static const empty = ContactModel(id: 99, name: '', status: '');
@@ -22,6 +24,7 @@ class ContactModel extends Equatable {
         id: data['id'],
         name: data['name'],
         status: data['status'],
+        requestSentAt: data['reqiuestSentAt'],
       );
 
   Map<String, dynamic> toDatabaseJson() => {
@@ -31,7 +34,8 @@ class ContactModel extends Equatable {
         'id': this.id,
         'name': this.name,
         'status': this.status,
+        'requestSentAt': this.requestSentAt,
       };
   @override
-  List<Object> get props => [id, name, status];
+  List<Object> get props => [id, name, status, requestSentAt];
 }

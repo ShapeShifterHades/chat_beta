@@ -1,7 +1,10 @@
+import '../../../authentication/authentication.dart';
 import 'package:firestore_repository/firestore_repository.dart';
 import 'package:flutter_form_bloc/flutter_form_bloc.dart';
 
 class SearchUserFormBloc extends FormBloc<String, String> {
+  final AuthenticationBloc authenticaionBloc;
+
   FirestoreContactRepository firestoreContactRepository =
       FirestoreContactRepository();
   final username = TextFieldBloc(
@@ -9,7 +12,7 @@ class SearchUserFormBloc extends FormBloc<String, String> {
     asyncValidatorDebounceTime: Duration(milliseconds: 0),
   );
 
-  SearchUserFormBloc() {
+  SearchUserFormBloc({this.authenticaionBloc}) {
     addFieldBlocs(fieldBlocs: [username]);
     username.addAsyncValidators(
       [_checkUsername],
@@ -29,9 +32,9 @@ class SearchUserFormBloc extends FormBloc<String, String> {
   void onSubmitting() async {
     try {
       // Emmit here bloc ... found user
-      print(username.value);
-      var result =
-          await firestoreContactRepository.findIdByUsername(username.value);
+      print(authenticaionBloc.state.user.id);
+      var result = await firestoreContactRepository.findIdByUsername(
+          username.value, authenticaionBloc.state.user.id);
       print(result);
       emitSuccess();
     } catch (e) {

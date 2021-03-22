@@ -76,13 +76,13 @@ class FriendlistContent extends StatelessWidget {
 //       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
 //       children: [
 //         MaterialButton(
-//           onPressed: () => context.read<ContactsBloc>().add(
-//                 SendFriendshipRequest(
-//                   message: 'Add me mah boy',
-//                   contactId: '54lsIRYehTQecNGEdc95EOvjVnv2',
-//                   uid: context.read<AuthenticationBloc>().state.user.id,
-//                 ),
-//               ),
+// onPressed: () => context.read<ContactsBloc>().add(
+//       SendFriendshipRequest(
+//         message: 'Add me mah boy',
+//         contactId: '54lsIRYehTQecNGEdc95EOvjVnv2',
+//         uid: context.read<AuthenticationBloc>().state.user.id,
+//       ),
+//     ),
 //           child: Text('add'),
 //           color: Colors.green,
 //         ),

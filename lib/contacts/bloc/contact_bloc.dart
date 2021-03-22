@@ -39,10 +39,6 @@ class ContactBloc extends Bloc<ContactEvent, ContactsState> {
       yield* _mapRemoveFromBlocklistToState(event);
     } else if (event is ContactsUpdated) {
       yield* _mapContactsUpdatedToState(event);
-    } else if (event is FindIdByUsername) {
-      yield* _mapFindIdByUsernameToState(event);
-    } else if (event is FindUsernameById) {
-      yield* _mapFindUsernameByIdTpState(event);
     }
   }
 
@@ -100,12 +96,12 @@ class ContactBloc extends Bloc<ContactEvent, ContactsState> {
     yield ContactsLoaded(event.contacts);
   }
 
-  Stream<ContactsState> _mapFindIdByUsernameToState(
-      FindIdByUsername event) async* {
-    var result =
-        await this._firestoreContactRepository.findIdByUsername(event.username);
-    print(result);
-  }
+  // Stream<ContactsState> _mapFindIdByUsernameToState(
+  //     FindIdByUsername event) async* {
+  //   var result =
+  //       await this._firestoreContactRepository.findIdByUsername(event.username);
+  //   print(result);
+  // }
 
   Stream<ContactsState> _mapFindUsernameByIdTpState(
       FindUsernameById event) async* {
