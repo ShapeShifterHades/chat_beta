@@ -42,29 +42,23 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return RepositoryProvider.value(
-      value: authenticationRepository,
-      child: RepositoryProvider.value(
-        value: (context) => firestoreContactRepository,
+    return BlocProvider<AuthenticationBloc>(
+      create: (context) => AuthenticationBloc(
+        authenticationRepository: authenticationRepository,
+      ),
+      child: BlocProvider<ContactBloc>(
+        lazy: true,
+        create: (context) => ContactBloc(
+            firestoreContactRepository, context.read<AuthenticationBloc>())
+          ..add(LoadContacts(
+              uid: context.read<AuthenticationBloc>().state.user.id)),
         child: BlocProvider(
-          create: (context) => AuthenticationBloc(
-            authenticationRepository: authenticationRepository,
-          ),
+          create: (context) => LocaleCubit(),
           child: BlocProvider(
-            lazy: false,
-            create: (context) => ContactBloc(
-                firestoreContactRepository, context.read<AuthenticationBloc>())
-              ..add(LoadContacts(
-                  uid: context.read<AuthenticationBloc>().state.user.id)),
-            child: BlocProvider(
-              create: (context) => LocaleCubit(),
-              child: BlocProvider(
-                create: (context) => BrightnessCubit(),
-                child: AppView(
-                  authenticationRepository: authenticationRepository,
-                  firestoreContactRepository: firestoreContactRepository,
-                ),
-              ),
+            create: (context) => BrightnessCubit(),
+            child: AppView(
+              authenticationRepository: authenticationRepository,
+              firestoreContactRepository: firestoreContactRepository,
             ),
           ),
         ),

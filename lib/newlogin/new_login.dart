@@ -12,8 +12,7 @@ class NewLoginPage extends StatelessWidget {
     return MultiBlocProvider(
         providers: [
           BlocProvider<LoginFormBloc>(
-            create: (context) =>
-                LoginFormBloc(context.read<AuthenticationRepository>()),
+            create: (context) => LoginFormBloc(AuthenticationRepository()),
           ),
         ],
         child: Builder(builder: (context) {
