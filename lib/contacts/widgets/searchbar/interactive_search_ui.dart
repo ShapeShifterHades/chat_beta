@@ -3,7 +3,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:void_chat_beta/authentication/bloc/authentication_bloc.dart';
 import 'package:void_chat_beta/contacts/bloc/contact_bloc.dart';
 import 'package:void_chat_beta/contacts/widgets/searchbar/search_bloc.dart';
-import 'package:form_bloc/form_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:firestore_repository/firestore_repository.dart';
 
@@ -12,11 +11,17 @@ class InteractiveSearchUi extends StatelessWidget {
     Key key,
     @required FocusNode focusNode,
     this.response = 'Enter valid username',
-  })  : _focusNode = focusNode,
+  })  : searchUiHeight = 260.0,
+        _focusNode = focusNode,
         super(key: key);
 
   final FocusNode _focusNode;
   final String response;
+  final double searchUiHeight;
+
+  double getSearchHeight() {
+    return _focusNode.hasFocus ? searchUiHeight : 0;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,9 +31,8 @@ class InteractiveSearchUi extends StatelessWidget {
     return AnimatedContainer(
       margin: EdgeInsets.only(bottom: 20),
       duration: Duration(milliseconds: 400),
-      // color: Colors.green,
       width: double.infinity,
-      height: _focusNode.hasFocus ? 220 : 0,
+      height: getSearchHeight(),
       child: CustomPaint(
         painter: SearchUiPainter(
           context,
@@ -36,12 +40,9 @@ class InteractiveSearchUi extends StatelessWidget {
         ),
         child: SingleChildScrollView(
           child: Column(
-            // mainAxisAlignment: MainAxisAlignment.center,
-            // mainAxisSize: MainAxisSize.max,
             children: [
               context.watch<SearchUserFormBloc>().username.value.length > 5
                   ? FutureBuilder(
-                      initialData: Text('Nigger initial'),
                       future: _firestoreContactRepository.findIdByUsername(
                           context.watch<SearchUserFormBloc>().username.value,
                           context.watch<AuthenticationBloc>().state.user.id),
@@ -166,17 +167,24 @@ class FoundUserUi extends StatelessWidget {
                     child: IconButton(
                       icon: Icon(Icons.add,
                           color: Theme.of(context).backgroundColor),
-                      onPressed: () => context.read<ContactBloc>().add(
-                            SendFriendshipRequest(
-                              message: 'Add me mah sweet boy',
-                              contactId: result?.id ?? '',
-                              uid: context
-                                  .read<AuthenticationBloc>()
-                                  .state
-                                  .user
-                                  .id,
-                            ),
-                          ),
+                      onPressed: () {
+                        // context.read<SearchUserFormBloc>().clear();
+
+                        context.read<ContactBloc>().add(
+                              SendFriendshipRequest(
+                                  message: context
+                                      .read<SearchUserFormBloc>()
+                                      .username
+                                      .value,
+                                  contactId: result?.id ?? '',
+                                  uid: context
+                                      .read<AuthenticationBloc>()
+                                      .state
+                                      .user
+                                      .id),
+                            );
+                        context.read<SearchUserFormBloc>().emitSuccess();
+                      },
                     ),
                   ),
                 ),

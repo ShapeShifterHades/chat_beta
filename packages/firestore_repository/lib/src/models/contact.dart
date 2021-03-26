@@ -9,6 +9,7 @@ class Contact {
   final String status;
   final String message;
   final Timestamp requestSentAt;
+  final String requestFrom;
 
   Contact({
     this.message,
@@ -16,6 +17,7 @@ class Contact {
     this.username,
     this.status,
     this.requestSentAt,
+    this.requestFrom,
   });
 
   Contact copyWith({String id, String username, String status}) {
@@ -25,13 +27,18 @@ class Contact {
       status: status ?? this.status,
       message: message ?? this.message,
       requestSentAt: requestSentAt ?? this.requestSentAt,
+      requestFrom: requestFrom ?? this.requestFrom,
     );
   }
 
   @override
   // ignore: override_on_non_overriding_member
   int get hashcode =>
-      id.hashCode ^ username.hashCode ^ status.hashCode ^ message.hashCode;
+      id.hashCode ^
+      username.hashCode ^
+      status.hashCode ^
+      message.hashCode ^
+      requestFrom.hashCode;
 
   @override
   // ignore: hash_and_equals
@@ -43,11 +50,12 @@ class Contact {
           username == other.username &&
           status == other.status &&
           message == other.message &&
-          requestSentAt == other.requestSentAt;
+          requestSentAt == other.requestSentAt &&
+          requestFrom == other.requestFrom;
 
   @override
   String toString() {
-    return 'Contact{id: $id, username: $username, status: $status, message: $message, requestSentAt: $requestSentAt}';
+    return 'Contact{id: $id, username: $username, status: $status, message: $message, requestSentAt: $requestSentAt, requestFrom: $requestFrom}';
   }
 
   ContactEntity toEntity() {
@@ -57,6 +65,7 @@ class Contact {
       status,
       message,
       requestSentAt,
+      requestFrom,
     );
   }
 
@@ -67,6 +76,7 @@ class Contact {
       status: entity.status,
       message: entity.message,
       requestSentAt: entity.requestSentAt,
+      requestFrom: entity.requestFrom,
     );
   }
 }

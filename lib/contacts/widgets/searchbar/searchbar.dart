@@ -40,16 +40,23 @@ class _UserSearchState extends State<UserSearch> {
   Widget build(BuildContext context) {
     return FormBlocListener<SearchUserFormBloc, String, String>(
       onSubmitting: (context, state) async {
-        // TODO: implement listener';
-        // try {
-        //   var result =
-        // } catch (e) {
-        // }
+        setState(() {
+          context.read<SearchUserFormBloc>().clear();
+          Future.delayed(
+              Duration(milliseconds: 100), () => _focusNode.unfocus());
+        });
         print('AVTOBOTI VPERDE!!!');
       },
       onFailure: (context, state) {
         stateSearch = !stateSearch;
         print(stateSearch.toString());
+      },
+      onSuccess: (context, state) {
+        setState(() {
+          context.read<SearchUserFormBloc>().clear();
+          Future.delayed(
+              Duration(milliseconds: 100), () => _focusNode.unfocus());
+        });
       },
       child: SingleChildScrollView(
         child: Column(

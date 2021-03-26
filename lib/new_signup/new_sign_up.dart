@@ -15,7 +15,7 @@ class NewSignUpPage extends StatelessWidget {
         providers: [
           BlocProvider<SignUpFormBloc>(
             create: (context) => SignUpFormBloc(
-              context.read<AuthenticationRepository>(),
+              AuthenticationRepository(),
               context.read<FirestoreNewUserRepository>(),
             ),
           ),

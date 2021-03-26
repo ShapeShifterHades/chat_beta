@@ -71,7 +71,7 @@ class ContactBloc extends Bloc<ContactEvent, ContactsState> {
       RemoveContactRequest event) async* {
     await this._firestoreContactRepository.removeRequest(
           contactId: event.contactId,
-          uid: event.uid,
+          uid: _authenticationBloc.state.user.id,
         );
   }
 
@@ -95,13 +95,6 @@ class ContactBloc extends Bloc<ContactEvent, ContactsState> {
       ContactsUpdated event) async* {
     yield ContactsLoaded(event.contacts);
   }
-
-  // Stream<ContactsState> _mapFindIdByUsernameToState(
-  //     FindIdByUsername event) async* {
-  //   var result =
-  //       await this._firestoreContactRepository.findIdByUsername(event.username);
-  //   print(result);
-  // }
 
   Stream<ContactsState> _mapFindUsernameByIdTpState(
       FindUsernameById event) async* {

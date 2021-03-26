@@ -3,7 +3,6 @@ import 'package:firestore_repository/firestore_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_statusbarcolor/flutter_statusbarcolor.dart';
 import 'package:void_chat_beta/blocs/contactlist/contactlist_bloc.dart';
 import 'package:void_chat_beta/constants/constants.dart';
 import 'package:void_chat_beta/newlogin/new_login.dart';
@@ -27,58 +26,33 @@ import 'package:get/get.dart' as Get;
 class App extends StatelessWidget {
   const App({
     Key key,
-    this.firestoreContactRepository,
-    @required this.authenticationRepository,
-  })  : assert(authenticationRepository != null),
-        super(key: key);
-
-  final AuthenticationRepository authenticationRepository;
-  final FirestoreContactRepository firestoreContactRepository;
-
-  setStatusColor(BuildContext context) async {
-    await FlutterStatusbarcolor.setStatusBarColor(
-        Theme.of(context).backgroundColor);
-  }
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider<AuthenticationBloc>(
-      create: (context) => AuthenticationBloc(
-        authenticationRepository: authenticationRepository,
-      ),
-      child: BlocProvider<ContactBloc>(
-        lazy: true,
-        create: (context) => ContactBloc(
-            firestoreContactRepository, context.read<AuthenticationBloc>())
-          ..add(LoadContacts(
-              uid: context.read<AuthenticationBloc>().state.user.id)),
+        lazy: false,
+        create: (context) => AuthenticationBloc(
+              authenticationRepository: AuthenticationRepository(),
+            ),
         child: BlocProvider(
           create: (context) => LocaleCubit(),
-          child: BlocProvider(
-            create: (context) => BrightnessCubit(),
-            child: AppView(
-              authenticationRepository: authenticationRepository,
-              firestoreContactRepository: firestoreContactRepository,
+          child: BlocProvider<ContactBloc>(
+            create: (context) => ContactBloc(FirestoreContactRepository(),
+                context.read<AuthenticationBloc>())
+              ..add(LoadContacts(
+                  uid: context.read<AuthenticationBloc>().state.user.id)),
+            child: BlocProvider(
+              create: (context) => BrightnessCubit(),
+              child: AppView(),
             ),
           ),
-        ),
-      ),
-    );
+        ));
   }
 }
 
 class AppView extends StatelessWidget {
-  final FirestoreContactRepository firestoreContactRepository;
-  final AuthenticationRepository authenticationRepository;
-
-  AppView(
-      {Key key, this.authenticationRepository, this.firestoreContactRepository})
-      : super(key: key);
-
-  /// Sets up [StatusBar] color to transparent
-  setStatusColor(BuildContext context) async {
-    await FlutterStatusbarcolor.setStatusBarColor(Colors.transparent);
-  }
+  AppView({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -91,9 +65,8 @@ class AppView extends StatelessWidget {
                   Get.Get.deviceLocale.countryCode),
               initialRoute: '/',
               routingCallback: (routing) {
-                if (routing.current == '/') {
-                  // authenticationRepository.logOut();
-                  print('MiddleWare here. Suppose to ;loggin Out.');
+                if (routing.current == '/messages') {
+                  print('MiddleWare here adding an ContactBlocEvent');
                 }
               },
               getPages: [
@@ -105,12 +78,7 @@ class AppView extends StatelessWidget {
                         builder: (context, state) {
                           if (state.status ==
                               AuthenticationStatus.authenticated) {
-                            // context.read<ContactBloc>().add(LoadContacts(
-                            //     uid: context
-                            //         .watch<AuthenticationBloc>()
-                            //         .state
-                            //         .user
-                            //         .id));
+                            context.watch<ContactBloc>();
                             return MessagesView();
                           } else {
                             return NewLoginPage();
@@ -144,9 +112,6 @@ class AppView extends StatelessWidget {
               debugShowCheckedModeBanner: false,
               theme: theme1(context, brightness),
               builder: (context, child) {
-                // Here statusbar color is set to transparent
-                setStatusColor(context);
-                // Sets statusbar text color based on current [BrightnessCubit value].
                 return AnnotatedRegion<SystemUiOverlayStyle>(
                   value: SystemUiOverlayStyle(
                     // For Android.
@@ -167,7 +132,7 @@ class AppView extends StatelessWidget {
                           Get.Get.offAllNamed(homeRoute, arguments: 'Messages');
                           break;
                         case AuthenticationStatus.unknown:
-                          Get.Get.offAllNamed(loginRoute);
+                          // Get.Get.offAllNamed(loginRoute);
                           break;
                       }
                     },

@@ -7,6 +7,7 @@ class ContactEntity extends Equatable {
   final String status;
   final String message;
   final Timestamp requestSentAt;
+  final String requestFrom;
 
   const ContactEntity(
     this.id,
@@ -14,6 +15,7 @@ class ContactEntity extends Equatable {
     this.status,
     this.message,
     this.requestSentAt,
+    this.requestFrom,
   );
 
   Map<String, Object> toJson() {
@@ -23,15 +25,17 @@ class ContactEntity extends Equatable {
       'status': status,
       'message': message,
       'requestSentAt': requestSentAt,
+      'requestFrom': requestFrom,
     };
   }
 
   @override
-  List<Object> get props => [id, username, status, message, requestSentAt];
+  List<Object> get props =>
+      [id, username, status, message, requestSentAt, requestFrom];
 
   @override
   String toString() {
-    return 'ContactEntity { id: $id, username: $username, status: $status, message: $message, requestSentAt: $requestSentAt}';
+    return 'ContactEntity { id: $id, username: $username, status: $status, message: $message, requestSentAt: $requestSentAt, requestFrom: $requestFrom}';
   }
 
   static ContactEntity fromJson(Map<String, Object> json) {
@@ -41,6 +45,7 @@ class ContactEntity extends Equatable {
       json['status'] as String,
       json['message'] as String,
       json['requestSentAt'] as Timestamp,
+      json['requestFrom'] as String,
     );
   }
 
@@ -51,6 +56,7 @@ class ContactEntity extends Equatable {
       snap.data()['status'],
       snap.data()['message'],
       snap.data()['requestSentAt'],
+      snap.data()['requestFrom'],
     );
   }
 
@@ -61,6 +67,7 @@ class ContactEntity extends Equatable {
       'status': status,
       'message': message,
       'requestSentAt': requestSentAt,
+      'requestFrom': requestFrom,
     };
   }
 }

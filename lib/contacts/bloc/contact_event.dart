@@ -80,7 +80,7 @@ class AcceptFriendshipRequest extends ContactEvent {
   final String uid;
   AcceptFriendshipRequest({
     @required this.contactId,
-    @required this.uid,
+    this.uid,
   });
   @override
   List<Object> get props => [contactId, uid];
@@ -106,7 +106,7 @@ class RemoveContactRequest extends ContactEvent {
   final String uid;
   RemoveContactRequest({
     @required this.contactId,
-    @required this.uid,
+    this.uid,
   });
   @override
   List<Object> get props => [contactId, uid];

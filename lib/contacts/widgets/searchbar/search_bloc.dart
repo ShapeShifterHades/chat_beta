@@ -14,9 +14,9 @@ class SearchUserFormBloc extends FormBloc<String, String> {
 
   SearchUserFormBloc({this.authenticaionBloc}) {
     addFieldBlocs(fieldBlocs: [username]);
-    username.addAsyncValidators(
-      [_checkUsername],
-    );
+    // username.addAsyncValidators(
+    //   [_checkUsername],
+    // );
   }
 
   static String _min5Char(String username) {
@@ -24,9 +24,9 @@ class SearchUserFormBloc extends FormBloc<String, String> {
     return null;
   }
 
-  Future<String> _checkUsername(String username) async {
-    await Future.delayed(Duration(microseconds: 300));
-  }
+  // Future<String> _checkUsername(String username) async {
+  //   await Future.delayed(Duration(microseconds: 400));
+  // }
 
   @override
   void onSubmitting() async {
@@ -35,10 +35,11 @@ class SearchUserFormBloc extends FormBloc<String, String> {
       print(authenticaionBloc.state.user.id);
       var result = await firestoreContactRepository.findIdByUsername(
           username.value, authenticaionBloc.state.user.id);
-      print(result);
+      print('Bitch! $result');
+      username.clear();
       emitSuccess();
     } catch (e) {
-      print(e);
+      print('For fuck sake! $e');
       emitFailure();
     }
   }

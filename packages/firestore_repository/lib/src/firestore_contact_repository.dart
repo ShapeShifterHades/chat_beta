@@ -54,6 +54,7 @@ class FirestoreContactRepository {
   Future<String> findUsernameById(String id) async {
     QuerySnapshot documentSnapshot =
         await usernamesCollection.where("uid", isEqualTo: id).get();
+
     return documentSnapshot.docs.isNotEmpty
         ? documentSnapshot.docs[0].id
         : null;
@@ -70,6 +71,7 @@ class FirestoreContactRepository {
     var username2 = await findUsernameById(contactId);
     try {
       batch.set(contactsCollectionOf(contactId).doc(uid), {
+        "id": uid,
         "requestFrom": uid,
         "requestTo": contactId,
         "username": username1, // Here we need a username getter.
@@ -78,6 +80,7 @@ class FirestoreContactRepository {
         "requestSentAt": FieldValue.serverTimestamp()
       });
       batch.set(contactsCollectionOf(uid).doc(contactId), {
+        "id": contactId,
         "requestFrom": uid,
         "requestTo": contactId,
         "username": username2, // Here we need a username getter #2.
