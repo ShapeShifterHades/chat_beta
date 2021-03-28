@@ -52,8 +52,11 @@ class SendFriendshipRequest extends ContactEvent {
   final String contactId;
   final String uid;
   final String message;
-  SendFriendshipRequest(
-      {@required this.contactId, @required this.uid, this.message = ''});
+  SendFriendshipRequest({
+    @required this.contactId,
+    this.uid,
+    this.message = '',
+  });
   @override
   List<Object> get props => [contactId, uid];
   @override

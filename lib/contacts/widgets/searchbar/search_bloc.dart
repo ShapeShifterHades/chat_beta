@@ -9,24 +9,30 @@ class SearchUserFormBloc extends FormBloc<String, String> {
       FirestoreContactRepository();
   final username = TextFieldBloc(
     validators: [_min5Char],
-    asyncValidatorDebounceTime: Duration(milliseconds: 0),
+    asyncValidatorDebounceTime: Duration(milliseconds: 600),
   );
 
   SearchUserFormBloc({this.authenticaionBloc}) {
     addFieldBlocs(fieldBlocs: [username]);
-    // username.addAsyncValidators(
-    //   [_checkUsername],
-    // );
+    username.addAsyncValidators(
+      [_checkUsername],
+    );
   }
 
   static String _min5Char(String username) {
-    if (username.length < 5) return '';
+    if (username.length < 5) return 'WTF NIGGA';
     return null;
   }
 
-  // Future<String> _checkUsername(String username) async {
-  //   await Future.delayed(Duration(microseconds: 400));
-  // }
+  Future<String> _checkUsername(String username) async {
+    try {
+      Contact result = await firestoreContactRepository.findIdByUsername(
+          username, authenticaionBloc.state.user.id);
+      return 'EXISTS!!!';
+    } catch (e) {
+      return e.toString();
+    }
+  }
 
   @override
   void onSubmitting() async {
