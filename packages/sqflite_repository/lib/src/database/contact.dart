@@ -33,7 +33,6 @@ class ContactDatabaseProvider {
   }
 
   // This is optional, and only used for changing database schema migrations
-  // TODO implement or remove
   void onUpgrade(Database database, int oldVersion, int newVersion) {
     if (newVersion > oldVersion) {}
   }

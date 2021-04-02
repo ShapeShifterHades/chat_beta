@@ -3,15 +3,16 @@ import 'package:flutter_form_bloc/flutter_form_bloc.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:simple_animations/simple_animations.dart';
-import 'package:void_chat_beta/new_signup/widgets/switcher.dart';
-import 'package:void_chat_beta/newlogin/bloc/login_form_bloc.dart';
+import 'package:void_chat_beta/login/bloc/login_form_bloc.dart';
+import 'package:void_chat_beta/signup/widgets/switcher.dart';
 import 'package:void_chat_beta/theme/brightness_cubit.dart';
 import 'package:void_chat_beta/theme/locale_cubit.dart';
-import 'package:void_chat_beta/ui/frontside/status_bar/screen_tag.dart';
 import 'package:void_chat_beta/widgets/auth_custom_frame/custom_clip_path.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:supercharged/supercharged.dart';
 import 'package:void_chat_beta/widgets/form_header_signup.dart';
+
+import 'button_model.dart';
 
 /// Widget that represents main part of the Signup View
 class LoginMainFormFrame extends StatefulWidget {
@@ -179,7 +180,7 @@ class _LoginMainFormFrameState extends State<LoginMainFormFrame>
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    SimpleButtonOne(
+                    ButtonModel(
                       text: 'signup_submit'.tr,
                       onPressed: widget.loginFormBloc.submit,
                     ),
@@ -241,7 +242,7 @@ class _LoginMainFormFrameState extends State<LoginMainFormFrame>
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    SimpleButtonOne(
+                    ButtonModel(
                       text: 'signup_with_google'.tr,
                       onPressed: formController.value == 0.0 ? null : () {},
                     ),
@@ -334,36 +335,6 @@ class _LoginMainFormFrameState extends State<LoginMainFormFrame>
         prefixIcon: Icon(
           Icons.mail_outline,
           color: Theme.of(context).primaryColor,
-        ),
-      ),
-    );
-  }
-}
-
-class SimpleButtonOne extends StatelessWidget {
-  final bool enabled;
-  final String text;
-  final Function onPressed;
-  const SimpleButtonOne({
-    Key key,
-    @required this.text,
-    this.onPressed,
-    this.enabled,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return ClipPath(
-      clipper: ScreenTagClipper(),
-      child: MaterialButton(
-        disabledColor: Theme.of(context).backgroundColor,
-        onPressed: onPressed ?? () {},
-        highlightColor: Theme.of(context).backgroundColor.withOpacity(0.14),
-        child: Text(
-          text,
-          style: GoogleFonts.jura(
-              fontWeight: FontWeight.w300,
-              color: Theme.of(context).backgroundColor),
         ),
       ),
     );

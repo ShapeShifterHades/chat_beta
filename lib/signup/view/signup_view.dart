@@ -6,9 +6,8 @@ import 'package:keyboard_visibility/keyboard_visibility.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:get/get.dart';
 import 'package:void_chat_beta/constants/constants.dart';
-
-import 'package:void_chat_beta/new_signup/bloc/sign_up_form_bloc.dart';
-import 'package:void_chat_beta/new_signup/widgets/main_form_frame.dart';
+import 'package:void_chat_beta/signup/bloc/sign_up_form_bloc.dart';
+import 'package:void_chat_beta/signup/widgets/main_form_frame.dart';
 
 import 'package:void_chat_beta/theme/brightness_cubit.dart';
 

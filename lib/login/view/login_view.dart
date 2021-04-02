@@ -5,16 +5,15 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:keyboard_visibility/keyboard_visibility.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:get/get.dart';
-
-import 'package:void_chat_beta/newlogin/bloc/login_form_bloc.dart';
-import 'package:void_chat_beta/newlogin/widgets/login_main_form_frame.dart';
+import 'package:void_chat_beta/login/bloc/login_form_bloc.dart';
+import 'package:void_chat_beta/login/widgets/login_main_form_frame.dart';
 
 import 'package:void_chat_beta/theme/brightness_cubit.dart';
 
 import 'package:simple_animations/simple_animations.dart';
 
-class NewLoginView extends StatefulWidget {
-  const NewLoginView({
+class LoginView extends StatefulWidget {
+  const LoginView({
     Key key,
     @required this.loginFormBloc,
   }) : super(key: key);
@@ -22,10 +21,10 @@ class NewLoginView extends StatefulWidget {
   final LoginFormBloc loginFormBloc;
 
   @override
-  _NewLoginViewState createState() => _NewLoginViewState();
+  _LoginViewState createState() => _LoginViewState();
 }
 
-class _NewLoginViewState extends State<NewLoginView> with AnimationMixin {
+class _LoginViewState extends State<LoginView> with AnimationMixin {
   bool keyboardIsVisible = false;
 
   @override

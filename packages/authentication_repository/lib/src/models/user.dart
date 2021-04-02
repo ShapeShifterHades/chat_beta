@@ -12,8 +12,7 @@ class User extends Equatable {
   const User({
     @required this.email,
     @required this.id,
-    this.username
-    ,
+    @required this.username,
   })  : assert(email != null),
         assert(id != null);
 
@@ -24,14 +23,11 @@ class User extends Equatable {
   final String id;
 
   /// The current user's name (display name).
-  final String username
-  ;
+  final String username;
 
   /// Empty user which represents an unauthenticated user.
-  static const empty = User(email: '', id: '', username
-  : '');
+  static const empty = User(email: '', id: '', username: '');
 
   @override
-  List<Object> get props => [email, id, username
-  ];
+  List<Object> get props => [email, id, username];
 }

@@ -96,10 +96,10 @@ class ContactBloc extends Bloc<ContactEvent, ContactsState> {
     yield ContactsLoaded(event.contacts);
   }
 
-  Stream<ContactsState> _mapFindUsernameByIdTpState(
-      FindUsernameById event) async* {
-    await this._firestoreContactRepository.findUsernameById(event.contactId);
-  }
+  // Stream<ContactsState> _mapFindUsernameByIdTpState(
+  //     FindUsernameById event) async* {
+  //   await this._firestoreContactRepository.findUsernameById(event.contactId);
+  // }
 
   @override
   Future<void> close() {

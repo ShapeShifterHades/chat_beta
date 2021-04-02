@@ -26,8 +26,8 @@ class SearchUserFormBloc extends FormBloc<String, String> {
 
   Future<String> _checkUsername(String username) async {
     try {
-      Contact result = await firestoreContactRepository.findIdByUsername(
-          username, authenticaionBloc.state.user.id);
+      // Contact result = await firestoreContactRepository.findIdByUsername(
+      //     username, authenticaionBloc.state.user.id);
       return 'EXISTS!!!';
     } catch (e) {
       return e.toString();

@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'bloc/login_form_bloc.dart';
-import 'view/new_login_view.dart';
+import 'view/login_view.dart';
 
 /// This page will be a replace for old Login page
-class NewLoginPage extends StatelessWidget {
+class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
@@ -19,7 +19,7 @@ class NewLoginPage extends StatelessWidget {
           // ignore: close_sinks
           final loginFormBloc = context.watch<LoginFormBloc>();
 
-          return NewLoginView(loginFormBloc: loginFormBloc);
+          return LoginView(loginFormBloc: loginFormBloc);
         }));
   }
 }

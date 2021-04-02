@@ -62,7 +62,6 @@ class FirestoreContactRepository {
 
   /// Sends to user [contactId] a friend request with a greeting message.
   ///
-  /// TODO: implement getting and wrighting a username.
   Future<void> sendRequest(
       {String contactId, String uid, String message}) async {
     final batch = FirebaseFirestore.instance.batch();
@@ -147,7 +146,6 @@ class FirestoreContactRepository {
   /// Creates new document with id [contactId] in blocklist collection of user [uid].
   ///
   /// Blocked [contactId] must have no permission to send messages, friend requests.
-  /// TODO: 1st check if exists a contacts collection document ? removes it : proceeds,
   /// creates blocked document that in security rules checks if there will be no
   /// such [contactId] document in contacts by 'getAfter'.
   /// SECURITY RULES:

@@ -5,10 +5,11 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:void_chat_beta/blocs/contactlist/contactlist_bloc.dart';
 import 'package:void_chat_beta/constants/constants.dart';
-import 'package:void_chat_beta/newlogin/new_login.dart';
+import 'package:void_chat_beta/login/login.dart';
 
-import 'new_signup/new_sign_up.dart';
 import 'settings/settings.dart';
+import 'signup/sign_up.dart';
+import 'splash/view.dart/splash_view.dart';
 import 'translations/translations.dart';
 
 import 'authentication/authentication.dart';
@@ -30,24 +31,34 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<AuthenticationBloc>(
-        lazy: false,
-        create: (context) => AuthenticationBloc(
-              authenticationRepository: AuthenticationRepository(),
-            ),
-        child: BlocProvider(
-          create: (context) => LocaleCubit(),
-          child: BlocProvider<ContactBloc>(
-            create: (context) => ContactBloc(FirestoreContactRepository(),
-                context.read<AuthenticationBloc>())
-              ..add(LoadContacts(
-                  uid: context.read<AuthenticationBloc>().state.user.id)),
+    AuthenticationRepository _authenticationRepository =
+        AuthenticationRepository();
+    FirestoreNewUserRepository _firestoreNewUserRepository =
+        FirestoreNewUserRepository();
+    return RepositoryProvider.value(
+      value: _firestoreNewUserRepository,
+      child: RepositoryProvider.value(
+        value: _authenticationRepository,
+        child: BlocProvider<AuthenticationBloc>(
+            lazy: false,
+            create: (context) => AuthenticationBloc(
+                  authenticationRepository: _authenticationRepository,
+                ),
             child: BlocProvider(
-              create: (context) => BrightnessCubit(),
-              child: AppView(),
-            ),
-          ),
-        ));
+              create: (context) => LocaleCubit(),
+              child: BlocProvider<ContactBloc>(
+                create: (context) => ContactBloc(FirestoreContactRepository(),
+                    context.read<AuthenticationBloc>())
+                  ..add(LoadContacts(
+                      uid: context.read<AuthenticationBloc>().state.user.id)),
+                child: BlocProvider(
+                  create: (context) => BrightnessCubit(),
+                  child: AppView(),
+                ),
+              ),
+            )),
+      ),
+    );
   }
 }
 
@@ -63,12 +74,13 @@ class AppView extends StatelessWidget {
             return Get.GetMaterialApp(
               locale: Locale(context.watch<LocaleCubit>().state ??
                   Get.Get.deviceLocale.countryCode),
-              initialRoute: '/',
-              routingCallback: (routing) {
-                if (routing.current == '/messages') {
-                  print('MiddleWare here adding an ContactBlocEvent');
-                }
-              },
+              // initialRoute: '/',
+              // routingCallback: (routing) {
+              //   if (routing.current == '/messages') {
+              //     print('MiddleWare here adding an ContactBlocEvent');
+              //   }
+              // },
+              onGenerateRoute: (_) => SplashView.route(),
               getPages: [
                 Get.GetPage(
                     name: '/',
@@ -81,13 +93,13 @@ class AppView extends StatelessWidget {
                             context.watch<ContactBloc>();
                             return MessagesView();
                           } else {
-                            return NewLoginPage();
+                            return LoginPage();
                           }
                         },
                       );
                     }),
                 Get.GetPage(name: homeRoute, page: () => MessagesView()),
-                Get.GetPage(name: loginRoute, page: () => NewLoginPage()),
+                Get.GetPage(name: loginRoute, page: () => LoginPage()),
                 Get.GetPage(name: settingsRoute, page: () => SettingsView()),
                 Get.GetPage(name: securityRoute, page: () => SecurityView()),
                 Get.GetPage(name: faqRoute, page: () => FaqView()),
@@ -101,9 +113,7 @@ class AppView extends StatelessWidget {
                 ),
                 Get.GetPage(
                   name: '/newSignUp',
-                  page: () => RepositoryProvider.value(
-                      value: FirestoreNewUserRepository(),
-                      child: NewSignUpPage()),
+                  page: () => SignUpPage(),
                 ),
               ],
               defaultTransition: Get.Transition.size,

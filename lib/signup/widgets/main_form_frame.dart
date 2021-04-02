@@ -3,8 +3,9 @@ import 'package:flutter_form_bloc/flutter_form_bloc.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:simple_animations/simple_animations.dart';
-import 'package:void_chat_beta/new_signup/bloc/sign_up_form_bloc.dart';
-import 'package:void_chat_beta/new_signup/widgets/switcher.dart';
+import 'package:void_chat_beta/signup/bloc/sign_up_form_bloc.dart';
+import 'package:void_chat_beta/signup/widgets/switcher.dart';
+
 import 'package:void_chat_beta/theme/brightness_cubit.dart';
 import 'package:void_chat_beta/theme/locale_cubit.dart';
 import 'package:void_chat_beta/ui/frontside/status_bar/screen_tag.dart';

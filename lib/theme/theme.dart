@@ -29,73 +29,73 @@ ThemeData theme1(BuildContext context, Brightness brightness) {
 
   return isDark ? darkTheme : lightTheme;
 
-  ThemeData(
-    brightness: brightness,
-    primaryTextTheme: TextTheme(
-      bodyText1: TextStyle(
-        color: isDark ? Color(0xFFE6E8EB) : Color(0xFF10171E),
-        fontSize: 13,
-      ),
-      bodyText2: TextStyle(
-        color: isDark ? Color(0xFFFBFBFD) : Color(0xFF1C2321),
-        fontSize: 13,
-      ),
-      subtitle1:
-          TextStyle(color: isDark ? Color(0xFF1C2321) : Color(0xFF1C2321)),
-    ),
-    bottomAppBarColor: isDark ? Color(0xFF002E3D) : Color(0xFFF2F2F2),
-    cardColor: isDark ? Color(0xFF10171E) : Color(0xFFFBFBFD),
-    primaryColor: isDark ? Color(0xFFA7F5FF) : Color(0xFF57756E),
-    errorColor: Color(0xFFC83E4D),
-    highlightColor: Color(0xFFF28123),
-    accentColor: isDark ? Color(0xFF002E3D) : Color(0xFFDBDBDB),
-    backgroundColor: isDark ? Color(0xFF282929) : Color(0xFFFCF7FF),
-    scaffoldBackgroundColor: isDark ? Color(0xFF3B3B3B) : Color(0xFFF2F2F2),
-    inputDecorationTheme: InputDecorationTheme(
-      enabledBorder: OutlineInputBorder(
-        borderSide: BorderSide(
-          width: 0.3,
-          color: isDark ? Colors.transparent : Colors.transparent,
-        ),
-      ),
-      focusedBorder: OutlineInputBorder(
-        borderSide: BorderSide(
-          width: 0.8,
-          color: isDark ? Color(0xFFF2F2F2) : Color(0xFF1C2321),
-        ),
-      ),
-      errorBorder: OutlineInputBorder(
-        borderSide: BorderSide(
-          width: 0.01,
-          color: isDark ? Color(0xFFBF4342) : Colors.red[600],
-        ),
-      ),
-      focusedErrorBorder: OutlineInputBorder(
-        borderSide: BorderSide(
-          width: 0.21,
-          color: isDark ? Color(0xFFC83E4D) : Colors.red[600],
-        ),
-      ),
-      errorStyle: TextStyle(
-        color: isDark ? Color(0xFFBF4342) : Colors.red[600],
-        fontWeight: FontWeight.w300,
-        fontSize: 15,
-      ),
-      hintStyle: TextStyle(
-        color: isDark ? Color(0xFFC83E4D) : Colors.red[600],
-        fontWeight: FontWeight.w100,
-        fontSize: 15,
-      ),
-      labelStyle: TextStyle(
-          fontSize: 14,
-          color: isDark ? Color(0xFFF2F2F2) : Color(0xFFFFFFFF),
-          fontWeight: FontWeight.w500,
-          decoration: TextDecoration.none),
-      contentPadding: EdgeInsets.all(12),
-      counterStyle: TextStyle(color: Colors.teal),
-      border: InputBorder.none,
-      filled: true,
-      fillColor: isDark ? Colors.transparent : Colors.transparent,
-    ),
-  );
+//   ThemeData(
+//     brightness: brightness,
+//     primaryTextTheme: TextTheme(
+//       bodyText1: TextStyle(
+//         color: isDark ? Color(0xFFE6E8EB) : Color(0xFF10171E),
+//         fontSize: 13,
+//       ),
+//       bodyText2: TextStyle(
+//         color: isDark ? Color(0xFFFBFBFD) : Color(0xFF1C2321),
+//         fontSize: 13,
+//       ),
+//       subtitle1:
+//           TextStyle(color: isDark ? Color(0xFF1C2321) : Color(0xFF1C2321)),
+//     ),
+//     bottomAppBarColor: isDark ? Color(0xFF002E3D) : Color(0xFFF2F2F2),
+//     cardColor: isDark ? Color(0xFF10171E) : Color(0xFFFBFBFD),
+//     primaryColor: isDark ? Color(0xFFA7F5FF) : Color(0xFF57756E),
+//     errorColor: Color(0xFFC83E4D),
+//     highlightColor: Color(0xFFF28123),
+//     accentColor: isDark ? Color(0xFF002E3D) : Color(0xFFDBDBDB),
+//     backgroundColor: isDark ? Color(0xFF282929) : Color(0xFFFCF7FF),
+//     scaffoldBackgroundColor: isDark ? Color(0xFF3B3B3B) : Color(0xFFF2F2F2),
+//     inputDecorationTheme: InputDecorationTheme(
+//       enabledBorder: OutlineInputBorder(
+//         borderSide: BorderSide(
+//           width: 0.3,
+//           color: isDark ? Colors.transparent : Colors.transparent,
+//         ),
+//       ),
+//       focusedBorder: OutlineInputBorder(
+//         borderSide: BorderSide(
+//           width: 0.8,
+//           color: isDark ? Color(0xFFF2F2F2) : Color(0xFF1C2321),
+//         ),
+//       ),
+//       errorBorder: OutlineInputBorder(
+//         borderSide: BorderSide(
+//           width: 0.01,
+//           color: isDark ? Color(0xFFBF4342) : Colors.red[600],
+//         ),
+//       ),
+//       focusedErrorBorder: OutlineInputBorder(
+//         borderSide: BorderSide(
+//           width: 0.21,
+//           color: isDark ? Color(0xFFC83E4D) : Colors.red[600],
+//         ),
+//       ),
+//       errorStyle: TextStyle(
+//         color: isDark ? Color(0xFFBF4342) : Colors.red[600],
+//         fontWeight: FontWeight.w300,
+//         fontSize: 15,
+//       ),
+//       hintStyle: TextStyle(
+//         color: isDark ? Color(0xFFC83E4D) : Colors.red[600],
+//         fontWeight: FontWeight.w100,
+//         fontSize: 15,
+//       ),
+//       labelStyle: TextStyle(
+//           fontSize: 14,
+//           color: isDark ? Color(0xFFF2F2F2) : Color(0xFFFFFFFF),
+//           fontWeight: FontWeight.w500,
+//           decoration: TextDecoration.none),
+//       contentPadding: EdgeInsets.all(12),
+//       counterStyle: TextStyle(color: Colors.teal),
+//       border: InputBorder.none,
+//       filled: true,
+//       fillColor: isDark ? Colors.transparent : Colors.transparent,
+//     ),
+//   );
 }
