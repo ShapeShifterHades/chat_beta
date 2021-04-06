@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class CustomClipPath extends CustomClipper<Path> {
+class MainLoginFrameClipPath extends CustomClipper<Path> {
   @override
   Path getClip(Size size) {
     Path path = Path();

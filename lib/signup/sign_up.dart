@@ -2,28 +2,23 @@ import 'package:authentication_repository/authentication_repository.dart';
 import 'package:firestore_repository/firestore_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:void_chat_beta/signup/cubit/signup_cubit.dart';
 
-import 'bloc/sign_up_form_bloc.dart';
 import 'view/signup_view.dart';
 
-/// This page will be a replace for old Registration page
 class SignUpPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
-        providers: [
-          BlocProvider<SignUpFormBloc>(
-            create: (context) => SignUpFormBloc(
-              AuthenticationRepository(),
-              context.read<FirestoreNewUserRepository>(),
-            ),
+      providers: [
+        BlocProvider<SignUpCubit>(
+          create: (context) => SignUpCubit(
+            AuthenticationRepository(),
+            context.read<FirestoreNewUserRepository>(),
           ),
-        ],
-        child: Builder(builder: (context) {
-          // ignore: close_sinks
-          final loginFormBloc = context.watch<SignUpFormBloc>();
-
-          return SignUpView(loginFormBloc: loginFormBloc);
-        }));
+        ),
+      ],
+      child: SignUpView(),
+    );
   }
 }

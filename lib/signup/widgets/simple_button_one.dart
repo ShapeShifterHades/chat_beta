@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:void_chat_beta/ui/frontside/status_bar/screen_tag.dart';
 
-class ButtonModel extends StatelessWidget {
+class SimpleButtonOne extends StatelessWidget {
   final bool enabled;
   final String text;
   final Function onPressed;
-  const ButtonModel({
+  const SimpleButtonOne({
     Key key,
     @required this.text,
     this.onPressed,
