@@ -28,7 +28,8 @@ class ButtonModel extends StatelessWidget {
           child: Text(
             text,
             style: GoogleFonts.jura(
-                fontWeight: FontWeight.w300,
+                fontWeight: FontWeight.w500,
+                fontSize: 18,
                 color: Theme.of(context).backgroundColor),
           ),
         ),

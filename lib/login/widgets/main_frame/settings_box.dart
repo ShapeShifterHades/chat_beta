@@ -40,9 +40,11 @@ class SettingsBox extends StatelessWidget {
           children: [
             SizedBox(height: 20),
             Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Text('Brightness'),
+                SizedBox(width: 20),
+                Text('signup_brightness'.tr),
+                Spacer(),
                 Switcher(
                   onChange: context.watch<BrightnessCubit>().toggleBrightness,
                 ),
@@ -50,16 +52,17 @@ class SettingsBox extends StatelessWidget {
             ),
             SizedBox(height: 20),
             Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Text('Locale'),
+                SizedBox(width: 20),
+                Text('signup_locale'.tr),
+                Spacer(),
                 Switcher(
                   onChange: () {
                     context.read<LocaleCubit>().toggleLocale();
                     Get.updateLocale(Locale(context.read<LocaleCubit>().state));
                   },
                 ),
-                SizedBox(height: 20),
               ],
             ),
           ],

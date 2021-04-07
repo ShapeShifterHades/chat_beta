@@ -7,7 +7,14 @@ class FirestoreNewUserRepository implements NewUserRepository {
   final newUsernameCollection =
       FirebaseFirestore.instance.collection('usernames');
 
-  @override
+  Future<bool> usernameAlreadyExists(String username) async {
+    try {
+      DocumentSnapshot doc = await newUsernameCollection.doc(username).get();
+      return doc.exists;
+    } catch (e) {
+      return true;
+    }
+  }
 
   /// Commits a batch of two documents to users collection and Username collection
   /// with a given [newProfile] on user creation

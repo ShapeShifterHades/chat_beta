@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:void_chat_beta/signup/cubit/signup_cubit.dart';
 import 'package:void_chat_beta/signup/widgets/simple_button_one.dart';
 import 'package:get/get.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class SubmitButton extends StatelessWidget {
   const SubmitButton({
@@ -18,7 +20,9 @@ class SubmitButton extends StatelessWidget {
         children: [
           SimpleButtonOne(
             text: 'signup_submit'.tr,
-            onPressed: () {},
+            onPressed: () {
+              context.read<SignUpCubit>().signUpFormSubmitted();
+            },
           ),
         ],
       ),

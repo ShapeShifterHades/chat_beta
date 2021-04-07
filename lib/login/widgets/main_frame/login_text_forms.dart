@@ -5,8 +5,8 @@ import 'package:void_chat_beta/login/widgets/main_frame/formfields/password_inpu
 import 'formfields/email_input.dart';
 import 'constants.dart';
 
-class SigninTextForms extends StatelessWidget {
-  const SigninTextForms({
+class LoginTextForms extends StatelessWidget {
+  const LoginTextForms({
     Key key,
     @required this.formFrameHeight,
   }) : super(key: key);
@@ -18,7 +18,7 @@ class SigninTextForms extends StatelessWidget {
     return Container(
       height: formFrameHeight.value,
       width: Get.size.width * 0.9,
-      padding: EdgeInsets.symmetric(horizontal: 5),
+      padding: EdgeInsets.only(left: 5, right: 5),
       decoration: buildFormFieldBackground(context),
       child: SingleChildScrollView(
         child: Column(

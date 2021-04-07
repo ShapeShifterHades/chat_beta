@@ -12,18 +12,20 @@ class Email extends FormzInput<String, EmailValidationError> {
 
   @override
   EmailValidationError validator(String value) {
-    // return _emailRegExp.hasMatch(value) ? null : EmailValidationError.invalid;
+    return _emailRegExp.hasMatch(value) ? null : EmailValidationError.invalid;
 
-    if (!_emailRegExp.hasMatch(value)) return EmailValidationError.invalid;
-    return null;
+    // if (!_emailRegExp.hasMatch(value)) return EmailValidationError.invalid;
+    // return null;
   }
 
-  static String getErrorMessage(error) {
-    switch (error) {
-      case EmailValidationError.invalid:
-        return 'This is not a valid email';
-      default:
-        return null;
-    }
-  }
+  // static String getErrorMessage(error) {
+  //   if ( error==EmailValidationError.invalid && FormzInput.dirty()) re
+
+  //   switch (error) {
+  //     case error==EmailValidationError.invalid &&true:
+  //       return 'This is not a valid email';
+  //     default:
+  //       return null;
+  //   }
+  // }
 }

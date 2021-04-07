@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:void_chat_beta/login/widgets/main_frame/formfields/email_input.dart';
-import 'package:void_chat_beta/login/widgets/main_frame/formfields/password_input.dart';
+
 import 'package:void_chat_beta/signup/widgets/constants.dart';
 import 'package:void_chat_beta/signup/widgets/textfields/confirm_password_input.dart';
+import 'package:void_chat_beta/signup/widgets/textfields/email_input.dart';
+import 'package:void_chat_beta/signup/widgets/textfields/password_input.dart';
 import 'package:void_chat_beta/signup/widgets/textfields/username_input.dart';
 import 'package:void_chat_beta/ui/frontside/status_bar/screen_tag.dart';
 
@@ -26,7 +27,7 @@ class TextfieldsFrame extends StatelessWidget {
         child: Column(
           children: [
             Container(
-              padding: EdgeInsets.only(left: 5, right: 5, top: 5),
+              padding: EdgeInsets.only(left: 5, right: 5, top: 10),
               child: ClipPath(clipper: ScreenTagClipper(), child: EmailInput()),
             ),
             Container(

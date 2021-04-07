@@ -79,10 +79,23 @@ class SignUpCubit extends Cubit<SignUpState> {
     if (!state.status.isValidated) return;
     emit(state.copyWith(status: FormzStatus.submissionInProgress));
     try {
-      await _authenticationRepository.signUp(
+      var _exists =
+          await _newUserRepository.usernameAlreadyExists(state.username.value);
+      if (_exists) {
+        print('WE FUCKED UP!!! username already exists!');
+        emit(state.copyWith(status: FormzStatus.submissionFailure));
+      }
+    } on Exception {
+      emit(state.copyWith(status: FormzStatus.submissionFailure));
+    }
+    try {
+      var userCredential = await _authenticationRepository.signUp(
         email: state.email.value,
         password: state.password.value,
       );
+      NewProfile newProfile = NewProfile(
+          uid: userCredential.user.uid, username: state.username.value);
+      await _newUserRepository.addNewUser(newProfile);
       emit(state.copyWith(status: FormzStatus.submissionSuccess));
     } on Exception {
       emit(state.copyWith(status: FormzStatus.submissionFailure));

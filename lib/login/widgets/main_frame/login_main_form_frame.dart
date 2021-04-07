@@ -6,12 +6,12 @@ import 'package:void_chat_beta/login/cubit/login_cubit.dart';
 import 'package:void_chat_beta/login/widgets/main_frame/OrDivider.dart';
 import 'package:void_chat_beta/login/widgets/main_frame/buttons_divider.dart';
 import 'package:void_chat_beta/login/widgets/main_frame/constants.dart';
+import 'package:void_chat_beta/login/widgets/main_frame/login_submit_button.dart';
+import 'package:void_chat_beta/login/widgets/main_frame/login_text_forms.dart';
 import 'package:void_chat_beta/login/widgets/main_frame/settings_box.dart';
-import 'package:void_chat_beta/login/widgets/main_frame/signin_text_forms.dart';
 import 'package:void_chat_beta/widgets/auth_custom_frame/custom_clip_path.dart';
 import 'package:supercharged/supercharged.dart';
 import 'package:void_chat_beta/widgets/form_header_signup.dart';
-import 'package:formz/formz.dart';
 
 import 'button_model.dart';
 
@@ -55,7 +55,6 @@ class _LoginMainFormFrameState extends State<LoginMainFormFrame>
       listener: (context, state) {},
       child: Positioned.fill(
         child: Container(
-          // background of main frame
           decoration: buildBgBoxDecoration(context),
           child: AnimatedAlign(
             duration: Duration(milliseconds: 500),
@@ -75,29 +74,17 @@ class _LoginMainFormFrameState extends State<LoginMainFormFrame>
                       if (!widget.keyboardIsVisible)
                         FormHeaderSignUp(
                           color: Theme.of(context).primaryColor,
-                          title: 'signup_registration'.tr,
+                          title: 'loginpage_login_form'.tr,
                           formController: formController,
                           settingsController: settingsController,
                         ),
                       SettingsBox(settingsFrameHeight: settingsFrameHeight),
-                      SigninTextForms(formFrameHeight: formFrameHeight),
-                      BlocBuilder<LoginCubit, LoginState>(
-                        builder: (context, state) {
-                          return ButtonModel(
-                            key: const Key('loginForm_continue_raisedButton'),
-                            text: 'signin_submit'.tr,
-                            onPressed: state.status.isValidated
-                                ? () => context
-                                    .read<LoginCubit>()
-                                    .logInWithCredentials()
-                                : null,
-                          );
-                        },
-                      ),
+                      LoginTextForms(formFrameHeight: formFrameHeight),
+                      LoginSubmitButton(),
                       ButtonsDivider(orLineAlterHeight: orLineAlterHeight),
                       OrDivider(orLineHeight: orLineHeight),
                       ButtonModel(
-                        text: 'signup_with_google'.tr,
+                        text: 'loginpage_login_with_google'.tr,
                         onPressed: formController.value == 0.0 ? null : () {},
                       ),
                     ],

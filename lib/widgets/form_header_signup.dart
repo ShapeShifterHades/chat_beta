@@ -20,7 +20,7 @@ class FormHeaderSignUp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 60,
+      height: 40,
       width: double.infinity,
       color: color,
       alignment: Alignment.center,

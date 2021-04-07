@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:void_chat_beta/login/cubit/login_cubit.dart';
+import 'package:get/get.dart';
 
 class PasswordInput extends StatelessWidget {
   @override
@@ -13,10 +15,12 @@ class PasswordInput extends StatelessWidget {
           onChanged: (password) =>
               context.read<LoginCubit>().passwordChanged(password),
           obscureText: true,
+          style: GoogleFonts.jura(fontSize: 24),
           decoration: InputDecoration(
-            labelText: 'password',
+            labelText: 'loginpage_password'.tr,
             helperText: '',
-            errorText: state.password.invalid ? 'invalid password' : null,
+            errorText:
+                state.password.invalid ? 'loginpage_invalid_password'.tr : null,
           ),
         );
       },
