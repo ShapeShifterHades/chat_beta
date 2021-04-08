@@ -1,4 +1,3 @@
-import 'package:authentication_repository/authentication_repository.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:firestore_repository/firestore_repository.dart';
@@ -24,20 +23,20 @@ class SearchUsernameCubit extends Cubit<SearchUsernameState> {
     final username = Username.dirty(value);
     emit(
         state.copyWith(username: username, status: Formz.validate([username])));
+  }
 
-    Future<Contact> findUsername() async {
-      if (!state.status.isValidated) return null;
-      emit(state.copyWith(status: FormzStatus.submissionInProgress));
-      try {
-        Contact _contact = await _firestoreContactRepository.findIdByUsername(
-            username.value, uid);
-        emit(state.copyWith(status: FormzStatus.submissionSuccess));
+  Future<Contact> findUsername() async {
+    if (!state.status.isValidated) return null;
+    emit(state.copyWith(status: FormzStatus.submissionInProgress));
+    try {
+      Contact _contact = await _firestoreContactRepository.findIdByUsername(
+          state.username.value, uid);
+      emit(state.copyWith(status: FormzStatus.submissionSuccess));
 
-        return _contact;
-      } catch (e) {
-        emit(state.copyWith(status: FormzStatus.submissionFailure));
-      }
-      return null;
+      return _contact;
+    } catch (e) {
+      emit(state.copyWith(status: FormzStatus.submissionFailure));
     }
+    return null;
   }
 }

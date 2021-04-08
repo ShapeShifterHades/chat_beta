@@ -43,27 +43,47 @@ class App extends StatelessWidget {
         value: _authenticationRepository,
         child: RepositoryProvider.value(
           value: _firestoreContactRepository,
-          child: BlocProvider<AuthenticationBloc>(
-              lazy: false,
-              create: (_) => AuthenticationBloc(
-                    authenticationRepository: _authenticationRepository,
-                  ),
-              child: BlocProvider(
-                create: (_) => LocaleCubit(),
-                child: BlocProvider<ContactBloc>(
-                  create: (_) => ContactBloc(_firestoreContactRepository,
-                      context.read<AuthenticationBloc>())
-                    ..add(LoadContacts(
-                        uid: context.read<AuthenticationBloc>().state.user.id)),
-                  child: BlocProvider(
-                    create: (_) => BrightnessCubit(),
-                    child: AppView(),
-                  ),
-                ),
-              )),
+          child: App2(
+              authenticationRepository: _authenticationRepository,
+              firestoreContactRepository: _firestoreContactRepository),
         ),
       ),
     );
+  }
+}
+
+class App2 extends StatelessWidget {
+  const App2({
+    Key key,
+    @required AuthenticationRepository authenticationRepository,
+    @required FirestoreContactRepository firestoreContactRepository,
+  })  : _authenticationRepository = authenticationRepository,
+        _firestoreContactRepository = firestoreContactRepository,
+        super(key: key);
+
+  final AuthenticationRepository _authenticationRepository;
+  final FirestoreContactRepository _firestoreContactRepository;
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocProvider<AuthenticationBloc>(
+        lazy: false,
+        create: (context) => AuthenticationBloc(
+              authenticationRepository: _authenticationRepository,
+            ),
+        child: BlocProvider(
+          create: (context) => LocaleCubit(),
+          child: BlocProvider<ContactBloc>(
+            create: (context) => ContactBloc(_firestoreContactRepository,
+                context.read<AuthenticationBloc>()),
+            // ..add(LoadContacts(
+            //     uid: context.read<AuthenticationBloc>().state.user.id)),
+            child: BlocProvider(
+              create: (context) => BrightnessCubit(),
+              child: AppView(),
+            ),
+          ),
+        ));
   }
 }
 
@@ -76,86 +96,98 @@ class AppView extends StatelessWidget {
       builder: (context, brightness) {
         return BlocBuilder<LocaleCubit, String>(
           builder: (context, locale) {
-            return Get.GetMaterialApp(
-              locale: Locale(context.watch<LocaleCubit>().state ??
-                  Get.Get.deviceLocale.countryCode),
-              routingCallback: (routing) {
-                if (routing.current == homeRoute) {
-                  print('MiddleWare here adding an ContactBlocEvent');
-                }
-              },
-              onGenerateRoute: (_) => SplashView.route(),
-              getPages: [
-                Get.GetPage(
-                    name: '/',
-                    page: () {
-                      return BlocBuilder<AuthenticationBloc,
-                          AuthenticationState>(
-                        builder: (context, state) {
-                          if (state.status ==
-                              AuthenticationStatus.authenticated) {
-                            context.watch<ContactBloc>();
-                            return MessagesView();
-                          } else {
-                            return LoginPage();
-                          }
-                        },
-                      );
-                    }),
-                Get.GetPage(name: homeRoute, page: () => MessagesView()),
-                Get.GetPage(name: loginRoute, page: () => LoginPage()),
-                Get.GetPage(name: settingsRoute, page: () => SettingsView()),
-                Get.GetPage(name: securityRoute, page: () => SecurityView()),
-                Get.GetPage(name: faqRoute, page: () => FaqView()),
-                Get.GetPage(
-                  name: contactsRoute,
-                  page: () => BlocProvider<ContactlistBloc>(
-                    create: (context) =>
-                        ContactlistBloc(context.read<ContactBloc>()),
-                    child: ContactsView(),
-                  ),
-                ),
-                Get.GetPage(
-                  name: '/newSignUp',
-                  page: () => SignUpPage(),
-                ),
-              ],
-              defaultTransition: Get.Transition.size,
-              transitionDuration: Duration(milliseconds: 300),
-              translations: ContentTranslations(),
-              debugShowCheckedModeBanner: false,
-              theme: theme1(context, brightness),
-              builder: (context, child) {
-                return AnnotatedRegion<SystemUiOverlayStyle>(
-                  value: SystemUiOverlayStyle(
-                    // For Android.
-                    // Use [light] for white status bar and [dark] for black status bar.
-                    statusBarIconBrightness:
-                        context.watch<BrightnessCubit>().state ==
-                                Brightness.light
-                            ? Brightness.dark
-                            : Brightness.light,
-                  ),
-                  child: BlocListener<AuthenticationBloc, AuthenticationState>(
-                    listener: (context, state) {
-                      switch (state.status) {
-                        case AuthenticationStatus.unauthenticated:
-                          Get.Get.offAllNamed(loginRoute);
+            return BlocListener<AuthenticationBloc, AuthenticationState>(
+                listener: (context, state) {
+                  switch (state.status) {
+                    case AuthenticationStatus.unauthenticated:
+                      Get.Get.offAllNamed(loginRoute);
 
-                          break;
-                        case AuthenticationStatus.authenticated:
-                          Get.Get.offAllNamed(homeRoute, arguments: 'Messages');
-                          break;
-                        case AuthenticationStatus.unknown:
-                          // Get.Get.offAllNamed(loginRoute);
-                          break;
-                      }
-                    },
-                    child: child,
-                  ),
-                );
-              },
-            );
+                      break;
+                    case AuthenticationStatus.authenticated:
+                      Get.Get.offAllNamed(homeRoute, arguments: 'Messages');
+                      break;
+                    case AuthenticationStatus.unknown:
+                      // Get.Get.offAllNamed(loginRoute);
+                      break;
+                  }
+                },
+                child: Get.GetMaterialApp(
+                  locale: Locale(context.watch<LocaleCubit>().state ??
+                      Get.Get.deviceLocale.countryCode),
+                  routingCallback: (routing) {
+                    if (routing.current == homeRoute) {
+                      print('MiddleWare here adding an ContactBlocEvent');
+                    }
+                  },
+                  onGenerateRoute: (_) => SplashView.route(),
+                  getPages: [
+                    Get.GetPage(
+                        name: '/',
+                        page: () {
+                          return BlocBuilder<AuthenticationBloc,
+                              AuthenticationState>(
+                            builder: (context, state) {
+                              if (state.status ==
+                                  AuthenticationStatus.authenticated) {
+                                context.watch<ContactBloc>();
+                                return MessagesView();
+                              } else {
+                                return LoginPage();
+                              }
+                            },
+                          );
+                        }),
+                    Get.GetPage(
+                        name: homeRoute,
+                        page: () {
+                          BlocProvider.of<ContactBloc>(context).add(
+                              LoadContacts(
+                                  uid: context
+                                      .read<AuthenticationBloc>()
+                                      .state
+                                      .user
+                                      .id));
+                          return MessagesView();
+                        }),
+                    Get.GetPage(name: loginRoute, page: () => LoginPage()),
+                    Get.GetPage(
+                        name: settingsRoute, page: () => SettingsView()),
+                    Get.GetPage(
+                        name: securityRoute, page: () => SecurityView()),
+                    Get.GetPage(name: faqRoute, page: () => FaqView()),
+                    Get.GetPage(
+                      name: contactsRoute,
+                      page: () => BlocProvider<ContactlistBloc>(
+                        create: (context) =>
+                            ContactlistBloc(context.read<ContactBloc>()),
+                        child: ContactsView(),
+                      ),
+                    ),
+                    Get.GetPage(
+                      name: '/newSignUp',
+                      page: () => SignUpPage(),
+                    ),
+                  ],
+                  defaultTransition: Get.Transition.size,
+                  transitionDuration: Duration(milliseconds: 300),
+                  translations: ContentTranslations(),
+                  debugShowCheckedModeBanner: false,
+                  theme: theme1(context, brightness),
+                  builder: (context, child) {
+                    return AnnotatedRegion<SystemUiOverlayStyle>(
+                      value: SystemUiOverlayStyle(
+                        // For Android.
+                        // Use [light] for white status bar and [dark] for black status bar.
+                        statusBarIconBrightness:
+                            context.watch<BrightnessCubit>().state ==
+                                    Brightness.light
+                                ? Brightness.dark
+                                : Brightness.light,
+                      ),
+                      child: child,
+                    );
+                  },
+                ));
           },
         );
       },

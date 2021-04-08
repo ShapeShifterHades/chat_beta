@@ -1,5 +1,8 @@
+import 'package:firestore_repository/firestore_repository.dart';
 import 'package:flutter/material.dart';
+import 'package:void_chat_beta/contacts/search_cubit/searchuser_cubit.dart';
 import 'package:void_chat_beta/contacts/widgets/searchbar/search_username_input.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class UserSearch extends StatefulWidget {
   const UserSearch({
@@ -13,6 +16,7 @@ class UserSearch extends StatefulWidget {
 class _UserSearchState extends State<UserSearch> {
   FocusNode _focusNode = FocusNode();
   var stateSearch = false;
+  Contact contact;
 
   @override
   void initState() {
@@ -32,12 +36,25 @@ class _UserSearchState extends State<UserSearch> {
     print("Focus: " + _focusNode.hasFocus.toString());
   }
 
+  Future<Contact> find(context) async {
+    return BlocProvider.of<SearchUsernameCubit>(context).findUsername();
+  }
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Column(
         children: [
-          SearchUsernameInput(),
+          SearchUsernameInput(
+            focusNode: _focusNode,
+          ),
+          MaterialButton(
+            onPressed: () async {
+              contact = await find(context);
+            },
+            color: Colors.yellowAccent,
+          ),
+          Text(contact.id),
         ],
       ),
     );
