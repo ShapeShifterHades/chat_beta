@@ -35,28 +35,33 @@ class App extends StatelessWidget {
         AuthenticationRepository();
     FirestoreNewUserRepository _firestoreNewUserRepository =
         FirestoreNewUserRepository();
+    FirestoreContactRepository _firestoreContactRepository =
+        FirestoreContactRepository();
     return RepositoryProvider.value(
       value: _firestoreNewUserRepository,
       child: RepositoryProvider.value(
         value: _authenticationRepository,
-        child: BlocProvider<AuthenticationBloc>(
-            lazy: false,
-            create: (context) => AuthenticationBloc(
-                  authenticationRepository: _authenticationRepository,
+        child: RepositoryProvider.value(
+          value: _firestoreContactRepository,
+          child: BlocProvider<AuthenticationBloc>(
+              lazy: false,
+              create: (_) => AuthenticationBloc(
+                    authenticationRepository: _authenticationRepository,
+                  ),
+              child: BlocProvider(
+                create: (_) => LocaleCubit(),
+                child: BlocProvider<ContactBloc>(
+                  create: (_) => ContactBloc(_firestoreContactRepository,
+                      context.read<AuthenticationBloc>())
+                    ..add(LoadContacts(
+                        uid: context.read<AuthenticationBloc>().state.user.id)),
+                  child: BlocProvider(
+                    create: (_) => BrightnessCubit(),
+                    child: AppView(),
+                  ),
                 ),
-            child: BlocProvider(
-              create: (context) => LocaleCubit(),
-              child: BlocProvider<ContactBloc>(
-                create: (context) => ContactBloc(FirestoreContactRepository(),
-                    context.read<AuthenticationBloc>())
-                  ..add(LoadContacts(
-                      uid: context.read<AuthenticationBloc>().state.user.id)),
-                child: BlocProvider(
-                  create: (context) => BrightnessCubit(),
-                  child: AppView(),
-                ),
-              ),
-            )),
+              )),
+        ),
       ),
     );
   }
@@ -74,12 +79,11 @@ class AppView extends StatelessWidget {
             return Get.GetMaterialApp(
               locale: Locale(context.watch<LocaleCubit>().state ??
                   Get.Get.deviceLocale.countryCode),
-              // initialRoute: '/',
-              // routingCallback: (routing) {
-              //   if (routing.current == '/messages') {
-              //     print('MiddleWare here adding an ContactBlocEvent');
-              //   }
-              // },
+              routingCallback: (routing) {
+                if (routing.current == homeRoute) {
+                  print('MiddleWare here adding an ContactBlocEvent');
+                }
+              },
               onGenerateRoute: (_) => SplashView.route(),
               getPages: [
                 Get.GetPage(
@@ -137,6 +141,7 @@ class AppView extends StatelessWidget {
                       switch (state.status) {
                         case AuthenticationStatus.unauthenticated:
                           Get.Get.offAllNamed(loginRoute);
+
                           break;
                         case AuthenticationStatus.authenticated:
                           Get.Get.offAllNamed(homeRoute, arguments: 'Messages');

@@ -32,39 +32,39 @@ class InteractiveSearchUi extends StatelessWidget {
         child: SingleChildScrollView(
       child: Column(
         children: [
-          context.watch<SearchUserFormBloc>().username.value.length > 5
-              ? FutureBuilder(
-                  future: _firestoreContactRepository.findIdByUsername(
-                      context.watch<SearchUserFormBloc>().username.value,
-                      context.watch<AuthenticationBloc>().state.user.id),
-                  builder: (context, snapshot) {
-                    if (!snapshot.hasData)
-                      return Container(
-                          alignment: Alignment.center,
-                          child: Text('No such user'));
-                    else if (snapshot.hasData) {
-                      Contact result;
-                      try {
-                        result = snapshot?.data;
-                      } catch (e) {
-                        print(e);
-                      }
-                      // switch (context.watch<SearchUserFormBloc>().state)
-                      return FoundUserUi(result: result);
-                    }
-                    return Container(
-                      child: Text('No connection with Internet'),
-                    );
-                  },
-                )
-              : CustomPaint(
-                  painter: SearchUiPainter(context, _focusNode),
-                  child: Container(
-                      margin: EdgeInsets.all(10),
-                      alignment: Alignment.center,
-                      child:
-                          Text('Enter username at least 6 charachters long')),
-                )
+          // context.watch<SearchUserFormBloc>().username.value.length > 5
+          //     ? FutureBuilder(
+          //         future: _firestoreContactRepository.findIdByUsername(
+          //             context.watch<SearchUserFormBloc>().username.value,
+          //             context.watch<AuthenticationBloc>().state.user.id),
+          //         builder: (context, snapshot) {
+          //           if (!snapshot.hasData)
+          //             return Container(
+          //                 alignment: Alignment.center,
+          //                 child: Text('No such user'));
+          //           else if (snapshot.hasData) {
+          //             Contact result;
+          //             try {
+          //               result = snapshot?.data;
+          //             } catch (e) {
+          //               print(e);
+          //             }
+          //             // switch (context.watch<SearchUserFormBloc>().state)
+          //             return FoundUserUi(result: result);
+          //           }
+          //           return Container(
+          //             child: Text('No connection with Internet'),
+          //           );
+          //         },
+          //       )
+          //     : CustomPaint(
+          //         painter: SearchUiPainter(context, _focusNode),
+          //         child: Container(
+          //             margin: EdgeInsets.all(10),
+          //             alignment: Alignment.center,
+          //             child:
+          //                 Text('Enter username at least 6 charachters long')),
+          //       )
         ],
       ),
     ));
