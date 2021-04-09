@@ -40,7 +40,7 @@ class FirestoreContactRepository {
             status = 'Not in contacts';
           }
         } catch (e) {}
-
+        print('$uid username: $username');
         return Contact(
             id: uid, status: status ?? 'Not in contacts', username: username);
       } else {

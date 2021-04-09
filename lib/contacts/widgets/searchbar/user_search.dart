@@ -1,8 +1,10 @@
 import 'package:firestore_repository/firestore_repository.dart';
 import 'package:flutter/material.dart';
-import 'package:void_chat_beta/contacts/search_cubit/searchuser_cubit.dart';
+import 'package:void_chat_beta/contacts/bloc/bloc/finduser_bloc.dart';
 import 'package:void_chat_beta/contacts/widgets/searchbar/search_username_input.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import 'found_user_ui.dart';
 
 class UserSearch extends StatefulWidget {
   const UserSearch({
@@ -14,9 +16,9 @@ class UserSearch extends StatefulWidget {
 }
 
 class _UserSearchState extends State<UserSearch> {
-  FocusNode _focusNode = FocusNode();
-  var stateSearch = false;
-  Contact contact;
+  final finduserController = TextEditingController();
+  final FocusNode _focusNode = FocusNode();
+  bool isVisible = false;
 
   @override
   void initState() {
@@ -36,8 +38,15 @@ class _UserSearchState extends State<UserSearch> {
     print("Focus: " + _focusNode.hasFocus.toString());
   }
 
-  Future<Contact> find(context) async {
-    return BlocProvider.of<SearchUsernameCubit>(context).findUsername();
+  void find(context) async {
+    // finduserController.value.text.length < 6
+    //     ? print('invalid username')
+    //     : print(finduserController.value.text);
+    setState(() {
+      isVisible = !isVisible;
+    });
+    return BlocProvider.of<FinduserBloc>(context)
+        .add(FinduserEvent(finduserController.value.text));
   }
 
   @override
@@ -45,16 +54,51 @@ class _UserSearchState extends State<UserSearch> {
     return SingleChildScrollView(
       child: Column(
         children: [
-          SearchUsernameInput(
-            focusNode: _focusNode,
+          Row(
+            children: [
+              Expanded(
+                child: SearchUsernameInput(
+                  focusNode: _focusNode,
+                  myController: finduserController,
+                ),
+              ),
+              GestureDetector(
+                onTap: () async {
+                  find(context);
+                },
+                child: Container(
+                  width: 40,
+                  height: 40,
+                  color: Colors.cyan,
+                ),
+              )
+            ],
           ),
-          MaterialButton(
-            onPressed: () async {
-              contact = await find(context);
-            },
-            color: Colors.yellowAccent,
-          ),
-          Text(contact.id),
+          isVisible
+              ? Container(
+                  child: BlocBuilder<FinduserBloc, FinduserState>(
+                    cubit: BlocProvider.of<FinduserBloc>(context),
+                    builder: (BuildContext context, FinduserState state) {
+                      if (state.isLoading) {
+                        return Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      }
+                      if (state.hasError) {
+                        return Container(
+                          child: Text('Error'),
+                        );
+                      }
+                      return FoundUserUi(
+                        result: state.contact,
+                        finduserController: finduserController,
+                        focusNode: _focusNode,
+                        isVisible: isVisible,
+                      );
+                    },
+                  ),
+                )
+              : Container(),
         ],
       ),
     );

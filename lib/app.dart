@@ -76,8 +76,6 @@ class App2 extends StatelessWidget {
           child: BlocProvider<ContactBloc>(
             create: (context) => ContactBloc(_firestoreContactRepository,
                 context.read<AuthenticationBloc>()),
-            // ..add(LoadContacts(
-            //     uid: context.read<AuthenticationBloc>().state.user.id)),
             child: BlocProvider(
               create: (context) => BrightnessCubit(),
               child: AppView(),
