@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:void_chat_beta/blocs/contactlist/contactlist_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:void_chat_beta/ui/frontside/status_bar/screen_tag.dart';
+import 'package:get/get.dart';
 
 class ContactPageTabs extends StatelessWidget {
   const ContactPageTabs({
@@ -34,7 +35,7 @@ class ContactPageTabs extends StatelessWidget {
                           : Theme.of(context).primaryColor,
                   child: Center(
                     child: Text(
-                      'Friends',
+                      'contacts_friends'.tr,
                       style: GoogleFonts.jura(
                         fontWeight: FontWeight.w300,
                         fontSize: 18,
@@ -68,7 +69,7 @@ class ContactPageTabs extends StatelessWidget {
                           : Theme.of(context).primaryColor,
                   child: Center(
                     child: Text(
-                      'Pending',
+                      'contacts_pending'.tr,
                       style: GoogleFonts.jura(
                         fontWeight: FontWeight.w300,
                         fontSize: 18,
@@ -100,16 +101,19 @@ class ContactPageTabs extends StatelessWidget {
                       context.watch<ContactlistBloc>().state is BlocklistState
                           ? Theme.of(context).backgroundColor
                           : Theme.of(context).primaryColor,
-                  child: Center(
-                    child: Text(
-                      'Blocked',
-                      style: GoogleFonts.jura(
-                        fontWeight: FontWeight.w300,
-                        fontSize: 18,
-                        color: context.watch<ContactlistBloc>().state
-                                is BlocklistState
-                            ? Theme.of(context).primaryColor
-                            : Theme.of(context).backgroundColor,
+                  child: SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Center(
+                      child: Text(
+                        'contacts_blocked'.tr,
+                        style: GoogleFonts.jura(
+                          fontWeight: FontWeight.w300,
+                          fontSize: 18,
+                          color: context.watch<ContactlistBloc>().state
+                                  is BlocklistState
+                              ? Theme.of(context).primaryColor
+                              : Theme.of(context).backgroundColor,
+                        ),
                       ),
                     ),
                   ),

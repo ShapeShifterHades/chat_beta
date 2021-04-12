@@ -7,6 +7,7 @@ import 'package:void_chat_beta/blocs/contactlist/contactlist_bloc.dart';
 import 'package:void_chat_beta/contacts/bloc/bloc/finduser_bloc.dart';
 import 'package:void_chat_beta/contacts/widgets/pendinglist_content.dart';
 import 'package:void_chat_beta/contacts/widgets/searchbar/user_search.dart';
+import 'package:get/get.dart';
 
 import 'friendlist_content.dart';
 
@@ -42,7 +43,7 @@ class ContactPageTabsContent extends StatelessWidget {
                     if (state is ContactlistLoading) {
                       return Center(
                         child: Text(
-                          'Loading',
+                          'contacts_loading'.tr,
                           style: GoogleFonts.jura(
                               color: Theme.of(context).primaryColor),
                         ),

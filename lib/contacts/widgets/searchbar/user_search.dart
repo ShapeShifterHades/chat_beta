@@ -1,4 +1,3 @@
-import 'package:firestore_repository/firestore_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:void_chat_beta/contacts/bloc/bloc/finduser_bloc.dart';
 import 'package:void_chat_beta/contacts/widgets/searchbar/search_username_input.dart';
@@ -52,54 +51,72 @@ class _UserSearchState extends State<UserSearch> {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      child: Column(
-        children: [
-          Row(
-            children: [
-              Expanded(
-                child: SearchUsernameInput(
-                  focusNode: _focusNode,
-                  myController: finduserController,
+      child: Padding(
+        padding: const EdgeInsets.only(top: 20),
+        child: Column(
+          children: [
+            Row(
+              children: [
+                Expanded(
+                  child: SearchUsernameInput(
+                    focusNode: _focusNode,
+                    myController: finduserController,
+                  ),
                 ),
-              ),
-              GestureDetector(
-                onTap: () async {
-                  find(context);
-                },
-                child: Container(
-                  width: 40,
-                  height: 40,
-                  color: Colors.cyan,
-                ),
-              )
-            ],
-          ),
-          isVisible
-              ? Container(
-                  child: BlocBuilder<FinduserBloc, FinduserState>(
-                    cubit: BlocProvider.of<FinduserBloc>(context),
-                    builder: (BuildContext context, FinduserState state) {
-                      if (state.isLoading) {
-                        return Center(
-                          child: CircularProgressIndicator(),
-                        );
-                      }
-                      if (state.hasError) {
-                        return Container(
-                          child: Text('Error'),
-                        );
-                      }
-                      return FoundUserUi(
-                        result: state.contact,
-                        finduserController: finduserController,
-                        focusNode: _focusNode,
-                        isVisible: isVisible,
-                      );
-                    },
+                Transform.translate(
+                  offset: Offset(0, -10),
+                  child: Container(
+                    alignment: Alignment.centerRight,
+                    width: 50,
+                    height: 50,
+                    child: isVisible
+                        ? IconButton(
+                            icon: Icon(Icons.close,
+                                color: Theme.of(context).primaryColor),
+                            onPressed: () async {
+                              setState(() {
+                                isVisible = false;
+                              });
+                            },
+                          )
+                        : IconButton(
+                            icon: Icon(Icons.search,
+                                color: Theme.of(context).primaryColor),
+                            onPressed: () async {
+                              find(context);
+                            },
+                          ),
                   ),
                 )
-              : Container(),
-        ],
+              ],
+            ),
+            isVisible
+                ? Container(
+                    child: BlocBuilder<FinduserBloc, FinduserState>(
+                      cubit: BlocProvider.of<FinduserBloc>(context),
+                      builder: (BuildContext context, FinduserState state) {
+                        if (state.isLoading) {
+                          return Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        }
+                        if (state.hasError) {
+                          return Container(
+                            child: Text('Error'),
+                          );
+                        }
+                        return FoundUserUi(
+                          result: state.contact,
+                          finduserController: finduserController,
+                          focusNode: _focusNode,
+                          isVisible: isVisible,
+                        );
+                      },
+                    ),
+                  )
+                : Container(),
+          ],
+        ),
       ),
     );
   }

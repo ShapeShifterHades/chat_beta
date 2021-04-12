@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:void_chat_beta/authentication/bloc/authentication_bloc.dart';
 import 'package:void_chat_beta/contacts/bloc/contact_bloc.dart';
 import 'package:void_chat_beta/contacts/widgets/tiles/outcoming_pending_request_tile.dart';
+import 'package:get/get.dart';
 
 import 'tiles/incoming_pending_requests.dart';
 
@@ -32,7 +33,9 @@ class PendinglistContent extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
                           Text(
-                            'Requests: ${sorted.length}',
+                            'contacts_pending'.tr +
+                                ': ' +
+                                sorted.length.toString(),
                             style: GoogleFonts.jura(
                                 fontWeight: FontWeight.w300,
                                 fontSize: 15,

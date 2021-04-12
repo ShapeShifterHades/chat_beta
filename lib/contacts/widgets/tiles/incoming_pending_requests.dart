@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:void_chat_beta/contacts/bloc/contact_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get/get.dart';
 
 class IncomingPendingRequestTile extends StatefulWidget {
   final String username;
@@ -276,7 +277,7 @@ class RightSideExpanded extends StatelessWidget {
                   children: [
                     SizedBox(width: 7),
                     Text(
-                      'User:',
+                      'contacts_user'.tr,
                       style: GoogleFonts.jura(
                           color: Theme.of(context).backgroundColor,
                           fontWeight: FontWeight.bold),
@@ -295,7 +296,7 @@ class RightSideExpanded extends StatelessWidget {
                   children: [
                     SizedBox(width: 7),
                     Text(
-                      'Id:',
+                      'contacts_id'.tr,
                       style: GoogleFonts.jura(
                           color: Theme.of(context).backgroundColor,
                           fontWeight: FontWeight.bold),
@@ -316,7 +317,7 @@ class RightSideExpanded extends StatelessWidget {
                   children: [
                     SizedBox(width: 7),
                     Text(
-                      'Sent at:',
+                      'contacts_sent_at'.tr,
                       style: GoogleFonts.jura(
                           color: Theme.of(context).backgroundColor,
                           fontWeight: FontWeight.bold),
@@ -425,7 +426,7 @@ class RightSideShort extends StatelessWidget {
                       height: 39.5,
                       alignment: Alignment.centerLeft,
                       child: Text(
-                        'ACCEPT',
+                        'contacts_accept'.tr,
                         style: GoogleFonts.jura(
                             color: Colors.green[700],
                             fontSize: 14,
@@ -448,7 +449,7 @@ class RightSideShort extends StatelessWidget {
                       height: 39.5,
                       alignment: Alignment.centerLeft,
                       child: Text(
-                        'REJECT',
+                        'contacts_reject'.tr,
                         style: GoogleFonts.jura(
                             color: Colors.red[800],
                             fontSize: 14,
@@ -461,13 +462,32 @@ class RightSideShort extends StatelessWidget {
             ),
             Stack(
               children: [
-                Container(
-                  height: 80,
-                  width: 80,
-                  child: CircleAvatar(
-                      backgroundImage:
-                          Image.asset('assets/images/avatar-placeholder.png')
-                              .image),
+                ClipOval(
+                  child: Container(
+                    height: 80,
+                    width: 80,
+                    clipBehavior: Clip.hardEdge,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      image: DecorationImage(
+                        image:
+                            AssetImage('assets/images/avatar-placeholder.png'),
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                    foregroundDecoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      boxShadow: [
+                        BoxShadow(
+                          color: Theme.of(context)
+                              .primaryColor, // background color
+                          // color: Color(0xffe0e5ec), // background color
+                          spreadRadius: -8.0,
+                          blurRadius: 50.0,
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
                 Positioned(
                   bottom: 1,
@@ -499,10 +519,10 @@ class RightSideShort extends StatelessWidget {
                     alignment: Alignment.center,
                     height: 39.5,
                     child: Text(
-                      'User info',
+                      'contacts_more_info'.tr,
                       style: GoogleFonts.jura(
                           color: Theme.of(context).backgroundColor,
-                          fontSize: 14,
+                          fontSize: 11,
                           fontWeight: FontWeight.normal),
                     ),
                   ),

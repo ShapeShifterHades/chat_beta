@@ -38,6 +38,20 @@ class ContentTranslations extends Translations {
           'signup_agree': '   Check to continue',
           'signup_brightness': 'Night mode',
           'signup_locale': 'Locale',
+          // Contacts page translations: starts with contacts_
+          //
+          'contacts_search_username': 'search user',
+          'contacts_friends': 'Friends',
+          'contacts_pending': 'Requests',
+          'contacts_blocked': 'Blocked',
+          'contacts_loading': 'Loading...',
+          'contacts_more_info': 'More info',
+          'contacts_cancel': 'Cancel',
+          'contacts_reject': 'Reject',
+          'contacts_accept': 'Accept',
+          'contacts_user': 'Username: ',
+          'contacts_id': 'Id: ',
+          'contacts_sent_at': 'Sent at: ',
         },
         'RU': {
           // LoginPage Translations: starts with loginpage_
@@ -73,6 +87,20 @@ class ContentTranslations extends Translations {
           'signup_agree': '   Необходимо согласие',
           'signup_brightness': 'Ночной режим',
           'signup_locale': 'Язык',
+          // Contacts page translations: starts with contacts_
+          //
+          'contacts_search_username': 'Поиск пользователя',
+          'contacts_friends': 'Друзья',
+          'contacts_pending': 'Заявки',
+          'contacts_blocked': 'Черный список',
+          'contacts_loading': 'Загрузка...',
+          'contacts_more_info': 'Подробнее',
+          'contacts_cancel': 'Отозвать',
+          'contacts_reject': 'Отклонить',
+          'contacts_accept': 'Принять',
+          'contacts_user': 'Пользователь: ',
+          'contacts_id': 'Id: ',
+          'contacts_sent_at': 'Отправлено: ',
         }
       };
 }

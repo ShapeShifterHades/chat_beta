@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:get/get.dart';
 
 import 'package:void_chat_beta/contacts/bloc/contact_bloc.dart';
 
@@ -30,7 +31,9 @@ class FriendlistContent extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         Text(
-                          'Friends: ${sorted.length}',
+                          'contacts_friends'.tr +
+                              ': ' +
+                              sorted.length.toString(),
                           style: GoogleFonts.jura(
                               fontWeight: FontWeight.w300,
                               fontSize: 15,

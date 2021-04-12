@@ -17,7 +17,7 @@ class SearchUsernameInput extends StatelessWidget {
       cursorColor: Theme.of(context).primaryColor,
       controller: myController,
       decoration: InputDecoration(
-        labelText: 'search_username'.tr,
+        labelText: 'contacts_search_username'.tr,
         helperText: '',
       ),
     );
