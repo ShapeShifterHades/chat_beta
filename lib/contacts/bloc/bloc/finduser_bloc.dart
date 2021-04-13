@@ -4,6 +4,7 @@ import 'package:bloc/bloc.dart';
 import 'package:firestore_repository/firestore_repository.dart';
 import 'package:meta/meta.dart';
 import 'package:void_chat_beta/authentication/authentication.dart';
+import 'package:equatable/equatable.dart';
 
 part 'finduser_event.dart';
 part 'finduser_state.dart';
@@ -21,7 +22,6 @@ class FinduserBloc extends Bloc<FinduserEvent, FinduserState> {
   String uid;
   Contact contact;
 
-  @override
   FinduserState get initialState => FinduserState.initial();
 
   // @override
@@ -31,15 +31,19 @@ class FinduserBloc extends Bloc<FinduserEvent, FinduserState> {
 
   @override
   Stream<FinduserState> mapEventToState(FinduserEvent event) async* {
-    yield FinduserState.loading();
+    if (event is QueryEvent) {
+      yield FinduserState.loading();
 
-    try {
-      Contact contact = await _getSearchResults(event.query);
-      yield FinduserState.success(contact);
-    } catch (_) {
-      yield FinduserState.error();
-    }
+      try {
+        Contact contact = await _getSearchResults(event.query);
+        yield FinduserState.success(contact);
+      } catch (_) {
+        yield FinduserState.error();
+      }
+    } else if (event is ResetEvent) yield FinduserState.initial();
   }
+
+  Future<void> resetState() {}
 
   Future<Contact> _getSearchResults(String query) async {
     try {

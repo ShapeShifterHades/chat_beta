@@ -37,51 +37,37 @@ class App extends StatelessWidget {
         FirestoreNewUserRepository();
     FirestoreContactRepository _firestoreContactRepository =
         FirestoreContactRepository();
-    return RepositoryProvider.value(
-      value: _firestoreNewUserRepository,
-      child: RepositoryProvider.value(
-        value: _authenticationRepository,
-        child: RepositoryProvider.value(
-          value: _firestoreContactRepository,
-          child: App2(
-              authenticationRepository: _authenticationRepository,
-              firestoreContactRepository: _firestoreContactRepository),
-        ),
-      ),
-    );
-  }
-}
-
-class App2 extends StatelessWidget {
-  const App2({
-    Key key,
-    @required AuthenticationRepository authenticationRepository,
-    @required FirestoreContactRepository firestoreContactRepository,
-  })  : _authenticationRepository = authenticationRepository,
-        _firestoreContactRepository = firestoreContactRepository,
-        super(key: key);
-
-  final AuthenticationRepository _authenticationRepository;
-  final FirestoreContactRepository _firestoreContactRepository;
-
-  @override
-  Widget build(BuildContext context) {
-    return BlocProvider<AuthenticationBloc>(
-        lazy: false,
-        create: (context) => AuthenticationBloc(
-              authenticationRepository: _authenticationRepository,
-            ),
-        child: BlocProvider(
-          create: (context) => LocaleCubit(),
-          child: BlocProvider<ContactBloc>(
-            create: (context) => ContactBloc(_firestoreContactRepository,
-                context.read<AuthenticationBloc>()),
-            child: BlocProvider(
-              create: (context) => BrightnessCubit(),
-              child: AppView(),
-            ),
+    return MultiRepositoryProvider(
+        providers: [
+          RepositoryProvider.value(
+            value: _firestoreNewUserRepository,
           ),
-        ));
+          RepositoryProvider.value(
+            value: _firestoreContactRepository,
+          ),
+          RepositoryProvider.value(
+            value: _authenticationRepository,
+          ),
+        ],
+        child: BlocProvider<AuthenticationBloc>(
+            lazy: false,
+            create: (context) => AuthenticationBloc(
+                  authenticationRepository: _authenticationRepository,
+                ),
+            child: Builder(
+              builder: (context) {
+                return MultiBlocProvider(providers: [
+                  BlocProvider<LocaleCubit>(create: (context) => LocaleCubit()),
+                  BlocProvider<BrightnessCubit>(
+                      create: (context) => BrightnessCubit()),
+                  BlocProvider<ContactBloc>(
+                      lazy: false,
+                      create: (context) => ContactBloc(
+                          _firestoreContactRepository,
+                          context.read<AuthenticationBloc>())),
+                ], child: AppView());
+              },
+            )));
   }
 }
 
@@ -105,7 +91,7 @@ class AppView extends StatelessWidget {
                       Get.Get.offAllNamed(homeRoute, arguments: 'Messages');
                       break;
                     case AuthenticationStatus.unknown:
-                      // Get.Get.offAllNamed(loginRoute);
+                      SplashView.route();
                       break;
                   }
                 },
@@ -113,9 +99,7 @@ class AppView extends StatelessWidget {
                   locale: Locale(context.watch<LocaleCubit>().state ??
                       Get.Get.deviceLocale.countryCode),
                   routingCallback: (routing) {
-                    if (routing.current == homeRoute) {
-                      print('MiddleWare here adding an ContactBlocEvent');
-                    }
+                    if (routing.current == homeRoute) {}
                   },
                   onGenerateRoute: (_) => SplashView.route(),
                   getPages: [
@@ -155,14 +139,10 @@ class AppView extends StatelessWidget {
                     Get.GetPage(name: faqRoute, page: () => FaqView()),
                     Get.GetPage(
                       name: contactsRoute,
-                      page: () => BlocProvider<ContactlistBloc>(
-                        create: (context) =>
-                            ContactlistBloc(context.read<ContactBloc>()),
-                        child: ContactsView(),
-                      ),
+                      page: () => ContactsView(),
                     ),
                     Get.GetPage(
-                      name: '/newSignUp',
+                      name: '/signup',
                       page: () => SignUpPage(),
                     ),
                   ],
@@ -171,20 +151,20 @@ class AppView extends StatelessWidget {
                   translations: ContentTranslations(),
                   debugShowCheckedModeBanner: false,
                   theme: theme1(context, brightness),
-                  builder: (context, child) {
-                    return AnnotatedRegion<SystemUiOverlayStyle>(
-                      value: SystemUiOverlayStyle(
-                        // For Android.
-                        // Use [light] for white status bar and [dark] for black status bar.
-                        statusBarIconBrightness:
-                            context.watch<BrightnessCubit>().state ==
-                                    Brightness.light
-                                ? Brightness.dark
-                                : Brightness.light,
-                      ),
-                      child: child,
-                    );
-                  },
+                  // builder: (context, child) {
+                  //   return AnnotatedRegion<SystemUiOverlayStyle>(
+                  //     value: SystemUiOverlayStyle(
+                  //       // For Android.
+                  //       // Use [light] for white status bar and [dark] for black status bar.
+                  //       statusBarIconBrightness:
+                  //           context.watch<BrightnessCubit>().state ==
+                  //                   Brightness.light
+                  //               ? Brightness.dark
+                  //               : Brightness.light,
+                  //     ),
+                  //     child: child,
+                  //   );
+                  // },
                 ));
           },
         );

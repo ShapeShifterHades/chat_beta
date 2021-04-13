@@ -1,8 +1,13 @@
+import 'package:firestore_repository/firestore_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_bloc/flutter_form_bloc.dart';
+import 'package:void_chat_beta/authentication/authentication.dart';
 
 import 'package:void_chat_beta/blocs/contactlist/contactlist_bloc.dart';
+import 'package:void_chat_beta/contacts/bloc/bloc/finduser_bloc.dart';
+import 'package:void_chat_beta/contacts/bloc/bloc/search_button_bloc.dart';
+import 'package:void_chat_beta/contacts/bloc/contact_bloc.dart';
 import 'package:void_chat_beta/contacts/widgets/contact_page_tabs.dart';
 import 'package:void_chat_beta/contacts/widgets/contact_page_tabs_content.dart';
 
@@ -12,27 +17,43 @@ class ContactsView extends StatelessWidget {
   const ContactsView({Key key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      body: UI(
-        body: BlocBuilder<ContactlistBloc, ContactlistState>(
-            builder: (context, state) {
-          return GestureDetector(
-            onTap: () {
-              FocusScopeNode currentFocus = FocusScope.of(context);
-              if (!currentFocus.hasPrimaryFocus) {
-                currentFocus.unfocus();
-              }
-            },
-            child: Column(
-              children: [
-                ContactPageTabs(),
-                ContactPageTabsContent(),
-              ],
+    return MultiBlocProvider(
+        providers: [
+          BlocProvider<ContactlistBloc>(
+              create: (context) =>
+                  ContactlistBloc(context.read<ContactBloc>())),
+          BlocProvider<FinduserBloc>(
+              create: (context) => FinduserBloc(
+                  context.read<AuthenticationBloc>(),
+                  context.read<FirestoreContactRepository>())),
+        ],
+        child: Builder(builder: (context) {
+          return BlocProvider(
+            create: (context) =>
+                SearchButtonBloc(BlocProvider.of<FinduserBloc>(context)),
+            child: Scaffold(
+              resizeToAvoidBottomInset: false,
+              body: UI(
+                body: BlocBuilder<ContactlistBloc, ContactlistState>(
+                    builder: (context, state) {
+                  return GestureDetector(
+                    onTap: () {
+                      FocusScopeNode currentFocus = FocusScope.of(context);
+                      if (!currentFocus.hasPrimaryFocus) {
+                        currentFocus.unfocus();
+                      }
+                    },
+                    child: Column(
+                      children: [
+                        ContactPageTabs(),
+                        ContactPageTabsContent(),
+                      ],
+                    ),
+                  );
+                }),
+              ),
             ),
           );
-        }),
-      ),
-    );
+        }));
   }
 }
