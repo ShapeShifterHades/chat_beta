@@ -16,34 +16,24 @@ class ScreenTag extends StatelessWidget {
   Widget build(BuildContext context) {
     return CustomPaint(
       painter: ScreenTagPainter(context: context),
-      child: ClipPath(
-        clipper: ScreenTagClipper(),
-        child: Container(
-          // color: Theme.of(context).primaryColor.withOpacity(0.08),
-          // height: 36,
-          child: child ??
-              Material(
-                color: Colors.transparent,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 20),
-                      child: Text(
-                        Get.arguments ?? 'null',
-                        style: GoogleFonts.jura(
-                            color: Theme.of(context)
-                                .primaryTextTheme
-                                .bodyText1
-                                .color,
-                            fontSize: 20,
-                            fontWeight: FontWeight.w300),
-                      ),
-                    ),
-                  ],
-                ),
+      child: Container(
+        child: child ??
+            Material(
+              color: Colors.transparent,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Text(
+                    Get.arguments ?? 'null',
+                    style: GoogleFonts.jura(
+                        color:
+                            Theme.of(context).primaryTextTheme.bodyText1.color,
+                        fontSize: 20,
+                        fontWeight: FontWeight.w300),
+                  ),
+                ],
               ),
-        ),
+            ),
       ),
     );
   }
@@ -77,14 +67,29 @@ class ScreenTagPainter extends CustomPainter {
       ..strokeCap = StrokeCap.butt
       ..color = Theme.of(context).primaryTextTheme.bodyText1.color;
 
-    canvas.drawPath(path1, paint1);
+    // canvas.drawPath(path1, paint1);
 
     Paint paint2 = Paint()
       ..style = PaintingStyle.stroke
       ..strokeWidth = 0.2
       ..color = color ?? Theme.of(context).primaryTextTheme.bodyText1.color;
 
-    canvas.drawPath(path2, paint2);
+    // canvas.drawPath(path2, paint2);
+
+    Paint paint3 = Paint()
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 2
+      ..strokeCap = StrokeCap.butt
+      ..color = Colors.red;
+    Path path3 = Path();
+
+    path3.lineTo(0, size.height - 8);
+    path3.lineTo(8, size.height);
+    path3.lineTo(size.width, size.height);
+    path3.lineTo(size.width, 8);
+    path3.lineTo(size.width - 8, 0);
+    // canvas.clipPath(path3);
+    canvas.drawPath(path3, paint3);
   }
 
   @override

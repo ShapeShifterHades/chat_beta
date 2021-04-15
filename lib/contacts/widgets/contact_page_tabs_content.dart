@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:void_chat_beta/blocs/contactlist/contactlist_bloc.dart';
-import 'package:void_chat_beta/contacts/bloc/bloc/search_button_bloc.dart';
 import 'package:void_chat_beta/contacts/widgets/pendinglist_content.dart';
 import 'package:void_chat_beta/contacts/widgets/searchbar/user_search.dart';
 import 'package:get/get.dart';
