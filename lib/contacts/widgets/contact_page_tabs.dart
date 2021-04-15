@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:void_chat_beta/blocs/contactlist/contactlist_bloc.dart';
+import 'package:void_chat_beta/blocs/contact_tabs/contact_tabs_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:void_chat_beta/ui/frontside/status_bar/screen_tag.dart';
 import 'package:get/get.dart';
@@ -15,24 +15,41 @@ class ContactPageTabs extends StatefulWidget {
 }
 
 class _ContactPageTabsState extends State<ContactPageTabs> {
-  DropListModel dropListModel = DropListModel([
-    OptionItem(id: "2", title: 'contacts_pending'.tr),
-    OptionItem(id: "3", title: 'contacts_blocked'.tr)
-  ]);
-  OptionItem optionItemSelected =
-      OptionItem(id: "1", title: 'contacts_friends'.tr);
+  List<OptionItem> tabList = [
+    OptionItem(id: "1", title: 'FriendlistState'),
+    OptionItem(id: "2", title: 'PendinglistState'),
+    OptionItem(id: "3", title: 'BlocklistState'),
+  ];
+
+  List<OptionItem> getListWithout(String currentTab, List<OptionItem> tablist) {
+    var _tablist = tablist;
+    _tablist.removeWhere((element) => element.title == currentTab.toString());
+    return _tablist;
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 260,
-      child: SelectDropList(
-        optionItemSelected,
-        dropListModel,
-        (optionItem) {
-          optionItemSelected = optionItem;
-          setState(() {});
-        },
-      ),
+    return BlocBuilder<ContactTabsBloc, ContactTabsState>(
+      builder: (context, state) {
+        OptionItem _currentTab =
+            tabList.firstWhere((element) => element.title == state.toString());
+        DropListModel _dropListModel =
+            DropListModel(getListWithout(state.toString(), tabList));
+        return Container(
+          width: 260,
+          child: SelectDropList(
+            _currentTab,
+            _dropListModel,
+            (optionItem) {
+              context.read<ContactTabsBloc>().add(PendinglistClicked());
+              print(optionItem.title.toString());
+              _dropListModel =
+                  DropListModel(getListWithout(state.toString(), tabList));
+              setState(() {});
+            },
+          ),
+        );
+      },
     );
   }
 }
@@ -70,7 +87,7 @@ class _SelectDropListState extends State<SelectDropList>
   AnimationController expandController;
   Animation<double> animation;
 
-  bool isShow = false;
+  bool isShown = false;
 
   _SelectDropListState(this.optionItemSelected, this.dropListModel);
 
@@ -87,7 +104,7 @@ class _SelectDropListState extends State<SelectDropList>
   }
 
   void _runExpandCheck() {
-    if (isShow) {
+    if (isShown) {
       expandController.forward();
     } else {
       expandController.reverse();
@@ -115,7 +132,7 @@ class _SelectDropListState extends State<SelectDropList>
           ),
           child: GestureDetector(
             onTap: () {
-              this.isShow = !this.isShow;
+              this.isShown = !this.isShown;
               _runExpandCheck();
               setState(() {});
             },
@@ -135,7 +152,7 @@ class _SelectDropListState extends State<SelectDropList>
                 Align(
                   alignment: Alignment(1, 0),
                   child: Icon(
-                    isShow ? Icons.arrow_drop_down : Icons.arrow_right,
+                    isShown ? Icons.arrow_drop_down : Icons.arrow_right,
                     color: Theme.of(context).primaryColor,
                     size: 25,
                   ),
@@ -195,7 +212,7 @@ class _SelectDropListState extends State<SelectDropList>
         ),
         onTap: () {
           this.optionItemSelected = item;
-          isShow = false;
+          isShown = false;
           expandController.reverse();
           widget.onOptionSelected(item);
         },
@@ -211,12 +228,12 @@ class _BlockTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    bool active = context.watch<ContactlistBloc>().state is BlocklistState;
+    bool active = context.watch<ContactTabsBloc>().state is BlocklistState;
 
     return ScreenTag(
       child: GestureDetector(
         onTap: () {
-          context.read<ContactlistBloc>().add(BlocklistClicked());
+          context.read<ContactTabsBloc>().add(BlocklistClicked());
         },
         child: AnimatedContainer(
           duration: Duration(milliseconds: 700),
@@ -253,12 +270,12 @@ class _PendingTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    bool active = context.watch<ContactlistBloc>().state is PendinglistState;
+    bool active = context.watch<ContactTabsBloc>().state is PendinglistState;
 
     return ScreenTag(
       child: GestureDetector(
         onTap: () {
-          context.read<ContactlistBloc>().add(PendinglistClicked());
+          context.read<ContactTabsBloc>().add(PendinglistClicked());
         },
         child: AnimatedContainer(
           duration: Duration(milliseconds: 700),
@@ -292,10 +309,10 @@ class _FriendTag extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    bool active = context.watch<ContactlistBloc>().state is FriendlistState;
+    bool active = context.watch<ContactTabsBloc>().state is FriendlistState;
     return GestureDetector(
       onTap: () {
-        context.read<ContactlistBloc>().add(
+        context.read<ContactTabsBloc>().add(
               FriendlistClicked(),
             );
       },

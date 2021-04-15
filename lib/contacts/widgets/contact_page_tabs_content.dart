@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:void_chat_beta/blocs/contactlist/contactlist_bloc.dart';
+import 'package:void_chat_beta/blocs/contact_tabs/contact_tabs_bloc.dart';
 import 'package:void_chat_beta/contacts/widgets/pendinglist_content.dart';
 import 'package:void_chat_beta/contacts/widgets/searchbar/user_search.dart';
 import 'package:get/get.dart';
@@ -28,8 +28,8 @@ class ContactPageTabsContent extends StatelessWidget {
                 width: double.infinity,
                 child: UserSearch(),
               ),
-              BlocBuilder<ContactlistBloc, ContactlistState>(
-                  cubit: BlocProvider.of<ContactlistBloc>(context),
+              BlocBuilder<ContactTabsBloc, ContactTabsState>(
+                  cubit: BlocProvider.of<ContactTabsBloc>(context),
                   builder: (context, state) {
                     if (state is ContactlistLoading) {
                       return Center(

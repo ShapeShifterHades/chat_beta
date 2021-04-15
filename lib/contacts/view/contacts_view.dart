@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_bloc/flutter_form_bloc.dart';
 import 'package:void_chat_beta/authentication/authentication.dart';
+import 'package:void_chat_beta/blocs/contact_tabs/contact_tabs_bloc.dart';
 
-import 'package:void_chat_beta/blocs/contactlist/contactlist_bloc.dart';
 import 'package:void_chat_beta/contacts/bloc/bloc/finduser_bloc.dart';
 import 'package:void_chat_beta/contacts/bloc/bloc/search_button_bloc.dart';
 import 'package:void_chat_beta/contacts/bloc/contact_bloc.dart';
@@ -19,9 +19,9 @@ class ContactsView extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
         providers: [
-          BlocProvider<ContactlistBloc>(
+          BlocProvider<ContactTabsBloc>(
               create: (context) =>
-                  ContactlistBloc(context.read<ContactBloc>())),
+                  ContactTabsBloc(context.read<ContactBloc>())),
           BlocProvider<FinduserBloc>(
               create: (context) => FinduserBloc(
                   context.read<AuthenticationBloc>(),
@@ -34,7 +34,7 @@ class ContactsView extends StatelessWidget {
             child: Scaffold(
               resizeToAvoidBottomInset: false,
               body: UI(
-                body: BlocBuilder<ContactlistBloc, ContactlistState>(
+                body: BlocBuilder<ContactTabsBloc, ContactTabsState>(
                     builder: (context, state) {
                   return GestureDetector(
                     onTap: () {

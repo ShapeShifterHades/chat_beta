@@ -6,13 +6,13 @@ import 'package:firestore_repository/firestore_repository.dart';
 import 'package:meta/meta.dart';
 import 'package:void_chat_beta/contacts/bloc/contact_bloc.dart';
 
-part 'contactlist_event.dart';
-part 'contactlist_state.dart';
+part 'contact_tabs_event.dart';
+part 'contact_tabs_state.dart';
 
-class ContactlistBloc extends Bloc<ContactlistEvent, ContactlistState> {
+class ContactTabsBloc extends Bloc<ContactTabsEvent, ContactTabsState> {
   final ContactBloc _contactsBloc;
   StreamSubscription contactsSubscription;
-  ContactlistBloc(this._contactsBloc)
+  ContactTabsBloc(this._contactsBloc)
       : contactsSubscription = _contactsBloc.listen((state) {
           if (state is ContactsLoaded) {
             ContactsUpdated((_contactsBloc.state as ContactsLoaded).contacts);
@@ -22,7 +22,7 @@ class ContactlistBloc extends Bloc<ContactlistEvent, ContactlistState> {
 
   @override
   // ignore: override_on_non_overriding_member
-  ContactlistState get initialState {
+  ContactTabsState get initialState {
     return _contactsBloc.state is ContactsLoaded
         ? FriendlistState(
             fullContactlist: (_contactsBloc.state as ContactsLoaded).contacts)
@@ -30,8 +30,8 @@ class ContactlistBloc extends Bloc<ContactlistEvent, ContactlistState> {
   }
 
   @override
-  Stream<ContactlistState> mapEventToState(
-    ContactlistEvent event,
+  Stream<ContactTabsState> mapEventToState(
+    ContactTabsEvent event,
   ) async* {
     if (event is FriendlistClicked) {
       yield _mapFriendlistClickedToState(event);

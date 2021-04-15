@@ -1,19 +1,19 @@
-part of 'contactlist_bloc.dart';
+part of 'contact_tabs_bloc.dart';
 
 enum ContactsStatus { friendlist, blocklist, pending, loading }
 
-abstract class ContactlistState extends Equatable {
+abstract class ContactTabsState extends Equatable {
   final List<Contact> contacts;
-  ContactlistState({
+  ContactTabsState({
     this.contacts = const [],
   });
   @override
   List<Object> get props => [contacts];
 }
 
-class ContactlistLoading extends ContactlistState {}
+class ContactlistLoading extends ContactTabsState {}
 
-class FriendlistState extends ContactlistState {
+class FriendlistState extends ContactTabsState {
   final List<Contact> fullContactlist;
   final List<Contact> contacts;
   FriendlistState({
@@ -26,7 +26,7 @@ class FriendlistState extends ContactlistState {
   List<Object> get props => [contacts];
 }
 
-class PendinglistState extends ContactlistState {
+class PendinglistState extends ContactTabsState {
   final List<Contact> fullContactlist;
   final List<Contact> contacts;
 
@@ -40,7 +40,7 @@ class PendinglistState extends ContactlistState {
   List<Object> get props => [contacts];
 }
 
-class BlocklistState extends ContactlistState {
+class BlocklistState extends ContactTabsState {
   final List<Contact> blocklist;
   final List<Contact> contacts;
 
