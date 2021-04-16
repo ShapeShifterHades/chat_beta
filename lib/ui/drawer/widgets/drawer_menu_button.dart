@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:void_chat_beta/styles.dart';
 
 /// Represetation of an animated buttor for a drawer-side main menu.
 class DrawerMenuButton extends StatefulWidget {
@@ -50,11 +50,10 @@ class _DrawerMenuButtonState extends State<DrawerMenuButton> {
         });
       },
       child: AnimatedOpacity(
-        duration: Duration(milliseconds: 200),
+        duration: Times.fast,
         opacity: _pressed ? 0.4 : 1,
         child: Row(
           children: [
-            SizedBox(width: 0),
             CustomPaint(
               painter: DrawerMenuButtonPainter(
                   pressed: _pressed,
@@ -63,23 +62,18 @@ class _DrawerMenuButtonState extends State<DrawerMenuButton> {
               child: ClipPath(
                 clipper: DrawerMenuButtonClipper(),
                 child: Container(
-                  // color: widget.isCurrentPage
-                  //     ? Theme.of(context).primaryColor
-                  //     : Theme.of(context).primaryColor.withOpacity(0.08),
                   width: 140,
                   height: 38,
+                  padding: EdgeInsets.only(bottom: 6),
                   child: Material(
                     color: Colors.transparent,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        SizedBox(width: 20),
+                        const SizedBox(width: 30),
                         Text(
                           widget.label,
-                          style: GoogleFonts.jura(
-                              color: Theme.of(context).primaryColor,
-                              fontSize: 20,
-                              fontWeight: FontWeight.w300),
+                          style: TextStyles.body1,
                           textAlign: TextAlign.left,
                         ),
                       ],

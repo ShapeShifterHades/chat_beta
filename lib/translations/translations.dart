@@ -20,7 +20,7 @@ class ContentTranslations extends Translations {
           'signup_i_agree': 'I agree with ',
           'signup_with_terms': 'Terms and Conditions',
           'signup_registration': 'REGISTRATION',
-          'signup_switch_to_login': 'SWITCH TO SIGNIN',
+          'signup_switch_to_login': 'SWITCH TO LOGIN',
           'signup_failure': 'FAILURE',
           'signup_submit': 'SUBMIT',
           'signup_connecting': 'CONNECTING...',
@@ -52,6 +52,16 @@ class ContentTranslations extends Translations {
           'contacts_user': 'Username: ',
           'contacts_id': 'Id: ',
           'contacts_sent_at': 'Sent at: ',
+          'contacts_status': 'Status: ',
+          // Drawer translations: starts with drawer_
+          //
+          'drawer_messages': 'Messages',
+          'drawer_contacts': 'Contacts',
+          'drawer_settings': 'Settings',
+          'drawer_security': 'Security',
+          'drawer_faq': 'Faq',
+          'drawer_logout': 'Logout',
+          'drawer_slogan': 'YorKee - keep the choice to yourself.',
         },
         'RU': {
           // LoginPage Translations: starts with loginpage_
@@ -101,6 +111,16 @@ class ContentTranslations extends Translations {
           'contacts_user': 'Пользователь: ',
           'contacts_id': 'Id: ',
           'contacts_sent_at': 'Отправлено: ',
+          'contacts_status': 'Статус: ',
+          // Drawer translations: starts with drawer_
+          //
+          'drawer_messages': 'Сообщения',
+          'drawer_contacts': 'Контакты',
+          'drawer_settings': 'Настройки',
+          'drawer_security': 'Защита',
+          'drawer_faq': 'FAQ',
+          'drawer_logout': 'Выход',
+          'drawer_slogan': 'YorKee - оставьте выбор за собой.',
         }
       };
 }

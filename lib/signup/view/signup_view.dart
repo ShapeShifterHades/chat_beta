@@ -1,45 +1,31 @@
+import 'package:authentication_repository/authentication_repository.dart';
+import 'package:firestore_repository/firestore_repository.dart';
 import 'package:flutter/material.dart';
-import 'package:keyboard_visibility/keyboard_visibility.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:void_chat_beta/signup/cubit/signup_cubit.dart';
 import 'package:void_chat_beta/signup/widgets/main_form_frame.dart';
 import 'package:void_chat_beta/signup/widgets/switch_to_login.dart';
 
-import 'package:simple_animations/simple_animations.dart';
-
-class SignUpView extends StatefulWidget {
+class SignUpView extends StatelessWidget {
   const SignUpView({
     Key key,
   }) : super(key: key);
 
   @override
-  _SignUpViewState createState() => _SignUpViewState();
-}
-
-class _SignUpViewState extends State<SignUpView> with AnimationMixin {
-  bool keyboardIsVisible = false;
-
-  @override
-  void initState() {
-    super.initState();
-
-    KeyboardVisibilityNotification().addNewListener(
-      onChange: (bool visible) {
-        keyboardIsVisible = visible;
-        setState(() {});
-      },
-    );
-  }
-
-  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Theme.of(context).backgroundColor,
-      resizeToAvoidBottomInset: false,
-      body: Stack(children: [
-        SignupMainFormFrame(
-          keyboardIsVisible: keyboardIsVisible,
-        ),
-        SwitchToLogin()
-      ]),
+    return BlocProvider(
+      create: (context) => SignUpCubit(
+        RepositoryProvider.of<AuthenticationRepository>(context),
+        RepositoryProvider.of<FirestoreNewUserRepository>(context),
+      ),
+      child: Scaffold(
+        backgroundColor: Theme.of(context).backgroundColor,
+        resizeToAvoidBottomInset: false,
+        body: Stack(children: [
+          SignupMainFormFrame(),
+          SwitchToLogin(),
+        ]),
+      ),
     );
   }
 }

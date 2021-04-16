@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:void_chat_beta/signup/widgets/switcher.dart';
+import 'package:void_chat_beta/styles.dart';
 import 'package:void_chat_beta/theme/brightness_cubit.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:void_chat_beta/theme/locale_cubit.dart';
@@ -42,20 +43,21 @@ class SettingsBox extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                SizedBox(width: 20),
-                Text('signup_brightness'.tr),
+                SizedBox(width: 50),
+                Text('signup_brightness'.tr, style: TextStyles.body1),
                 Spacer(),
                 Switcher(
                   onChange: context.watch<BrightnessCubit>().toggleBrightness,
                 ),
+                SizedBox(width: 50),
               ],
             ),
             SizedBox(height: 20),
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                SizedBox(width: 20),
-                Text('signup_locale'.tr),
+                SizedBox(width: 50),
+                Text('signup_locale'.tr, style: TextStyles.body1),
                 Spacer(),
                 Switcher(
                   onChange: () {
@@ -63,6 +65,7 @@ class SettingsBox extends StatelessWidget {
                     Get.updateLocale(Locale(context.read<LocaleCubit>().state));
                   },
                 ),
+                SizedBox(width: 50),
               ],
             ),
           ],

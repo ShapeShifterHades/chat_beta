@@ -49,3 +49,14 @@ flutter:
   uses-material-design: true
   assets:
    - assets/images/
+  fonts:
+    - family: Iceland
+      fonts:
+        - asset: fonts/Iceland-Regular.ttf
+    - family: Jura
+      fonts:
+        - asset: fonts/jura/static/Jura-Bold.ttf
+        - asset: fonts/jura/static/Jura-Light.ttf
+        - asset: fonts/jura/static/Jura-Medium.ttf
+        - asset: fonts/jura/static/Jura-Regular.ttf
+        - asset: fonts/jura/static/Jura-SemiBold.ttf

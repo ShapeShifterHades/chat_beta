@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:void_chat_beta/styles.dart';
 import 'package:void_chat_beta/ui/frontside/status_bar/screen_tag.dart';
 
 class SimpleButtonOne extends StatelessWidget {
@@ -21,12 +21,11 @@ class SimpleButtonOne extends StatelessWidget {
         disabledColor: Theme.of(context).backgroundColor,
         onPressed: onPressed ?? () {},
         highlightColor: Theme.of(context).backgroundColor.withOpacity(0.14),
-        child: Text(
-          text,
-          style: GoogleFonts.jura(
-              fontWeight: FontWeight.w500,
-              fontSize: 18,
-              color: Theme.of(context).backgroundColor),
+        child: Padding(
+          padding: const EdgeInsets.only(bottom: 6.0),
+          child: Text(text,
+              style: TextStyles.body1
+                  .copyWith(color: Theme.of(context).backgroundColor)),
         ),
       ),
     );

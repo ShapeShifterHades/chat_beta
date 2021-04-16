@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:void_chat_beta/styles.dart';
 import 'package:void_chat_beta/ui/frontside/status_bar/screen_tag.dart';
 
 class ButtonModel extends StatelessWidget {
@@ -18,6 +18,7 @@ class ButtonModel extends StatelessWidget {
     return Container(
       width: double.infinity,
       height: 30,
+      padding: EdgeInsets.only(bottom: 10),
       color: Theme.of(context).primaryColor,
       child: ClipPath(
         clipper: ScreenTagClipper(),
@@ -25,13 +26,9 @@ class ButtonModel extends StatelessWidget {
           disabledColor: Theme.of(context).backgroundColor,
           onPressed: onPressed ?? () {},
           highlightColor: Theme.of(context).backgroundColor.withOpacity(0.14),
-          child: Text(
-            text,
-            style: GoogleFonts.jura(
-                fontWeight: FontWeight.w500,
-                fontSize: 18,
-                color: Theme.of(context).backgroundColor),
-          ),
+          child: Text(text,
+              style: TextStyles.body1
+                  .copyWith(color: Theme.of(context).backgroundColor)),
         ),
       ),
     );

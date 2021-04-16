@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:void_chat_beta/signup/cubit/signup_cubit.dart';
 import 'package:get/get.dart';
+import 'package:void_chat_beta/styles.dart';
 
 class ConfirmPasswordInput extends StatelessWidget {
+  ConfirmPasswordInput({
+    Key key,
+  }) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<SignUpCubit, SignUpState>(
@@ -13,7 +16,7 @@ class ConfirmPasswordInput extends StatelessWidget {
           previous.confirmedPassword != current.confirmedPassword,
       builder: (context, state) {
         return TextField(
-          style: GoogleFonts.jura(fontSize: 24),
+          style: TextStyles.body1,
           cursorColor: Theme.of(context).primaryColor,
           key: const Key('signUpForm_confirmedPasswordInput_textField'),
           onChanged: (confirmPassword) => context

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:void_chat_beta/signup/widgets/constants.dart';
+import 'package:void_chat_beta/styles.dart';
 
 class OrLine extends StatelessWidget {
   const OrLine({
@@ -32,11 +33,12 @@ class OrLine extends StatelessWidget {
                 endIndent: 12,
               ),
             ),
-            Text(
-              'signup_or'.tr,
-              style: GoogleFonts.jura(
-                  fontWeight: FontWeight.bold,
-                  color: Theme.of(context).primaryColor),
+            Padding(
+              padding: const EdgeInsets.only(bottom: 6.0),
+              child: Text(
+                'signup_or'.tr,
+                style: TextStyles.body1,
+              ),
             ),
             Expanded(
                 child: Divider(

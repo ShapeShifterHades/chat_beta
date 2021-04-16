@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:void_chat_beta/styles.dart';
 
 import 'constants.dart';
 
@@ -35,9 +36,7 @@ class OrDivider extends StatelessWidget {
               ),
               Text(
                 'signup_or'.tr,
-                style: GoogleFonts.jura(
-                    fontWeight: FontWeight.bold,
-                    color: Theme.of(context).primaryColor),
+                style: TextStyles.body2,
               ),
               Expanded(
                   child: Divider(

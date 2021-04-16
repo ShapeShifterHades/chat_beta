@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:void_chat_beta/login/cubit/login_cubit.dart';
 import 'package:get/get.dart';
+import 'package:void_chat_beta/styles.dart';
 
 class EmailInput extends StatelessWidget {
   @override
@@ -15,7 +15,7 @@ class EmailInput extends StatelessWidget {
           onChanged: (email) => context.read<LoginCubit>().emailChanged(email),
           keyboardType: TextInputType.emailAddress,
           cursorColor: Theme.of(context).primaryColor,
-          style: GoogleFonts.jura(fontSize: 24),
+          style: TextStyles.body2,
           decoration: InputDecoration(
             enabledBorder: OutlineInputBorder(
               borderSide: BorderSide(

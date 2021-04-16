@@ -1,12 +1,12 @@
 import 'package:firestore_repository/firestore_repository.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:simple_animations/simple_animations.dart';
 import 'package:supercharged/supercharged.dart';
 import 'package:void_chat_beta/authentication/authentication.dart';
 import 'package:void_chat_beta/contacts/bloc/contact_bloc.dart';
 import 'package:void_chat_beta/contacts/widgets/tiles/contact_tile.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:void_chat_beta/styles.dart';
 
 class ContactItem extends StatefulWidget {
   const ContactItem({
@@ -31,11 +31,10 @@ class _ContactItemState extends State<ContactItem> {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 5),
       child: Column(
-        mainAxisSize: MainAxisSize.min,
         children: [
           CustomAnimation(
               curve: Curves.bounceInOut,
-              duration: 100.milliseconds,
+              duration: Times.fastest,
               control: fingerprintAnimationcontroller,
               tween: (0.0).tweenTo(2.0),
               builder: (context, child, value) {
@@ -63,21 +62,17 @@ class _ContactItemState extends State<ContactItem> {
                               ),
                             ),
                           ),
-                          SizedBox(width: 10),
+                          const SizedBox(width: 10),
                           Container(
                             alignment: Alignment.center,
-                            padding: EdgeInsets.only(bottom: 20),
+                            padding: const EdgeInsets.only(bottom: 30),
                             child: Text(
-                              '${widget.sorted[widget.index].username}',
-                              style: GoogleFonts.jura(
-                                  fontSize: 16,
-                                  color: Theme.of(context).primaryColor),
-                            ),
+                                '${widget.sorted[widget.index].username}',
+                                style: TextStyles.body1.copyWith(fontSize: 20)),
                           ),
                           Spacer(),
                           GestureDetector(
                             onLongPress: () {
-                              print('emmit!!!');
                               setState(() {
                                 isExpanded = !isExpanded;
                               });
@@ -126,11 +121,9 @@ class _ContactItemState extends State<ContactItem> {
                 child: AnimatedContainer(
                   curve: Curves.easeInCubic,
                   key: Key('left_button'),
-                  duration: 200.milliseconds,
-
+                  duration: Times.fastest,
                   width: 120,
-                  padding: EdgeInsets.all(0),
-                  // height: 50,
+                  padding: const EdgeInsets.all(0),
                   height: isExpanded ? 50 : 0,
                   child: Center(
                       child: GestureDetector(
@@ -154,22 +147,19 @@ class _ContactItemState extends State<ContactItem> {
                         color: Theme.of(context).scaffoldBackgroundColor,
 
                         child: Text('message',
-                            style: GoogleFonts.jura(
-                                color: Theme.of(context).primaryColor,
-                                fontSize: 20,
-                                fontWeight: FontWeight.normal)),
+                            style: TextStyles.body1.copyWith(fontSize: 20)),
                       ),
                     ),
                   )),
                 ),
               ),
-              SizedBox(width: 8),
+              const SizedBox(width: 8),
               ClipPath(
                 clipper: DrawerMenuButtonClipper(),
                 child: AnimatedContainer(
                   curve: Curves.easeInCubic,
                   key: Key('right_button'),
-                  duration: 200.milliseconds,
+                  duration: Times.fastest,
                   width: 120,
                   height: isExpanded ? 50 : 0,
                   child: Center(
@@ -180,17 +170,16 @@ class _ContactItemState extends State<ContactItem> {
                         width: 110,
                         height: 40,
                         color: Theme.of(context).scaffoldBackgroundColor,
-                        child: Text('remove',
-                            style: GoogleFonts.jura(
-                                color: Theme.of(context).primaryColor,
-                                fontSize: 20,
-                                fontWeight: FontWeight.normal)),
+                        child: Text(
+                          'remove',
+                          style: TextStyles.body1.copyWith(fontSize: 20),
+                        ),
                       ),
                     ),
                   ),
                 ),
               ),
-              SizedBox(width: 8),
+              const SizedBox(width: 8),
             ],
           )
         ],

@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:void_chat_beta/authentication/authentication.dart';
 import 'package:void_chat_beta/faq/faq.dart';
 import 'package:void_chat_beta/home/home.dart';
-import 'package:void_chat_beta/login/login.dart';
+import 'package:void_chat_beta/login/view/login_view.dart';
 import 'package:void_chat_beta/security/security.dart';
 import 'package:void_chat_beta/settings/settings.dart';
-import 'package:void_chat_beta/signup/sign_up.dart';
+import 'package:void_chat_beta/signup/view/signup_view.dart';
 import 'package:void_chat_beta/splash/splash.dart';
 
 class AppRouter {
@@ -16,7 +16,7 @@ class AppRouter {
     print('${settings.name},  ${state.status}');
 
     final loginRoute = MaterialPageRoute<void>(
-      builder: (context) => LoginPage(),
+      builder: (context) => LoginView(),
       settings: RouteSettings(name: '/login'),
     );
 
@@ -41,7 +41,7 @@ class AppRouter {
     );
 
     final signupRoute = MaterialPageRoute<void>(
-      builder: (context) => SignUpPage(),
+      builder: (context) => SignUpView(),
       settings: RouteSettings(name: '/signup'),
     );
 

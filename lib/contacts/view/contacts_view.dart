@@ -1,7 +1,6 @@
 import 'package:firestore_repository/firestore_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_form_bloc/flutter_form_bloc.dart';
 import 'package:void_chat_beta/authentication/authentication.dart';
 import 'package:void_chat_beta/blocs/contact_tabs/contact_tabs_bloc.dart';
 
@@ -18,42 +17,36 @@ class ContactsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
-        providers: [
-          BlocProvider<ContactTabsBloc>(
-              create: (context) =>
-                  ContactTabsBloc(context.read<ContactBloc>())),
-          BlocProvider<FinduserBloc>(
-              create: (context) => FinduserBloc(
-                  context.read<AuthenticationBloc>(),
-                  context.read<FirestoreContactRepository>())),
-        ],
-        child: Builder(builder: (context) {
-          return BlocProvider(
+      providers: [
+        BlocProvider<ContactTabsBloc>(
+            create: (context) => ContactTabsBloc(context.read<ContactBloc>())),
+        BlocProvider<FinduserBloc>(
+            create: (context) => FinduserBloc(
+                context.read<AuthenticationBloc>(),
+                context.read<FirestoreContactRepository>())),
+        BlocProvider<SearchButtonBloc>(
             create: (context) =>
-                SearchButtonBloc(BlocProvider.of<FinduserBloc>(context)),
-            child: Scaffold(
-              resizeToAvoidBottomInset: false,
-              body: UI(
-                body: BlocBuilder<ContactTabsBloc, ContactTabsState>(
-                    builder: (context, state) {
-                  return GestureDetector(
-                    onTap: () {
-                      FocusScopeNode currentFocus = FocusScope.of(context);
-                      if (!currentFocus.hasPrimaryFocus) {
-                        currentFocus.unfocus();
-                      }
-                    },
-                    child: Column(
-                      children: [
-                        ContactPageTabs(),
-                        ContactPageTabsContent(),
-                      ],
-                    ),
-                  );
-                }),
-              ),
+                SearchButtonBloc(BlocProvider.of<FinduserBloc>(context))),
+      ],
+      child: Scaffold(
+        resizeToAvoidBottomInset: false,
+        body: UI(
+          body: GestureDetector(
+            onTap: () {
+              FocusScopeNode currentFocus = FocusScope.of(context);
+              if (!currentFocus.hasPrimaryFocus) {
+                currentFocus.unfocus();
+              }
+            },
+            child: Column(
+              children: [
+                ContactPageTabs(),
+                ContactPageTabsContent(),
+              ],
             ),
-          );
-        }));
+          ),
+        ),
+      ),
+    );
   }
 }

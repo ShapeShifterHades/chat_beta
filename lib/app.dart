@@ -4,10 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:void_chat_beta/constants/constants.dart';
-import 'package:void_chat_beta/login/login.dart';
+import 'package:void_chat_beta/signup/view/signup_view.dart';
 
+import 'login/view/login_view.dart';
 import 'settings/settings.dart';
-import 'signup/sign_up.dart';
 import 'splash/view.dart/splash_view.dart';
 import 'translations/translations.dart';
 
@@ -26,47 +26,45 @@ import 'package:get/get.dart' as Get;
 class App extends StatelessWidget {
   const App({
     Key key,
+    this.authenticationRepository,
+    this.firestoreNewUserRepository,
+    this.firestoreContactRepository,
   }) : super(key: key);
+  final AuthenticationRepository authenticationRepository;
+  final FirestoreNewUserRepository firestoreNewUserRepository;
+  final FirestoreContactRepository firestoreContactRepository;
 
   @override
   Widget build(BuildContext context) {
-    AuthenticationRepository _authenticationRepository =
-        AuthenticationRepository();
-    FirestoreNewUserRepository _firestoreNewUserRepository =
-        FirestoreNewUserRepository();
-    FirestoreContactRepository _firestoreContactRepository =
-        FirestoreContactRepository();
     return MultiRepositoryProvider(
-        providers: [
-          RepositoryProvider.value(
-            value: _firestoreNewUserRepository,
+      providers: [
+        RepositoryProvider.value(
+          value: firestoreNewUserRepository,
+        ),
+        RepositoryProvider.value(
+          value: firestoreContactRepository,
+        ),
+        RepositoryProvider.value(
+          value: authenticationRepository,
+        ),
+      ],
+      child: MultiBlocProvider(providers: [
+        BlocProvider<AuthenticationBloc>(
+          lazy: false,
+          create: (context) => AuthenticationBloc(
+            authenticationRepository:
+                RepositoryProvider.of<AuthenticationRepository>(context),
           ),
-          RepositoryProvider.value(
-            value: _firestoreContactRepository,
-          ),
-          RepositoryProvider.value(
-            value: _authenticationRepository,
-          ),
-        ],
-        child: BlocProvider<AuthenticationBloc>(
+        ),
+        BlocProvider<LocaleCubit>(create: (context) => LocaleCubit()),
+        BlocProvider<BrightnessCubit>(create: (context) => BrightnessCubit()),
+        BlocProvider<ContactBloc>(
             lazy: false,
-            create: (context) => AuthenticationBloc(
-                  authenticationRepository: _authenticationRepository,
-                ),
-            child: Builder(
-              builder: (context) {
-                return MultiBlocProvider(providers: [
-                  BlocProvider<LocaleCubit>(create: (context) => LocaleCubit()),
-                  BlocProvider<BrightnessCubit>(
-                      create: (context) => BrightnessCubit()),
-                  BlocProvider<ContactBloc>(
-                      lazy: false,
-                      create: (context) => ContactBloc(
-                          _firestoreContactRepository,
-                          context.read<AuthenticationBloc>())),
-                ], child: AppView());
-              },
-            )));
+            create: (context) => ContactBloc(
+                RepositoryProvider.of<FirestoreContactRepository>(context),
+                context.read<AuthenticationBloc>())),
+      ], child: AppView()),
+    );
   }
 }
 
@@ -113,7 +111,7 @@ class AppView extends StatelessWidget {
                                 context.watch<ContactBloc>();
                                 return MessagesView();
                               } else {
-                                return LoginPage();
+                                return LoginView();
                               }
                             },
                           );
@@ -130,7 +128,7 @@ class AppView extends StatelessWidget {
                                       .id));
                           return MessagesView();
                         }),
-                    Get.GetPage(name: loginRoute, page: () => LoginPage()),
+                    Get.GetPage(name: loginRoute, page: () => LoginView()),
                     Get.GetPage(
                         name: settingsRoute, page: () => SettingsView()),
                     Get.GetPage(
@@ -141,8 +139,8 @@ class AppView extends StatelessWidget {
                       page: () => ContactsView(),
                     ),
                     Get.GetPage(
-                      name: '/signup',
-                      page: () => SignUpPage(),
+                      name: signupRoute,
+                      page: () => SignUpView(),
                     ),
                   ],
                   defaultTransition: Get.Transition.size,
@@ -150,20 +148,6 @@ class AppView extends StatelessWidget {
                   translations: ContentTranslations(),
                   debugShowCheckedModeBanner: false,
                   theme: theme1(context, brightness),
-                  // builder: (context, child) {
-                  //   return AnnotatedRegion<SystemUiOverlayStyle>(
-                  //     value: SystemUiOverlayStyle(
-                  //       // For Android.
-                  //       // Use [light] for white status bar and [dark] for black status bar.
-                  //       statusBarIconBrightness:
-                  //           context.watch<BrightnessCubit>().state ==
-                  //                   Brightness.light
-                  //               ? Brightness.dark
-                  //               : Brightness.light,
-                  //     ),
-                  //     child: child,
-                  //   );
-                  // },
                 ));
           },
         );

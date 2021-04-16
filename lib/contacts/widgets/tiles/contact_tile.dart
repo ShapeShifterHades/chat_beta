@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'dart:ui' as ui;
 
+import 'package:void_chat_beta/styles.dart';
+
 class ContactTile extends StatelessWidget {
   final String id;
   final BuildContext context;
@@ -89,11 +91,11 @@ class ContactTilePainter extends CustomPainter {
 
     canvas.drawPath(path2, paint2);
 
-    final textStyle = GoogleFonts.jura(
-        color: Theme.of(context).backgroundColor,
-        fontSize: 12,
-        fontStyle: FontStyle.italic,
-        fontWeight: FontWeight.normal);
+    final textStyle = TextStyles.body2.copyWith(
+      fontStyle: FontStyle.italic,
+      color: Theme.of(context).backgroundColor,
+      fontSize: 11,
+    );
     final idSpan = TextSpan(
       text: id,
       style: textStyle,
@@ -106,7 +108,7 @@ class ContactTilePainter extends CustomPainter {
       minWidth: 50,
       maxWidth: size.width,
     );
-    final offset = Offset(size.height / 2 + 30, size.height - 16);
+    final offset = Offset(size.height / 2 + 30, size.height - 18);
     idPainter.paint(canvas, offset);
   }
 

@@ -14,7 +14,6 @@ class SignupWithGoogle extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: 500,
-      clipBehavior: Clip.none,
       height: 30,
       color: Theme.of(context).primaryColor,
       child: Row(

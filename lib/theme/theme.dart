@@ -9,6 +9,8 @@ ThemeData theme1(BuildContext context, Brightness brightness) {
   bool isDark = brightness == Brightness.dark;
 
   ThemeData darkTheme = ThemeData(
+    // canvasColor: Colors.transparent,
+
     brightness: brightness,
     primarySwatch: Colors.grey,
     primaryColor: Color(0xFFE6E8EB),
@@ -64,6 +66,7 @@ ThemeData theme1(BuildContext context, Brightness brightness) {
     ),
   );
   ThemeData lightTheme = ThemeData(
+    // canvasColor: Colors.transparent,
     brightness: brightness,
     primarySwatch: Colors.grey,
     primaryColor: Color(0xFF57756E),
