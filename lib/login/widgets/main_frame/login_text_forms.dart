@@ -1,9 +1,9 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:void_chat_beta/login/widgets/main_frame/formfields/password_input.dart';
 
 import 'formfields/email_input.dart';
-import 'constants.dart';
 
 class LoginTextForms extends StatelessWidget {
   const LoginTextForms({
@@ -15,27 +15,34 @@ class LoginTextForms extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: formFrameHeight.value,
-      width: Get.size.width * 0.9,
-      padding: EdgeInsets.only(left: 5, right: 5),
-      decoration: buildFormFieldBackground(context),
-      child: SingleChildScrollView(
-        child: Column(
-          children: [
-            Container(
-              height: 100,
-              alignment: Alignment.center,
-              padding: EdgeInsets.only(left: 5, right: 5, top: 20),
-              child: EmailInput(),
+    return ClipRect(
+      child: BackdropFilter(
+        filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
+        child: Container(
+          height: formFrameHeight.value,
+          decoration: BoxDecoration(
+            color: Theme.of(context).backgroundColor.withOpacity(0.4),
+            border: Border.symmetric(
+              vertical:
+                  BorderSide(color: Theme.of(context).primaryColor, width: 0.2),
             ),
-            Container(
-              height: 80,
-              alignment: Alignment.topCenter,
-              padding: EdgeInsets.only(left: 5, right: 5),
-              child: PasswordInput(),
+          ),
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                Container(
+                  alignment: Alignment.center,
+                  padding: const EdgeInsets.only(left: 10, right: 10, top: 20),
+                  child: EmailInput(),
+                ),
+                Container(
+                  alignment: Alignment.topCenter,
+                  padding: const EdgeInsets.only(left: 10, right: 10),
+                  child: PasswordInput(),
+                ),
+              ],
             ),
-          ],
+          ),
         ),
       ),
     );

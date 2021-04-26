@@ -3,25 +3,26 @@ import 'package:firestore_repository/firestore_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:void_chat_beta/constants/constants.dart';
+import 'package:void_chat_beta/constants.dart';
 import 'package:void_chat_beta/signup/view/signup_view.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:void_chat_beta/generated/l10n.dart';
 
 import 'login/view/login_view.dart';
 import 'settings/settings.dart';
 import 'splash/view.dart/splash_view.dart';
-import 'translations/translations.dart';
 
 import 'authentication/authentication.dart';
 import 'contacts/bloc/contact_bloc.dart';
 
 import 'contacts/view/contacts_view.dart';
 import 'faq/view/faq_view.dart';
+
 import 'home/home.dart';
 import 'security/view/security_view.dart';
 import 'theme/brightness_cubit.dart';
 import 'theme/locale_cubit.dart';
 import 'theme/theme.dart';
-import 'package:get/get.dart' as Get;
 
 class App extends StatelessWidget {
   const App({
@@ -77,81 +78,96 @@ class AppView extends StatelessWidget {
       builder: (context, brightness) {
         return BlocBuilder<LocaleCubit, String>(
           builder: (context, locale) {
-            return BlocListener<AuthenticationBloc, AuthenticationState>(
-                listener: (context, state) {
-                  switch (state.status) {
-                    case AuthenticationStatus.unauthenticated:
-                      Get.Get.offAllNamed(loginRoute);
+            print('Aigght! : ${context.read<LocaleCubit>().state}');
+            return MaterialApp(
+              locale: Locale(context.read<LocaleCubit>().state),
+              initialRoute: '/',
+              routes: {
+                '/': (context) {
+                  return BlocBuilder<AuthenticationBloc, AuthenticationState>(
+                      builder: (context, state) {
+                    if (state.status == AuthenticationStatus.unauthenticated)
+                      return LoginView();
+                    if (state.status == AuthenticationStatus.authenticated) {
+                      BlocProvider.of<ContactBloc>(context).add(LoadContacts(
+                          uid: context
+                              .read<AuthenticationBloc>()
+                              .state
+                              .user
+                              .id));
+                      return ContactsView();
+                    }
 
-                      break;
-                    case AuthenticationStatus.authenticated:
-                      Get.Get.offAllNamed(homeRoute, arguments: 'Messages');
-                      break;
-                    case AuthenticationStatus.unknown:
-                      SplashView.route();
-                      break;
-                  }
+                    return SplashView();
+                  });
                 },
-                child: Get.GetMaterialApp(
-                  locale: Locale(context.watch<LocaleCubit>().state ??
-                      Get.Get.deviceLocale.countryCode),
-                  routingCallback: (routing) {
-                    if (routing.current == homeRoute) {}
-                  },
-                  onGenerateRoute: (_) => SplashView.route(),
-                  getPages: [
-                    Get.GetPage(
-                        name: '/',
-                        page: () {
-                          return BlocBuilder<AuthenticationBloc,
-                              AuthenticationState>(
-                            builder: (context, state) {
-                              if (state.status ==
-                                  AuthenticationStatus.authenticated) {
-                                context.watch<ContactBloc>();
-                                return MessagesView();
-                              } else {
-                                return LoginView();
-                              }
-                            },
-                          );
-                        }),
-                    Get.GetPage(
-                        name: homeRoute,
-                        page: () {
-                          BlocProvider.of<ContactBloc>(context).add(
-                              LoadContacts(
-                                  uid: context
-                                      .read<AuthenticationBloc>()
-                                      .state
-                                      .user
-                                      .id));
-                          return MessagesView();
-                        }),
-                    Get.GetPage(name: loginRoute, page: () => LoginView()),
-                    Get.GetPage(
-                        name: settingsRoute, page: () => SettingsView()),
-                    Get.GetPage(
-                        name: securityRoute, page: () => SecurityView()),
-                    Get.GetPage(name: faqRoute, page: () => FaqView()),
-                    Get.GetPage(
-                      name: contactsRoute,
-                      page: () => ContactsView(),
-                    ),
-                    Get.GetPage(
-                      name: signupRoute,
-                      page: () => SignUpView(),
-                    ),
-                  ],
-                  defaultTransition: Get.Transition.size,
-                  transitionDuration: Duration(milliseconds: 300),
-                  translations: ContentTranslations(),
-                  debugShowCheckedModeBanner: false,
-                  theme: theme1(context, brightness),
-                ));
+                loginRoute: (context) => LoginView(),
+                signupRoute: (context) => SignUpView(),
+                settingsRoute: (context) => SettingsView(),
+                securityRoute: (context) => SecurityView(),
+                homeRoute: (context) => MessagesView(),
+                faqRoute: (context) => FaqView(),
+                contactsRoute: (context) => ContactsView(),
+              },
+              onGenerateRoute: (_) => SplashView.route(),
+              localizationsDelegates: [
+                S.delegate,
+                GlobalMaterialLocalizations.delegate,
+                GlobalWidgetsLocalizations.delegate,
+                GlobalCupertinoLocalizations.delegate,
+              ],
+              supportedLocales: S.delegate.supportedLocales,
+              debugShowCheckedModeBanner: false,
+              theme: theme1(context, brightness),
+            );
           },
         );
       },
     );
   }
 }
+
+// pages: [
+//   Get.GetPage(
+//       name: '/',
+//       page: () {
+//         return BlocBuilder<AuthenticationBloc,
+//             AuthenticationState>(
+//           builder: (context, state) {
+//             if (state.status ==
+//                 AuthenticationStatus.authenticated) {
+//               context.watch<ContactBloc>();
+//               return MessagesView();
+//             } else {
+//               return LoginView();
+//             }
+//           },
+//         );
+//       }),
+//   Get.GetPage(
+//       name: homeRoute,
+//       page: () {
+// BlocProvider.of<ContactBloc>(context).add(
+//     LoadContacts(
+//         uid: context
+//             .read<AuthenticationBloc>()
+//             .state
+//             .user
+//             .id));
+//         return MessagesView();
+//       }),
+//   Get.GetPage(name: loginRoute, page: () => LoginView()),
+//   Get.GetPage(
+//       name: settingsRoute, page: () => SettingsView()),
+//   Get.GetPage(
+//       name: securityRoute, page: () => SecurityView()),
+//   Get.GetPage(name: faqRoute, page: () => FaqView()),
+//   Get.GetPage(
+//     name: contactsRoute,
+//     page: () => ContactsView(),
+//   ),
+//   Get.GetPage(
+//     name: signupRoute,
+//     page: () => SignUpView(),
+//   ),
+// ],

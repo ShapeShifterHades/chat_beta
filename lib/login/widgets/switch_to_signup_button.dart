@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:shimmer/shimmer.dart';
-import 'package:void_chat_beta/constants/constants.dart';
+import 'package:void_chat_beta/constants.dart';
 import 'package:void_chat_beta/styles.dart';
+import 'package:void_chat_beta/generated/l10n.dart';
 
 class SwitchToSignUpButton extends StatelessWidget {
   const SwitchToSignUpButton({
@@ -16,9 +16,7 @@ class SwitchToSignUpButton extends StatelessWidget {
       left: 0,
       right: 0,
       child: GestureDetector(
-        onTap: () {
-          Get.toNamed(signupRoute);
-        },
+        onTap: () => Navigator.of(context).pushNamed(signupRoute),
         child: Container(
           alignment: Alignment.center,
           height: 60,
@@ -27,7 +25,7 @@ class SwitchToSignUpButton extends StatelessWidget {
             highlightColor: Theme.of(context).primaryColor,
             loop: 0,
             period: Times.slower,
-            child: Text('loginpage_switch_to_registration'.tr,
+            child: Text(S.of(context).loginpage_switch_to_registration,
                 style: TextStyles.body1.copyWith(fontSize: 26)),
           ),
         ),

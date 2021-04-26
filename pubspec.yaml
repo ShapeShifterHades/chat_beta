@@ -5,7 +5,7 @@ publish_to: none
 version: 1.0.0+1
 
 environment:
-  sdk: '>=2.3.0 <3.0.0'
+  sdk: '>=2.6.0 <3.0.0'
 
 dependencies:
   flutter:
@@ -14,7 +14,6 @@ dependencies:
   cupertino_icons: ^0.1.2
   keyboard_visibility: any
   font_awesome_flutter: any
-  google_fonts: any
   bloc: any
   flutter_bloc: any
   formz: any
@@ -31,13 +30,16 @@ dependencies:
   path_provider: any
   equatable: any
   hydrated_bloc: any
-  get: any
-  flutter_form_bloc: any
   simple_animations: any
   flutter_statusbarcolor: any
   flutter_slidable: any
   mockito: any
   cloud_firestore: any
+  flutter_i18n: ^0.22.3
+  intl: null
+  flutter_svg: ^0.22.0
+  flutter_localizations:
+    sdk: flutter
 
 dev_dependencies:
   flutter_test:
@@ -48,7 +50,7 @@ dev_dependencies:
 flutter:
   uses-material-design: true
   assets:
-   - assets/images/
+    - assets/images/
   fonts:
     - family: Iceland
       fonts:
@@ -60,3 +62,6 @@ flutter:
         - asset: fonts/jura/static/Jura-Medium.ttf
         - asset: fonts/jura/static/Jura-Regular.ttf
         - asset: fonts/jura/static/Jura-SemiBold.ttf
+flutter_intl:
+  main_locale: en_US
+  enabled: true

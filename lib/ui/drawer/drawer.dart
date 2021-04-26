@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:void_chat_beta/authentication/bloc/authentication_bloc.dart';
-import 'package:void_chat_beta/constants/constants.dart';
+import 'package:void_chat_beta/constants.dart';
 import 'package:void_chat_beta/styles.dart';
 import 'package:void_chat_beta/ui/drawer/widgets/drawer_menu_button.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:void_chat_beta/widgets/arctext.dart';
+import 'package:void_chat_beta/generated/l10n.dart';
 
 class DrawerPM extends StatelessWidget {
   DrawerPM({
@@ -46,47 +46,36 @@ class _MenuButtonsBlock extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
             DrawerMenuButton(
-              isCurrentPage: Get.arguments == 'Messages',
-              label: 'drawer_messages'.tr,
+              label: S.of(context).drawer_messages,
               func: () {
-                Get.toNamed(homeRoute, arguments: 'Messages');
+                Navigator.of(context).pushNamed(homeRoute);
               },
             ),
             const SizedBox(height: 15),
             DrawerMenuButton(
-              isCurrentPage: Get.arguments == 'Contacts',
-              label: 'drawer_contacts'.tr,
+              label: S.of(context).drawer_contacts,
+              func: () => Navigator.of(context).pushNamed(contactsRoute),
+            ),
+            const SizedBox(height: 15),
+            DrawerMenuButton(
+              label: S.of(context).drawer_settings,
               func: () {
-                Get.toNamed(contactsRoute, arguments: 'Contacts');
+                Navigator.of(context).pushNamed(settingsRoute);
               },
             ),
             const SizedBox(height: 15),
             DrawerMenuButton(
-              isCurrentPage: Get.arguments == 'Settings',
-              label: 'drawer_settings'.tr,
-              func: () {
-                Get.toNamed(settingsRoute, arguments: 'Settings');
-              },
+              label: S.of(context).drawer_security,
+              func: () => Navigator.of(context).pushNamed(securityRoute),
             ),
             const SizedBox(height: 15),
             DrawerMenuButton(
-              isCurrentPage: Get.arguments == 'Security',
-              label: 'drawer_security'.tr,
-              func: () {
-                Get.toNamed(securityRoute, arguments: 'Security');
-              },
-            ),
-            const SizedBox(height: 15),
-            DrawerMenuButton(
-              isCurrentPage: Get.arguments == 'FAQ',
-              label: 'drawer_faq'.tr,
-              func: () {
-                Get.toNamed(faqRoute, arguments: 'FAQ');
-              },
+              label: S.of(context).drawer_faq,
+              func: () => Navigator.of(context).pushNamed(faqRoute),
             ),
             const SizedBox(height: 45),
             DrawerMenuButton(
-              label: 'drawer_logout'.tr,
+              label: S.of(context).drawer_logout,
               func: () async {
                 await FirebaseAuth.instance.signOut();
               },
@@ -97,7 +86,7 @@ class _MenuButtonsBlock extends StatelessWidget {
               height: 40,
               width: 170,
               child: Text(
-                'drawer_slogan'.tr,
+                S.of(context).drawer_slogan,
                 style: TextStyles.body2,
               ),
             ),

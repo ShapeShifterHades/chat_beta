@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:void_chat_beta/blocs/contact_tabs/contact_tabs_bloc.dart';
-import 'package:void_chat_beta/contacts/widgets/pendinglist_content.dart';
+import 'package:void_chat_beta/contacts/widgets/tabs_content/pendinglist_content.dart';
 import 'package:void_chat_beta/contacts/widgets/searchbar/user_search.dart';
-import 'package:get/get.dart';
 import 'package:void_chat_beta/styles.dart';
+import 'package:void_chat_beta/generated/l10n.dart';
 
-import 'friendlist_content.dart';
+import 'tabs_content/friendlist_content.dart';
 
 class ContactPageTabsContent extends StatelessWidget {
   const ContactPageTabsContent({
@@ -19,8 +18,7 @@ class ContactPageTabsContent extends StatelessWidget {
     return Expanded(
       child: SingleChildScrollView(
         child: Container(
-          width: double.infinity,
-          margin: const EdgeInsets.only(left: 32, top: 0),
+          margin: const EdgeInsets.only(left: 32),
           child: Column(
             children: [
               UserSearch(),
@@ -41,23 +39,31 @@ class _UserList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<ContactTabsBloc, ContactTabsState>(
-        cubit: BlocProvider.of<ContactTabsBloc>(context),
+        bloc: BlocProvider.of<ContactTabsBloc>(context),
         builder: (context, state) {
-          if (state is ContactlistLoading) {
-            return Center(
-              child: Text(
-                'contacts_loading'.tr,
-                style: TextStyles.body1,
-              ),
-            );
-          }
           if (state is FriendlistState) {
             return FriendlistContent();
           }
           if (state is PendinglistState) {
             return PendinglistContent();
           }
-          return Container();
+          return _ContactsLoadingIndication();
         });
+  }
+}
+
+class _ContactsLoadingIndication extends StatelessWidget {
+  const _ContactsLoadingIndication({
+    Key key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Text(
+        S.of(context).contacts_loading,
+        style: TextStyles.body1,
+      ),
+    );
   }
 }

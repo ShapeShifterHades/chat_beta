@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:void_chat_beta/signup/widgets/simple_button_one.dart';
+import 'package:void_chat_beta/generated/l10n.dart';
 
 class SignupWithGoogle extends StatelessWidget {
   const SignupWithGoogle({
@@ -20,7 +20,7 @@ class SignupWithGoogle extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           SimpleButtonOne(
-            text: 'signup_with_google'.tr,
+            text: S.of(context).signup_with_google,
             onPressed: formController.value == 0.0 ? null : () {},
           ),
         ],

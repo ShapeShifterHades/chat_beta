@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:get/get.dart';
 import 'package:void_chat_beta/contacts/bloc/bloc/finduser_bloc.dart';
 import 'package:void_chat_beta/contacts/bloc/bloc/search_button_bloc.dart';
+import 'package:void_chat_beta/generated/l10n.dart';
+import 'package:void_chat_beta/styles.dart';
 
 class SearchUsernameInput extends StatelessWidget {
   final FocusNode focusNode;
@@ -26,11 +26,11 @@ class SearchUsernameInput extends StatelessWidget {
         BlocProvider.of<FinduserBloc>(context)
             .add(QueryEvent(myController.value.text));
       },
-      style: GoogleFonts.jura(fontSize: 24),
+      style: TextStyles.body1,
       cursorColor: Theme.of(context).primaryColor,
       controller: myController,
       decoration: InputDecoration(
-        labelText: 'contacts_search_username'.tr,
+        labelText: S.of(context).contacts_search_username,
         helperText: '',
       ),
     );

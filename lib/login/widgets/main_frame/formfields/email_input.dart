@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:void_chat_beta/login/cubit/login_cubit.dart';
-import 'package:get/get.dart';
 import 'package:void_chat_beta/styles.dart';
+import 'package:void_chat_beta/generated/l10n.dart';
+
+import '../constants.dart';
 
 class EmailInput extends StatelessWidget {
   @override
@@ -17,6 +19,7 @@ class EmailInput extends StatelessWidget {
           cursorColor: Theme.of(context).primaryColor,
           style: TextStyles.body2,
           decoration: InputDecoration(
+            fillColor: Theme.of(context).backgroundColor,
             enabledBorder: OutlineInputBorder(
               borderSide: BorderSide(
                 width: 0.3,
@@ -29,10 +32,11 @@ class EmailInput extends StatelessWidget {
                 color: Theme.of(context).primaryColor,
               ),
             ),
-            labelText: 'loginpage_email'.tr,
+            labelText: S.of(context).loginpage_email,
             helperText: '',
-            errorText:
-                state.email.invalid ? 'loginpage_invalid_email'.tr : null,
+            errorText: state.email.invalid
+                ? S.of(context).loginpage_invalid_email
+                : null,
           ),
         );
       },

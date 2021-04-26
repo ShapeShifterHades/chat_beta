@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:void_chat_beta/constants.dart';
 import 'mini_menu_tile.dart';
 
 class MiniMenu extends StatelessWidget {
@@ -23,50 +23,35 @@ class MiniMenu extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
             MiniMenuTile(
-              isCurrentPage: Get.arguments == 'Messages',
               key: Key('messages_minimenu_buton'),
-              func: () {
-                Get.toNamed("/messages", arguments: 'Messages');
-              },
+              func: () => Navigator.of(context).pushNamed(homeRoute),
               icon: Icons.message,
             ),
-            SizedBox(height: 15),
+            const SizedBox(height: 15),
             MiniMenuTile(
-              isCurrentPage: Get.arguments == 'Contacts',
               key: Key('contacts_minimenu_buton'),
-              func: () {
-                Get.toNamed("/contacts", arguments: 'Contacts');
-              },
+              func: () => Navigator.of(context).pushNamed(contactsRoute),
               icon: Icons.contacts,
             ),
-            SizedBox(height: 15),
+            const SizedBox(height: 15),
             MiniMenuTile(
-              isCurrentPage: Get.arguments == 'Settings',
               key: Key('settings_minimenu_buton'),
-              func: () {
-                Get.toNamed("/settings", arguments: 'Settings');
-              },
+              func: () => Navigator.of(context).pushNamed(settingsRoute),
               icon: Icons.settings,
             ),
-            SizedBox(height: 15),
+            const SizedBox(height: 15),
             MiniMenuTile(
-              isCurrentPage: Get.arguments == 'Security',
               key: Key('security_minimenu_buton'),
-              func: () {
-                Get.toNamed("/security", arguments: 'Security');
-              },
+              func: () => Navigator.of(context).pushNamed(securityRoute),
               icon: Icons.lock,
             ),
-            SizedBox(height: 15),
+            const SizedBox(height: 15),
             MiniMenuTile(
-              isCurrentPage: Get.arguments == 'FAQ',
               key: Key('faq_minimenu_buton'),
-              func: () {
-                Get.toNamed("/faq", arguments: 'FAQ');
-              },
+              func: () => Navigator.of(context).pushNamed(faqRoute),
               icon: Icons.help,
             ),
-            SizedBox(height: 45),
+            const SizedBox(height: 45),
             MiniMenuTile(
               func: () async {
                 await FirebaseAuth.instance.signOut();

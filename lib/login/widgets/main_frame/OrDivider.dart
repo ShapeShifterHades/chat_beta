@@ -1,7 +1,8 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:void_chat_beta/styles.dart';
+import 'package:void_chat_beta/generated/l10n.dart';
 
 import 'constants.dart';
 
@@ -15,37 +16,43 @@ class OrDivider extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: Get.size.width * 0.9,
-      decoration: buildOrLineBoxDecoration(context),
-      height: orLineHeight.value,
-      child: SingleChildScrollView(
-        child: Container(
-          color: Colors.transparent,
-          height: 40,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Expanded(
-                child: Divider(
+    return ClipRect(
+      child: BackdropFilter(
+        filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
+        child: SingleChildScrollView(
+          child: Container(
+            decoration: BoxDecoration(
+              color: Theme.of(context).backgroundColor.withOpacity(0.4),
+              border: Border.symmetric(
+                vertical: BorderSide(
+                    color: Theme.of(context).primaryColor, width: 0.2),
+              ),
+            ),
+            height: orLineHeight.value,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Expanded(
+                  child: Divider(
+                    color: Theme.of(context).primaryColor,
+                    thickness: 0.4,
+                    indent: 12,
+                    endIndent: 12,
+                  ),
+                ),
+                Text(
+                  S.of(context).signup_or,
+                  style: TextStyles.body2,
+                ),
+                Expanded(
+                    child: Divider(
                   color: Theme.of(context).primaryColor,
                   thickness: 0.4,
                   indent: 12,
                   endIndent: 12,
-                ),
-              ),
-              Text(
-                'signup_or'.tr,
-                style: TextStyles.body2,
-              ),
-              Expanded(
-                  child: Divider(
-                color: Theme.of(context).primaryColor,
-                thickness: 0.4,
-                indent: 12,
-                endIndent: 12,
-              )),
-            ],
+                )),
+              ],
+            ),
           ),
         ),
       ),

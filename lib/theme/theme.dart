@@ -68,7 +68,7 @@ ThemeData theme1(BuildContext context, Brightness brightness) {
   ThemeData lightTheme = ThemeData(
     // canvasColor: Colors.transparent,
     brightness: brightness,
-    primarySwatch: Colors.grey,
+    primarySwatch: Colors.white,
     primaryColor: Color(0xFF57756E),
     accentColor: Color(0xFFDBDBDB),
     backgroundColor: Color(0xFFFCF7FF),

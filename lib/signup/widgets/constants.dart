@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:void_chat_beta/theme/brightness_cubit.dart';
-import 'package:get/get.dart';
 
-EdgeInsets buildFormMargin() {
+EdgeInsets buildFormMargin(BuildContext ctx) {
   return EdgeInsets.only(
     top: 40,
-    left: Get.size.width * 0.03,
-    right: Get.size.width * 0.03,
+    left: MediaQuery.of(ctx).size.width * 0.03,
+    right: MediaQuery.of(ctx).size.width * 0.03,
   );
 }
 

@@ -43,8 +43,6 @@ class FinduserBloc extends Bloc<FinduserEvent, FinduserState> {
     } else if (event is ResetEvent) yield FinduserState.initial();
   }
 
-  Future<void> resetState() {}
-
   Future<Contact> _getSearchResults(String query) async {
     try {
       contact = await _firestoreContactRepository.findIdByUsername(query, uid);

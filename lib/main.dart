@@ -5,6 +5,7 @@ import 'package:firestore_repository/firestore_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'app.dart';
+import 'package:path_provider/path_provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -15,7 +16,8 @@ void main() async {
       FirestoreNewUserRepository();
   FirestoreContactRepository _firestoreContactRepository =
       FirestoreContactRepository();
-  HydratedBloc.storage = await HydratedStorage.build();
+  HydratedBloc.storage = await HydratedStorage.build(
+      storageDirectory: await getApplicationDocumentsDirectory());
   runApp(App(
     authenticationRepository: _authenticationRepository,
     firestoreContactRepository: _firestoreContactRepository,

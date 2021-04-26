@@ -7,6 +7,7 @@ import 'package:void_chat_beta/contacts/bloc/contact_bloc.dart';
 import 'package:void_chat_beta/contacts/widgets/tiles/contact_tile.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:void_chat_beta/styles.dart';
+import 'package:void_chat_beta/generated/l10n.dart';
 
 class ContactItem extends StatefulWidget {
   const ContactItem({
@@ -70,7 +71,7 @@ class _ContactItemState extends State<ContactItem> {
                                 '${widget.sorted[widget.index].username}',
                                 style: TextStyles.body1.copyWith(fontSize: 20)),
                           ),
-                          Spacer(),
+                          const Spacer(),
                           GestureDetector(
                             onLongPress: () {
                               setState(() {
@@ -97,7 +98,7 @@ class _ContactItemState extends State<ContactItem> {
                             },
                             child: Container(
                               width: 60,
-                              padding: EdgeInsets.only(bottom: 20),
+                              padding: const EdgeInsets.only(bottom: 20),
                               child: Icon(
                                 Icons.fingerprint,
                                 size: 34,
@@ -112,10 +113,10 @@ class _ContactItemState extends State<ContactItem> {
                   ),
                 );
               }),
-          SizedBox(height: 1.5),
+          const SizedBox(height: 1.5),
           Row(
             children: [
-              Spacer(),
+              const Spacer(),
               ClipPath(
                 clipper: DrawerMenuButtonClipper(),
                 child: AnimatedContainer(
@@ -146,8 +147,10 @@ class _ContactItemState extends State<ContactItem> {
                         // margin: EdgeInsets.all(5),
                         color: Theme.of(context).scaffoldBackgroundColor,
 
-                        child: Text('message',
-                            style: TextStyles.body1.copyWith(fontSize: 20)),
+                        child: Text(
+                          S.of(context).contacts_form_message,
+                          style: TextStyles.body1.copyWith(fontSize: 20),
+                        ),
                       ),
                     ),
                   )),
@@ -171,7 +174,7 @@ class _ContactItemState extends State<ContactItem> {
                         height: 40,
                         color: Theme.of(context).scaffoldBackgroundColor,
                         child: Text(
-                          'remove',
+                          S.of(context).contacts_form_remove,
                           style: TextStyles.body1.copyWith(fontSize: 20),
                         ),
                       ),

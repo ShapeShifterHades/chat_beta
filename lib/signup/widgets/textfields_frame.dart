@@ -1,13 +1,13 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 import 'package:void_chat_beta/signup/widgets/constants.dart';
 import 'package:void_chat_beta/signup/widgets/textfields/confirm_password_input.dart';
 import 'package:void_chat_beta/signup/widgets/textfields/email_input.dart';
+import 'package:void_chat_beta/signup/widgets/textfields/licence_agreement_tile.dart';
 import 'package:void_chat_beta/signup/widgets/textfields/password_input.dart';
 import 'package:void_chat_beta/signup/widgets/textfields/username_input.dart';
-import 'package:void_chat_beta/styles.dart';
-import 'package:void_chat_beta/ui/frontside/status_bar/screen_tag.dart';
 
 class TextfieldsFrame extends StatelessWidget {
   const TextfieldsFrame({
@@ -19,36 +19,30 @@ class TextfieldsFrame extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: formFrameHeight.value,
-      width: Get.size.width * 0.9,
-      padding: EdgeInsets.symmetric(horizontal: 5),
-      decoration: buildFormBackground3(context),
-      child: SingleChildScrollView(
-        child: Column(
-          children: [
-            Container(
-              padding: const EdgeInsets.only(left: 5, right: 5, top: 10),
-              child: ClipPath(clipper: ScreenTagClipper(), child: EmailInput()),
+    return ClipRect(
+      child: BackdropFilter(
+        filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
+        child: Container(
+          height: formFrameHeight.value,
+          padding: EdgeInsets.symmetric(horizontal: 5),
+          decoration: BoxDecoration(
+            color: Theme.of(context).backgroundColor.withOpacity(0.4),
+            border: Border.symmetric(
+              vertical:
+                  BorderSide(color: Theme.of(context).primaryColor, width: 0.2),
             ),
-            Container(
-              padding: const EdgeInsets.only(left: 5, right: 5, top: 5),
-              child: PasswordInput(),
+          ),
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                EmailInput(),
+                PasswordInput(),
+                ConfirmPasswordInput(),
+                UsernameInput(),
+                LicenceAgreementTile(),
+              ],
             ),
-            Container(
-              padding: const EdgeInsets.only(left: 5, right: 5, top: 5),
-              child: ConfirmPasswordInput(),
-            ),
-            Container(
-              padding: const EdgeInsets.only(left: 5, right: 5, top: 5),
-              child: UsernameInput(),
-            ),
-            Container(
-              padding: const EdgeInsets.only(bottom: 15),
-              child: Container(
-                  child: Text('License here', style: TextStyles.body1)),
-            ),
-          ],
+          ),
         ),
       ),
     );

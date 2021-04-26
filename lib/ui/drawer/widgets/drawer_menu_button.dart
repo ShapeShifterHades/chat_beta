@@ -64,7 +64,7 @@ class _DrawerMenuButtonState extends State<DrawerMenuButton> {
                 child: Container(
                   width: 140,
                   height: 38,
-                  padding: EdgeInsets.only(bottom: 6),
+                  padding: const EdgeInsets.only(bottom: 6),
                   child: Material(
                     color: Colors.transparent,
                     child: Row(

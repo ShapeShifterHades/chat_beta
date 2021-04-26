@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:void_chat_beta/styles.dart';
 
 class ScreenTag extends StatelessWidget {
   final BuildContext context;
@@ -24,12 +23,8 @@ class ScreenTag extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   Text(
-                    Get.arguments ?? 'null',
-                    style: GoogleFonts.jura(
-                        color:
-                            Theme.of(context).primaryTextTheme.bodyText1.color,
-                        fontSize: 20,
-                        fontWeight: FontWeight.w300),
+                    '',
+                    style: TextStyles.body1,
                   ),
                 ],
               ),
@@ -61,18 +56,18 @@ class ScreenTagPainter extends CustomPainter {
     path2.lineTo(size.width - 8, 0);
     path2.close();
 
-    Paint paint1 = Paint()
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = 0.5
-      ..strokeCap = StrokeCap.butt
-      ..color = Theme.of(context).primaryTextTheme.bodyText1.color;
+    // // Paint paint1 = Paint()
+    //   ..style = PaintingStyle.stroke
+    //   ..strokeWidth = 0.5
+    //   ..strokeCap = StrokeCap.butt
+    //   ..color = Theme.of(context).primaryTextTheme.bodyText1.color;
 
     // canvas.drawPath(path1, paint1);
 
-    Paint paint2 = Paint()
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = 0.2
-      ..color = color ?? Theme.of(context).primaryTextTheme.bodyText1.color;
+    // Paint paint2 = Paint()
+    //   ..style = PaintingStyle.stroke
+    //   ..strokeWidth = 0.2
+    //   ..color = color ?? Theme.of(context).primaryTextTheme.bodyText1.color;
 
     // canvas.drawPath(path2, paint2);
 

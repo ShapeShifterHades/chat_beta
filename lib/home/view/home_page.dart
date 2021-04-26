@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:void_chat_beta/authentication/bloc/authentication_bloc.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -30,13 +31,11 @@ class MessagesView extends StatelessWidget {
       body: UI(
         body: BlocBuilder<AuthenticationBloc, AuthenticationState>(
           builder: (context, state) {
-            return Container(
-                // child: Text(
-                //   Get.arguments,
-                //   style: TextStyle(
-                //       color: Theme.of(context).primaryTextTheme.bodyText2.color),
-                // ),
-                );
+            return Center(
+              child: Container(
+                child: Text("nigga"),
+              ),
+            );
           },
         ),
       ),

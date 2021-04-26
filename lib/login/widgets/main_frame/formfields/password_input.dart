@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:void_chat_beta/login/cubit/login_cubit.dart';
-import 'package:get/get.dart';
 import 'package:void_chat_beta/styles.dart';
+import 'package:void_chat_beta/generated/l10n.dart';
 
 class PasswordInput extends StatelessWidget {
   @override
@@ -17,10 +17,24 @@ class PasswordInput extends StatelessWidget {
           obscureText: true,
           style: TextStyles.body2,
           decoration: InputDecoration(
-            labelText: 'loginpage_password'.tr,
+            fillColor: Theme.of(context).backgroundColor,
+            enabledBorder: OutlineInputBorder(
+              borderSide: BorderSide(
+                width: 0.3,
+                color: Theme.of(context).primaryColor,
+              ),
+            ),
+            border: OutlineInputBorder(
+              borderSide: BorderSide(
+                width: 0.3,
+                color: Theme.of(context).primaryColor,
+              ),
+            ),
+            labelText: S.of(context).loginpage_password,
             helperText: '',
-            errorText:
-                state.password.invalid ? 'loginpage_invalid_password'.tr : null,
+            errorText: state.password.invalid
+                ? S.of(context).loginpage_invalid_password
+                : null,
           ),
         );
       },

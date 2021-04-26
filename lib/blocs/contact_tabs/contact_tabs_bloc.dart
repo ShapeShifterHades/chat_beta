@@ -13,7 +13,7 @@ class ContactTabsBloc extends Bloc<ContactTabsEvent, ContactTabsState> {
   final ContactBloc _contactsBloc;
   StreamSubscription contactsSubscription;
   ContactTabsBloc(this._contactsBloc)
-      : contactsSubscription = _contactsBloc.listen((state) {
+      : contactsSubscription = _contactsBloc.stream.listen((state) {
           if (state is ContactsLoaded) {
             ContactsUpdated((_contactsBloc.state as ContactsLoaded).contacts);
           }

@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:void_chat_beta/blocs/contact_tabs/contact_tabs_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:get/get.dart';
 import 'package:void_chat_beta/styles.dart';
+import 'package:void_chat_beta/generated/l10n.dart';
 
 class ContactPageTabs extends StatefulWidget {
   const ContactPageTabs({
@@ -17,30 +17,25 @@ class ContactPageTabs extends StatefulWidget {
 
 class _ContactPageTabsState extends State<ContactPageTabs> {
   String dropdownValue;
-  String tab1;
-  String tab2;
-  String tab3;
+
   @override
   void initState() {
-    tab1 = 'contacts_friends'.tr;
-    tab2 = 'contacts_pending'.tr;
-    tab3 = 'contacts_blocked'.tr;
-    dropdownValue = tab1;
     super.initState();
   }
 
   void sendEvent(String newValue) {
-    if (newValue == tab1) {
+    if (newValue == S.of(context).contacts_friends) {
       context.read<ContactTabsBloc>().add(FriendlistClicked());
-    } else if (newValue == tab2) {
+    } else if (newValue == S.of(context).contacts_pending) {
       context.read<ContactTabsBloc>().add(PendinglistClicked());
-    } else if (newValue == tab3) {
+    } else if (newValue == S.of(context).contacts_blocked) {
       context.read<ContactTabsBloc>().add(BlocklistClicked());
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    dropdownValue = S.of(context).contacts_friends;
     return Container(
       alignment: Alignment.center,
       margin: const EdgeInsets.only(left: 20, top: 10),
@@ -63,9 +58,9 @@ class _ContactPageTabsState extends State<ContactPageTabs> {
               });
             },
             items: <String>[
-              tab1,
-              tab2,
-              tab3,
+              S.of(context).contacts_friends,
+              S.of(context).contacts_pending,
+              S.of(context).contacts_blocked,
             ].map<DropdownMenuItem<String>>((String value) {
               return DropdownMenuItem<String>(
                 value: value,

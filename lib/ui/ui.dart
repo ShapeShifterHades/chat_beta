@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 import 'drawer/drawer.dart';
 
@@ -55,7 +54,7 @@ class UIState extends State<UI> with SingleTickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    Size size = Get.size;
+    Size size = MediaQuery.of(context).size;
     return WillPopScope(
       onWillPop: () async {
         if (_animationController.isCompleted) {
@@ -112,14 +111,12 @@ class UIState extends State<UI> with SingleTickerProviderStateMixin {
             final slideAmount = maxSlide * animValue;
             // This stack defines relations between drawer side and content side
             return Stack(
-              overflow: Overflow.clip,
               children: <Widget>[
                 DrawerPM(),
                 Transform(
                   transform: Matrix4.identity()..translate(slideAmount),
                   alignment: Alignment.centerLeft,
                   child: Stack(
-                    overflow: Overflow.clip,
                     children: [
                       child,
                       Positioned(

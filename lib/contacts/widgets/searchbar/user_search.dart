@@ -40,7 +40,7 @@ class _UserSearchState extends State<UserSearch> {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<SearchButtonBloc, SearchButtonState>(
-        cubit: BlocProvider.of<SearchButtonBloc>(context),
+        bloc: BlocProvider.of<SearchButtonBloc>(context),
         builder: (context, state) {
           return SingleChildScrollView(
             child: Padding(
@@ -68,7 +68,7 @@ class _UserSearchState extends State<UserSearch> {
                   if (state.isExpanded)
                     Container(
                       child: BlocBuilder<FinduserBloc, FinduserState>(
-                        cubit: BlocProvider.of<FinduserBloc>(context),
+                        bloc: BlocProvider.of<FinduserBloc>(context),
                         builder: (BuildContext context, FinduserState state) {
                           if (state.isLoading) {
                             return Center(

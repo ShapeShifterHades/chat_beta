@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:get/get.dart';
 import 'package:void_chat_beta/theme/brightness_cubit.dart';
 
 BoxDecoration buildBgBoxDecoration(BuildContext context) {
@@ -21,11 +20,11 @@ BoxDecoration buildBgBoxDecoration(BuildContext context) {
   );
 }
 
-EdgeInsets buildMainFrameMargin() {
+EdgeInsets buildMainFrameMargin(context) {
   return EdgeInsets.only(
     top: 40,
-    left: Get.size.width * 0.03,
-    right: Get.size.width * 0.03,
+    left: MediaQuery.of(context).size.width * 0.03,
+    right: MediaQuery.of(context).size.width * 0.03,
   );
 }
 

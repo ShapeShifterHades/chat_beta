@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:shimmer/shimmer.dart';
-import 'package:void_chat_beta/constants/constants.dart';
+import 'package:void_chat_beta/constants.dart';
 import 'package:void_chat_beta/styles.dart';
+import 'package:void_chat_beta/generated/l10n.dart';
 
 class SwitchToLogin extends StatelessWidget {
   const SwitchToLogin({
@@ -16,7 +16,7 @@ class SwitchToLogin extends StatelessWidget {
       left: 0,
       right: 0,
       child: GestureDetector(
-        onTap: () => Get.toNamed(loginRoute),
+        onTap: () => Navigator.of(context).pushNamed(loginRoute),
         child: Container(
           alignment: Alignment.center,
           height: 60,
@@ -26,7 +26,7 @@ class SwitchToLogin extends StatelessWidget {
             loop: 0,
             period: Times.slower,
             child: Text(
-              'signup_switch_to_login'.tr,
+              S.of(context).signup_switch_to_login,
               style: TextStyles.body1.copyWith(fontSize: 26),
             ),
           ),

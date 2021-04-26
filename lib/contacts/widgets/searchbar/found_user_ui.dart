@@ -1,9 +1,9 @@
 import 'package:firestore_repository/firestore_repository.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:void_chat_beta/contacts/bloc/contact_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:get/get.dart';
+import 'package:void_chat_beta/styles.dart';
+import 'package:void_chat_beta/generated/l10n.dart';
 
 class FoundUserUi extends StatelessWidget {
   FoundUserUi({
@@ -22,8 +22,6 @@ class FoundUserUi extends StatelessWidget {
   final messageController = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    TextStyle style =
-        GoogleFonts.jura(backgroundColor: Theme.of(context).backgroundColor);
     return Padding(
       padding: const EdgeInsets.only(left: 0, right: 0, bottom: 8),
       child: Column(
@@ -32,36 +30,45 @@ class FoundUserUi extends StatelessWidget {
           Row(
             children: [
               Text(
-                'contacts_user'.tr,
-                style: style,
+                S.of(context).contacts_user,
+                style: TextStyles.body2,
               ),
-              Spacer(),
-              Text(result?.username ?? '', style: style),
+              const Spacer(),
+              Text(
+                result?.username ?? '',
+                style: TextStyles.body2,
+              ),
             ],
           ),
-          SizedBox(height: 5),
+          const SizedBox(height: 5),
           Row(
             children: [
               Text(
-                'contacts_status'.tr,
-                style: style,
+                S.of(context).contacts_status,
+                style: TextStyles.body2,
               ),
-              Spacer(),
-              Text(result?.status ?? '', style: style),
+              const Spacer(),
+              Text(
+                result?.status ?? '',
+                style: TextStyles.body2,
+              ),
             ],
           ),
-          SizedBox(height: 5),
+          const SizedBox(height: 5),
           Row(
             children: [
               Text(
-                'contacts_id'.tr,
-                style: style,
+                S.of(context).contacts_id,
+                style: TextStyles.body2,
               ),
-              Spacer(),
-              Text(result?.id ?? '', style: style),
+              const Spacer(),
+              Text(
+                result?.id ?? '',
+                style: TextStyles.body2,
+              ),
             ],
           ),
-          SizedBox(height: 5),
+          const SizedBox(height: 5),
           if (result.status == 'Not in contacts')
             _BefriendForm(messageController: messageController, result: result),
         ],
@@ -88,15 +95,15 @@ class _BefriendForm extends StatelessWidget {
           width: 80,
           height: 120,
           decoration: BoxDecoration(
-            color: Theme.of(context).primaryColor.withOpacity(0.8),
-            borderRadius: BorderRadius.only(
+            color: Theme.of(context).primaryColor.withOpacity(0.5),
+            borderRadius: const BorderRadius.only(
               topLeft: Radius.circular(10),
               bottomLeft: Radius.circular(10),
             ),
           ),
           child: Column(
             children: [
-              Spacer(),
+              const Spacer(),
               Center(
                 child: Image.asset(
                   'assets/images/avatar-placeholder.png',
@@ -105,7 +112,7 @@ class _BefriendForm extends StatelessWidget {
                   //     BlendMode.color,
                 ),
               ),
-              Spacer(),
+              const Spacer(),
               Material(
                 color: Colors.transparent,
                 child: InkWell(
@@ -128,11 +135,6 @@ class _BefriendForm extends StatelessWidget {
                                 contactId: result?.id ?? '',
                               ),
                             );
-
-                        // widget.finduserController.clear();
-                        // FocusScope.of(context).unfocus();
-                        // messageController.clear();
-                        // print(widget.isVisible.toString());
                       },
                     ),
                   ),
@@ -143,11 +145,11 @@ class _BefriendForm extends StatelessWidget {
         ),
         Expanded(
           child: Container(
-            margin: EdgeInsets.all(5),
+            margin: const EdgeInsets.all(5),
             height: 120,
             decoration: BoxDecoration(
-              color: Theme.of(context).primaryColor.withOpacity(0.8),
-              borderRadius: BorderRadius.only(
+              color: Theme.of(context).primaryColor.withOpacity(0.5),
+              borderRadius: const BorderRadius.only(
                 topRight: Radius.circular(10),
                 bottomRight: Radius.circular(10),
               ),
@@ -158,18 +160,15 @@ class _BefriendForm extends StatelessWidget {
               children: [
                 Row(
                   children: [
-                    SizedBox(width: 5),
+                    const SizedBox(width: 5),
                     Text(
-                      'Messsage',
-                      style: GoogleFonts.jura(
-                          color: Theme.of(context).backgroundColor,
-                          fontWeight: FontWeight.bold),
+                      S.of(context).contacts_form_message,
+                      style: TextStyles.body2,
                     ),
                   ],
                 ),
                 TextFormField(
-                  style: GoogleFonts.jura(
-                      color: Theme.of(context).backgroundColor),
+                  style: TextStyles.body2,
                   decoration: InputDecoration(
                     border: InputBorder.none,
                     counterStyle: TextStyle(color: Colors.black),

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:void_chat_beta/contacts/bloc/contact_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:get/get.dart';
+import 'package:void_chat_beta/generated/l10n.dart';
+import 'package:void_chat_beta/styles.dart';
 
 class OutcomingPendingRequestTile extends StatefulWidget {
   final String username;
@@ -70,7 +70,7 @@ class _OutcomingPendingRequestTileState
             right: 0,
             bottom: 0,
             child: Transform.translate(
-              offset: Offset(20, 0),
+              offset: const Offset(20, 0),
               child: MaterialButton(
                 onPressed: () {
                   _playAnimation();
@@ -171,13 +171,13 @@ class StageredAnimation extends StatelessWidget {
                     onPressed: () {},
                   ),
                   decoration: BoxDecoration(
-                    color: Theme.of(context).primaryColor.withOpacity(0.8),
+                    color: Theme.of(context).primaryColor.withOpacity(0.5),
                     borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(10),
+                      topLeft: const Radius.circular(10),
                     ),
                   ),
                 ),
-                SizedBox(height: 0.5),
+                const SizedBox(height: 0.5),
                 Opacity(
                   opacity: imageOpacity.value,
                   child: Container(
@@ -190,20 +190,23 @@ class StageredAnimation extends StatelessWidget {
                                 .image),
                   ),
                 ),
-                SizedBox(height: 0.5),
+                const SizedBox(height: 0.5),
                 Container(
                   width: double.infinity,
                   height: buttonsHeight.value,
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
-                    color: Theme.of(context).primaryColor.withOpacity(0.8),
+                    color: Theme.of(context).primaryColor.withOpacity(0.5),
                     borderRadius: BorderRadius.only(
-                      bottomLeft: Radius.circular(10),
+                      bottomLeft: const Radius.circular(10),
                     ),
                   ),
                   // height: 30,
                   child: IconButton(
-                    icon: Icon(Icons.cancel_outlined, color: Colors.red[800]),
+                    icon: Icon(
+                      Icons.cancel_outlined,
+                      color: Colors.red[800],
+                    ),
                     onPressed: () => context.read<ContactBloc>().add(
                           RemoveContactRequest(
                             contactId: id,
@@ -259,14 +262,14 @@ class RightSideExpanded extends StatelessWidget {
     return Stack(
       children: [
         Container(
-          margin: EdgeInsets.only(left: 0),
+          margin: const EdgeInsets.only(left: 0),
           height: rseHeight.value,
           decoration: BoxDecoration(
-            color: Theme.of(context).primaryColor.withOpacity(0.8),
+            color: Theme.of(context).primaryColor.withOpacity(0.5),
             borderRadius: BorderRadius.only(
-              topRight: Radius.circular(10),
-              bottomRight: Radius.circular(10),
-              bottomLeft: Radius.circular(10),
+              topRight: const Radius.circular(10),
+              bottomRight: const Radius.circular(10),
+              bottomLeft: const Radius.circular(10),
             ),
           ),
           width: double.infinity,
@@ -274,63 +277,49 @@ class RightSideExpanded extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SizedBox(height: 5),
+                const SizedBox(height: 5),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    SizedBox(width: 7),
+                    const SizedBox(width: 7),
                     Text(
-                      'contacts_user'.tr,
-                      style: GoogleFonts.jura(
-                          color: Theme.of(context).backgroundColor,
-                          fontWeight: FontWeight.bold),
+                      S.of(context).contacts_user,
+                      style: TextStyles.body2,
                     ),
-                    SizedBox(width: 2),
+                    const SizedBox(width: 2),
                     Text(
                       username,
-                      style: GoogleFonts.jura(
-                          color: Theme.of(context).backgroundColor,
-                          fontWeight: FontWeight.normal),
+                      style: TextStyles.body2,
                     ),
                   ],
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    SizedBox(width: 7),
+                    const SizedBox(width: 7),
                     Text(
-                      'contacts_id'.tr,
-                      style: GoogleFonts.jura(
-                        color: Theme.of(context).backgroundColor,
-                        fontWeight: FontWeight.bold,
-                      ),
+                      S.of(context).contacts_id,
+                      style: TextStyles.body2,
                     ),
-                    SizedBox(width: 2),
+                    const SizedBox(width: 2),
                     Text(
                       id,
-                      style: GoogleFonts.jura(
-                          color: Theme.of(context).backgroundColor,
-                          fontWeight: FontWeight.normal,
-                          fontSize: 12),
+                      style: TextStyles.body2,
                     ),
                   ],
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    SizedBox(width: 7),
+                    const SizedBox(width: 7),
                     Text(
-                      'contacts_sent_at'.tr,
-                      style: GoogleFonts.jura(
-                          color: Theme.of(context).backgroundColor,
-                          fontWeight: FontWeight.bold),
+                      S.of(context).contacts_sent_at,
+                      style: TextStyles.body2,
                     ),
-                    SizedBox(width: 2),
+                    const SizedBox(width: 2),
                     Text(
                       requestSentAt,
-                      style: GoogleFonts.jura(
-                          color: Theme.of(context).backgroundColor,
-                          fontWeight: FontWeight.normal),
+                      style: TextStyles.body2,
                     ),
                   ],
                 ),
@@ -340,21 +329,19 @@ class RightSideExpanded extends StatelessWidget {
                   endIndent: 7,
                 ),
                 Container(
-                  margin: EdgeInsets.symmetric(horizontal: 7),
-                  padding: EdgeInsets.all(3),
+                  margin: const EdgeInsets.symmetric(horizontal: 7),
+                  padding: const EdgeInsets.all(3),
                   height: 80,
                   width: double.infinity,
                   decoration: BoxDecoration(
                     border: Border.all(
                         width: 0.5, color: Theme.of(context).primaryColor),
-                    borderRadius: BorderRadius.all(Radius.circular(5)),
+                    borderRadius: const BorderRadius.all(Radius.circular(5)),
                     color: Theme.of(context).backgroundColor.withOpacity(0.35),
                   ),
                   child: Text(
                     message,
-                    style: GoogleFonts.jura(
-                        color: Theme.of(context).primaryColor,
-                        fontWeight: FontWeight.normal),
+                    style: TextStyles.body2,
                   ),
                 ),
               ],
@@ -369,13 +356,13 @@ class RightSideExpanded extends StatelessWidget {
             width: 25,
             height: 25,
             decoration: BoxDecoration(
-              color: Theme.of(context).backgroundColor.withOpacity(0.8),
+              color: Theme.of(context).backgroundColor.withOpacity(0.5),
               border:
                   Border.all(width: 1, color: Theme.of(context).primaryColor),
               borderRadius: BorderRadius.circular(6),
             ),
             child: Transform.translate(
-              offset: Offset(-4, -4),
+              offset: const Offset(-4, -4),
               child: Icon(Icons.arrow_drop_up_sharp,
                   size: 32, color: Theme.of(context).primaryColor),
             ),
@@ -401,12 +388,12 @@ class RightSideShort extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(left: 0),
+      margin: const EdgeInsets.only(left: 0),
       width: double.infinity,
       height: rssHeight.value,
       decoration: BoxDecoration(
-        color: Theme.of(context).primaryColor.withOpacity(0.8),
-        borderRadius: BorderRadius.only(
+        color: Theme.of(context).primaryColor.withOpacity(0.5),
+        borderRadius: const BorderRadius.only(
           topRight: Radius.circular(10),
           bottomRight: Radius.circular(10),
         ),
@@ -423,13 +410,8 @@ class RightSideShort extends StatelessWidget {
                     height: 39.5,
                     alignment: Alignment.centerLeft,
                     child: Text(
-                      'contacts_accept'.tr,
-                      style: GoogleFonts.jura(
-                          color: Theme.of(context)
-                              .backgroundColor
-                              .withOpacity(0.2),
-                          fontSize: 11,
-                          fontWeight: FontWeight.bold),
+                      S.of(context).contacts_accept,
+                      style: TextStyles.body2,
                     ),
                   ),
                   Container(
@@ -448,11 +430,8 @@ class RightSideShort extends StatelessWidget {
                       alignment: Alignment.centerLeft,
                       child: GestureDetector(
                         child: Text(
-                          'contacts_cancel'.tr,
-                          style: GoogleFonts.jura(
-                              color: Colors.red[800],
-                              fontSize: 11,
-                              fontWeight: FontWeight.bold),
+                          S.of(context).contacts_cancel,
+                          style: TextStyles.body2,
                         ),
                       ),
                     ),
@@ -479,9 +458,7 @@ class RightSideShort extends StatelessWidget {
                       shape: BoxShape.circle,
                       boxShadow: [
                         BoxShadow(
-                          color: Theme.of(context)
-                              .primaryColor, // background color
-                          // color: Color(0xffe0e5ec), // background color
+                          color: Theme.of(context).primaryColor,
                           spreadRadius: -8.0,
                           blurRadius: 50.0,
                         ),
@@ -492,7 +469,7 @@ class RightSideShort extends StatelessWidget {
                 Positioned(
                   bottom: 1,
                   left: 59,
-                  child: OutcomingIndicator(),
+                  child: const OutcomingIndicator(),
                 ),
               ],
             ),
@@ -504,10 +481,7 @@ class RightSideShort extends StatelessWidget {
                     height: 39.5,
                     child: Text(
                       username,
-                      style: GoogleFonts.jura(
-                          color: Theme.of(context).backgroundColor,
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold),
+                      style: TextStyles.body2,
                     ),
                   ),
                   Container(
@@ -519,11 +493,8 @@ class RightSideShort extends StatelessWidget {
                     alignment: Alignment.center,
                     height: 39.5,
                     child: Text(
-                      'contacts_more_info'.tr,
-                      style: GoogleFonts.jura(
-                          color: Theme.of(context).backgroundColor,
-                          fontSize: 11,
-                          fontWeight: FontWeight.normal),
+                      S.of(context).contacts_more_info,
+                      style: TextStyles.body2,
                     ),
                   ),
                 ],
@@ -548,7 +519,7 @@ class OutcomingIndicator extends StatelessWidget {
       width: 20,
       height: 20,
       decoration: BoxDecoration(
-        color: Color(0xFFD5B00B),
+        color: const Color(0xFFD5B00B),
         border: Border.all(width: 1, color: Theme.of(context).primaryColor),
         borderRadius: BorderRadius.circular(6),
       ),
