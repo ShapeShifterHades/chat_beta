@@ -12,9 +12,9 @@ part 'chatroom_state.dart';
 
 class ChatroomBloc extends Bloc<ChatroomEvent, ChatroomState> {
   final FirestoreChatroomRepository _firestoreChatroomRepository;
-  StreamSubscription _chatroomSubscription;
+  StreamSubscription? _chatroomSubscription;
   ChatroomBloc(
-      {@required FirestoreChatroomRepository firestoreChatroomRepository})
+      {required FirestoreChatroomRepository firestoreChatroomRepository})
       : _firestoreChatroomRepository = firestoreChatroomRepository,
         super(ChatroomLoading());
 

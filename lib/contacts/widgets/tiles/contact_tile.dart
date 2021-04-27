@@ -4,12 +4,12 @@ import 'dart:ui' as ui;
 import 'package:void_chat_beta/styles.dart';
 
 class ContactTile extends StatelessWidget {
-  final String id;
-  final BuildContext context;
-  final Widget child;
+  final String? id;
+  final BuildContext? context;
+  final Widget? child;
 
   const ContactTile({
-    Key key,
+    Key? key,
     this.child,
     this.id,
     this.context,
@@ -30,9 +30,9 @@ class ContactTile extends StatelessWidget {
 }
 
 class ContactTilePainter extends CustomPainter {
-  final BuildContext context;
-  final Color color;
-  final String id;
+  final BuildContext? context;
+  final Color? color;
+  final String? id;
 
   ContactTilePainter({this.context, this.color, this.id});
   @override
@@ -54,11 +54,11 @@ class ContactTilePainter extends CustomPainter {
         Offset(0.0, 0.0),
         Offset(size.width, size.height),
         [
-          Theme.of(context).primaryColor,
-          Theme.of(context).primaryColor.withOpacity(0.5),
+          Theme.of(context!).primaryColor,
+          Theme.of(context!).primaryColor.withOpacity(0.5),
         ],
       )
-      ..color = color ?? Theme.of(context).primaryTextTheme.bodyText1.color;
+      ..color = color ?? Theme.of(context!).primaryTextTheme.bodyText1!.color!;
 
     canvas.drawPath(path1, paint1);
 
@@ -82,17 +82,17 @@ class ContactTilePainter extends CustomPainter {
         Offset(0.0, 0.0),
         Offset(size.width, size.height),
         [
-          Theme.of(context).primaryColor,
-          Theme.of(context).primaryColor.withOpacity(0.5),
+          Theme.of(context!).primaryColor,
+          Theme.of(context!).primaryColor.withOpacity(0.5),
         ],
       )
-      ..color = color ?? Theme.of(context).primaryTextTheme.bodyText1.color;
+      ..color = color ?? Theme.of(context!).primaryTextTheme.bodyText1!.color!;
 
     canvas.drawPath(path2, paint2);
 
     final textStyle = TextStyles.body2.copyWith(
       fontStyle: FontStyle.italic,
-      color: Theme.of(context).backgroundColor,
+      color: Theme.of(context!).backgroundColor,
       fontSize: 11,
     );
     final idSpan = TextSpan(

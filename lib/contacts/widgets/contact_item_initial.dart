@@ -11,9 +11,9 @@ import 'package:void_chat_beta/generated/l10n.dart';
 
 class ContactItem extends StatefulWidget {
   const ContactItem({
-    Key key,
-    @required this.sorted,
-    @required this.index,
+    Key? key,
+    required this.sorted,
+    required this.index,
   }) : super(key: key);
 
   final List<Contact> sorted;
@@ -24,7 +24,7 @@ class ContactItem extends StatefulWidget {
 }
 
 class _ContactItemState extends State<ContactItem> {
-  CustomAnimationControl fingerprintAnimationcontroller;
+  late CustomAnimationControl fingerprintAnimationcontroller;
   bool isExpanded = false;
 
   @override
@@ -38,11 +38,11 @@ class _ContactItemState extends State<ContactItem> {
               duration: Times.fastest,
               control: fingerprintAnimationcontroller,
               tween: (0.0).tweenTo(2.0),
-              builder: (context, child, value) {
+              builder: (context, child, dynamic value) {
                 return Transform.translate(
                   offset: Offset(0, value),
                   child: ContactTile(
-                    id: 'ID: ${widget.sorted[widget.index].id.toUpperCase()}',
+                    id: 'ID: ${widget.sorted[widget.index].id!.toUpperCase()}',
                     child: Container(
                       width: 300,
                       height: 70,
@@ -148,7 +148,7 @@ class _ContactItemState extends State<ContactItem> {
                         color: Theme.of(context).scaffoldBackgroundColor,
 
                         child: Text(
-                          S.of(context).contacts_form_message,
+                          S.of(context)!.contacts_form_message,
                           style: TextStyles.body1.copyWith(fontSize: 20),
                         ),
                       ),
@@ -174,7 +174,7 @@ class _ContactItemState extends State<ContactItem> {
                         height: 40,
                         color: Theme.of(context).scaffoldBackgroundColor,
                         child: Text(
-                          S.of(context).contacts_form_remove,
+                          S.of(context)!.contacts_form_remove,
                           style: TextStyles.body1.copyWith(fontSize: 20),
                         ),
                       ),

@@ -11,11 +11,11 @@ import 'package:void_chat_beta/signup/widgets/textfields/username_input.dart';
 
 class TextfieldsFrame extends StatelessWidget {
   const TextfieldsFrame({
-    Key key,
-    @required this.formFrameHeight,
+    Key? key,
+    required this.formFrameHeight,
   }) : super(key: key);
 
-  final Animation<double> formFrameHeight;
+  final Animation<double>? formFrameHeight;
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +23,7 @@ class TextfieldsFrame extends StatelessWidget {
       child: BackdropFilter(
         filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
         child: Container(
-          height: formFrameHeight.value,
+          height: formFrameHeight!.value,
           padding: EdgeInsets.symmetric(horizontal: 5),
           decoration: BoxDecoration(
             color: Theme.of(context).backgroundColor.withOpacity(0.4),

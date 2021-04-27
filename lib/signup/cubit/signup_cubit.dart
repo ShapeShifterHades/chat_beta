@@ -94,7 +94,7 @@ class SignUpCubit extends Cubit<SignUpState> {
         password: state.password.value,
       );
       NewProfile newProfile = NewProfile(
-          uid: userCredential.user.uid, username: state.username.value);
+          uid: userCredential.user!.uid, username: state.username.value);
       await _newUserRepository.addNewUser(newProfile);
       emit(state.copyWith(status: FormzStatus.submissionSuccess));
     } on Exception {
@@ -125,11 +125,11 @@ class SignUpState extends Equatable {
       [username, email, password, confirmedPassword, status];
 
   SignUpState copyWith({
-    Email email,
-    Password password,
-    ConfirmedPassword confirmedPassword,
-    Username username,
-    FormzStatus status,
+    Email? email,
+    Password? password,
+    ConfirmedPassword? confirmedPassword,
+    Username? username,
+    FormzStatus? status,
   }) {
     return SignUpState(
       username: username ?? this.username,

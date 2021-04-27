@@ -1,9 +1,9 @@
 part of 'finduser_bloc.dart';
 
 class FinduserState {
-  final bool isLoading;
-  final Contact contact;
-  final bool hasError;
+  final bool? isLoading;
+  final Contact? contact;
+  final bool? hasError;
 
   const FinduserState({this.isLoading, this.contact, this.hasError});
 
@@ -23,7 +23,7 @@ class FinduserState {
     );
   }
 
-  factory FinduserState.success(Contact contact) {
+  factory FinduserState.success(Contact? contact) {
     return FinduserState(
       contact: contact,
       isLoading: false,

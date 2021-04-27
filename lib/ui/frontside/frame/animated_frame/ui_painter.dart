@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class UiPainter extends CustomPainter {
-  BuildContext context;
+  BuildContext? context;
 
   UiPainter({
     this.context,
@@ -10,7 +10,7 @@ class UiPainter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     Path _bottomRightCornerPath = Path();
     Paint _bottomRightCorner = Paint()
-      ..color = Theme.of(context).scaffoldBackgroundColor
+      ..color = Theme.of(context!).scaffoldBackgroundColor
       ..style = PaintingStyle.fill;
 
     _bottomRightCornerPath.moveTo(size.width - 30, size.height);
@@ -21,7 +21,7 @@ class UiPainter extends CustomPainter {
     canvas.drawPath(_bottomRightCornerPath, _bottomRightCorner);
 
     Paint _anglePaint = Paint()
-      ..color = Theme.of(context).primaryColor
+      ..color = Theme.of(context!).primaryColor
       ..strokeWidth = 0.3
       ..strokeCap = StrokeCap.round;
 
@@ -31,7 +31,7 @@ class UiPainter extends CustomPainter {
     canvas.drawLine(angleStartingPoint, angleEndingPoint, _anglePaint);
 
     Paint _topPaint = Paint()
-      ..color = Theme.of(context).primaryColor
+      ..color = Theme.of(context!).primaryColor
       ..strokeWidth = 0.3
       ..strokeCap = StrokeCap.round;
 
@@ -41,7 +41,7 @@ class UiPainter extends CustomPainter {
     canvas.drawLine(topStartingPoint, topEndingPoint, _topPaint);
 
     Paint _bottomPaint = Paint()
-      ..color = Theme.of(context).primaryColor
+      ..color = Theme.of(context!).primaryColor
       ..strokeWidth = 0.3
       ..strokeCap = StrokeCap.round;
 
@@ -51,7 +51,7 @@ class UiPainter extends CustomPainter {
     canvas.drawLine(bottomStartingPoint, bottomEndingPoint, _bottomPaint);
 
     Paint _rightPaint = Paint()
-      ..color = Theme.of(context).primaryColor
+      ..color = Theme.of(context!).primaryColor
       ..strokeWidth = 0.3
       ..strokeCap = StrokeCap.round;
 
@@ -61,7 +61,7 @@ class UiPainter extends CustomPainter {
     canvas.drawLine(rightStartingPoint, rightEndingPoint, _rightPaint);
 
     Paint _leftPaint = Paint()
-      ..color = Theme.of(context).primaryColor
+      ..color = Theme.of(context!).primaryColor
       ..strokeWidth = 0.3
       ..strokeCap = StrokeCap.round;
 

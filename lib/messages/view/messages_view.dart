@@ -29,7 +29,7 @@ class MessagesView extends StatelessWidget {
 
 class MessagesContent extends StatelessWidget {
   const MessagesContent({
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override
@@ -56,13 +56,13 @@ class MessagesContent extends StatelessWidget {
 
 class ChatroomCard extends StatelessWidget {
   const ChatroomCard({
-    Key key,
-    @required this.chat,
+    Key? key,
+    required this.chat,
     this.onPress,
   }) : super(key: key);
 
   final Chatroom chat;
-  final VoidCallback onPress;
+  final VoidCallback? onPress;
   final bool isActive = false;
 
   @override
@@ -104,7 +104,7 @@ class ChatroomCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      chat.name,
+                      chat.name!,
                       style:
                           TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
                     ),

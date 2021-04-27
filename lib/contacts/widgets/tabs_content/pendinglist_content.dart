@@ -19,7 +19,7 @@ class PendinglistContent extends StatelessWidget {
         builder: (context, state) {
           if (state is ContactsLoaded) {
             var sorted = state.contacts
-                .where((element) => element.status.contains('pending'))
+                .where((element) => element.status!.contains('pending'))
                 .toList();
 
             return Container(
@@ -41,7 +41,7 @@ class PendinglistContent extends StatelessWidget {
 
 class _Divider extends StatelessWidget {
   const _Divider({
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override
@@ -55,8 +55,8 @@ class _Divider extends StatelessWidget {
 
 class _ContactsListView extends StatelessWidget {
   const _ContactsListView({
-    Key key,
-    @required this.sorted,
+    Key? key,
+    required this.sorted,
   }) : super(key: key);
 
   final List<Contact> sorted;
@@ -68,10 +68,10 @@ class _ContactsListView extends StatelessWidget {
       shrinkWrap: true,
       itemCount: sorted.length,
       itemBuilder: (context, index) {
-        var _date = sorted[index]?.requestSentAt == null
+        var _date = sorted[index].requestSentAt == null
             ? null
             : DateFormat.MMMMEEEEd()
-                .format(sorted[index]?.requestSentAt?.toDate()?.toLocal())
+                // .format(sorted[index].requestSentAt?.toDate())
                 .toString();
         return _date != null
             ? (sorted[index].requestFrom ==
@@ -96,8 +96,8 @@ class _ContactsListView extends StatelessWidget {
 
 class _RequestsCounter extends StatelessWidget {
   const _RequestsCounter({
-    Key key,
-    @required this.sorted,
+    Key? key,
+    required this.sorted,
   }) : super(key: key);
 
   final List<Contact> sorted;
@@ -108,7 +108,7 @@ class _RequestsCounter extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
         Text(
-          S.of(context).contacts_pending + ': ' + sorted.length.toString(),
+          S.of(context)!.contacts_pending + ': ' + sorted.length.toString(),
           style: TextStyles.body1,
         ),
         const SizedBox(width: 20),

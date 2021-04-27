@@ -32,10 +32,10 @@ class EmailInput extends StatelessWidget {
                 color: Theme.of(context).primaryColor,
               ),
             ),
-            labelText: S.of(context).loginpage_email,
+            labelText: S.of(context)!.loginpage_email,
             helperText: '',
             errorText: state.email.invalid
-                ? S.of(context).loginpage_invalid_email
+                ? S.of(context)!.loginpage_invalid_email
                 : null,
           ),
         );

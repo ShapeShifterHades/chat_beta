@@ -4,13 +4,13 @@ import 'ui_painter.dart';
 
 class UiFullFrameAnimated extends StatelessWidget {
   const UiFullFrameAnimated({
-    Key key,
-    @required this.context,
+    Key? key,
+    required this.context,
     this.size,
   }) : super(key: key);
 
   final BuildContext context;
-  final Size size;
+  final Size? size;
 
   @override
   Widget build(BuildContext ctx) {

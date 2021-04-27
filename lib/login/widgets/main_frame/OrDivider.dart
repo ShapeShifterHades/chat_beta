@@ -8,11 +8,11 @@ import 'constants.dart';
 
 class OrDivider extends StatelessWidget {
   const OrDivider({
-    Key key,
-    @required this.orLineHeight,
+    Key? key,
+    required this.orLineHeight,
   }) : super(key: key);
 
-  final Animation<double> orLineHeight;
+  final Animation<double>? orLineHeight;
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +28,7 @@ class OrDivider extends StatelessWidget {
                     color: Theme.of(context).primaryColor, width: 0.2),
               ),
             ),
-            height: orLineHeight.value,
+            height: orLineHeight!.value,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -41,7 +41,7 @@ class OrDivider extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  S.of(context).signup_or,
+                  S.of(context)!.signup_or,
                   style: TextStyles.body2,
                 ),
                 Expanded(

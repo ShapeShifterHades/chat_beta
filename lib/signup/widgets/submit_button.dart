@@ -6,7 +6,7 @@ import 'package:void_chat_beta/generated/l10n.dart';
 
 class SubmitButton extends StatelessWidget {
   const SubmitButton({
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override
@@ -19,7 +19,7 @@ class SubmitButton extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           SimpleButtonOne(
-            text: S.of(context).signup_submit,
+            text: S.of(context)!.signup_submit,
             onPressed: () {
               context.read<SignUpCubit>().signUpFormSubmitted();
             },

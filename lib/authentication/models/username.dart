@@ -11,7 +11,7 @@ class Username extends FormzInput<String, UsernameValidationError> {
   );
 
   @override
-  UsernameValidationError validator(String value) {
+  UsernameValidationError? validator(String value) {
     // return _UsernameRegExp.hasMatch(value) ? null : UsernameValidationError.invalid;
 
     if (!_usernameRegExp.hasMatch(value))
@@ -19,7 +19,7 @@ class Username extends FormzInput<String, UsernameValidationError> {
     return null;
   }
 
-  static String getErrorMessage(error) {
+  static String? getErrorMessage(error) {
     switch (error) {
       case UsernameValidationError.invalid:
         return 'This is not a valid Username';

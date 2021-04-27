@@ -16,7 +16,7 @@ class SearchButtonBloc extends Bloc<SearchButtonEvent, SearchButtonState> {
   }
 
   final FinduserBloc _finduserBloc;
-  StreamSubscription<FinduserState> _finduserSubscription;
+  StreamSubscription<FinduserState>? _finduserSubscription;
 
   @override
   Future<void> close() {

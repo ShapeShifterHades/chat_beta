@@ -10,7 +10,7 @@ import 'package:void_chat_beta/widgets/svg_background.dart';
 
 class SignUpView extends StatelessWidget {
   const SignUpView({
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override

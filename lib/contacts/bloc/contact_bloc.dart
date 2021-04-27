@@ -12,7 +12,7 @@ part 'contact_state.dart';
 class ContactBloc extends Bloc<ContactEvent, ContactsState> {
   final AuthenticationBloc _authenticationBloc;
   final FirestoreContactRepository _firestoreContactRepository;
-  StreamSubscription _contactSubscription;
+  StreamSubscription? _contactSubscription;
 
   ContactBloc(
     FirestoreContactRepository firestoreContactRepository,

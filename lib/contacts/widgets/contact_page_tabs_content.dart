@@ -10,7 +10,7 @@ import 'tabs_content/friendlist_content.dart';
 
 class ContactPageTabsContent extends StatelessWidget {
   const ContactPageTabsContent({
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override
@@ -33,7 +33,7 @@ class ContactPageTabsContent extends StatelessWidget {
 
 class _UserList extends StatelessWidget {
   const _UserList({
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override
@@ -54,14 +54,14 @@ class _UserList extends StatelessWidget {
 
 class _ContactsLoadingIndication extends StatelessWidget {
   const _ContactsLoadingIndication({
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Center(
       child: Text(
-        S.of(context).contacts_loading,
+        S.of(context)!.contacts_loading,
         style: TextStyles.body1,
       ),
     );

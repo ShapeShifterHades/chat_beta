@@ -5,10 +5,10 @@ import 'package:flutter/widgets.dart';
 
 class ArcText extends StatelessWidget {
   const ArcText({
-    Key key,
-    @required this.radius,
-    @required this.text,
-    @required this.textStyle,
+    Key? key,
+    required this.radius,
+    required this.text,
+    required this.textStyle,
     this.startAngle = 0,
   }) : super(key: key);
 
@@ -43,10 +43,10 @@ class _Painter extends CustomPainter {
     canvas.translate(size.width / 2, size.height / 2 - radius);
 
     if (initialAngle != 0) {
-      final d = 2 * radius * math.sin(initialAngle / 2);
+      final num d = 2 * radius * math.sin(initialAngle / 2);
       final rotationAngle = _calculateRotationAngle(0, initialAngle);
       canvas.rotate(rotationAngle);
-      canvas.translate(d, 0);
+      canvas.translate(d as double, 0);
     }
 
     double angle = initialAngle;

@@ -7,11 +7,11 @@ import 'formfields/email_input.dart';
 
 class LoginTextForms extends StatelessWidget {
   const LoginTextForms({
-    Key key,
-    @required this.formFrameHeight,
+    Key? key,
+    required this.formFrameHeight,
   }) : super(key: key);
 
-  final Animation<double> formFrameHeight;
+  final Animation<double>? formFrameHeight;
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +19,7 @@ class LoginTextForms extends StatelessWidget {
       child: BackdropFilter(
         filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
         child: Container(
-          height: formFrameHeight.value,
+          height: formFrameHeight!.value,
           decoration: BoxDecoration(
             color: Theme.of(context).backgroundColor.withOpacity(0.4),
             border: Border.symmetric(

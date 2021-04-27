@@ -2,12 +2,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
 
 class ContactEntity extends Equatable {
-  final String id;
-  final String username;
-  final String status;
-  final String message;
-  final Timestamp requestSentAt;
-  final String requestFrom;
+  final String? id;
+  final String? username;
+  final String? status;
+  final String? message;
+  final Timestamp? requestSentAt;
+  final String? requestFrom;
 
   const ContactEntity(
     this.id,
@@ -18,7 +18,7 @@ class ContactEntity extends Equatable {
     this.requestFrom,
   );
 
-  Map<String, Object> toJson() {
+  Map<String, Object?> toJson() {
     return {
       'id': id,
       'username': username,
@@ -30,7 +30,7 @@ class ContactEntity extends Equatable {
   }
 
   @override
-  List<Object> get props =>
+  List<Object?> get props =>
       [id, username, status, message, requestSentAt, requestFrom];
 
   @override
@@ -40,27 +40,27 @@ class ContactEntity extends Equatable {
 
   static ContactEntity fromJson(Map<String, Object> json) {
     return ContactEntity(
-      json['id'] as String,
-      json['username'] as String,
-      json['status'] as String,
-      json['message'] as String,
-      json['requestSentAt'] as Timestamp,
-      json['requestFrom'] as String,
+      json['id'] as String?,
+      json['username'] as String?,
+      json['status'] as String?,
+      json['message'] as String?,
+      json['requestSentAt'] as Timestamp?,
+      json['requestFrom'] as String?,
     );
   }
 
   static ContactEntity fromSnapshot(DocumentSnapshot snap) {
     return ContactEntity(
-      snap.data()['id'],
-      snap.data()['username'],
-      snap.data()['status'],
-      snap.data()['message'],
-      snap.data()['requestSentAt'],
-      snap.data()['requestFrom'],
+      snap.data()!['id'],
+      snap.data()!['username'],
+      snap.data()!['status'],
+      snap.data()!['message'],
+      snap.data()!['requestSentAt'],
+      snap.data()!['requestFrom'],
     );
   }
 
-  Map<String, Object> toDocument() {
+  Map<String, Object?> toDocument() {
     return {
       'id': id,
       'username': username,

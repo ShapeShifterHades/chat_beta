@@ -3,8 +3,8 @@ import 'package:shimmer/shimmer.dart';
 
 class SwitchAuthButton extends StatelessWidget {
   const SwitchAuthButton({
-    Key key,
-    @required this.text,
+    Key? key,
+    required this.text,
   }) : super(key: key);
   final String text;
 
@@ -17,12 +17,12 @@ class SwitchAuthButton extends StatelessWidget {
         Shimmer.fromColors(
           baseColor: Theme.of(context)
               .inputDecorationTheme
-              .enabledBorder
+              .enabledBorder!
               .borderSide
               .color.withOpacity(0.35),
           highlightColor: Theme.of(context)
               .inputDecorationTheme
-              .enabledBorder
+              .enabledBorder!
               .borderSide
               .color.withOpacity(1),
           loop: 0,

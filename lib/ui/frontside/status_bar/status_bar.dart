@@ -3,10 +3,10 @@ import 'toggle_drawer_button.dart';
 
 // ignore: must_be_immutable
 class StatusBar extends StatelessWidget {
-  AnimationController animationController;
+  AnimationController? animationController;
 
   StatusBar({
-    Key key,
+    Key? key,
     this.animationController,
   }) : super(key: key);
 

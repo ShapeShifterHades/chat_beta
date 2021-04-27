@@ -13,8 +13,8 @@ class LocaleCubit extends HydratedCubit<String> {
   }
 
   @override
-  String fromJson(Map<String, dynamic> json) {
-    return json['locale2'] as String;
+  String? fromJson(Map<String, dynamic> json) {
+    return json['locale2'] as String?;
   }
 
   @override

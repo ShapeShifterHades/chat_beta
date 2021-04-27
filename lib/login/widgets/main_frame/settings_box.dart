@@ -10,11 +10,11 @@ import 'package:void_chat_beta/generated/l10n.dart';
 
 class SettingsBox extends StatefulWidget {
   const SettingsBox({
-    Key key,
-    @required this.settingsFrameHeight,
+    Key? key,
+    required this.settingsFrameHeight,
   }) : super(key: key);
 
-  final Animation<double> settingsFrameHeight;
+  final Animation<double>? settingsFrameHeight;
 
   @override
   _SettingsBoxState createState() => _SettingsBoxState();
@@ -27,7 +27,7 @@ class _SettingsBoxState extends State<SettingsBox> {
       child: BackdropFilter(
         filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
         child: Container(
-          height: widget.settingsFrameHeight.value,
+          height: widget.settingsFrameHeight!.value,
           decoration: BoxDecoration(
             color: Theme.of(context).backgroundColor.withOpacity(.4),
             border: Border.symmetric(
@@ -45,7 +45,7 @@ class _SettingsBoxState extends State<SettingsBox> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       const SizedBox(width: 50),
-                      Text(S.of(context).signup_brightness,
+                      Text(S.of(context)!.signup_brightness,
                           style: TextStyles.body1),
                       const Spacer(),
                       Switcher(
@@ -59,7 +59,7 @@ class _SettingsBoxState extends State<SettingsBox> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       const SizedBox(width: 50),
-                      Text(S.of(context).signup_locale,
+                      Text(S.of(context)!.signup_locale,
                           style: TextStyles.body1),
                       const Spacer(),
                       Switcher(

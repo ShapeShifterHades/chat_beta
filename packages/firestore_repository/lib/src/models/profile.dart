@@ -3,8 +3,8 @@ import '../entities/entities.dart';
 /// Represents a class passed to entity converter
 /// added to Firestore when new user creates account
 class NewProfile {
-  final String uid;
-  final String username;
+  final String? uid;
+  final String? username;
   /// Timestamp in milliseconds since epoch shows when account is created
   // final int createdAt;
 

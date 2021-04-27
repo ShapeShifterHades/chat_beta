@@ -18,7 +18,7 @@ import 'button_model.dart';
 /// Widget that represents main part of the Signup View
 class LoginMainFormFrame extends StatefulWidget {
   LoginMainFormFrame({
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override
@@ -28,16 +28,16 @@ class LoginMainFormFrame extends StatefulWidget {
 class _LoginMainFormFrameState extends State<LoginMainFormFrame>
     with AnimationMixin {
   /// Controller that is taking care of animation, is set to be played after widget first build
-  AnimationController _formController;
-  AnimationController _settingsController;
+  AnimationController? _formController;
+  AnimationController? _settingsController;
   // Whether keyboard is opened or not.
   // bool keyboardIsVisible = false;
   // Notification provider for keyboard opening.
 
-  Animation<double> formFrameHeight;
-  Animation<double> settingsFrameHeight;
-  Animation<double> orLineHeight;
-  Animation<double> orLineAlterHeight;
+  Animation<double>? formFrameHeight;
+  Animation<double>? settingsFrameHeight;
+  Animation<double>? orLineHeight;
+  Animation<double>? orLineAlterHeight;
 
   @override
   void initState() {
@@ -46,10 +46,10 @@ class _LoginMainFormFrameState extends State<LoginMainFormFrame>
       ..curve(Curves.easeInQuad);
     _settingsController = createController();
 
-    formFrameHeight = 0.0.tweenTo(168.0).animatedBy(_formController);
-    settingsFrameHeight = 0.0.tweenTo(160.0).animatedBy(_settingsController);
-    orLineHeight = 0.0.tweenTo(40.0).animatedBy(_formController);
-    orLineAlterHeight = 0.0.tweenTo(40.0).animatedBy(_settingsController);
+    formFrameHeight = 0.0.tweenTo(168.0).animatedBy(_formController!);
+    settingsFrameHeight = 0.0.tweenTo(160.0).animatedBy(_settingsController!);
+    orLineHeight = 0.0.tweenTo(40.0).animatedBy(_formController!);
+    orLineAlterHeight = 0.0.tweenTo(40.0).animatedBy(_settingsController!);
 
     super.initState();
   }
@@ -80,7 +80,7 @@ class _LoginMainFormFrameState extends State<LoginMainFormFrame>
                   if (!isKeyboardVisible)
                     FormHeaderSignUp(
                       color: Theme.of(context).primaryColor,
-                      title: S.of(context).loginpage_login_form,
+                      title: S.of(context)!.loginpage_login_form,
                       formController: _formController,
                       settingsController: _settingsController,
                     ),
@@ -90,8 +90,8 @@ class _LoginMainFormFrameState extends State<LoginMainFormFrame>
                   ButtonsDivider(orLineAlterHeight: orLineAlterHeight),
                   OrDivider(orLineHeight: orLineHeight),
                   ButtonModel(
-                    text: S.of(context).loginpage_login_with_google,
-                    onPressed: _formController.value == 0.0 ? null : () {},
+                    text: S.of(context)!.loginpage_login_with_google,
+                    onPressed: _formController!.value == 0.0 ? null : () {},
                   ),
                 ],
               ),

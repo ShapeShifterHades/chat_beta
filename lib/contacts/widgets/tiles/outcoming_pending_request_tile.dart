@@ -5,12 +5,12 @@ import 'package:void_chat_beta/generated/l10n.dart';
 import 'package:void_chat_beta/styles.dart';
 
 class OutcomingPendingRequestTile extends StatefulWidget {
-  final String username;
-  final String id;
-  final String message;
+  final String? username;
+  final String? id;
+  final String? message;
   final String requestSentAt;
   OutcomingPendingRequestTile({
-    Key key,
+    Key? key,
     this.username: '',
     this.id: '',
     this.message: '',
@@ -24,7 +24,7 @@ class OutcomingPendingRequestTile extends StatefulWidget {
 
 class _OutcomingPendingRequestTileState
     extends State<OutcomingPendingRequestTile> with TickerProviderStateMixin {
-  AnimationController _animationController;
+  late AnimationController _animationController;
 
   @override
   void initState() {
@@ -85,13 +85,13 @@ class _OutcomingPendingRequestTileState
 }
 
 class StageredAnimation extends StatelessWidget {
-  final String username;
-  final String id;
-  final String message;
-  final String requestSentAt;
+  final String? username;
+  final String? id;
+  final String? message;
+  final String? requestSentAt;
   StageredAnimation({
-    Key key,
-    this.controller,
+    Key? key,
+    required this.controller,
     this.username,
     this.id,
     this.message,
@@ -147,7 +147,7 @@ class StageredAnimation extends StatelessWidget {
     return AnimatedBuilder(animation: controller, builder: _buildAnimation);
   }
 
-  Widget _buildAnimation(BuildContext context, Widget child) {
+  Widget _buildAnimation(BuildContext context, Widget? child) {
     return SingleChildScrollView(
       child: Row(
         children: [
@@ -242,13 +242,13 @@ class StageredAnimation extends StatelessWidget {
 }
 
 class RightSideExpanded extends StatelessWidget {
-  final String username;
-  final String id;
-  final String message;
-  final String requestSentAt;
+  final String? username;
+  final String? id;
+  final String? message;
+  final String? requestSentAt;
   const RightSideExpanded({
-    Key key,
-    @required this.rseHeight,
+    Key? key,
+    required this.rseHeight,
     this.username: '',
     this.id: '',
     this.message: '',
@@ -283,12 +283,12 @@ class RightSideExpanded extends StatelessWidget {
                   children: [
                     const SizedBox(width: 7),
                     Text(
-                      S.of(context).contacts_user,
+                      S.of(context)!.contacts_user,
                       style: TextStyles.body2,
                     ),
                     const SizedBox(width: 2),
                     Text(
-                      username,
+                      username!,
                       style: TextStyles.body2,
                     ),
                   ],
@@ -298,12 +298,12 @@ class RightSideExpanded extends StatelessWidget {
                   children: [
                     const SizedBox(width: 7),
                     Text(
-                      S.of(context).contacts_id,
+                      S.of(context)!.contacts_id,
                       style: TextStyles.body2,
                     ),
                     const SizedBox(width: 2),
                     Text(
-                      id,
+                      id!,
                       style: TextStyles.body2,
                     ),
                   ],
@@ -313,12 +313,12 @@ class RightSideExpanded extends StatelessWidget {
                   children: [
                     const SizedBox(width: 7),
                     Text(
-                      S.of(context).contacts_sent_at,
+                      S.of(context)!.contacts_sent_at,
                       style: TextStyles.body2,
                     ),
                     const SizedBox(width: 2),
                     Text(
-                      requestSentAt,
+                      requestSentAt!,
                       style: TextStyles.body2,
                     ),
                   ],
@@ -340,7 +340,7 @@ class RightSideExpanded extends StatelessWidget {
                     color: Theme.of(context).backgroundColor.withOpacity(0.35),
                   ),
                   child: Text(
-                    message,
+                    message!,
                     style: TextStyles.body2,
                   ),
                 ),
@@ -374,11 +374,11 @@ class RightSideExpanded extends StatelessWidget {
 }
 
 class RightSideShort extends StatelessWidget {
-  final String username;
-  final String id;
+  final String? username;
+  final String? id;
   const RightSideShort({
-    Key key,
-    @required this.rssHeight,
+    Key? key,
+    required this.rssHeight,
     this.username: '',
     this.id,
   }) : super(key: key);
@@ -410,7 +410,7 @@ class RightSideShort extends StatelessWidget {
                     height: 39.5,
                     alignment: Alignment.centerLeft,
                     child: Text(
-                      S.of(context).contacts_accept,
+                      S.of(context)!.contacts_accept,
                       style: TextStyles.body2,
                     ),
                   ),
@@ -430,7 +430,7 @@ class RightSideShort extends StatelessWidget {
                       alignment: Alignment.centerLeft,
                       child: GestureDetector(
                         child: Text(
-                          S.of(context).contacts_cancel,
+                          S.of(context)!.contacts_cancel,
                           style: TextStyles.body2,
                         ),
                       ),
@@ -480,7 +480,7 @@ class RightSideShort extends StatelessWidget {
                     alignment: Alignment.center,
                     height: 39.5,
                     child: Text(
-                      username,
+                      username!,
                       style: TextStyles.body2,
                     ),
                   ),
@@ -493,7 +493,7 @@ class RightSideShort extends StatelessWidget {
                     alignment: Alignment.center,
                     height: 39.5,
                     child: Text(
-                      S.of(context).contacts_more_info,
+                      S.of(context)!.contacts_more_info,
                       style: TextStyles.body2,
                     ),
                   ),
@@ -509,7 +509,7 @@ class RightSideShort extends StatelessWidget {
 
 class OutcomingIndicator extends StatelessWidget {
   const OutcomingIndicator({
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override

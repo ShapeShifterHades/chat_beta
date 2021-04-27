@@ -2,22 +2,22 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firestore_repository/src/entities/chatroom_entity.dart';
 
 class Chatroom {
-  final String name;
-  final String id1;
-  final String id2;
+  final String? name;
+  final String? id1;
+  final String? id2;
   final DateTime createdAt;
   final String lastMessage;
-  final DateTime lastMessageAt;
-  final String lastMessageFrom;
+  final DateTime? lastMessageAt;
+  final String? lastMessageFrom;
 
   Chatroom({
     this.name = '',
     this.id1,
     this.id2,
-    String lastMessage,
+    String? lastMessage,
     this.lastMessageFrom,
     this.lastMessageAt,
-    DateTime createdAt,
+    DateTime? createdAt,
   })  : this.createdAt = DateTime.now(),
         this.lastMessage = lastMessage ?? 'none';
 
@@ -30,7 +30,7 @@ class Chatroom {
       id2,
       lastMessage,
       lastMessageFrom,
-      Timestamp.fromDate(lastMessageAt),
+      Timestamp.fromDate(lastMessageAt!),
       // Timestamp.fromDate(createdAt),
     );
   }
@@ -40,10 +40,10 @@ class Chatroom {
       name: entity.name,
       id1: entity.id1,
       id2: entity.id2,
-      lastMessage: entity?.lastMessage,
-      lastMessageFrom: entity?.lastMessageFrom,
+      lastMessage: entity.lastMessage,
+      lastMessageFrom: entity.lastMessageFrom,
       lastMessageAt: DateTime?.fromMillisecondsSinceEpoch(
-          entity?.lastMessageAt?.millisecondsSinceEpoch),
+          entity.lastMessageAt!.millisecondsSinceEpoch),
       // createdAt: DateTime?.fromMillisecondsSinceEpoch(
       // entity?.createdAt?.millisecondsSinceEpoch),
     );

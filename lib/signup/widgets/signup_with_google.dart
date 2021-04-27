@@ -4,11 +4,11 @@ import 'package:void_chat_beta/generated/l10n.dart';
 
 class SignupWithGoogle extends StatelessWidget {
   const SignupWithGoogle({
-    Key key,
-    @required this.formController,
+    Key? key,
+    required this.formController,
   }) : super(key: key);
 
-  final AnimationController formController;
+  final AnimationController? formController;
 
   @override
   Widget build(BuildContext context) {
@@ -20,8 +20,8 @@ class SignupWithGoogle extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           SimpleButtonOne(
-            text: S.of(context).signup_with_google,
-            onPressed: formController.value == 0.0 ? null : () {},
+            text: S.of(context)!.signup_with_google,
+            onPressed: formController!.value == 0.0 ? null : () {},
           ),
         ],
       ),

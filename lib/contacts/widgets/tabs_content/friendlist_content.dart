@@ -11,7 +11,7 @@ import 'package:void_chat_beta/generated/l10n.dart';
 
 class FriendlistContent extends StatelessWidget {
   FriendlistContent({
-    Key key,
+    Key? key,
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -20,7 +20,7 @@ class FriendlistContent extends StatelessWidget {
         builder: (context, state) {
           if (state is ContactsLoaded) {
             var sorted = state.contacts
-                .where((element) => element.status.contains('friend'))
+                .where((element) => element.status!.contains('friend'))
                 .toList();
             return Column(
               children: [
@@ -39,7 +39,7 @@ class FriendlistContent extends StatelessWidget {
 
 class _Divider extends StatelessWidget {
   const _Divider({
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override
@@ -53,8 +53,8 @@ class _Divider extends StatelessWidget {
 
 class _FriendsListViewBuilder extends StatelessWidget {
   const _FriendsListViewBuilder({
-    Key key,
-    @required this.sorted,
+    Key? key,
+    required this.sorted,
   }) : super(key: key);
 
   final List<Contact> sorted;
@@ -77,8 +77,8 @@ class _FriendsListViewBuilder extends StatelessWidget {
 
 class _ContactsCounter extends StatelessWidget {
   const _ContactsCounter({
-    Key key,
-    @required this.sorted,
+    Key? key,
+    required this.sorted,
   }) : super(key: key);
 
   final List<Contact> sorted;
@@ -89,7 +89,7 @@ class _ContactsCounter extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
         Text(
-          S.of(context).contacts_friends + ': ' + sorted.length.toString(),
+          S.of(context)!.contacts_friends + ': ' + sorted.length.toString(),
           style: TextStyles.body1,
         ),
         const SizedBox(width: 20),

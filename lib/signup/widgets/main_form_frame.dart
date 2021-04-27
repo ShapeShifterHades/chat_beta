@@ -18,7 +18,7 @@ import 'package:void_chat_beta/generated/l10n.dart';
 /// Widget that represents main part of the Signup View
 class SignupMainFormFrame extends StatefulWidget {
   SignupMainFormFrame({
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override
@@ -28,13 +28,13 @@ class SignupMainFormFrame extends StatefulWidget {
 class _SignupMainFormFrameState extends State<SignupMainFormFrame>
     with AnimationMixin {
   /// Controller that is taking care of animation, is set to be played after widget first build
-  AnimationController formController;
-  AnimationController settingsController;
+  AnimationController? formController;
+  AnimationController? settingsController;
 
-  Animation<double> formFrameHeight;
-  Animation<double> settingsFrameHeight;
-  Animation<double> orLineHeight;
-  Animation<double> orLineAlterHeight;
+  Animation<double>? formFrameHeight;
+  Animation<double>? settingsFrameHeight;
+  Animation<double>? orLineHeight;
+  Animation<double>? orLineAlterHeight;
 
   // bool keyboardIsVisible = false;
 
@@ -45,10 +45,10 @@ class _SignupMainFormFrameState extends State<SignupMainFormFrame>
       ..curve(Curves.easeInQuad);
     settingsController = createController();
 
-    formFrameHeight = .0.tweenTo(310.0).animatedBy(formController);
-    settingsFrameHeight = .0.tweenTo(160.0).animatedBy(settingsController);
-    orLineHeight = .0.tweenTo(40.0).animatedBy(formController);
-    orLineAlterHeight = .0.tweenTo(40.0).animatedBy(settingsController);
+    formFrameHeight = .0.tweenTo(310.0).animatedBy(formController!);
+    settingsFrameHeight = .0.tweenTo(160.0).animatedBy(settingsController!);
+    orLineHeight = .0.tweenTo(40.0).animatedBy(formController!);
+    orLineAlterHeight = .0.tweenTo(40.0).animatedBy(settingsController!);
 
     super.initState();
   }
@@ -78,7 +78,7 @@ class _SignupMainFormFrameState extends State<SignupMainFormFrame>
                 if (!isKeyboardVisible)
                   FormHeaderSignUp(
                     color: Theme.of(context).primaryColor,
-                    title: S.of(context).signup_registration,
+                    title: S.of(context)!.signup_registration,
                     formController: formController,
                     settingsController: settingsController,
                   ),

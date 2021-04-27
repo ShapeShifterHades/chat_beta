@@ -8,7 +8,7 @@ class SettingsView extends StatelessWidget {
       body: UI(
         body: Container(
           child: Text(
-            ModalRoute.of(context).settings.name ?? 'settings route',
+            ModalRoute.of(context)!.settings.name ?? 'settings route',
             style: TextStyle(color: Colors.white),
           ),
         ),

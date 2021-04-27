@@ -5,7 +5,7 @@ abstract class ContactEvent extends Equatable {
   const ContactEvent();
 
   @override
-  List<Object> get props => [];
+  List<Object?> get props => [];
 }
 
 class FindUsernameById extends ContactEvent {
@@ -50,15 +50,15 @@ class FindIdByUsername extends ContactEvent {
 /// document [contactId] with status 'pending', if there is no doc with such [contactId].
 class SendFriendshipRequest extends ContactEvent {
   final String contactId;
-  final String uid;
+  final String? uid;
   final String message;
   SendFriendshipRequest({
-    @required this.contactId,
+    required this.contactId,
     this.uid,
     this.message = '',
   });
   @override
-  List<Object> get props => [contactId, uid];
+  List<Object?> get props => [contactId, uid];
   @override
   String toString() => 'Friend request sent to {contact: $contactId}';
 }
@@ -79,14 +79,14 @@ class SendFriendshipRequest extends ContactEvent {
 /// status: 'friend' with check if [uid] in his contacts collection has changed
 /// [contactId] to status: 'friend'.
 class AcceptFriendshipRequest extends ContactEvent {
-  final String contactId;
-  final String uid;
+  final String? contactId;
+  final String? uid;
   AcceptFriendshipRequest({
-    @required this.contactId,
+    required this.contactId,
     this.uid,
   });
   @override
-  List<Object> get props => [contactId, uid];
+  List<Object?> get props => [contactId, uid];
   @override
   String toString() => 'Contact accepted { contact: $contactId }';
 }
@@ -105,14 +105,14 @@ class AcceptFriendshipRequest extends ContactEvent {
 /// NOTE: usage of [uid] named parameter is temporary option and will be
 /// removed since [ContactBloc] handles passing it to [FirestoreContactRepository].
 class RemoveContactRequest extends ContactEvent {
-  final String contactId;
-  final String uid;
+  final String? contactId;
+  final String? uid;
   RemoveContactRequest({
-    @required this.contactId,
+    required this.contactId,
     this.uid,
   });
   @override
-  List<Object> get props => [contactId, uid];
+  List<Object?> get props => [contactId, uid];
   @override
   String toString() => 'Contact removed { from contact: $contactId }';
 }
@@ -133,8 +133,8 @@ class RemoveFromBlocklist extends ContactEvent {
   final String contactId;
   final String uid;
   RemoveFromBlocklist({
-    @required this.contactId,
-    @required this.uid,
+    required this.contactId,
+    required this.uid,
   });
   @override
   List<Object> get props => [contactId, uid];
@@ -158,8 +158,8 @@ class AddToBlocklist extends ContactEvent {
   final String contactId;
   final String uid;
   AddToBlocklist({
-    @required this.contactId,
-    @required this.uid,
+    required this.contactId,
+    required this.uid,
   });
   @override
   List<Object> get props => [contactId, uid];
@@ -171,7 +171,7 @@ class AddToBlocklist extends ContactEvent {
 class LoadContacts extends ContactEvent {
   final String uid;
 
-  LoadContacts({@required this.uid});
+  LoadContacts({required this.uid});
 
   @override
   List<Object> get props => [uid];

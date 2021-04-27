@@ -3,10 +3,10 @@ part of 'search_button_bloc.dart';
 enum SearchButtonStatus { initial, loading, hasResult, hasError }
 
 class SearchButtonState {
-  final bool isExpanded; // Wether the result of search is shown.
-  final bool isLoading; // Wether the state of search query is loading.
-  final bool hasError; // Wether the result of search query contains an error.
-  final SearchButtonStatus status;
+  final bool? isExpanded; // Wether the result of search is shown.
+  final bool? isLoading; // Wether the state of search query is loading.
+  final bool? hasError; // Wether the result of search query contains an error.
+  final SearchButtonStatus? status;
 
   SearchButtonState({
     this.isExpanded,

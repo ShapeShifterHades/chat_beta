@@ -5,7 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class SvgBackground extends StatelessWidget {
   SvgBackground({
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override

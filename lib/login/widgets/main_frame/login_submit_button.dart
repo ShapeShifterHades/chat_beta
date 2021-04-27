@@ -8,7 +8,7 @@ import 'button_model.dart';
 
 class LoginSubmitButton extends StatelessWidget {
   const LoginSubmitButton({
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override
@@ -22,7 +22,7 @@ class LoginSubmitButton extends StatelessWidget {
           child: Container(
             child: ButtonModel(
               key: const Key('loginForm_continue_raisedButton'),
-              text: S.of(context).loginpage_submit,
+              text: S.of(context)!.loginpage_submit,
               onPressed: state.status.isValidated
                   ? () => context.read<LoginCubit>().logInWithCredentials()
                   : null,

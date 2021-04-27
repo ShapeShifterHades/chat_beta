@@ -5,8 +5,8 @@ import 'mini_menu_tile.dart';
 
 class MiniMenu extends StatelessWidget {
   const MiniMenu({
-    Key key,
-    @required this.size,
+    Key? key,
+    required this.size,
   }) : super(key: key);
 
   final Size size;

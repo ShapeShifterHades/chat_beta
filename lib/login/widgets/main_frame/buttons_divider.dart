@@ -4,11 +4,11 @@ import 'package:flutter/material.dart';
 
 class ButtonsDivider extends StatelessWidget {
   const ButtonsDivider({
-    Key key,
-    @required this.orLineAlterHeight,
+    Key? key,
+    required this.orLineAlterHeight,
   }) : super(key: key);
 
-  final Animation<double> orLineAlterHeight;
+  final Animation<double>? orLineAlterHeight;
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +23,7 @@ class ButtonsDivider extends StatelessWidget {
                   BorderSide(color: Theme.of(context).primaryColor, width: 0.2),
             ),
           ),
-          height: orLineAlterHeight.value,
+          height: orLineAlterHeight!.value,
         ),
       ),
     );

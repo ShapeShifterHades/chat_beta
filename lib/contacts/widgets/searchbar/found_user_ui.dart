@@ -7,17 +7,17 @@ import 'package:void_chat_beta/generated/l10n.dart';
 
 class FoundUserUi extends StatelessWidget {
   FoundUserUi({
-    Key key,
-    @required this.result,
+    Key? key,
+    required this.result,
     this.focusNode,
     this.finduserController,
     this.isVisible,
   }) : super(key: key);
 
-  final Contact result;
+  final Contact? result;
   final isVisible;
-  final FocusNode focusNode;
-  final TextEditingController finduserController;
+  final FocusNode? focusNode;
+  final TextEditingController? finduserController;
 
   final messageController = TextEditingController();
   @override
@@ -30,7 +30,7 @@ class FoundUserUi extends StatelessWidget {
           Row(
             children: [
               Text(
-                S.of(context).contacts_user,
+                S.of(context)!.contacts_user,
                 style: TextStyles.body2,
               ),
               const Spacer(),
@@ -44,7 +44,7 @@ class FoundUserUi extends StatelessWidget {
           Row(
             children: [
               Text(
-                S.of(context).contacts_status,
+                S.of(context)!.contacts_status,
                 style: TextStyles.body2,
               ),
               const Spacer(),
@@ -58,7 +58,7 @@ class FoundUserUi extends StatelessWidget {
           Row(
             children: [
               Text(
-                S.of(context).contacts_id,
+                S.of(context)!.contacts_id,
                 style: TextStyles.body2,
               ),
               const Spacer(),
@@ -69,7 +69,7 @@ class FoundUserUi extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 5),
-          if (result.status == 'Not in contacts')
+          if (result!.status == 'Not in contacts')
             _BefriendForm(messageController: messageController, result: result),
         ],
       ),
@@ -79,13 +79,13 @@ class FoundUserUi extends StatelessWidget {
 
 class _BefriendForm extends StatelessWidget {
   const _BefriendForm({
-    Key key,
-    @required this.messageController,
-    @required this.result,
+    Key? key,
+    required this.messageController,
+    required this.result,
   }) : super(key: key);
 
   final TextEditingController messageController;
-  final Contact result;
+  final Contact? result;
 
   @override
   Widget build(BuildContext context) {
@@ -162,7 +162,7 @@ class _BefriendForm extends StatelessWidget {
                   children: [
                     const SizedBox(width: 5),
                     Text(
-                      S.of(context).contacts_form_message,
+                      S.of(context)!.contacts_form_message,
                       style: TextStyles.body2,
                     ),
                   ],

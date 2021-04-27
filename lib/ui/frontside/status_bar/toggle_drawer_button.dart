@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 /// Button, that triggers drawer animation
 class ToggleDrawerButton extends StatelessWidget {
   /// Controller to trigger animation
-  final AnimationController animationController;
+  final AnimationController? animationController;
   ToggleDrawerButton({
-    Key key,
-    @required this.animationController,
+    Key? key,
+    required this.animationController,
   }) : super(key: key);
 
   @override
@@ -17,9 +17,9 @@ class ToggleDrawerButton extends StatelessWidget {
         painter: MenuButtonPainter(context),
         child: GestureDetector(
           onTap: () {
-            animationController.isCompleted
-                ? animationController.reverse()
-                : animationController.forward();
+            animationController!.isCompleted
+                ? animationController!.reverse()
+                : animationController!.forward();
           },
           child: Container(
             color: Colors.transparent,
@@ -30,7 +30,7 @@ class ToggleDrawerButton extends StatelessWidget {
               margin: EdgeInsets.all(5.5),
               child: AnimatedIcon(
                 icon: AnimatedIcons.menu_close,
-                progress: animationController,
+                progress: animationController!,
                 semanticLabel: 'Show menu',
                 size: 20,
                 color: Theme.of(context).primaryColor,

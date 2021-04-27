@@ -6,16 +6,16 @@ import 'package:void_chat_beta/generated/l10n.dart';
 import 'package:void_chat_beta/styles.dart';
 
 class SearchUsernameInput extends StatelessWidget {
-  final FocusNode focusNode;
-  final TextEditingController myController;
+  final FocusNode? focusNode;
+  final TextEditingController? myController;
 
-  const SearchUsernameInput({Key key, this.focusNode, this.myController})
+  const SearchUsernameInput({Key? key, this.focusNode, this.myController})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return TextField(
-      onTap: myController.value.text.length < 1
+      onTap: myController!.value.text.length < 1
           ? () {
               BlocProvider.of<SearchButtonBloc>(context)
                   .add(SearchButtonResetEvent());
@@ -24,13 +24,13 @@ class SearchUsernameInput extends StatelessWidget {
       focusNode: focusNode,
       onEditingComplete: () {
         BlocProvider.of<FinduserBloc>(context)
-            .add(QueryEvent(myController.value.text));
+            .add(QueryEvent(myController!.value.text));
       },
       style: TextStyles.body1,
       cursorColor: Theme.of(context).primaryColor,
       controller: myController,
       decoration: InputDecoration(
-        labelText: S.of(context).contacts_search_username,
+        labelText: S.of(context)!.contacts_search_username,
         helperText: '',
       ),
     );

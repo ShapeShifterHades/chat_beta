@@ -8,7 +8,7 @@ import 'found_user_ui.dart';
 
 class UserSearch extends StatefulWidget {
   const UserSearch({
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override
@@ -65,17 +65,17 @@ class _UserSearchState extends State<UserSearch> {
                       ),
                     ],
                   ),
-                  if (state.isExpanded)
+                  if (state.isExpanded!)
                     Container(
                       child: BlocBuilder<FinduserBloc, FinduserState>(
                         bloc: BlocProvider.of<FinduserBloc>(context),
                         builder: (BuildContext context, FinduserState state) {
-                          if (state.isLoading) {
+                          if (state.isLoading!) {
                             return Center(
                               child: CircularProgressIndicator(),
                             );
                           }
-                          if (state.hasError) {
+                          if (state.hasError!) {
                             return Container(
                               child: Text('Error'),
                             );

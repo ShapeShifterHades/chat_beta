@@ -6,7 +6,7 @@ import 'package:void_chat_beta/generated/l10n.dart';
 
 class UsernameInput extends StatelessWidget {
   UsernameInput({
-    Key key,
+    Key? key,
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -23,10 +23,10 @@ class UsernameInput extends StatelessWidget {
                 context.read<SignUpCubit>().usernameChanged(username),
             keyboardType: TextInputType.emailAddress,
             decoration: InputDecoration(
-              labelText: S.of(context).signup_username,
+              labelText: S.of(context)!.signup_username,
               helperText: '',
               errorText: state.username.invalid
-                  ? S.of(context).signup_invalid_username
+                  ? S.of(context)!.signup_invalid_username
                   : null,
             ),
           );

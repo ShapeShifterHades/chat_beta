@@ -42,17 +42,17 @@ class ContactTabsBloc extends Bloc<ContactTabsEvent, ContactTabsState> {
     }
   }
 
-  _mapFriendlistClickedToState(FriendlistClicked event) {
+  ContactTabsState _mapFriendlistClickedToState(FriendlistClicked event) {
     return FriendlistState(
         fullContactlist: (_contactsBloc.state as ContactsLoaded).contacts);
   }
 
-  _mapBlocklistClickedToState(BlocklistClicked event) {
+  ContactTabsState _mapBlocklistClickedToState(BlocklistClicked event) {
     return BlocklistState(
         blocklist: (_contactsBloc.state as ContactsLoaded).contacts);
   }
 
-  _mapPendinglistClickedToState(PendinglistClicked event) {
+  ContactTabsState _mapPendinglistClickedToState(PendinglistClicked event) {
     return PendinglistState(
         fullContactlist: (_contactsBloc.state as ContactsLoaded).contacts);
   }

@@ -30,10 +30,10 @@ class PasswordInput extends StatelessWidget {
                 color: Theme.of(context).primaryColor,
               ),
             ),
-            labelText: S.of(context).loginpage_password,
+            labelText: S.of(context)!.loginpage_password,
             helperText: '',
             errorText: state.password.invalid
-                ? S.of(context).loginpage_invalid_password
+                ? S.of(context)!.loginpage_invalid_password
                 : null,
           ),
         );

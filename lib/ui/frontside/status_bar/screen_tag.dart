@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:void_chat_beta/styles.dart';
 
 class ScreenTag extends StatelessWidget {
-  final BuildContext context;
-  final Widget child;
+  final BuildContext? context;
+  final Widget? child;
 
   const ScreenTag({
-    Key key,
+    Key? key,
     this.child,
     this.context,
   }) : super(key: key);
@@ -35,8 +35,8 @@ class ScreenTag extends StatelessWidget {
 }
 
 class ScreenTagPainter extends CustomPainter {
-  final BuildContext context;
-  final Color color;
+  final BuildContext? context;
+  final Color? color;
 
   ScreenTagPainter({this.context, this.color});
   @override

@@ -13,7 +13,7 @@ import 'package:void_chat_beta/contacts/widgets/contact_page_tabs_content.dart';
 import 'package:void_chat_beta/ui/ui.dart';
 
 class ContactsView extends StatelessWidget {
-  const ContactsView({Key key}) : super(key: key);
+  const ContactsView({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(

@@ -4,12 +4,12 @@ import '../entities/entities.dart';
 
 @immutable
 class Contact {
-  final String id;
-  final String username;
-  final String status;
-  final String message;
-  final Timestamp requestSentAt;
-  final String requestFrom;
+  final String? id;
+  final String? username;
+  final String? status;
+  final String? message;
+  final Timestamp? requestSentAt;
+  final String? requestFrom;
 
   Contact({
     this.message,
@@ -20,7 +20,7 @@ class Contact {
     this.requestFrom,
   });
 
-  Contact copyWith({String id, String username, String status}) {
+  Contact copyWith({String? id, String? username, String? status}) {
     return Contact(
       id: id ?? this.id,
       username: username ?? this.username,

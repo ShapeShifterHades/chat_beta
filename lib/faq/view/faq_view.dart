@@ -8,7 +8,7 @@ class FaqView extends StatelessWidget {
       body: UI(
         body: Container(
           child: Text(
-            ModalRoute.of(context).settings.name ?? 'faq route',
+            ModalRoute.of(context)!.settings.name ?? 'faq route',
             style: TextStyle(color: Colors.white),
           ),
         ),

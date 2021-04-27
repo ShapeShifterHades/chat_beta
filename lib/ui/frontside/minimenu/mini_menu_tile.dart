@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 
 class MiniMenuTile extends StatelessWidget {
   final bool isCurrentPage;
-  final IconData icon;
-  final Function func;
+  final IconData? icon;
+  final Function? func;
   const MiniMenuTile({
-    Key key,
+    Key? key,
     this.icon,
     this.func,
     this.isCurrentPage = false,
@@ -14,7 +14,7 @@ class MiniMenuTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: func,
+      onTap: func as void Function()?,
       child: Container(
         decoration: BoxDecoration(
           color: Theme.of(context).backgroundColor,
@@ -52,9 +52,9 @@ class MiniMenuTile extends StatelessWidget {
 }
 
 class MiniMenuTilePainter extends CustomPainter {
-  final Color color;
+  final Color? color;
 
-  final bool pressed;
+  final bool? pressed;
 
   MiniMenuTilePainter({this.color, this.pressed = false});
 
@@ -64,7 +64,7 @@ class MiniMenuTilePainter extends CustomPainter {
       ..style = PaintingStyle.stroke
       ..strokeWidth = 0.3
       ..strokeCap = StrokeCap.round
-      ..color = color.withOpacity(0.8);
+      ..color = color!.withOpacity(0.8);
 
     Path path1 = Path();
     path1.lineTo(size.width * 0.15, 0);

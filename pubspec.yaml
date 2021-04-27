@@ -5,7 +5,7 @@ publish_to: none
 version: 1.0.0+2
 
 environment:
-  sdk: '>=2.6.0 <3.0.0'
+  sdk: '>=2.12.0 <3.0.0'
 
 dependencies:
   flutter:
@@ -13,13 +13,13 @@ dependencies:
 
   cupertino_icons: ^0.1.2
   flutter_keyboard_visibility: any
-  font_awesome_flutter: any
+  font_awesome_flutter: ^9.0.0
   bloc: any
   flutter_bloc: any
-  formz: any
+  formz: ^0.4.0
   meta: any
   pedantic: any
-  shimmer: any
+  shimmer: ^2.0.0
   authentication_repository:
     path: packages/authentication_repository
   firestore_repository:
@@ -27,7 +27,7 @@ dependencies:
   path_provider: any
   equatable: any
   hydrated_bloc: any
-  simple_animations: any
+  simple_animations: ^3.1.1
   mockito: any
   cloud_firestore: any
   intl: null

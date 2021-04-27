@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
 class Switcher extends StatefulWidget {
-  final Function onChange;
+  final Function? onChange;
 
-  const Switcher({Key key, this.onChange}) : super(key: key);
+  const Switcher({Key? key, this.onChange}) : super(key: key);
   @override
   _SwitcherState createState() => _SwitcherState();
 }
@@ -17,7 +17,7 @@ class _SwitcherState extends State<Switcher> {
       onChanged: (value) {
         setState(() {
           isSwitched = value;
-          widget.onChange();
+          widget.onChange!();
           print(isSwitched);
         });
       },

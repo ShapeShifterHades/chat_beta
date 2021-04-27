@@ -26,16 +26,16 @@ import 'theme/theme.dart';
 
 class App extends StatelessWidget {
   const App({
-    Key key,
+    Key? key,
     this.authenticationRepository,
     this.firestoreNewUserRepository,
     this.firestoreContactRepository,
     this.firestoreChatroomRepository,
   }) : super(key: key);
-  final AuthenticationRepository authenticationRepository;
-  final FirestoreNewUserRepository firestoreNewUserRepository;
-  final FirestoreContactRepository firestoreContactRepository;
-  final FirestoreChatroomRepository firestoreChatroomRepository;
+  final AuthenticationRepository? authenticationRepository;
+  final FirestoreNewUserRepository? firestoreNewUserRepository;
+  final FirestoreContactRepository? firestoreContactRepository;
+  final FirestoreChatroomRepository? firestoreChatroomRepository;
 
   @override
   Widget build(BuildContext context) {
@@ -73,7 +73,7 @@ class App extends StatelessWidget {
 }
 
 class AppView extends StatelessWidget {
-  AppView({Key key}) : super(key: key);
+  AppView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

@@ -8,7 +8,7 @@ class SecurityView extends StatelessWidget {
       body: UI(
         body: Container(
           child: Text(
-            ModalRoute.of(context).settings.name ?? 'security route',
+            ModalRoute.of(context)!.settings.name ?? 'security route',
             style: TextStyle(color: Colors.white),
           ),
         ),

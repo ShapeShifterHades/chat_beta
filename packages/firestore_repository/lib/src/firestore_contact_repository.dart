@@ -20,22 +20,22 @@ class FirestoreContactRepository {
   /// Gets [Contact] by its username
   ///
   ///
-  Future<Contact> findIdByUsername(String username, String selfId) async {
+  Future<Contact?> findIdByUsername(String username, String selfId) async {
     try {
       DocumentSnapshot idDocumentSnapshot =
           await usernamesCollection.doc(username).get();
 
       if (idDocumentSnapshot.exists) {
         print('Document exists on the database');
-        var uid = idDocumentSnapshot.data()['uid'].toString();
+        var uid = idDocumentSnapshot.data()!['uid'].toString();
         var status;
 
         try {
-          DocumentSnapshot contactDocumentSnapshot =
-              await contactsCollectionOf(selfId)?.doc(uid)?.get();
+          DocumentSnapshot? contactDocumentSnapshot =
+              await contactsCollectionOf(selfId).doc(uid).get();
 
           if (contactDocumentSnapshot.exists) {
-            status = contactDocumentSnapshot.data()['status'];
+            status = contactDocumentSnapshot.data()!['status'];
           } else {
             status = 'Not in contacts';
           }
@@ -47,11 +47,11 @@ class FirestoreContactRepository {
         return null;
       }
     } catch (e) {
-      return e;
+      print(e);
     }
   }
 
-  Future<String> findUsernameById(String id) async {
+  Future<String?> findUsernameById(String? id) async {
     QuerySnapshot documentSnapshot =
         await usernamesCollection.where("uid", isEqualTo: id).get();
 
@@ -63,7 +63,7 @@ class FirestoreContactRepository {
   /// Sends to user [contactId] a friend request with a greeting message.
   ///
   Future<void> sendRequest(
-      {String contactId, String uid, String message}) async {
+      {String? contactId, String? uid, String? message}) async {
     final batch = FirebaseFirestore.instance.batch();
 
     var username1 = await findUsernameById(uid);
@@ -100,7 +100,7 @@ class FirestoreContactRepository {
   /// update if request.auth != null && resource.data.initiatedBy != request.auth.uid &&
   /// resource.data.status == 'pending' && getAfter(resource).data.status == 'friend'
   /// && request.data.initiatedBy == null
-  Future<void> acceptRequest({String contactId, String uid}) async {
+  Future<void> acceptRequest({String? contactId, String? uid}) async {
     final batch = FirebaseFirestore.instance.batch();
 
     try {
@@ -131,7 +131,7 @@ class FirestoreContactRepository {
   /// SECURITY RULES:
   /// match /users/{uid}/contacts/{contact}
   /// allow delete: if request.auth.uid == contact || request.auth.uid == uid
-  Future<void> removeRequest({String contactId, String uid}) async {
+  Future<void> removeRequest({String? contactId, String? uid}) async {
     final batch = FirebaseFirestore.instance.batch();
 
     try {
@@ -152,7 +152,7 @@ class FirestoreContactRepository {
   /// match /users/{uid}/blocklist/{contact}
   /// allow create: if request.auth.uid == uid || request.response.data.contactId == contact;
   /// allow delete: if request.auth.uid == uid;
-  Future<void> blockContact({String contactId, String uid}) async {
+  Future<void> blockContact({String? contactId, String? uid}) async {
     try {
       await removeRequest(contactId: contactId, uid: uid);
     } catch (e) {
@@ -174,7 +174,7 @@ class FirestoreContactRepository {
   /// match /users/{uid}/blocklist/{contact}
   /// allow create: if request.auth.uid == uid || request.response.data.contactId == contact;
   /// allow delete: if request.auth.uid == uid;
-  Future<void> removeFromBlocklist({String contactId, String uid}) async {
+  Future<void> removeFromBlocklist({String? contactId, String? uid}) async {
     try {
       await blocklistCollectionOf(uid).doc(contactId).delete();
     } catch (e) {
@@ -183,7 +183,7 @@ class FirestoreContactRepository {
   }
 
   /// Gets a stream of snapshots of user [uid] contacts collection.
-  Stream<List<Contact>> contacts({String uid}) {
+  Stream<List<Contact>> contacts({String? uid}) {
     return contactsCollectionOf(uid).snapshots().map((snapshot) {
       return snapshot.docs
           .map((doc) => Contact.fromEntity(ContactEntity.fromSnapshot(doc)))

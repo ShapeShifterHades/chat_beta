@@ -6,7 +6,7 @@ import 'package:void_chat_beta/generated/l10n.dart';
 
 class SwitchToLogin extends StatelessWidget {
   const SwitchToLogin({
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override
@@ -26,7 +26,7 @@ class SwitchToLogin extends StatelessWidget {
             loop: 0,
             period: Times.slower,
             child: Text(
-              S.of(context).signup_switch_to_login,
+              S.of(context)!.signup_switch_to_login,
               style: TextStyles.body1.copyWith(fontSize: 26),
             ),
           ),

@@ -7,16 +7,16 @@ class DrawerMenuButton extends StatefulWidget {
   final bool isCurrentPage;
 
   /// Function to use onPress
-  final Function func;
+  final Function? func;
 
   ///  Text for button label
-  final String label;
+  final String? label;
 
   /// Context for dynamic styling
-  final BuildContext context;
+  final BuildContext? context;
 
   const DrawerMenuButton(
-      {Key key,
+      {Key? key,
       this.context,
       this.label,
       this.func,
@@ -42,7 +42,7 @@ class _DrawerMenuButtonState extends State<DrawerMenuButton> {
         setState(() {
           _pressed = false;
         });
-        widget.func();
+        widget.func!();
       },
       onTapDown: (val) {
         setState(() {
@@ -72,7 +72,7 @@ class _DrawerMenuButtonState extends State<DrawerMenuButton> {
                       children: [
                         const SizedBox(width: 30),
                         Text(
-                          widget.label,
+                          widget.label!,
                           style: TextStyles.body1,
                           textAlign: TextAlign.left,
                         ),
@@ -92,7 +92,7 @@ class _DrawerMenuButtonState extends State<DrawerMenuButton> {
 /// Frame elements for [DrawerMenuButton].
 class DrawerMenuButtonPainter extends CustomPainter {
   final bool pressed;
-  final Color color;
+  final Color? color;
   final bool current;
 
   DrawerMenuButtonPainter(
@@ -104,7 +104,7 @@ class DrawerMenuButtonPainter extends CustomPainter {
       ..style = PaintingStyle.stroke
       ..strokeWidth = current ? 1.5 : 0.3
       ..strokeCap = StrokeCap.round
-      ..color = color.withOpacity(0.8);
+      ..color = color!.withOpacity(0.8);
 
     Path path1 = Path();
     path1.lineTo(size.width * 0.15, 0);

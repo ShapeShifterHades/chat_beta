@@ -6,13 +6,13 @@ import 'package:void_chat_beta/styles.dart';
 class FormHeaderSignUp extends StatelessWidget {
   final Color color;
   final String title;
-  final AnimationController formController;
-  final AnimationController settingsController;
+  final AnimationController? formController;
+  final AnimationController? settingsController;
 
   const FormHeaderSignUp({
-    Key key,
-    @required this.color,
-    @required this.title,
+    Key? key,
+    required this.color,
+    required this.title,
     this.formController,
     this.settingsController,
   }) : super(key: key);
@@ -47,12 +47,12 @@ class FormHeaderSignUp extends StatelessWidget {
               ),
               GestureDetector(
                 onTap: () async {
-                  if (formController.value == 1.0) {
-                    await formController.playReverse(duration: Times.fast);
-                    await settingsController.play(duration: Times.fast);
+                  if (formController!.value == 1.0) {
+                    await formController!.playReverse(duration: Times.fast);
+                    await settingsController!.play(duration: Times.fast);
                   } else {
-                    await settingsController.playReverse(duration: Times.fast);
-                    await formController.play(duration: Times.fast);
+                    await settingsController!.playReverse(duration: Times.fast);
+                    await formController!.play(duration: Times.fast);
                   }
                 },
                 child: Container(

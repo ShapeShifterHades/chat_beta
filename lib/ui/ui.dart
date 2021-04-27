@@ -10,15 +10,15 @@ import 'frontside/minimenu/mini_menu.dart';
 class UI extends StatefulWidget {
   // content is a Widget, passed to PortraitMobileUI that is a current page's materials
   final Widget body;
-  final Widget statusBar;
+  final Widget? statusBar;
 
   const UI({
-    Key key,
-    @required this.body,
+    Key? key,
+    required this.body,
     this.statusBar,
   }) : super(key: key);
 
-  static UIState of(BuildContext context) =>
+  static UIState? of(BuildContext context) =>
       context.findAncestorStateOfType<UIState>();
 
   @override
@@ -34,7 +34,7 @@ class UIState extends State<UI> with SingleTickerProviderStateMixin {
   static const double minDragStartEdge = 100;
   // On what distance it needs to be dragged
   static double maxDragStartEdge = maxSlide - 16;
-  AnimationController _animationController;
+  AnimationController? _animationController;
   bool _canBeDragged = false;
 
   @override
@@ -48,7 +48,7 @@ class UIState extends State<UI> with SingleTickerProviderStateMixin {
 
   @override
   void dispose() {
-    _animationController.dispose();
+    _animationController!.dispose();
     super.dispose();
   }
 
@@ -57,7 +57,7 @@ class UIState extends State<UI> with SingleTickerProviderStateMixin {
     Size size = MediaQuery.of(context).size;
     return WillPopScope(
       onWillPop: () async {
-        if (_animationController.isCompleted) {
+        if (_animationController!.isCompleted) {
           close();
           return false;
         }
@@ -68,7 +68,7 @@ class UIState extends State<UI> with SingleTickerProviderStateMixin {
         onHorizontalDragUpdate: _onDragUpdate,
         onHorizontalDragEnd: _onDragEnd,
         child: AnimatedBuilder(
-          animation: _animationController,
+          animation: _animationController!,
           // Here starts frontside of drawer-content system, margin defines its base shape
           child: Stack(
             // overflow: Overflow.clip,
@@ -82,7 +82,7 @@ class UIState extends State<UI> with SingleTickerProviderStateMixin {
                 bottom: 0,
                 child: GestureDetector(
                     // This Gestures closes [DrawerPM] when it is opened
-                    onTap: _animationController.isCompleted ? close : null,
+                    onTap: _animationController!.isCompleted ? close : null,
                     onHorizontalDragStart: _onDragStart,
                     onHorizontalDragUpdate: _onDragUpdate,
                     onHorizontalDragEnd: _onDragEnd,
@@ -94,7 +94,7 @@ class UIState extends State<UI> with SingleTickerProviderStateMixin {
             ],
           ),
           builder: (context, child) {
-            double animValue = _animationController.value;
+            double animValue = _animationController!.value;
             final slideAmount = maxSlide * animValue;
             // This stack defines relations between drawer side and content side
             return Stack(
@@ -105,14 +105,14 @@ class UIState extends State<UI> with SingleTickerProviderStateMixin {
                   alignment: Alignment.centerLeft,
                   child: Stack(
                     children: [
-                      child,
+                      child!,
                       Positioned(
                         left: size.width * 0.05,
                         top: size.width * 0.05 + 30,
                         child: GestureDetector(
                           // This Gestures closes [DrawerPM] when it is opened
                           onTap:
-                              _animationController.isCompleted ? close : null,
+                              _animationController!.isCompleted ? close : null,
                           onHorizontalDragStart: _onDragStart,
                           onHorizontalDragUpdate: _onDragUpdate,
                           onHorizontalDragEnd: _onDragEnd,
@@ -133,16 +133,16 @@ class UIState extends State<UI> with SingleTickerProviderStateMixin {
   }
 
   /// Closes drawer
-  void close() => _animationController.reverse();
+  void close() => _animationController!.reverse();
 
   /// Opens drawer
-  void open() => _animationController.forward();
+  void open() => _animationController!.forward();
 
   /// Handles gesture drawer control starting drawer animation
   void _onDragStart(DragStartDetails details) {
-    bool isDragOpenFromLeft = _animationController.isDismissed &&
+    bool isDragOpenFromLeft = _animationController!.isDismissed &&
         details.globalPosition.dx < minDragStartEdge;
-    bool isDragCloseFromRight = _animationController.isCompleted &&
+    bool isDragCloseFromRight = _animationController!.isCompleted &&
         details.globalPosition.dx > maxDragStartEdge;
 
     _canBeDragged = isDragOpenFromLeft || isDragCloseFromRight;
@@ -152,8 +152,8 @@ class UIState extends State<UI> with SingleTickerProviderStateMixin {
 
   void _onDragUpdate(DragUpdateDetails details) {
     if (_canBeDragged) {
-      double delta = details.primaryDelta / maxSlide;
-      _animationController.value += delta;
+      double delta = details.primaryDelta! / maxSlide;
+      _animationController!.value += delta;
     }
   }
 
@@ -162,15 +162,15 @@ class UIState extends State<UI> with SingleTickerProviderStateMixin {
   void _onDragEnd(DragEndDetails details) {
     double _kMinFlingVelocity = 365.0;
 
-    if (_animationController.isDismissed || _animationController.isCompleted) {
+    if (_animationController!.isDismissed || _animationController!.isCompleted) {
       return;
     }
     if (details.velocity.pixelsPerSecond.dx.abs() >= _kMinFlingVelocity) {
       double visualVelocity = details.velocity.pixelsPerSecond.dx /
           MediaQuery.of(context).size.width;
 
-      _animationController.fling(velocity: visualVelocity);
-    } else if (_animationController.value < 0.5) {
+      _animationController!.fling(velocity: visualVelocity);
+    } else if (_animationController!.value < 0.5) {
       close();
     } else {
       open();
@@ -180,8 +180,8 @@ class UIState extends State<UI> with SingleTickerProviderStateMixin {
 
 class _FrontFrameBackground extends StatelessWidget {
   const _FrontFrameBackground({
-    Key key,
-    @required this.size,
+    Key? key,
+    required this.size,
   }) : super(key: key);
 
   final Size size;
