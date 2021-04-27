@@ -26,7 +26,7 @@ class SwitchToLogin extends StatelessWidget {
             loop: 0,
             period: Times.slower,
             child: Text(
-              S.of(context)!.signup_switch_to_login,
+              S.of(context).signup_switch_to_login,
               style: TextStyles.body1.copyWith(fontSize: 26),
             ),
           ),

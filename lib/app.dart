@@ -56,17 +56,22 @@ class App extends StatelessWidget {
         BlocProvider<AuthenticationBloc>(
           lazy: false,
           create: (context) => AuthenticationBloc(
-            authenticationRepository:
-                RepositoryProvider.of<AuthenticationRepository>(context),
+            authenticationRepository: authenticationRepository,
           ),
         ),
-        BlocProvider<LocaleCubit>(create: (context) => LocaleCubit()),
-        BlocProvider<BrightnessCubit>(create: (context) => BrightnessCubit()),
+        BlocProvider<LocaleCubit>(
+          create: (context) => LocaleCubit(),
+          lazy: false,
+        ),
+        BlocProvider<BrightnessCubit>(
+          create: (context) => BrightnessCubit(),
+          lazy: false,
+        ),
         BlocProvider<ContactBloc>(
-            lazy: false,
-            create: (context) => ContactBloc(
-                RepositoryProvider.of<FirestoreContactRepository>(context),
-                context.read<AuthenticationBloc>())),
+          create: (context) => ContactBloc(
+              firestoreContactRepository, context.read<AuthenticationBloc>()),
+          lazy: false,
+        ),
       ], child: AppView()),
     );
   }
@@ -87,14 +92,15 @@ class AppView extends StatelessWidget {
               initialRoute: '/',
               routes: {
                 '/': (context) {
+                  // print(
+                  //     'nigga!!!+${RepositoryProvider.of<AuthenticationRepository>(context)}');
                   return BlocBuilder<AuthenticationBloc, AuthenticationState>(
                       builder: (context, state) {
                     if (state.status == AuthenticationStatus.unauthenticated)
                       return LoginView();
                     if (state.status == AuthenticationStatus.authenticated) {
                       BlocProvider.of<ContactBloc>(context).add(LoadContacts(
-                          uid: context
-                              .read<AuthenticationBloc>()
+                          uid: BlocProvider.of<AuthenticationBloc>(context)
                               .state
                               .user
                               .id));
@@ -121,7 +127,7 @@ class AppView extends StatelessWidget {
               ],
               supportedLocales: S.delegate.supportedLocales,
               debugShowCheckedModeBanner: false,
-              theme: theme1(context, brightness),
+              theme: getTheme(context, brightness),
             );
           },
         );

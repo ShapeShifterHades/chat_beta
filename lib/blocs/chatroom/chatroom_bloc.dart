@@ -4,17 +4,15 @@ import 'dart:core';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:firestore_repository/firestore_repository.dart';
-import 'package:flutter/material.dart';
-import 'package:meta/meta.dart';
 
 part 'chatroom_event.dart';
 part 'chatroom_state.dart';
 
 class ChatroomBloc extends Bloc<ChatroomEvent, ChatroomState> {
-  final FirestoreChatroomRepository _firestoreChatroomRepository;
+  final FirestoreChatroomRepository? _firestoreChatroomRepository;
   StreamSubscription? _chatroomSubscription;
   ChatroomBloc(
-      {required FirestoreChatroomRepository firestoreChatroomRepository})
+      {required FirestoreChatroomRepository? firestoreChatroomRepository})
       : _firestoreChatroomRepository = firestoreChatroomRepository,
         super(ChatroomLoading());
 
@@ -38,20 +36,20 @@ class ChatroomBloc extends Bloc<ChatroomEvent, ChatroomState> {
   Stream<ChatroomState> _mapLoadChatroomsToState() async* {
     _chatroomSubscription?.cancel();
     _chatroomSubscription = _firestoreChatroomRepository
-        .chatrooms()
+        ?.chatrooms()
         .listen((chatrooms) => add(ChatroomsUpdated(chatrooms)));
   }
 
   Stream<ChatroomState> _mapAddChatroomToState(AddChatroom event) async* {
-    _firestoreChatroomRepository.addChatroom(event.chatroom);
+    _firestoreChatroomRepository?.addChatroom(event.chatroom);
   }
 
   Stream<ChatroomState> _mapUpdateChatroomToState(UpdateChatroom event) async* {
-    _firestoreChatroomRepository.updateChatroom(event.updatedChatroom);
+    _firestoreChatroomRepository?.updateChatroom(event.updatedChatroom);
   }
 
   Stream<ChatroomState> _mapDeleteChatroomToState(DeleteChatroom event) async* {
-    _firestoreChatroomRepository.deleteChatroom(event.chatroom);
+    _firestoreChatroomRepository?.deleteChatroom(event.chatroom);
   }
 
   Stream<ChatroomState> _mapChatroomsUpdatedToState(

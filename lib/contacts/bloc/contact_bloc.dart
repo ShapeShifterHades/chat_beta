@@ -10,16 +10,14 @@ part 'contact_event.dart';
 part 'contact_state.dart';
 
 class ContactBloc extends Bloc<ContactEvent, ContactsState> {
-  final AuthenticationBloc _authenticationBloc;
-  final FirestoreContactRepository _firestoreContactRepository;
+  final AuthenticationBloc? _authenticationBloc;
+  final FirestoreContactRepository? _firestoreContactRepository;
   StreamSubscription? _contactSubscription;
 
   ContactBloc(
-    FirestoreContactRepository firestoreContactRepository,
-    AuthenticationBloc authenticationBloc,
-  )   : assert(authenticationBloc != null),
-        assert(firestoreContactRepository != null),
-        _firestoreContactRepository = firestoreContactRepository,
+    FirestoreContactRepository? firestoreContactRepository,
+    AuthenticationBloc? authenticationBloc,
+  )   : _firestoreContactRepository = firestoreContactRepository,
         _authenticationBloc = authenticationBloc,
         super(ContactsAreLoading());
 
@@ -45,7 +43,7 @@ class ContactBloc extends Bloc<ContactEvent, ContactsState> {
   Stream<ContactsState> _mapLoadContactsToState() async* {
     _contactSubscription?.cancel();
     _contactSubscription = _firestoreContactRepository
-        .contacts(uid: _authenticationBloc.state.user.id)
+        ?.contacts(uid: _authenticationBloc?.state.user.id)
         .listen(
           (contacts) => add(ContactsUpdated(contacts)),
         );
@@ -53,40 +51,40 @@ class ContactBloc extends Bloc<ContactEvent, ContactsState> {
 
   Stream<ContactsState> _mapSendFriendshipRequestToState(
       SendFriendshipRequest event) async* {
-    await this._firestoreContactRepository.sendRequest(
+    await this._firestoreContactRepository?.sendRequest(
         contactId: event.contactId,
-        uid: _authenticationBloc.state.user.id,
+        uid: _authenticationBloc?.state.user.id,
         message: event.message);
   }
 
   Stream<ContactsState> _mapAcceptFriendshipRequestToState(
       AcceptFriendshipRequest event) async* {
-    await this._firestoreContactRepository.acceptRequest(
+    await this._firestoreContactRepository?.acceptRequest(
           contactId: event.contactId,
-          uid: _authenticationBloc.state.user.id,
+          uid: _authenticationBloc?.state.user.id,
         );
   }
 
   Stream<ContactsState> _mapRemoveContactRequestToState(
       RemoveContactRequest event) async* {
-    await this._firestoreContactRepository.removeRequest(
+    await this._firestoreContactRepository?.removeRequest(
           contactId: event.contactId,
-          uid: _authenticationBloc.state.user.id,
+          uid: _authenticationBloc?.state.user.id,
         );
   }
 
   Stream<ContactsState> _mapRemoveFromBlocklistToState(
       RemoveFromBlocklist event) async* {
-    await this._firestoreContactRepository.removeFromBlocklist(
+    await this._firestoreContactRepository?.removeFromBlocklist(
           contactId: event.contactId,
-          uid: _authenticationBloc.state.user.id,
+          uid: _authenticationBloc?.state.user.id,
         );
   }
 
   Stream<ContactsState> _mapAddToBlocklistToState(AddToBlocklist event) async* {
-    await this._firestoreContactRepository.blockContact(
+    await this._firestoreContactRepository?.blockContact(
           contactId: event.contactId,
-          uid: _authenticationBloc.state.user.id,
+          uid: _authenticationBloc?.state.user.id,
         );
   }
 

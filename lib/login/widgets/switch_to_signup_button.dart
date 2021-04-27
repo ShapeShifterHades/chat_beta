@@ -25,7 +25,7 @@ class SwitchToSignUpButton extends StatelessWidget {
             highlightColor: Theme.of(context).primaryColor,
             loop: 0,
             period: Times.slower,
-            child: Text(S.of(context)!.loginpage_switch_to_registration,
+            child: Text(S.of(context).loginpage_switch_to_registration,
                 style: TextStyles.body1.copyWith(fontSize: 26)),
           ),
         ),

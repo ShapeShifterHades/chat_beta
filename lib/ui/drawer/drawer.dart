@@ -46,36 +46,36 @@ class _MenuButtonsBlock extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
             DrawerMenuButton(
-              label: S.of(context)!.drawer_messages,
+              label: S.of(context).drawer_messages,
               func: () {
                 Navigator.of(context).pushNamed(homeRoute);
               },
             ),
             const SizedBox(height: 15),
             DrawerMenuButton(
-              label: S.of(context)!.drawer_contacts,
+              label: S.of(context).drawer_contacts,
               func: () => Navigator.of(context).pushNamed(contactsRoute),
             ),
             const SizedBox(height: 15),
             DrawerMenuButton(
-              label: S.of(context)!.drawer_settings,
+              label: S.of(context).drawer_settings,
               func: () {
                 Navigator.of(context).pushNamed(settingsRoute);
               },
             ),
             const SizedBox(height: 15),
             DrawerMenuButton(
-              label: S.of(context)!.drawer_security,
+              label: S.of(context).drawer_security,
               func: () => Navigator.of(context).pushNamed(securityRoute),
             ),
             const SizedBox(height: 15),
             DrawerMenuButton(
-              label: S.of(context)!.drawer_faq,
+              label: S.of(context).drawer_faq,
               func: () => Navigator.of(context).pushNamed(faqRoute),
             ),
             const SizedBox(height: 45),
             DrawerMenuButton(
-              label: S.of(context)!.drawer_logout,
+              label: S.of(context).drawer_logout,
               func: () async {
                 await FirebaseAuth.instance.signOut();
               },
@@ -86,7 +86,7 @@ class _MenuButtonsBlock extends StatelessWidget {
               height: 40,
               width: 170,
               child: Text(
-                S.of(context)!.drawer_slogan,
+                S.of(context).drawer_slogan,
                 style: TextStyles.body2,
               ),
             ),

@@ -45,7 +45,7 @@ class _SettingsBoxState extends State<SettingsBox> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       const SizedBox(width: 50),
-                      Text(S.of(context)!.signup_brightness,
+                      Text(S.of(context).signup_brightness,
                           style: TextStyles.body1),
                       const Spacer(),
                       Switcher(
@@ -59,7 +59,7 @@ class _SettingsBoxState extends State<SettingsBox> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       const SizedBox(width: 50),
-                      Text(S.of(context)!.signup_locale,
+                      Text(S.of(context).signup_locale,
                           style: TextStyles.body1),
                       const Spacer(),
                       Switcher(

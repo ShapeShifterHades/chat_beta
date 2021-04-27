@@ -8,7 +8,7 @@ class ChatroomEntity extends Equatable {
   final String? lastMessage;
   final String? lastMessageFrom;
   final Timestamp? lastMessageAt;
-  // final Timestamp createdAt;
+  // final Timestamp? createdAt;
 
   const ChatroomEntity(
     this.name,
@@ -56,7 +56,7 @@ class ChatroomEntity extends Equatable {
       json["lastMessage"] as String?,
       json["lastMessageFrom"] as String?,
       json["lastMessageAt"] as Timestamp?,
-      // json["createdAt"] as Timestamp,
+      // json["createdAt"] as Timestamp?,
     );
   }
 
@@ -68,7 +68,7 @@ class ChatroomEntity extends Equatable {
       snap.data()!["lastMessage"],
       snap.data()!["lastMessageFrom"],
       snap.data()!["lastMessageAt"],
-      // snap.data()["createdAt"],
+      // snap.data()!["createdAt"],
     );
   }
 

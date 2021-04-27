@@ -108,7 +108,7 @@ class _RequestsCounter extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
         Text(
-          S.of(context)!.contacts_pending + ': ' + sorted.length.toString(),
+          S.of(context).contacts_pending + ': ' + sorted.length.toString(),
           style: TextStyles.body1,
         ),
         const SizedBox(width: 20),

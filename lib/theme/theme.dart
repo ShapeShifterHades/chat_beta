@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 // primaryColor - contrasting with bg
 // scaffoldBackgroundColor
 
-ThemeData theme1(BuildContext context, Brightness brightness) {
+ThemeData getTheme(BuildContext context, Brightness brightness) {
   bool isDark = brightness == Brightness.dark;
 
   ThemeData darkTheme = ThemeData(

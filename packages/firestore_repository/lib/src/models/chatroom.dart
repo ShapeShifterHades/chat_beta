@@ -5,7 +5,7 @@ class Chatroom {
   final String? name;
   final String? id1;
   final String? id2;
-  final DateTime createdAt;
+  // final DateTime createdAt;
   final String lastMessage;
   final DateTime? lastMessageAt;
   final String? lastMessageFrom;
@@ -17,8 +17,9 @@ class Chatroom {
     String? lastMessage,
     this.lastMessageFrom,
     this.lastMessageAt,
-    DateTime? createdAt,
-  })  : this.createdAt = DateTime.now(),
+    // DateTime? createdAt,
+  }) :
+        // this.createdAt = DateTime.now(),
         this.lastMessage = lastMessage ?? 'none';
 
   // Chatroom toString({})
@@ -45,7 +46,7 @@ class Chatroom {
       lastMessageAt: DateTime?.fromMillisecondsSinceEpoch(
           entity.lastMessageAt!.millisecondsSinceEpoch),
       // createdAt: DateTime?.fromMillisecondsSinceEpoch(
-      // entity?.createdAt?.millisecondsSinceEpoch),
+      //     entity.createdAt!.millisecondsSinceEpoch),
     );
   }
 }

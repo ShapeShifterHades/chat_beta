@@ -10,8 +10,7 @@ import 'package:void_chat_beta/authentication/models/username.dart';
 
 class SignUpCubit extends Cubit<SignUpState> {
   SignUpCubit(this._authenticationRepository, this._newUserRepository)
-      : assert(_authenticationRepository != null),
-        super(const SignUpState());
+      : super(const SignUpState());
 
   final AuthenticationRepository _authenticationRepository;
   final FirestoreNewUserRepository _newUserRepository;

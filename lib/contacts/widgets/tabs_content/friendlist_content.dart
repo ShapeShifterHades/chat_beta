@@ -89,7 +89,7 @@ class _ContactsCounter extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
         Text(
-          S.of(context)!.contacts_friends + ': ' + sorted.length.toString(),
+          S.of(context).contacts_friends + ': ' + sorted.length.toString(),
           style: TextStyles.body1,
         ),
         const SizedBox(width: 20),

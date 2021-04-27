@@ -4,8 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:void_chat_beta/styles.dart';
 import 'package:void_chat_beta/generated/l10n.dart';
 
-import 'constants.dart';
-
 class OrDivider extends StatelessWidget {
   const OrDivider({
     Key? key,
@@ -41,7 +39,7 @@ class OrDivider extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  S.of(context)!.signup_or,
+                  S.of(context).signup_or,
                   style: TextStyles.body2,
                 ),
                 Expanded(

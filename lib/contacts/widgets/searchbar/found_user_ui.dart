@@ -30,7 +30,7 @@ class FoundUserUi extends StatelessWidget {
           Row(
             children: [
               Text(
-                S.of(context)!.contacts_user,
+                S.of(context).contacts_user,
                 style: TextStyles.body2,
               ),
               const Spacer(),
@@ -44,7 +44,7 @@ class FoundUserUi extends StatelessWidget {
           Row(
             children: [
               Text(
-                S.of(context)!.contacts_status,
+                S.of(context).contacts_status,
                 style: TextStyles.body2,
               ),
               const Spacer(),
@@ -58,7 +58,7 @@ class FoundUserUi extends StatelessWidget {
           Row(
             children: [
               Text(
-                S.of(context)!.contacts_id,
+                S.of(context).contacts_id,
                 style: TextStyles.body2,
               ),
               const Spacer(),
@@ -162,7 +162,7 @@ class _BefriendForm extends StatelessWidget {
                   children: [
                     const SizedBox(width: 5),
                     Text(
-                      S.of(context)!.contacts_form_message,
+                      S.of(context).contacts_form_message,
                       style: TextStyles.body2,
                     ),
                   ],

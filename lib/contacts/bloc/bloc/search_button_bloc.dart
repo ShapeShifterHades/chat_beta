@@ -12,10 +12,10 @@ part 'search_button_state.dart';
 class SearchButtonBloc extends Bloc<SearchButtonEvent, SearchButtonState> {
   SearchButtonBloc(this._finduserBloc) : super(SearchButtonState.initial()) {
     _finduserSubscription =
-        _finduserBloc.stream.listen((bloc) => add(FinduserStateChanged(bloc)));
+        _finduserBloc?.stream.listen((bloc) => add(FinduserStateChanged(bloc)));
   }
 
-  final FinduserBloc _finduserBloc;
+  final FinduserBloc? _finduserBloc;
   StreamSubscription<FinduserState>? _finduserSubscription;
 
   @override

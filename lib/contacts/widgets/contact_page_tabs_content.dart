@@ -61,7 +61,7 @@ class _ContactsLoadingIndication extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: Text(
-        S.of(context)!.contacts_loading,
+        S.of(context).contacts_loading,
         style: TextStyles.body1,
       ),
     );

@@ -23,10 +23,10 @@ class EmailInput extends StatelessWidget {
                 context.read<SignUpCubit>().emailChanged(email),
             keyboardType: TextInputType.emailAddress,
             decoration: InputDecoration(
-              labelText: S.of(context)!.signup_email,
+              labelText: S.of(context).signup_email,
               helperText: '',
               errorText: state.email.invalid
-                  ? S.of(context)!.signup_invalid_email
+                  ? S.of(context).signup_invalid_email
                   : null,
             ),
           );

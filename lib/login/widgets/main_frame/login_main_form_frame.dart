@@ -80,7 +80,7 @@ class _LoginMainFormFrameState extends State<LoginMainFormFrame>
                   if (!isKeyboardVisible)
                     FormHeaderSignUp(
                       color: Theme.of(context).primaryColor,
-                      title: S.of(context)!.loginpage_login_form,
+                      title: S.of(context).loginpage_login_form,
                       formController: _formController,
                       settingsController: _settingsController,
                     ),
@@ -90,7 +90,7 @@ class _LoginMainFormFrameState extends State<LoginMainFormFrame>
                   ButtonsDivider(orLineAlterHeight: orLineAlterHeight),
                   OrDivider(orLineHeight: orLineHeight),
                   ButtonModel(
-                    text: S.of(context)!.loginpage_login_with_google,
+                    text: S.of(context).loginpage_login_with_google,
                     onPressed: _formController!.value == 0.0 ? null : () {},
                   ),
                 ],

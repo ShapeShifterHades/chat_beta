@@ -18,10 +18,10 @@ class LicenceAgreementTile extends StatelessWidget {
           text: TextSpan(
             style: TextStyles.body1,
             children: <TextSpan>[
-              TextSpan(text: S.of(context)!.signup_i_agree + ' '),
+              TextSpan(text: S.of(context).signup_i_agree + ' '),
               TextSpan(
                   style: TextStyles.body1.copyWith(color: Colors.blue),
-                  text: S.of(context)!.signup_with_terms),
+                  text: S.of(context).signup_with_terms),
             ],
           ),
         ),

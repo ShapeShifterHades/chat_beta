@@ -18,8 +18,7 @@ class FriendlistState extends ContactTabsState {
   final List<Contact> contacts;
   FriendlistState({
     required this.fullContactlist,
-  })  : assert(fullContactlist != null),
-        contacts = fullContactlist
+  }) : contacts = fullContactlist
             .where((contact) => contact.status == 'friend')
             .toList();
   @override
@@ -32,8 +31,7 @@ class PendinglistState extends ContactTabsState {
 
   PendinglistState({
     required this.fullContactlist,
-  })  : assert(fullContactlist != null),
-        contacts = fullContactlist
+  }) : contacts = fullContactlist
             .where((contact) => contact.status == 'pending')
             .toList();
   @override
@@ -46,8 +44,7 @@ class BlocklistState extends ContactTabsState {
 
   BlocklistState({
     required this.blocklist,
-  })  : assert(blocklist != null),
-        contacts =
+  }) : contacts =
             blocklist.where((contact) => contact.status == 'blocked').toList();
   @override
   List<Object> get props => [contacts];

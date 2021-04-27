@@ -23,10 +23,10 @@ class UsernameInput extends StatelessWidget {
                 context.read<SignUpCubit>().usernameChanged(username),
             keyboardType: TextInputType.emailAddress,
             decoration: InputDecoration(
-              labelText: S.of(context)!.signup_username,
+              labelText: S.of(context).signup_username,
               helperText: '',
               errorText: state.username.invalid
-                  ? S.of(context)!.signup_invalid_username
+                  ? S.of(context).signup_invalid_username
                   : null,
             ),
           );

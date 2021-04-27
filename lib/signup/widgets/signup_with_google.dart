@@ -20,7 +20,7 @@ class SignupWithGoogle extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           SimpleButtonOne(
-            text: S.of(context)!.signup_with_google,
+            text: S.of(context).signup_with_google,
             onPressed: formController!.value == 0.0 ? null : () {},
           ),
         ],

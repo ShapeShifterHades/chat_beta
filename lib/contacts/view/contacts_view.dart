@@ -23,7 +23,7 @@ class ContactsView extends StatelessWidget {
         BlocProvider<FinduserBloc>(
             create: (context) => FinduserBloc(
                 context.read<AuthenticationBloc>(),
-                context.read<FirestoreContactRepository>())),
+                context.read<FirestoreContactRepository?>())),
         BlocProvider<SearchButtonBloc>(
             create: (context) =>
                 SearchButtonBloc(BlocProvider.of<FinduserBloc>(context))),

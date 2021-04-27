@@ -23,10 +23,10 @@ class PasswordInput extends StatelessWidget {
                 context.read<SignUpCubit>().passwordChanged(password),
             obscureText: true,
             decoration: InputDecoration(
-              labelText: S.of(context)!.signup_password,
+              labelText: S.of(context).signup_password,
               helperText: '',
               errorText: state.password.invalid
-                  ? S.of(context)!.loginpage_invalid_password
+                  ? S.of(context).loginpage_invalid_password
                   : null,
             ),
           );

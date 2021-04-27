@@ -18,7 +18,7 @@ class FinduserBloc extends Bloc<FinduserEvent, FinduserState> {
   }
 
   final AuthenticationBloc _authenticationBloc;
-  final FirestoreContactRepository _firestoreContactRepository;
+  final FirestoreContactRepository? _firestoreContactRepository;
   late String uid;
   Contact? contact;
 
@@ -45,7 +45,7 @@ class FinduserBloc extends Bloc<FinduserEvent, FinduserState> {
 
   Future<Contact?> _getSearchResults(String query) async {
     try {
-      contact = await _firestoreContactRepository.findIdByUsername(query, uid);
+      contact = await _firestoreContactRepository?.findIdByUsername(query, uid);
       return contact;
     } catch (e) {
       print(e);

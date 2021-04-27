@@ -24,18 +24,18 @@ class _ContactPageTabsState extends State<ContactPageTabs> {
   }
 
   void sendEvent(String? newValue) {
-    if (newValue == S.of(context)!.contacts_friends) {
+    if (newValue == S.of(context).contacts_friends) {
       context.read<ContactTabsBloc>().add(FriendlistClicked());
-    } else if (newValue == S.of(context)!.contacts_pending) {
+    } else if (newValue == S.of(context).contacts_pending) {
       context.read<ContactTabsBloc>().add(PendinglistClicked());
-    } else if (newValue == S.of(context)!.contacts_blocked) {
+    } else if (newValue == S.of(context).contacts_blocked) {
       context.read<ContactTabsBloc>().add(BlocklistClicked());
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    dropdownValue = S.of(context)!.contacts_friends;
+    dropdownValue = S.of(context).contacts_friends;
     return Container(
       alignment: Alignment.center,
       margin: const EdgeInsets.only(left: 20, top: 10),
@@ -58,9 +58,9 @@ class _ContactPageTabsState extends State<ContactPageTabs> {
               });
             },
             items: <String>[
-              S.of(context)!.contacts_friends,
-              S.of(context)!.contacts_pending,
-              S.of(context)!.contacts_blocked,
+              S.of(context).contacts_friends,
+              S.of(context).contacts_pending,
+              S.of(context).contacts_blocked,
             ].map<DropdownMenuItem<String>>((String value) {
               return DropdownMenuItem<String>(
                 value: value,

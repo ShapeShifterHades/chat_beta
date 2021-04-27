@@ -2,7 +2,6 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 
-import 'package:void_chat_beta/signup/widgets/constants.dart';
 import 'package:void_chat_beta/signup/widgets/textfields/confirm_password_input.dart';
 import 'package:void_chat_beta/signup/widgets/textfields/email_input.dart';
 import 'package:void_chat_beta/signup/widgets/textfields/licence_agreement_tile.dart';

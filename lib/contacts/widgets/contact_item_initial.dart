@@ -24,7 +24,7 @@ class ContactItem extends StatefulWidget {
 }
 
 class _ContactItemState extends State<ContactItem> {
-  late CustomAnimationControl fingerprintAnimationcontroller;
+  // CustomAnimationControl  fingerprintAnimationcontroller
   bool isExpanded = false;
 
   @override
@@ -33,86 +33,50 @@ class _ContactItemState extends State<ContactItem> {
       padding: const EdgeInsets.symmetric(vertical: 5),
       child: Column(
         children: [
-          CustomAnimation(
-              curve: Curves.bounceInOut,
-              duration: Times.fastest,
-              control: fingerprintAnimationcontroller,
-              tween: (0.0).tweenTo(2.0),
-              builder: (context, child, dynamic value) {
-                return Transform.translate(
-                  offset: Offset(0, value),
-                  child: ContactTile(
-                    id: 'ID: ${widget.sorted[widget.index].id!.toUpperCase()}',
-                    child: Container(
-                      width: 300,
-                      height: 70,
-                      child: Row(
-                        children: [
-                          Container(
-                            alignment: Alignment.center,
-                            // width: 70,
-                            height: 90,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(80),
-                            ),
+          ContactTile(
+            id: 'ID: ${widget.sorted[widget.index].id!.toUpperCase()}',
+            child: Container(
+              width: 300,
+              height: 70,
+              child: Row(
+                children: [
+                  Container(
+                    alignment: Alignment.center,
+                    // width: 70,
+                    height: 90,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(80),
+                    ),
 
-                            child: Center(
-                              child: Image.asset(
-                                'assets/images/avatar-placeholder.png',
-                                colorBlendMode: BlendMode.color,
-                              ),
-                            ),
-                          ),
-                          const SizedBox(width: 10),
-                          Container(
-                            alignment: Alignment.center,
-                            padding: const EdgeInsets.only(bottom: 30),
-                            child: Text(
-                                '${widget.sorted[widget.index].username}',
-                                style: TextStyles.body1.copyWith(fontSize: 20)),
-                          ),
-                          const Spacer(),
-                          GestureDetector(
-                            onLongPress: () {
-                              setState(() {
-                                isExpanded = !isExpanded;
-                              });
-                            },
-                            onTapDown: (v) {
-                              setState(() {
-                                fingerprintAnimationcontroller =
-                                    CustomAnimationControl.MIRROR;
-                              });
-                            },
-                            onTapCancel: () {
-                              setState(() {
-                                fingerprintAnimationcontroller =
-                                    CustomAnimationControl.STOP;
-                              });
-                            },
-                            onTapUp: (v) {
-                              setState(() {
-                                fingerprintAnimationcontroller =
-                                    CustomAnimationControl.STOP;
-                              });
-                            },
-                            child: Container(
-                              width: 60,
-                              padding: const EdgeInsets.only(bottom: 20),
-                              child: Icon(
-                                Icons.fingerprint,
-                                size: 34,
-                                color: Theme.of(context).primaryColor,
-                              ),
-                            ),
-                          ),
-                        ],
+                    child: Center(
+                      child: Image.asset(
+                        'assets/images/avatar-placeholder.png',
+                        colorBlendMode: BlendMode.color,
                       ),
                     ),
-                    // ),28
                   ),
-                );
-              }),
+                  const SizedBox(width: 10),
+                  Container(
+                    alignment: Alignment.center,
+                    padding: const EdgeInsets.only(bottom: 30),
+                    child: Text('${widget.sorted[widget.index].username}',
+                        style: TextStyles.body1.copyWith(fontSize: 20)),
+                  ),
+                  const Spacer(),
+                  Container(
+                    width: 60,
+                    padding: const EdgeInsets.only(bottom: 20),
+                    child: Icon(
+                      Icons.fingerprint,
+                      size: 34,
+                      color: Theme.of(context).primaryColor,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            // ),28
+          ),
           const SizedBox(height: 1.5),
           Row(
             children: [
@@ -148,7 +112,7 @@ class _ContactItemState extends State<ContactItem> {
                         color: Theme.of(context).scaffoldBackgroundColor,
 
                         child: Text(
-                          S.of(context)!.contacts_form_message,
+                          S.of(context).contacts_form_message,
                           style: TextStyles.body1.copyWith(fontSize: 20),
                         ),
                       ),
@@ -174,7 +138,7 @@ class _ContactItemState extends State<ContactItem> {
                         height: 40,
                         color: Theme.of(context).scaffoldBackgroundColor,
                         child: Text(
-                          S.of(context)!.contacts_form_remove,
+                          S.of(context).contacts_form_remove,
                           style: TextStyles.body1.copyWith(fontSize: 20),
                         ),
                       ),

@@ -1,5 +1,4 @@
 import 'package:equatable/equatable.dart';
-import 'package:meta/meta.dart';
 
 /// {@template user}
 ///  User model
@@ -13,8 +12,7 @@ class User extends Equatable {
     required this.email,
     required this.id,
     required this.username,
-  })  : assert(email != null),
-        assert(id != null);
+  });
 
   /// The current user's email address.
   final String email;

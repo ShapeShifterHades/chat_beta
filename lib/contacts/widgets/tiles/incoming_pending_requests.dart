@@ -277,7 +277,7 @@ class RightSideExpanded extends StatelessWidget {
                   children: [
                     const SizedBox(width: 7),
                     Text(
-                      S.of(context)!.contacts_user,
+                      S.of(context).contacts_user,
                       style: TextStyles.body2,
                     ),
                     const SizedBox(width: 7),
@@ -292,7 +292,7 @@ class RightSideExpanded extends StatelessWidget {
                   children: [
                     const SizedBox(width: 7),
                     Text(
-                      S.of(context)!.contacts_id,
+                      S.of(context).contacts_id,
                       style: TextStyles.body2,
                     ),
                     const SizedBox(width: 7),
@@ -307,7 +307,7 @@ class RightSideExpanded extends StatelessWidget {
                   children: [
                     const SizedBox(width: 7),
                     Text(
-                      S.of(context)!.contacts_sent_at,
+                      S.of(context).contacts_sent_at,
                       style: TextStyles.body2,
                     ),
                     const SizedBox(width: 7),
@@ -410,7 +410,7 @@ class RightSideShort extends StatelessWidget {
                       height: 39.5,
                       alignment: Alignment.centerLeft,
                       child: Text(
-                        S.of(context)!.contacts_accept,
+                        S.of(context).contacts_accept,
                         style: TextStyles.body2,
                       ),
                     ),
@@ -430,7 +430,7 @@ class RightSideShort extends StatelessWidget {
                       height: 39.5,
                       alignment: Alignment.centerLeft,
                       child: Text(
-                        S.of(context)!.contacts_reject,
+                        S.of(context).contacts_reject,
                         style: TextStyles.body2,
                       ),
                     ),
@@ -494,7 +494,7 @@ class RightSideShort extends StatelessWidget {
                     alignment: Alignment.center,
                     height: 39.5,
                     child: Text(
-                      S.of(context)!.contacts_more_info,
+                      S.of(context).contacts_more_info,
                       style: TextStyles.body2,
                     ),
                   ),

@@ -26,10 +26,10 @@ class ConfirmPasswordInput extends StatelessWidget {
                 .confirmedPasswordChanged(confirmPassword),
             obscureText: true,
             decoration: InputDecoration(
-              labelText: S.of(context)!.signup_confirm_password,
+              labelText: S.of(context).signup_confirm_password,
               helperText: '',
               errorText: state.confirmedPassword.invalid
-                  ? S.of(context)!.signup_invalid_confirm_password
+                  ? S.of(context).signup_invalid_confirm_password
                   : null,
             ),
           );

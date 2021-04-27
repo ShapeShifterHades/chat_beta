@@ -19,7 +19,7 @@ class SubmitButton extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           SimpleButtonOne(
-            text: S.of(context)!.signup_submit,
+            text: S.of(context).signup_submit,
             onPressed: () {
               context.read<SignUpCubit>().signUpFormSubmitted();
             },

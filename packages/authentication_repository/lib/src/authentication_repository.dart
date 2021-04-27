@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:meta/meta.dart';
 
 import 'models/models.dart';
 
@@ -50,7 +49,6 @@ class AuthenticationRepository {
     required String password,
     String? displayName,
   }) async {
-    assert(email != null && password != null);
     try {
       firebase_auth.UserCredential credentials =
           await _firebaseAuth.createUserWithEmailAndPassword(
@@ -71,7 +69,8 @@ class AuthenticationRepository {
   /// Throws a [LogInWithGoogleFailure] if an exception occurs.
   Future<void> logInWithGoogle() async {
     try {
-      final googleUser = await (_googleSignIn.signIn() as FutureOr<GoogleSignInAccount>);
+      final googleUser =
+          await (_googleSignIn.signIn() as FutureOr<GoogleSignInAccount>);
       final googleAuth = await googleUser.authentication;
       final credential = firebase_auth.GoogleAuthProvider.credential(
         accessToken: googleAuth.accessToken,
@@ -90,7 +89,6 @@ class AuthenticationRepository {
     required String email,
     required String password,
   }) async {
-    assert(email != null && password != null);
     try {
       await _firebaseAuth.signInWithEmailAndPassword(
         email: email,

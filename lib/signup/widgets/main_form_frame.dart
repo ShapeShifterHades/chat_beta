@@ -78,7 +78,7 @@ class _SignupMainFormFrameState extends State<SignupMainFormFrame>
                 if (!isKeyboardVisible)
                   FormHeaderSignUp(
                     color: Theme.of(context).primaryColor,
-                    title: S.of(context)!.signup_registration,
+                    title: S.of(context).signup_registration,
                     formController: formController,
                     settingsController: settingsController,
                   ),
