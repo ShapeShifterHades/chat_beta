@@ -12,12 +12,12 @@ class Chatroom {
 
   Chatroom({
     this.name = '',
-    this.lastMessageAt,
-    this.lastMessageFrom,
     this.id1,
     this.id2,
-    DateTime createdAt,
     String lastMessage,
+    this.lastMessageFrom,
+    this.lastMessageAt,
+    DateTime createdAt,
   })  : this.createdAt = DateTime.now(),
         this.lastMessage = lastMessage ?? 'none';
 
@@ -28,10 +28,10 @@ class Chatroom {
       name,
       id1,
       id2,
-      lastMessageFrom,
       lastMessage,
+      lastMessageFrom,
       Timestamp.fromDate(lastMessageAt),
-      Timestamp.fromDate(createdAt),
+      // Timestamp.fromDate(createdAt),
     );
   }
 
@@ -40,12 +40,12 @@ class Chatroom {
       name: entity.name,
       id1: entity.id1,
       id2: entity.id2,
-      lastMessageFrom: entity.lastMessageFrom,
-      lastMessage: entity.lastMessage,
-      lastMessageAt: DateTime.fromMillisecondsSinceEpoch(
-          entity.lastMessageAt.millisecondsSinceEpoch),
-      createdAt: DateTime.fromMillisecondsSinceEpoch(
-          entity.createdAt.millisecondsSinceEpoch),
+      lastMessage: entity?.lastMessage,
+      lastMessageFrom: entity?.lastMessageFrom,
+      lastMessageAt: DateTime?.fromMillisecondsSinceEpoch(
+          entity?.lastMessageAt?.millisecondsSinceEpoch),
+      // createdAt: DateTime?.fromMillisecondsSinceEpoch(
+      // entity?.createdAt?.millisecondsSinceEpoch),
     );
   }
 }

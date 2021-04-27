@@ -6,15 +6,14 @@ environment:
   sdk: '>=2.6.0 <3.0.0'
 
 dependencies:
-  flutter:
+  flutter: 
     sdk: flutter
-  equatable: 
-  firebase_auth: 
-  firebase_core:
-  google_sign_in: 
-  meta:
+  equatable: any
+  firebase_auth: any
+  firebase_core: any
+  google_sign_in: any
+  meta: any
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  mockito: ^4.0.0

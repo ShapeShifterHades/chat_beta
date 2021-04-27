@@ -9,7 +9,6 @@ dependencies:
   flutter:
     sdk: flutter
 
-  cloud_firestore:
-  # rxdart: ^0.24.0
-  equatable: 
-  firebase_core: 
+  cloud_firestore: any
+  equatable: any
+  firebase_core: any

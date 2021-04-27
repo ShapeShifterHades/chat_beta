@@ -22,8 +22,9 @@ class FirestoreChatroomRepository {
 
   Stream<List<Chatroom>> chatrooms() {
     return chatroomCollection.snapshots().map((QuerySnapshot snapshot) {
-      return snapshot.docs.map((QueryDocumentSnapshot doc) =>
-          Chatroom.fromEntity(ChatroomEntity.fromSnapshot(doc)));
+      return snapshot.docs
+          .map((doc) => Chatroom.fromEntity(ChatroomEntity.fromSnapshot(doc)))
+          .toList();
     });
   }
 }
