@@ -18,7 +18,7 @@ class LoginSubmitButton extends StatelessWidget {
         return PhysicalModel(
           shadowColor: Colors.red,
           color: Colors.white,
-          elevation: 1,
+          elevation: 3,
           child: Container(
             child: ButtonModel(
               key: const Key('loginForm_continue_raisedButton'),

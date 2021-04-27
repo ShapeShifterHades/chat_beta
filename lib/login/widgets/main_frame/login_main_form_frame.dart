@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:keyboard_visibility/keyboard_visibility.dart';
+import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:simple_animations/simple_animations.dart';
 import 'package:void_chat_beta/login/widgets/main_frame/OrDivider.dart';
 import 'package:void_chat_beta/login/widgets/main_frame/buttons_divider.dart';
@@ -31,10 +31,8 @@ class _LoginMainFormFrameState extends State<LoginMainFormFrame>
   AnimationController _formController;
   AnimationController _settingsController;
   // Whether keyboard is opened or not.
-  bool keyboardIsVisible = false;
+  // bool keyboardIsVisible = false;
   // Notification provider for keyboard opening.
-  KeyboardVisibilityNotification _keyboardVisibilityNotification =
-      KeyboardVisibilityNotification();
 
   Animation<double> formFrameHeight;
   Animation<double> settingsFrameHeight;
@@ -53,29 +51,24 @@ class _LoginMainFormFrameState extends State<LoginMainFormFrame>
     orLineHeight = 0.0.tweenTo(40.0).animatedBy(_formController);
     orLineAlterHeight = 0.0.tweenTo(40.0).animatedBy(_settingsController);
 
-    _keyboardVisibilityNotification.addNewListener(
-      onChange: (bool visible) {
-        keyboardIsVisible = visible;
-        setState(() {});
-      },
-    );
     super.initState();
   }
 
   @override
   void dispose() {
-    _keyboardVisibilityNotification.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    final bool isKeyboardVisible =
+        KeyboardVisibilityProvider.isKeyboardVisible(context);
     return Positioned.fill(
       child: Container(
         child: AnimatedAlign(
           duration: Times.medium,
           curve: Curves.easeIn,
-          alignment: keyboardIsVisible ? Alignment.topCenter : Alignment.center,
+          alignment: isKeyboardVisible ? Alignment.topCenter : Alignment.center,
           child: Container(
             margin: buildMainFrameMargin(context),
             width: MediaQuery.of(context).size.width * .8,
@@ -84,7 +77,7 @@ class _LoginMainFormFrameState extends State<LoginMainFormFrame>
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  if (!keyboardIsVisible)
+                  if (!isKeyboardVisible)
                     FormHeaderSignUp(
                       color: Theme.of(context).primaryColor,
                       title: S.of(context).loginpage_login_form,

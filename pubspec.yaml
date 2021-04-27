@@ -2,7 +2,7 @@ name: void_chat_beta
 description: A new Flutter project.
 publish_to: none
 
-version: 1.0.0+1
+version: 1.0.0+2
 
 environment:
   sdk: '>=2.6.0 <3.0.0'
@@ -12,7 +12,7 @@ dependencies:
     sdk: flutter
 
   cupertino_icons: ^0.1.2
-  keyboard_visibility: any
+  flutter_keyboard_visibility: any
   font_awesome_flutter: any
   bloc: any
   flutter_bloc: any
@@ -24,18 +24,12 @@ dependencies:
     path: packages/authentication_repository
   firestore_repository:
     path: packages/firestore_repository
-  sqflite_repository:
-    path: packages/sqflite_repository
-  # sqflite:
   path_provider: any
   equatable: any
   hydrated_bloc: any
   simple_animations: any
-  flutter_statusbarcolor: any
-  flutter_slidable: any
   mockito: any
   cloud_firestore: any
-  flutter_i18n: ^0.22.3
   intl: null
   flutter_svg: ^0.22.0
   flutter_localizations:
@@ -45,7 +39,7 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
 
-  build_runner: ^1.10.6
+  build_runner: any
 
 flutter:
   uses-material-design: true

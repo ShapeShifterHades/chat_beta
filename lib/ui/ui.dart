@@ -73,34 +73,21 @@ class UIState extends State<UI> with SingleTickerProviderStateMixin {
           child: Stack(
             // overflow: Overflow.clip,
             children: [
-              Positioned.fill(
-                child: Container(
-                  color: Theme.of(context).backgroundColor,
-                  margin: EdgeInsets.only(
-                    left: size.width * 0.07,
-                    top: size.width * 0.05 + 30,
-                  ),
-
-                  // Animated frame of main content part of UI
-                  child: UiFullFrameAnimated(context: context, size: size),
-                ),
-              ),
+              _FrontFrameBackground(size: size),
               Positioned(
                 // This is where main page content's scaffold size is defined
                 top: size.width * 0.05 + 25,
                 left: size.width * 0.05,
                 right: 12,
-                bottom: 00,
-                child: Container(
-                  child: GestureDetector(
-                      // This Gestures closes [DrawerPM] when it is opened
-                      onTap: _animationController.isCompleted ? close : null,
-                      onHorizontalDragStart: _onDragStart,
-                      onHorizontalDragUpdate: _onDragUpdate,
-                      onHorizontalDragEnd: _onDragEnd,
-                      // Here is the content of the pages
-                      child: widget.body),
-                ),
+                bottom: 0,
+                child: GestureDetector(
+                    // This Gestures closes [DrawerPM] when it is opened
+                    onTap: _animationController.isCompleted ? close : null,
+                    onHorizontalDragStart: _onDragStart,
+                    onHorizontalDragUpdate: _onDragUpdate,
+                    onHorizontalDragEnd: _onDragEnd,
+                    // Here is the content of the pages
+                    child: widget.body),
               ),
               // MiniMenu
               MiniMenu(size: size),
@@ -188,5 +175,30 @@ class UIState extends State<UI> with SingleTickerProviderStateMixin {
     } else {
       open();
     }
+  }
+}
+
+class _FrontFrameBackground extends StatelessWidget {
+  const _FrontFrameBackground({
+    Key key,
+    @required this.size,
+  }) : super(key: key);
+
+  final Size size;
+
+  @override
+  Widget build(BuildContext context) {
+    return Positioned.fill(
+      child: Container(
+        color: Theme.of(context).backgroundColor,
+        margin: EdgeInsets.only(
+          left: size.width * 0.07,
+          top: size.width * 0.05 + 30,
+        ),
+
+        // Animated frame of main content part of UI
+        child: UiFullFrameAnimated(context: context, size: size),
+      ),
+    );
   }
 }

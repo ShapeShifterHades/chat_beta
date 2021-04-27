@@ -16,11 +16,14 @@ void main() async {
       FirestoreNewUserRepository();
   FirestoreContactRepository _firestoreContactRepository =
       FirestoreContactRepository();
+  FirestoreChatroomRepository _firestoreChatroomRepository =
+      FirestoreChatroomRepository();
   HydratedBloc.storage = await HydratedStorage.build(
       storageDirectory: await getApplicationDocumentsDirectory());
   runApp(App(
     authenticationRepository: _authenticationRepository,
     firestoreContactRepository: _firestoreContactRepository,
     firestoreNewUserRepository: _firestoreNewUserRepository,
+    firestoreChatroomRepository: _firestoreChatroomRepository,
   ));
 }

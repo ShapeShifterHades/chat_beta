@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:keyboard_visibility/keyboard_visibility.dart';
+import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:simple_animations/simple_animations.dart';
 import 'package:void_chat_beta/login/widgets/main_frame/OrDivider.dart';
 import 'package:void_chat_beta/login/widgets/main_frame/buttons_divider.dart';
@@ -36,9 +36,7 @@ class _SignupMainFormFrameState extends State<SignupMainFormFrame>
   Animation<double> orLineHeight;
   Animation<double> orLineAlterHeight;
 
-  bool keyboardIsVisible = false;
-  KeyboardVisibilityNotification _keyboardVisibilityNotification =
-      KeyboardVisibilityNotification();
+  // bool keyboardIsVisible = false;
 
   @override
   void initState() {
@@ -52,27 +50,22 @@ class _SignupMainFormFrameState extends State<SignupMainFormFrame>
     orLineHeight = .0.tweenTo(40.0).animatedBy(formController);
     orLineAlterHeight = .0.tweenTo(40.0).animatedBy(settingsController);
 
-    _keyboardVisibilityNotification.addNewListener(
-      onChange: (bool visible) {
-        keyboardIsVisible = visible;
-        setState(() {});
-      },
-    );
     super.initState();
   }
 
   @override
   void dispose() {
-    _keyboardVisibilityNotification.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    final bool isKeyboardVisible =
+        KeyboardVisibilityProvider.isKeyboardVisible(context);
     return AnimatedAlign(
       duration: Times.fast,
       curve: Curves.easeIn,
-      alignment: keyboardIsVisible ? Alignment.topCenter : Alignment.center,
+      alignment: isKeyboardVisible ? Alignment.topCenter : Alignment.center,
       child: Container(
         margin: buildFormMargin(context),
         width: MediaQuery.of(context).size.width * .8,
@@ -82,7 +75,7 @@ class _SignupMainFormFrameState extends State<SignupMainFormFrame>
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                if (!keyboardIsVisible)
+                if (!isKeyboardVisible)
                   FormHeaderSignUp(
                     color: Theme.of(context).primaryColor,
                     title: S.of(context).signup_registration,

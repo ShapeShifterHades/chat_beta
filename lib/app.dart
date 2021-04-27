@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:void_chat_beta/constants.dart';
+import 'package:void_chat_beta/messages/view/messages_view.dart';
 import 'package:void_chat_beta/signup/view/signup_view.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:void_chat_beta/generated/l10n.dart';
@@ -18,7 +19,6 @@ import 'contacts/bloc/contact_bloc.dart';
 import 'contacts/view/contacts_view.dart';
 import 'faq/view/faq_view.dart';
 
-import 'home/home.dart';
 import 'security/view/security_view.dart';
 import 'theme/brightness_cubit.dart';
 import 'theme/locale_cubit.dart';
@@ -30,10 +30,12 @@ class App extends StatelessWidget {
     this.authenticationRepository,
     this.firestoreNewUserRepository,
     this.firestoreContactRepository,
+    this.firestoreChatroomRepository,
   }) : super(key: key);
   final AuthenticationRepository authenticationRepository;
   final FirestoreNewUserRepository firestoreNewUserRepository;
   final FirestoreContactRepository firestoreContactRepository;
+  final FirestoreChatroomRepository firestoreChatroomRepository;
 
   @override
   Widget build(BuildContext context) {
@@ -48,6 +50,7 @@ class App extends StatelessWidget {
         RepositoryProvider.value(
           value: authenticationRepository,
         ),
+        RepositoryProvider.value(value: firestoreChatroomRepository),
       ],
       child: MultiBlocProvider(providers: [
         BlocProvider<AuthenticationBloc>(
@@ -95,7 +98,7 @@ class AppView extends StatelessWidget {
                               .state
                               .user
                               .id));
-                      return ContactsView();
+                      return MessagesView();
                     }
 
                     return SplashView();
@@ -126,48 +129,3 @@ class AppView extends StatelessWidget {
     );
   }
 }
-
-// pages: [
-//   Get.GetPage(
-//       name: '/',
-//       page: () {
-//         return BlocBuilder<AuthenticationBloc,
-//             AuthenticationState>(
-//           builder: (context, state) {
-//             if (state.status ==
-//                 AuthenticationStatus.authenticated) {
-//               context.watch<ContactBloc>();
-//               return MessagesView();
-//             } else {
-//               return LoginView();
-//             }
-//           },
-//         );
-//       }),
-//   Get.GetPage(
-//       name: homeRoute,
-//       page: () {
-// BlocProvider.of<ContactBloc>(context).add(
-//     LoadContacts(
-//         uid: context
-//             .read<AuthenticationBloc>()
-//             .state
-//             .user
-//             .id));
-//         return MessagesView();
-//       }),
-//   Get.GetPage(name: loginRoute, page: () => LoginView()),
-//   Get.GetPage(
-//       name: settingsRoute, page: () => SettingsView()),
-//   Get.GetPage(
-//       name: securityRoute, page: () => SecurityView()),
-//   Get.GetPage(name: faqRoute, page: () => FaqView()),
-//   Get.GetPage(
-//     name: contactsRoute,
-//     page: () => ContactsView(),
-//   ),
-//   Get.GetPage(
-//     name: signupRoute,
-//     page: () => SignUpView(),
-//   ),
-// ],

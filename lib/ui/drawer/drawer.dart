@@ -106,54 +106,53 @@ class _ProfileAvatarBlock extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      child: Container(
-        child: Row(
-          children: [
-            const SizedBox(width: 15),
-            Stack(
-              alignment: Alignment.center,
-              children: [
-                Container(
-                  width: 136,
-                  height: 136,
-                  decoration: BoxDecoration(
-                      color: Colors.transparent,
-                      borderRadius: BorderRadius.circular(70),
-                      border: Border.all(
-                        width: 0.3,
-                        color: Theme.of(context).primaryColor,
-                      )),
-                  // child:,
+      child: Row(
+        children: [
+          const SizedBox(width: 15),
+          Stack(
+            alignment: Alignment.center,
+            children: [
+              Container(
+                width: 136,
+                height: 136,
+                decoration: BoxDecoration(
+                    color: Colors.transparent,
+                    borderRadius: BorderRadius.circular(70),
+                    border: Border.all(
+                      width: 0.3,
+                      color: Theme.of(context).primaryColor,
+                    )),
+                // child:,
+              ),
+              Align(
+                alignment: Alignment.center,
+                child: ArcText(
+                  radius: 52,
+                  text:
+                      'Id:   ${context.watch<AuthenticationBloc>().state.user.id.toLowerCase()}',
+                  textStyle: TextStyles.body2
+                      .copyWith(color: Theme.of(context).primaryColor),
+                  startAngle: -2.16,
                 ),
-                Align(
-                  alignment: Alignment.center,
-                  child: ArcText(
-                    radius: 52,
-                    text:
-                        'Id:   ${context.watch<AuthenticationBloc>().state.user.id.toLowerCase()}',
-                    textStyle: TextStyles.body2,
-                    startAngle: -2.16,
+              ),
+              Container(
+                width: 102,
+                height: 102,
+                clipBehavior: Clip.hardEdge,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(60),
+                ),
+                child: Center(
+                  child: Image.asset(
+                    'assets/images/avatar-placeholder.png',
+                    color: Theme.of(context).bottomAppBarColor,
+                    colorBlendMode: BlendMode.color,
                   ),
                 ),
-                Container(
-                  width: 102,
-                  height: 102,
-                  clipBehavior: Clip.hardEdge,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(60),
-                  ),
-                  child: Center(
-                    child: Image.asset(
-                      'assets/images/avatar-placeholder.png',
-                      color: Theme.of(context).bottomAppBarColor,
-                      colorBlendMode: BlendMode.color,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ],
-        ),
+              ),
+            ],
+          ),
+        ],
       ),
     );
   }
