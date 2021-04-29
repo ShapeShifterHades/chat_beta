@@ -17,14 +17,11 @@ class ContactPageTabsContent extends StatelessWidget {
   Widget build(BuildContext context) {
     return Expanded(
       child: SingleChildScrollView(
-        child: Container(
-          margin: const EdgeInsets.only(left: 32),
-          child: Column(
-            children: [
-              UserSearch(),
-              _UserList(),
-            ],
-          ),
+        child: Column(
+          children: [
+            UserSearch(),
+            _UserList(),
+          ],
         ),
       ),
     );

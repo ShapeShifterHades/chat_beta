@@ -38,7 +38,7 @@ class _ContactPageTabsState extends State<ContactPageTabs> {
     dropdownValue = S.of(context).contacts_friends;
     return Container(
       alignment: Alignment.center,
-      margin: const EdgeInsets.only(left: 20, top: 10),
+      margin: const EdgeInsets.only(top: 10),
       width: 160,
       height: 35,
       child: Theme(

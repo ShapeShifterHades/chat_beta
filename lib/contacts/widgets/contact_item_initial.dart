@@ -1,7 +1,5 @@
 import 'package:firestore_repository/firestore_repository.dart';
 import 'package:flutter/material.dart';
-import 'package:simple_animations/simple_animations.dart';
-import 'package:supercharged/supercharged.dart';
 import 'package:void_chat_beta/authentication/authentication.dart';
 import 'package:void_chat_beta/contacts/bloc/contact_bloc.dart';
 import 'package:void_chat_beta/contacts/widgets/tiles/contact_tile.dart';

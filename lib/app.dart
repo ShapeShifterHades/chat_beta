@@ -27,53 +27,66 @@ import 'theme/theme.dart';
 class App extends StatelessWidget {
   const App({
     Key? key,
-    this.authenticationRepository,
-    this.firestoreNewUserRepository,
-    this.firestoreContactRepository,
-    this.firestoreChatroomRepository,
   }) : super(key: key);
-  final AuthenticationRepository? authenticationRepository;
-  final FirestoreNewUserRepository? firestoreNewUserRepository;
-  final FirestoreContactRepository? firestoreContactRepository;
-  final FirestoreChatroomRepository? firestoreChatroomRepository;
 
   @override
   Widget build(BuildContext context) {
     return MultiRepositoryProvider(
-      providers: [
-        RepositoryProvider.value(
-          value: firestoreNewUserRepository,
-        ),
-        RepositoryProvider.value(
-          value: firestoreContactRepository,
-        ),
-        RepositoryProvider.value(
-          value: authenticationRepository,
-        ),
-        RepositoryProvider.value(value: firestoreChatroomRepository),
-      ],
-      child: MultiBlocProvider(providers: [
-        BlocProvider<AuthenticationBloc>(
-          lazy: false,
-          create: (context) => AuthenticationBloc(
-            authenticationRepository: authenticationRepository,
-          ),
-        ),
-        BlocProvider<LocaleCubit>(
-          create: (context) => LocaleCubit(),
-          lazy: false,
-        ),
-        BlocProvider<BrightnessCubit>(
-          create: (context) => BrightnessCubit(),
-          lazy: false,
-        ),
-        BlocProvider<ContactBloc>(
-          create: (context) => ContactBloc(
-              firestoreContactRepository, context.read<AuthenticationBloc>()),
-          lazy: false,
-        ),
-      ], child: AppView()),
-    );
+        providers: [
+          RepositoryProvider<AuthenticationRepository?>(
+              create: (_) => AuthenticationRepository()),
+          RepositoryProvider<FirestoreContactRepository?>(
+              create: (_) => FirestoreContactRepository()),
+          RepositoryProvider<FirestoreNewUserRepository?>(
+              create: (_) => FirestoreNewUserRepository()),
+          RepositoryProvider<FirestoreChatroomRepository?>(
+              create: (_) => FirestoreChatroomRepository()),
+        ],
+        child: Builder(builder: (context) {
+          return MultiRepositoryProvider(
+            providers: [
+              RepositoryProvider.value(
+                value:
+                    RepositoryProvider.of<AuthenticationRepository?>(context),
+              ),
+              RepositoryProvider.value(
+                value:
+                    RepositoryProvider.of<FirestoreContactRepository?>(context),
+              ),
+              RepositoryProvider.value(
+                value:
+                    RepositoryProvider.of<FirestoreNewUserRepository?>(context),
+              ),
+              RepositoryProvider.value(
+                value: RepositoryProvider.of<FirestoreChatroomRepository?>(
+                    context),
+              ),
+            ],
+            child: MultiBlocProvider(providers: [
+              BlocProvider<AuthenticationBloc>(
+                lazy: false,
+                create: (context) => AuthenticationBloc(
+                  authenticationRepository:
+                      RepositoryProvider.of<AuthenticationRepository?>(context),
+                ),
+              ),
+              BlocProvider<LocaleCubit>(
+                create: (context) => LocaleCubit(),
+                lazy: false,
+              ),
+              BlocProvider<BrightnessCubit>(
+                create: (context) => BrightnessCubit(),
+                lazy: false,
+              ),
+              BlocProvider<ContactBloc>(
+                create: (context) => ContactBloc(
+                    RepositoryProvider.of<FirestoreContactRepository?>(context),
+                    context.read<AuthenticationBloc>()),
+                lazy: false,
+              ),
+            ], child: AppView()),
+          );
+        }));
   }
 }
 
@@ -92,8 +105,6 @@ class AppView extends StatelessWidget {
               initialRoute: '/',
               routes: {
                 '/': (context) {
-                  // print(
-                  //     'nigga!!!+${RepositoryProvider.of<AuthenticationRepository>(context)}');
                   return BlocBuilder<AuthenticationBloc, AuthenticationState>(
                       builder: (context, state) {
                     if (state.status == AuthenticationStatus.unauthenticated)

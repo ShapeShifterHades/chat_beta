@@ -10,20 +10,7 @@ import 'package:path_provider/path_provider.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  AuthenticationRepository _authenticationRepository =
-      AuthenticationRepository();
-  FirestoreNewUserRepository _firestoreNewUserRepository =
-      FirestoreNewUserRepository();
-  FirestoreContactRepository _firestoreContactRepository =
-      FirestoreContactRepository();
-  FirestoreChatroomRepository _firestoreChatroomRepository =
-      FirestoreChatroomRepository();
   HydratedBloc.storage = await HydratedStorage.build(
       storageDirectory: await getApplicationDocumentsDirectory());
-  runApp(App(
-    authenticationRepository: _authenticationRepository,
-    firestoreContactRepository: _firestoreContactRepository,
-    firestoreNewUserRepository: _firestoreNewUserRepository,
-    firestoreChatroomRepository: _firestoreChatroomRepository,
-  ));
+  runApp(App());
 }

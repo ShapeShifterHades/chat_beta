@@ -77,8 +77,8 @@ class UIState extends State<UI> with SingleTickerProviderStateMixin {
               Positioned(
                 // This is where main page content's scaffold size is defined
                 top: size.width * 0.05 + 25,
-                left: size.width * 0.05,
-                right: 12,
+                left: size.width * 0.05 + 25,
+                right: 0,
                 bottom: 0,
                 child: GestureDetector(
                     // This Gestures closes [DrawerPM] when it is opened
@@ -162,7 +162,8 @@ class UIState extends State<UI> with SingleTickerProviderStateMixin {
   void _onDragEnd(DragEndDetails details) {
     double _kMinFlingVelocity = 365.0;
 
-    if (_animationController!.isDismissed || _animationController!.isCompleted) {
+    if (_animationController!.isDismissed ||
+        _animationController!.isCompleted) {
       return;
     }
     if (details.velocity.pixelsPerSecond.dx.abs() >= _kMinFlingVelocity) {
