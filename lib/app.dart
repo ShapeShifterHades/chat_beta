@@ -3,26 +3,22 @@ import 'package:firestore_repository/firestore_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:void_chat_beta/constants.dart';
-import 'package:void_chat_beta/messages/view/messages_view.dart';
-import 'package:void_chat_beta/signup/view/signup_view.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:void_chat_beta/core/constants/constants.dart';
+import 'package:void_chat_beta/core/themes/app_theme.dart';
 import 'package:void_chat_beta/generated/l10n.dart';
-
-import 'login/view/login_view.dart';
-import 'settings/settings.dart';
-import 'splash/view.dart/splash_view.dart';
-
-import 'authentication/authentication.dart';
-import 'contacts/bloc/contact_bloc.dart';
-
-import 'contacts/view/contacts_view.dart';
-import 'faq/view/faq_view.dart';
-
-import 'security/view/security_view.dart';
-import 'theme/brightness_cubit.dart';
-import 'theme/locale_cubit.dart';
-import 'theme/theme.dart';
+import 'package:void_chat_beta/logic/bloc/authentication/authentication_bloc.dart';
+import 'package:void_chat_beta/logic/bloc/contact/contact_bloc.dart';
+import 'package:void_chat_beta/logic/cubit/brightness/brightness.dart';
+import 'package:void_chat_beta/logic/cubit/locale/locale.dart';
+import 'package:void_chat_beta/presentation/screens/contacts_screen/view/contacts_view.dart';
+import 'package:void_chat_beta/presentation/screens/faq_screen/view/faq_view.dart';
+import 'package:void_chat_beta/presentation/screens/login_screen/view/login_view.dart';
+import 'package:void_chat_beta/presentation/screens/messages_screen/view/messages_view.dart';
+import 'package:void_chat_beta/presentation/screens/security_screen/view/security_view.dart';
+import 'package:void_chat_beta/presentation/screens/settings_screen/view/settings_view.dart';
+import 'package:void_chat_beta/presentation/screens/signup_screen/view/signup_view.dart';
+import 'package:void_chat_beta/presentation/screens/splash_screen/splash.dart';
 
 class App extends StatelessWidget {
   const App({
@@ -99,7 +95,9 @@ class AppView extends StatelessWidget {
       builder: (context, brightness) {
         return BlocBuilder<LocaleCubit, String>(
           builder: (context, locale) {
-            print('Aigght! : ${context.read<LocaleCubit>().state}');
+            var isDark = BlocProvider.of<BrightnessCubit>(context).state ==
+                Brightness.dark;
+            print(isDark ? 'Dark Theme' : 'Light Theme');
             return MaterialApp(
               locale: Locale(context.read<LocaleCubit>().state),
               initialRoute: '/',
@@ -138,7 +136,8 @@ class AppView extends StatelessWidget {
               ],
               supportedLocales: S.delegate.supportedLocales,
               debugShowCheckedModeBanner: false,
-              theme: getTheme(context, brightness),
+              theme: isDark ? AppTheme.lightTheme : AppTheme.darkTheme,
+              darkTheme: AppTheme.darkTheme,
             );
           },
         );

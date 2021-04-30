@@ -94,7 +94,9 @@ class AuthenticationRepository {
         email: email,
         password: password,
       );
-    } on Exception {
+    } on firebase_auth.FirebaseAuthException catch (e) {
+      print(e.code);
+      print(e.message);
       throw LogInWithEmailAndPasswordFailure();
     }
   }
