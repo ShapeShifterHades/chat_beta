@@ -1,7 +1,7 @@
 /// Next defined all routing constants used within the app
 
+const String initialRoute = '/';
 const String homeRoute = '/messages';
-
 const String loginRoute = '/login';
 const String signupRoute = '/signup';
 const String contactsRoute = '/contacts';

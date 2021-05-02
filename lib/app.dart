@@ -101,33 +101,86 @@ class AppView extends StatelessWidget {
             return MaterialApp(
               locale: Locale(context.read<LocaleCubit>().state),
               initialRoute: '/',
-              routes: {
-                '/': (context) {
-                  return BlocBuilder<AuthenticationBloc, AuthenticationState>(
-                      builder: (context, state) {
-                    if (state.status == AuthenticationStatus.unauthenticated)
-                      return LoginView();
-                    if (state.status == AuthenticationStatus.authenticated) {
-                      BlocProvider.of<ContactBloc>(context).add(LoadContacts(
-                          uid: BlocProvider.of<AuthenticationBloc>(context)
-                              .state
-                              .user
-                              .id));
-                      return MessagesView();
-                    }
+              // routes: {
+              //   '/': (context) {
+              //     return BlocBuilder<AuthenticationBloc, AuthenticationState>(
+              //         builder: (context, state) {
+              //       if (state.status == AuthenticationStatus.unauthenticated)
+              //         return LoginView();
+              //       if (state.status == AuthenticationStatus.authenticated) {
+              //         BlocProvider.of<ContactBloc>(context).add(LoadContacts(
+              //             uid: BlocProvider.of<AuthenticationBloc>(context)
+              //                 .state
+              //                 .user
+              //                 .id));
+              //         return MessagesView();
+              //       }
 
-                    return SplashView();
-                  });
-                },
-                loginRoute: (context) => LoginView(),
-                signupRoute: (context) => SignUpView(),
-                settingsRoute: (context) => SettingsView(),
-                securityRoute: (context) => SecurityView(),
-                homeRoute: (context) => MessagesView(),
-                faqRoute: (context) => FaqView(),
-                contactsRoute: (context) => ContactsView(),
+              //       return SplashView();
+              //     });
+              //   },
+              //   loginRoute: (context) => LoginView(),
+              //   signupRoute: (context) => SignUpView(),
+              //   settingsRoute: (context) => SettingsView(),
+              //   securityRoute: (context) => SecurityView(),
+              //   homeRoute: (context) => MessagesView(),
+              //   faqRoute: (context) => FaqView(),
+              //   contactsRoute: (context) => ContactsView(),
+              // },
+              onGenerateRoute: (RouteSettings settings) {
+                late Widget page;
+                if (settings.name == initialRoute) {
+                  return MaterialPageRoute<dynamic>(
+                    builder: (context) {
+                      return BlocBuilder<AuthenticationBloc,
+                          AuthenticationState>(
+                        builder: (context, state) {
+                          if (state.status ==
+                              AuthenticationStatus.unauthenticated)
+                            return LoginView();
+                          if (state.status ==
+                              AuthenticationStatus.authenticated) {
+                            BlocProvider.of<ContactBloc>(context).add(
+                              LoadContacts(
+                                  uid: BlocProvider.of<AuthenticationBloc>(
+                                          context)
+                                      .state
+                                      .user
+                                      .id),
+                            );
+                            return MessagesView();
+                          }
+
+                          return SplashView();
+                        },
+                      );
+                    },
+                  );
+                } else if (settings.name == homeRoute) {
+                  page = MessagesView();
+                } else if (settings.name == loginRoute) {
+                  page = LoginView();
+                } else if (settings.name == signupRoute) {
+                  page = SignUpView();
+                } else if (settings.name == contactsRoute) {
+                  page = ContactsView();
+                } else if (settings.name == settingsRoute) {
+                  page = SettingsView();
+                } else if (settings.name == securityRoute) {
+                  page = SecurityView();
+                } else if (settings.name == faqRoute) {
+                  page = FaqView();
+                } else if (settings.name == splashRoute) {
+                  page = SplashView();
+                }
+                print('Redirecting to page $page');
+                return MaterialPageRoute<dynamic>(
+                  builder: (context) {
+                    return page;
+                  },
+                  settings: settings,
+                );
               },
-              onGenerateRoute: (_) => SplashView.route(),
               localizationsDelegates: [
                 S.delegate,
                 GlobalMaterialLocalizations.delegate,
