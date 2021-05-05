@@ -10,5 +10,6 @@ dependencies:
     sdk: flutter
 
   cloud_firestore: any
+  async: ^2.6.1
   equatable: ^2.0.0
   firebase_core: any

@@ -1,19 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:void_chat_beta/core/constants/styles.dart';
 
 class AppTheme {
   const AppTheme._();
   static final darkTheme = ThemeData(
-    // textTheme: TextTheme(
-    //   bodyText1: TextStyles.body1,
-    //   bodyText2: TextStyles.body2,
-    //   caption: TextStyles.caption,
-    //   headline1: TextStyles.h1,
-    //   headline2: TextStyles.h2,
-    //   headline3: TextStyles.h3,
-    //   headline4: TextStyles.title1,
-    //   headline5: TextStyles.title2,
-    // ),
     brightness: Brightness.dark,
     primaryColor: Color(0xFFE6E8EB),
     accentColor: Color(0xFF002E3D), // Unused?

@@ -28,6 +28,7 @@ class StringUtils {
 
   // Measures longest text item in a list of Strings. Useful for things like Dropdown Menu, where you just want to take up as much space as the content requires.
   static double measureLongest(List<String> items, TextStyle style,
+      // ignore: avoid_init_to_null
       [int? maxItems = null]) {
     double l = 0;
     if (maxItems != null && maxItems < items.length) {

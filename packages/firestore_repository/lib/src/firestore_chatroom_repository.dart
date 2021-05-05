@@ -3,25 +3,38 @@ import 'package:firestore_repository/src/entities/chatroom_entity.dart';
 import 'package:firestore_repository/src/models/chatroom.dart';
 
 class FirestoreChatroomRepository {
-  final CollectionReference chatroomCollection =
-      FirebaseFirestore.instance.collection('messages');
+  final CollectionReference userCollection =
+      FirebaseFirestore.instance.collection('user');
 
-  Future<void> addChatroom(Chatroom chatroom) {
-    return chatroomCollection.add(chatroom.toEntity().toDocument());
+  Future<void> addChatroom(Chatroom chatroom, String authId) {
+    return userCollection
+        .doc(authId)
+        .collection('chatrooms')
+        .add(chatroom.toEntity().toDocument());
   }
 
-  Future<void> deleteChatroom(Chatroom chatroom) {
-    return chatroomCollection.doc(chatroom.name).delete();
+  Future<void> deleteChatroom(Chatroom chatroom, String authId) {
+    return userCollection
+        .doc(authId)
+        .collection('chatrooms')
+        .doc(chatroom.id)
+        .delete();
   }
 
-  Future<void> updateChatroom(Chatroom chatroom) {
-    return chatroomCollection
-        .doc(chatroom.name)
+  Future<void> updateChatroom(Chatroom chatroom, String authId) {
+    return userCollection
+        .doc(authId)
+        .collection('chatrooms')
+        .doc(chatroom.id)
         .update(chatroom.toEntity().toJson());
   }
 
-  Stream<List<Chatroom>> chatrooms() {
-    return chatroomCollection.snapshots().map((QuerySnapshot snapshot) {
+  Stream<List<Chatroom>> chatrooms(String authId) {
+    return userCollection
+        .doc(authId)
+        .collection('chatrooms')
+        .snapshots()
+        .map((QuerySnapshot snapshot) {
       return snapshot.docs
           .map((doc) => Chatroom.fromEntity(ChatroomEntity.fromSnapshot(doc)))
           .toList();

@@ -1,4 +1,3 @@
-import 'package:firestore_repository/firestore_repository.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -9,32 +8,28 @@ import 'package:void_chat_beta/presentation/screens/messages_screen/widgets/chat
 class MessagesView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider(
-          create: (context) => ChatroomBloc(
-            firestoreChatroomRepository:
-                RepositoryProvider.of<FirestoreChatroomRepository?>(context),
-          )..add(LoadChatrooms()),
-        ),
-      ],
-      child: Scaffold(
-        resizeToAvoidBottomInset: false,
-        body: UI(
-          body: MessagesContent(),
-        ),
+    return Scaffold(
+      resizeToAvoidBottomInset: false,
+      body: UI(
+        body: MessagesContent(),
       ),
     );
   }
 }
 
-class MessagesContent extends StatelessWidget {
+class MessagesContent extends StatefulWidget {
   const MessagesContent({
     Key? key,
   }) : super(key: key);
 
   @override
+  _MessagesContentState createState() => _MessagesContentState();
+}
+
+class _MessagesContentState extends State<MessagesContent> {
+  @override
   Widget build(BuildContext context) {
+    print(ModalRoute.of(context)?.settings.name);
     return BlocBuilder<ChatroomBloc, ChatroomState>(
       builder: (context, state) {
         if (state is ChatroomLoaded) {

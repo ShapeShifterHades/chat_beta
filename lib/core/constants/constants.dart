@@ -1,3 +1,5 @@
+import 'package:firestore_repository/firestore_repository.dart';
+
 /// Next defined all routing constants used within the app
 
 const String initialRoute = '/';
@@ -18,8 +20,14 @@ String generateChatroomFireStoreName(String id1, String id2) {
   return result;
 }
 
-String getChatroomId(String chatname, String authId) {
-  var result = chatname.replaceAll(authId, '').replaceAll('@', '');
+String? getInterlocutorIdFromChatname(String? chatname, String authId) {
+  var result = chatname!.replaceAll(authId, '').replaceAll('@', '');
 
   return result;
+}
+
+String? getInterlocutorUsernameFromChat(Chatroom chatroom, String authId) {
+  return chatroom.name!.startsWith(authId)
+      ? chatroom.username2
+      : chatroom.username1;
 }

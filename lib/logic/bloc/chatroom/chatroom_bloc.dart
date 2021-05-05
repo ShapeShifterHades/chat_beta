@@ -4,16 +4,20 @@ import 'dart:core';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:firestore_repository/firestore_repository.dart';
+import 'package:void_chat_beta/logic/bloc/authentication/authentication_bloc.dart';
 
 part 'chatroom_event.dart';
 part 'chatroom_state.dart';
 
 class ChatroomBloc extends Bloc<ChatroomEvent, ChatroomState> {
   final FirestoreChatroomRepository? _firestoreChatroomRepository;
+  final String authId;
   StreamSubscription? _chatroomSubscription;
   ChatroomBloc(
-      {required FirestoreChatroomRepository? firestoreChatroomRepository})
+      {required FirestoreChatroomRepository? firestoreChatroomRepository,
+      required AuthenticationBloc? authenticationBloc})
       : _firestoreChatroomRepository = firestoreChatroomRepository,
+        authId = authenticationBloc!.state.user.id,
         super(ChatroomLoading());
 
   @override
@@ -36,20 +40,20 @@ class ChatroomBloc extends Bloc<ChatroomEvent, ChatroomState> {
   Stream<ChatroomState> _mapLoadChatroomsToState() async* {
     _chatroomSubscription?.cancel();
     _chatroomSubscription = _firestoreChatroomRepository
-        ?.chatrooms()
+        ?.chatrooms(authId)
         .listen((chatrooms) => add(ChatroomsUpdated(chatrooms)));
   }
 
   Stream<ChatroomState> _mapAddChatroomToState(AddChatroom event) async* {
-    _firestoreChatroomRepository?.addChatroom(event.chatroom);
+    _firestoreChatroomRepository?.addChatroom(event.chatroom, authId);
   }
 
   Stream<ChatroomState> _mapUpdateChatroomToState(UpdateChatroom event) async* {
-    _firestoreChatroomRepository?.updateChatroom(event.updatedChatroom);
+    _firestoreChatroomRepository?.updateChatroom(event.updatedChatroom, authId);
   }
 
   Stream<ChatroomState> _mapDeleteChatroomToState(DeleteChatroom event) async* {
-    _firestoreChatroomRepository?.deleteChatroom(event.chatroom);
+    _firestoreChatroomRepository?.deleteChatroom(event.chatroom, authId);
   }
 
   Stream<ChatroomState> _mapChatroomsUpdatedToState(

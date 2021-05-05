@@ -26,30 +26,39 @@ class MiniMenu extends StatelessWidget {
               key: Key('messages_minimenu_buton'),
               func: () => Navigator.of(context).pushNamed(homeRoute),
               icon: Icons.message,
+              isCurrentPage:
+                  ModalRoute.of(context)?.settings.name == '/messages',
             ),
             const SizedBox(height: 15),
             MiniMenuTile(
               key: Key('contacts_minimenu_buton'),
               func: () => Navigator.of(context).pushNamed(contactsRoute),
               icon: Icons.contacts,
+              isCurrentPage:
+                  ModalRoute.of(context)?.settings.name == '/contacts',
             ),
             const SizedBox(height: 15),
             MiniMenuTile(
               key: Key('settings_minimenu_buton'),
               func: () => Navigator.of(context).pushNamed(settingsRoute),
               icon: Icons.settings,
+              isCurrentPage:
+                  ModalRoute.of(context)?.settings.name == '/settings',
             ),
             const SizedBox(height: 15),
             MiniMenuTile(
               key: Key('security_minimenu_buton'),
               func: () => Navigator.of(context).pushNamed(securityRoute),
               icon: Icons.lock,
+              isCurrentPage:
+                  ModalRoute.of(context)?.settings.name == '/security',
             ),
             const SizedBox(height: 15),
             MiniMenuTile(
               key: Key('faq_minimenu_buton'),
               func: () => Navigator.of(context).pushNamed(faqRoute),
               icon: Icons.help,
+              isCurrentPage: ModalRoute.of(context)?.settings.name == '/faq',
             ),
             const SizedBox(height: 45),
             MiniMenuTile(
