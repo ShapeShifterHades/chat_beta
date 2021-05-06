@@ -24,10 +24,7 @@ class AppContent extends StatelessWidget {
             painter: AppContentBorder(
               context: context,
             ),
-            child: Padding(
-              padding: const EdgeInsets.only(left: 20),
-              child: child,
-            )),
+            child: child),
       ),
     );
   }

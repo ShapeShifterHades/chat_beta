@@ -44,7 +44,7 @@ class _MessagesContentState extends State<MessagesContent> {
 
           if (chats.length > 0) {
             return Padding(
-              padding: const EdgeInsets.only(top: 20, left: 5),
+              padding: const EdgeInsets.only(top: 50, left: 25),
               child: RefreshIndicator(
                 key: refreshKey,
                 onRefresh: () => _reloadChatrooms(),

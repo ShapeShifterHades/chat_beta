@@ -30,7 +30,7 @@ class UIState extends State<UI> with SingleTickerProviderStateMixin {
   // Length of the drawer slide
   static const double maxSlide = 170;
   // Minimum edge where slider starts animating
-  static const double minDragStartEdge = 100;
+  static const double minDragStartEdge = 170;
   // On what distance it needs to be dragged
   static double maxDragStartEdge = maxSlide - 16;
   AnimationController? _animationController;
