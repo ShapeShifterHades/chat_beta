@@ -15,6 +15,7 @@ import 'package:void_chat_beta/logic/bloc/find_user/finduser_bloc.dart';
 import 'package:void_chat_beta/logic/bloc/search_button/search_button_bloc.dart';
 import 'package:void_chat_beta/logic/cubit/brightness/brightness.dart';
 import 'package:void_chat_beta/logic/cubit/locale/locale.dart';
+import 'package:void_chat_beta/presentation/screens/chat_screen/view/chat_view.dart';
 import 'package:void_chat_beta/presentation/screens/contacts_screen/view/contacts_view.dart';
 import 'package:void_chat_beta/presentation/screens/faq_screen/view/faq_view.dart';
 import 'package:void_chat_beta/presentation/screens/login_screen/view/login_view.dart';
@@ -31,6 +32,8 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(
+        SystemUiOverlayStyle(statusBarColor: Colors.transparent));
     return MultiRepositoryProvider(
         providers: [
           RepositoryProvider<AuthenticationRepository?>(
@@ -127,15 +130,12 @@ class AppView extends StatelessWidget {
                             return LoginView();
                           if (state.status ==
                               AuthenticationStatus.authenticated) {
-                            print('Starting loading blocs');
                             // Instantiating Blocs
                             BlocProvider.of<ContactBloc>(context);
                             BlocProvider.of<ContactTabsBloc>(context);
                             BlocProvider.of<ChatroomBloc>(context);
                             BlocProvider.of<FinduserBloc>(context);
                             BlocProvider.of<SearchButtonBloc>(context);
-                            print('Ending loading blocs');
-
                             return MessagesView();
                           }
 
@@ -160,6 +160,12 @@ class AppView extends StatelessWidget {
                   page = FaqView();
                 } else if (settings.name == splashRoute) {
                   page = SplashView();
+                } else if (settings.name == chatRoute) {
+                  Chatroom args = settings.arguments as Chatroom;
+
+                  page = ChatView(
+                    chat: args,
+                  );
                 }
 
                 return MaterialPageRoute<dynamic>(

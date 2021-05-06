@@ -4,7 +4,7 @@ import 'package:firestore_repository/src/models/chatroom.dart';
 
 class FirestoreChatroomRepository {
   final CollectionReference userCollection =
-      FirebaseFirestore.instance.collection('user');
+      FirebaseFirestore.instance.collection('users');
 
   Future<void> addChatroom(Chatroom chatroom, String authId) {
     return userCollection

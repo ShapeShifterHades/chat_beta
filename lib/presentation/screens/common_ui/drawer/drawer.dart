@@ -8,26 +8,24 @@ import 'package:void_chat_beta/logic/bloc/authentication/authentication_bloc.dar
 import 'package:void_chat_beta/presentation/screens/common_ui/drawer/widgets/drawer_menu_button.dart';
 import 'package:void_chat_beta/presentation/screens/common_ui/drawer/widgets/arctext.dart';
 
-class DrawerPM extends StatelessWidget {
-  DrawerPM({
+class DrawerBack extends StatelessWidget {
+  DrawerBack({
     Key? key,
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
     double _width = MediaQuery.of(context).size.width;
-    return SafeArea(
-      child: Row(
-        children: [
-          SizedBox(width: _width * 0.04),
-          Column(
-            children: [
-              const SizedBox(height: 32),
-              const _ProfileAvatarBlock(),
-              const _MenuButtonsBlock()
-            ],
-          ),
-        ],
-      ),
+    return Row(
+      children: [
+        SizedBox(width: _width * 0.04),
+        Column(
+          children: [
+            const SizedBox(height: 32),
+            const _ProfileAvatarBlock(),
+            const _MenuButtonsBlock()
+          ],
+        ),
+      ],
     );
   }
 }
@@ -39,60 +37,58 @@ class _MenuButtonsBlock extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: SingleChildScrollView(
-        child: Column(
-          mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            DrawerMenuButton(
-              label: S.of(context).drawer_messages,
-              func: () {
-                Navigator.of(context).pushNamed(homeRoute);
-              },
+    return SingleChildScrollView(
+      child: Column(
+        mainAxisSize: MainAxisSize.max,
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          DrawerMenuButton(
+            label: S.of(context).drawer_messages,
+            func: () {
+              Navigator.of(context).pushNamed(homeRoute);
+            },
+          ),
+          const SizedBox(height: 15),
+          DrawerMenuButton(
+            label: S.of(context).drawer_contacts,
+            func: () => Navigator.of(context).pushNamed(contactsRoute),
+          ),
+          const SizedBox(height: 15),
+          DrawerMenuButton(
+            label: S.of(context).drawer_settings,
+            func: () {
+              Navigator.of(context).pushNamed(settingsRoute);
+            },
+          ),
+          const SizedBox(height: 15),
+          DrawerMenuButton(
+            label: S.of(context).drawer_security,
+            func: () => Navigator.of(context).pushNamed(securityRoute),
+          ),
+          const SizedBox(height: 15),
+          DrawerMenuButton(
+            label: S.of(context).drawer_faq,
+            func: () => Navigator.of(context).pushNamed(faqRoute),
+          ),
+          const SizedBox(height: 45),
+          DrawerMenuButton(
+            label: S.of(context).drawer_logout,
+            func: () async {
+              await FirebaseAuth.instance.signOut();
+            },
+          ),
+          const SizedBox(height: 55),
+          Container(
+            padding: EdgeInsets.only(left: 15),
+            height: 40,
+            width: 170,
+            child: Text(
+              S.of(context).drawer_slogan,
+              style: TextStyles.body2,
             ),
-            const SizedBox(height: 15),
-            DrawerMenuButton(
-              label: S.of(context).drawer_contacts,
-              func: () => Navigator.of(context).pushNamed(contactsRoute),
-            ),
-            const SizedBox(height: 15),
-            DrawerMenuButton(
-              label: S.of(context).drawer_settings,
-              func: () {
-                Navigator.of(context).pushNamed(settingsRoute);
-              },
-            ),
-            const SizedBox(height: 15),
-            DrawerMenuButton(
-              label: S.of(context).drawer_security,
-              func: () => Navigator.of(context).pushNamed(securityRoute),
-            ),
-            const SizedBox(height: 15),
-            DrawerMenuButton(
-              label: S.of(context).drawer_faq,
-              func: () => Navigator.of(context).pushNamed(faqRoute),
-            ),
-            const SizedBox(height: 45),
-            DrawerMenuButton(
-              label: S.of(context).drawer_logout,
-              func: () async {
-                await FirebaseAuth.instance.signOut();
-              },
-            ),
-            const SizedBox(height: 55),
-            Container(
-              padding: EdgeInsets.only(left: 15),
-              height: 40,
-              width: 170,
-              child: Text(
-                S.of(context).drawer_slogan,
-                style: TextStyles.body2,
-              ),
-            ),
-            const SizedBox(height: 30),
-          ],
-        ),
+          ),
+          const SizedBox(height: 30),
+        ],
       ),
     );
   }

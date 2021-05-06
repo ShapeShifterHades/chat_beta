@@ -6,15 +6,14 @@ import 'mini_menu_tile.dart';
 class MiniMenu extends StatelessWidget {
   const MiniMenu({
     Key? key,
-    required this.size,
   }) : super(key: key);
-
-  final Size size;
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
+
     return Positioned(
-      left: 0,
+      left: -3,
       bottom: 40 - size.width * 0.01,
       child: Container(
         width: 50,
@@ -22,12 +21,42 @@ class MiniMenu extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
-            MiniMenuTile(
-              key: Key('messages_minimenu_buton'),
-              func: () => Navigator.of(context).pushNamed(homeRoute),
-              icon: Icons.message,
-              isCurrentPage:
-                  ModalRoute.of(context)?.settings.name == '/messages',
+            Stack(
+              alignment: Alignment.center,
+              children: [
+                MiniMenuTile(
+                  key: Key('messages_minimenu_buton'),
+                  func: () => Navigator.of(context).pushNamed(homeRoute),
+                  icon: Icons.message,
+                  isCurrentPage:
+                      ModalRoute.of(context)?.settings.name == '/messages',
+                ),
+                if (ModalRoute.of(context)?.settings.name == chatRoute)
+                  // TODO: make animated translation and rotation on init
+                  Transform(
+                      // rotationY(3.14159)..translate(2)
+                      transform: Matrix4(
+                        1,
+                        0,
+                        0,
+                        0,
+                        0,
+                        1,
+                        0,
+                        0,
+                        0,
+                        0,
+                        1,
+                        0,
+                        24,
+                        7,
+                        0,
+                        1,
+                      )..rotateY(3.14159),
+                      child: Icon(Icons.message,
+                          color: Theme.of(context).primaryColor, size: 18)),
+                // Container(color: Colors.red, width: 20, height: 20),
+              ],
             ),
             const SizedBox(height: 15),
             MiniMenuTile(

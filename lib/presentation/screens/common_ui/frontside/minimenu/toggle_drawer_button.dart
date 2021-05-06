@@ -11,29 +11,33 @@ class ToggleDrawerButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Theme.of(context).scaffoldBackgroundColor,
-      child: CustomPaint(
-        painter: MenuButtonPainter(context),
-        child: GestureDetector(
-          onTap: () {
-            animationController!.isCompleted
-                ? animationController!.reverse()
-                : animationController!.forward();
-          },
-          child: Container(
-            color: Colors.transparent,
-            width: 40,
-            height: 40,
-            padding: EdgeInsets.all(4.5),
+    return Positioned(
+      left: 8,
+      // top: MediaQuery.of(context).size.width * 0.05 + 30,
+      child: Container(
+        color: Theme.of(context).scaffoldBackgroundColor,
+        child: CustomPaint(
+          painter: MenuButtonPainter(context),
+          child: GestureDetector(
+            onTap: () {
+              animationController!.isCompleted
+                  ? animationController!.reverse()
+                  : animationController!.forward();
+            },
             child: Container(
-              margin: EdgeInsets.all(5.5),
-              child: AnimatedIcon(
-                icon: AnimatedIcons.menu_close,
-                progress: animationController!,
-                semanticLabel: 'Show menu',
-                size: 20,
-                color: Theme.of(context).primaryColor,
+              color: Colors.transparent,
+              width: 40,
+              height: 40,
+              padding: EdgeInsets.all(4.5),
+              child: Container(
+                margin: EdgeInsets.all(5.5),
+                child: AnimatedIcon(
+                  icon: AnimatedIcons.menu_close,
+                  progress: animationController!,
+                  semanticLabel: 'Show menu',
+                  size: 21,
+                  color: Theme.of(context).primaryColor,
+                ),
               ),
             ),
           ),

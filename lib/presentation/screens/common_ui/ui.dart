@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:void_chat_beta/presentation/screens/common_ui/frontside/minimenu/toggle_drawer_button.dart';
 
 import 'drawer/drawer.dart';
+import 'package:void_chat_beta/core/constants/styles.dart';
 
-import './frontside/status_bar/status_bar.dart';
-import 'frontside/frame/animated_frame/ui_frame_animated.dart';
+import 'frontside/app_content.dart';
 import 'frontside/minimenu/mini_menu.dart';
 
 /// [UI] class combines drawer and slidable content side of UI after user is logged in
@@ -26,9 +27,7 @@ class UI extends StatefulWidget {
 }
 
 class UIState extends State<UI> with SingleTickerProviderStateMixin {
-  // Duraton of drawer slide
-  static const Duration toggleDuration = Duration(milliseconds: 400);
-  // Length of the drawer
+  // Length of the drawer slide
   static const double maxSlide = 170;
   // Minimum edge where slider starts animating
   static const double minDragStartEdge = 100;
@@ -42,7 +41,7 @@ class UIState extends State<UI> with SingleTickerProviderStateMixin {
     super.initState();
     _animationController = AnimationController(
       vsync: this,
-      duration: UIState.toggleDuration,
+      duration: Times.medium,
     );
   }
 
@@ -54,79 +53,46 @@ class UIState extends State<UI> with SingleTickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
-    return WillPopScope(
-      onWillPop: () async {
-        if (_animationController!.isCompleted) {
-          close();
-          return false;
-        }
-        return true;
-      },
-      child: GestureDetector(
-        onHorizontalDragStart: _onDragStart,
-        onHorizontalDragUpdate: _onDragUpdate,
-        onHorizontalDragEnd: _onDragEnd,
+    return SafeArea(
+      child: WillPopScope(
+        onWillPop: () async {
+          if (_animationController!.isCompleted) {
+            close();
+            return false;
+          }
+          return true;
+        },
         child: AnimatedBuilder(
           animation: _animationController!,
-          // Here starts frontside of drawer-content system, margin defines its base shape
-          child: Stack(
-            // overflow: Overflow.clip,
-            children: [
-              _FrontFrameBackground(size: size),
-              Positioned(
-                // This is where main page content's scaffold size is defined
-                top: size.width * 0.05 + 25,
-                left: size.width * 0.05 + 25,
-                right: 0,
-                bottom: 0,
-                child: GestureDetector(
-                    // This Gestures closes [DrawerPM] when it is opened
-                    onTap: _animationController!.isCompleted ? close : null,
-                    onHorizontalDragStart: _onDragStart,
-                    onHorizontalDragUpdate: _onDragUpdate,
-                    onHorizontalDragEnd: _onDragEnd,
-                    // Here is the content of the pages
-                    child: widget.body),
-              ),
-              // MiniMenu
-              MiniMenu(size: size),
-            ],
-          ),
           builder: (context, child) {
-            double animValue = _animationController!.value;
-            final slideAmount = maxSlide * animValue;
+            final slideAmount = maxSlide * _animationController!.value;
             // This stack defines relations between drawer side and content side
             return Stack(
               children: <Widget>[
-                DrawerPM(),
+                DrawerBack(),
                 Transform(
                   transform: Matrix4.identity()..translate(slideAmount),
                   alignment: Alignment.centerLeft,
-                  child: Stack(
-                    children: [
-                      child!,
-                      Positioned(
-                        left: size.width * 0.05,
-                        top: size.width * 0.05 + 30,
-                        child: GestureDetector(
-                          // This Gestures closes [DrawerPM] when it is opened
-                          onTap:
-                              _animationController!.isCompleted ? close : null,
-                          onHorizontalDragStart: _onDragStart,
-                          onHorizontalDragUpdate: _onDragUpdate,
-                          onHorizontalDragEnd: _onDragEnd,
-                          child: widget.statusBar ??
-                              StatusBar(
-                                  animationController: _animationController),
-                        ),
-                      ),
-                    ],
-                  ),
+                  child: child!,
                 ),
               ],
             );
           },
+          child: Stack(
+            children: [
+              Positioned.fill(
+                child: GestureDetector(
+                  onTap: _animationController!.isCompleted ? close : null,
+                  onHorizontalDragStart: _onDragStart,
+                  onHorizontalDragUpdate: _onDragUpdate,
+                  onHorizontalDragEnd: _onDragEnd,
+                  child: AppContent(child: widget.body),
+                ),
+              ),
+              MiniMenu(),
+              ToggleDrawerButton(animationController: _animationController),
+            ],
+          ),
         ),
       ),
     );
@@ -176,30 +142,5 @@ class UIState extends State<UI> with SingleTickerProviderStateMixin {
     } else {
       open();
     }
-  }
-}
-
-class _FrontFrameBackground extends StatelessWidget {
-  const _FrontFrameBackground({
-    Key? key,
-    required this.size,
-  }) : super(key: key);
-
-  final Size size;
-
-  @override
-  Widget build(BuildContext context) {
-    return Positioned.fill(
-      child: Container(
-        color: Theme.of(context).backgroundColor,
-        margin: EdgeInsets.only(
-          left: size.width * 0.07,
-          top: size.width * 0.05 + 30,
-        ),
-
-        // Animated frame of main content part of UI
-        child: UiFullFrameAnimated(context: context, size: size),
-      ),
-    );
   }
 }

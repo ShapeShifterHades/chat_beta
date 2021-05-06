@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
 
-class UiPainter extends CustomPainter {
+class AppContentBorder extends CustomPainter {
   BuildContext? context;
+  // TODO: redraw this panter to have sigle path and clipper
 
-  UiPainter({
+  AppContentBorder({
     this.context,
   });
   @override
   void paint(Canvas canvas, Size size) {
     Path _bottomRightCornerPath = Path();
     Paint _bottomRightCorner = Paint()
-      ..color = Theme.of(context!).scaffoldBackgroundColor
+      // ..color = Theme.of(context!).scaffoldBackgroundColor
+      ..color = Colors.transparent
       ..style = PaintingStyle.fill;
 
     _bottomRightCornerPath.moveTo(size.width - 30, size.height);
