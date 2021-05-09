@@ -4,8 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:void_chat_beta/logic/cubit/login/login_cubit.dart';
 import 'package:void_chat_beta/presentation/screens/login_screen/widgets/main_frame/login_main_form_frame.dart';
-import 'package:void_chat_beta/presentation/screens/login_screen/widgets/switch_to_signup_button.dart';
 import 'package:void_chat_beta/presentation/screens/login_screen/widgets/svg_background.dart';
+import 'package:void_chat_beta/presentation/screens/login_screen/widgets/switch_to_signup_button.dart';
 
 class LoginView extends StatelessWidget {
   const LoginView({
