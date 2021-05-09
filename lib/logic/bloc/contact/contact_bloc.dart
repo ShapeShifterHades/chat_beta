@@ -51,7 +51,7 @@ class ContactBloc extends Bloc<ContactEvent, ContactsState> {
 
   Stream<ContactsState> _mapSendFriendshipRequestToState(
       SendFriendshipRequest event) async* {
-    await this._firestoreContactRepository?.sendRequest(
+    await _firestoreContactRepository?.sendRequest(
         contactId: event.contactId,
         uid: _authenticationBloc?.state.user.id,
         message: event.message);
@@ -59,33 +59,33 @@ class ContactBloc extends Bloc<ContactEvent, ContactsState> {
 
   Stream<ContactsState> _mapAcceptFriendshipRequestToState(
       AcceptFriendshipRequest event) async* {
-    await this._firestoreContactRepository?.acceptRequest(
-          contactId: event.contactId,
-          uid: _authenticationBloc?.state.user.id,
-        );
+    await _firestoreContactRepository?.acceptRequest(
+      contactId: event.contactId,
+      uid: _authenticationBloc?.state.user.id,
+    );
   }
 
   Stream<ContactsState> _mapRemoveContactRequestToState(
       RemoveContactRequest event) async* {
-    await this._firestoreContactRepository?.removeRequest(
-          contactId: event.contactId,
-          uid: _authenticationBloc?.state.user.id,
-        );
+    await _firestoreContactRepository?.removeRequest(
+      contactId: event.contactId,
+      uid: _authenticationBloc?.state.user.id,
+    );
   }
 
   Stream<ContactsState> _mapRemoveFromBlocklistToState(
       RemoveFromBlocklist event) async* {
-    await this._firestoreContactRepository?.removeFromBlocklist(
-          contactId: event.contactId,
-          uid: _authenticationBloc?.state.user.id,
-        );
+    await _firestoreContactRepository?.removeFromBlocklist(
+      contactId: event.contactId,
+      uid: _authenticationBloc?.state.user.id,
+    );
   }
 
   Stream<ContactsState> _mapAddToBlocklistToState(AddToBlocklist event) async* {
-    await this._firestoreContactRepository?.blockContact(
-          contactId: event.contactId,
-          uid: _authenticationBloc?.state.user.id,
-        );
+    await _firestoreContactRepository?.blockContact(
+      contactId: event.contactId,
+      uid: _authenticationBloc?.state.user.id,
+    );
   }
 
   /// Contactlist of a user has been updated

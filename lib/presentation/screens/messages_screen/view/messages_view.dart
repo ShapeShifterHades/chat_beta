@@ -10,7 +10,7 @@ import 'package:void_chat_beta/presentation/styled_widgets/loading_indicator.dar
 class MessagesView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return const Scaffold(
       resizeToAvoidBottomInset: false,
       body: UI(
         body: MessagesContent(),
@@ -29,7 +29,8 @@ class MessagesContent extends StatefulWidget {
 }
 
 class _MessagesContentState extends State<MessagesContent> {
-  var refreshKey = GlobalKey<RefreshIndicatorState>();
+  final GlobalKey<RefreshIndicatorState> refreshKey =
+      GlobalKey<RefreshIndicatorState>();
   Future<void> _reloadChatrooms() async {
     BlocProvider.of<ChatroomBloc>(context).add(LoadChatrooms());
     refreshKey.currentState?.show(atTop: false);
@@ -42,7 +43,7 @@ class _MessagesContentState extends State<MessagesContent> {
         if (state is ChatroomLoaded) {
           final chats = state.chatrooms;
 
-          if (chats.length > 0) {
+          if (chats.isNotEmpty) {
             return Padding(
               padding: const EdgeInsets.only(top: 50, left: 25),
               child: RefreshIndicator(
@@ -62,10 +63,12 @@ class _MessagesContentState extends State<MessagesContent> {
                 ),
               ),
             );
-          } else
-            return LoadingIndicator(text: 'You have no conversations yet...');
+          } else {
+            return const LoadingIndicator(
+                text: 'You have no conversations yet...');
+          }
         }
-        return LoadingIndicator();
+        return const LoadingIndicator();
       },
     );
   }

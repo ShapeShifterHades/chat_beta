@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class MainLoginFrameClipPath extends CustomClipper<Path> {
   @override
   Path getClip(Size size) {
-    Path path = Path();
+    final Path path = Path();
 
     path.moveTo(0, 30);
     path.lineTo(0, size.height);

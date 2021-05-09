@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:void_chat_beta/core/constants/styles.dart';
+import 'package:void_chat_beta/data/utils/safe_print.dart';
 import 'package:void_chat_beta/generated/l10n.dart';
 import 'package:void_chat_beta/logic/bloc/contact/contact_bloc.dart';
 
@@ -9,12 +10,12 @@ class OutcomingPendingRequestTile extends StatefulWidget {
   final String? id;
   final String? message;
   final String requestSentAt;
-  OutcomingPendingRequestTile({
+  const OutcomingPendingRequestTile({
     Key? key,
-    this.username: '',
-    this.id: '',
-    this.message: '',
-    this.requestSentAt: '',
+    this.username = '',
+    this.id = '',
+    this.message = '',
+    this.requestSentAt = '',
   }) : super(key: key);
 
   @override
@@ -30,7 +31,7 @@ class _OutcomingPendingRequestTileState
   void initState() {
     super.initState();
     _animationController = AnimationController(
-      duration: Duration(milliseconds: 500),
+      duration: const Duration(milliseconds: 500),
       vsync: this,
     );
   }
@@ -49,7 +50,7 @@ class _OutcomingPendingRequestTileState
         _animationController.forward().orCancel;
       }
     } catch (e) {
-      print(e);
+      safePrint('$e');
     }
   }
 
@@ -99,37 +100,37 @@ class StageredAnimation extends StatelessWidget {
   })  : totalHeight = Tween<double>(begin: 80, end: 160).animate(
           CurvedAnimation(
             parent: controller,
-            curve: Interval(0.0, 0.5, curve: Curves.easeIn),
+            curve: const Interval(0.0, 0.5, curve: Curves.easeIn),
           ),
         ),
         rseHeight = Tween<double>(begin: 0.0, end: 160.0).animate(
           CurvedAnimation(
             parent: controller,
-            curve: Interval(0.5, 1.0, curve: Curves.easeIn),
+            curve: const Interval(0.5, 1.0, curve: Curves.easeIn),
           ),
         ),
         rssHeight = Tween<double>(begin: 80, end: 0).animate(
           CurvedAnimation(
             parent: controller,
-            curve: Interval(0.0, 0.5, curve: Curves.easeIn),
+            curve: const Interval(0.0, 0.5, curve: Curves.easeIn),
           ),
         ),
         imageOpacity = Tween<double>(begin: 0.0, end: 1.0).animate(
           CurvedAnimation(
             parent: controller,
-            curve: Interval(0.8, 1, curve: Curves.easeIn),
+            curve: const Interval(0.8, 1, curve: Curves.easeIn),
           ),
         ),
         imageHeight = Tween<double>(begin: 0.0, end: 40.0).animate(
           CurvedAnimation(
             parent: controller,
-            curve: Interval(0.0, 0.5, curve: Curves.easeIn),
+            curve: const Interval(0.0, 0.5, curve: Curves.easeIn),
           ),
         ),
         buttonsHeight = Tween<double>(begin: 39.5, end: 39.5).animate(
           CurvedAnimation(
             parent: controller,
-            curve: Interval(0.8, 0.8, curve: Curves.easeIn),
+            curve: const Interval(0.8, 0.8, curve: Curves.easeIn),
           ),
         ),
         super(key: key);
@@ -163,17 +164,17 @@ class StageredAnimation extends StatelessWidget {
                   alignment: Alignment.center,
                   height: buttonsHeight.value,
                   width: double.infinity,
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).primaryColor.withOpacity(0.5),
+                    borderRadius: const BorderRadius.only(
+                      topLeft: Radius.circular(10),
+                    ),
+                  ),
                   child: IconButton(
+                    onPressed: () {},
                     icon: Icon(
                       Icons.add,
                       color: Theme.of(context).backgroundColor.withOpacity(0.2),
-                    ),
-                    onPressed: () {},
-                  ),
-                  decoration: BoxDecoration(
-                    color: Theme.of(context).primaryColor.withOpacity(0.5),
-                    borderRadius: BorderRadius.only(
-                      topLeft: const Radius.circular(10),
                     ),
                   ),
                 ),
@@ -197,8 +198,8 @@ class StageredAnimation extends StatelessWidget {
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
                     color: Theme.of(context).primaryColor.withOpacity(0.5),
-                    borderRadius: BorderRadius.only(
-                      bottomLeft: const Radius.circular(10),
+                    borderRadius: const BorderRadius.only(
+                      bottomLeft: Radius.circular(10),
                     ),
                   ),
                   // height: 30,
@@ -249,10 +250,10 @@ class RightSideExpanded extends StatelessWidget {
   const RightSideExpanded({
     Key? key,
     required this.rseHeight,
-    this.username: '',
-    this.id: '',
-    this.message: '',
-    this.requestSentAt: '',
+    this.username = '',
+    this.id = '',
+    this.message = '',
+    this.requestSentAt = '',
   }) : super(key: key);
 
   final Animation<double> rseHeight;
@@ -262,14 +263,13 @@ class RightSideExpanded extends StatelessWidget {
     return Stack(
       children: [
         Container(
-          margin: const EdgeInsets.only(left: 0),
           height: rseHeight.value,
           decoration: BoxDecoration(
             color: Theme.of(context).primaryColor.withOpacity(0.5),
-            borderRadius: BorderRadius.only(
-              topRight: const Radius.circular(10),
-              bottomRight: const Radius.circular(10),
-              bottomLeft: const Radius.circular(10),
+            borderRadius: const BorderRadius.only(
+              topRight: Radius.circular(10),
+              bottomRight: Radius.circular(10),
+              bottomLeft: Radius.circular(10),
             ),
           ),
           width: double.infinity,
@@ -279,7 +279,6 @@ class RightSideExpanded extends StatelessWidget {
               children: [
                 const SizedBox(height: 5),
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     const SizedBox(width: 7),
                     Text(
@@ -294,7 +293,6 @@ class RightSideExpanded extends StatelessWidget {
                   ],
                 ),
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     const SizedBox(width: 7),
                     Text(
@@ -309,7 +307,6 @@ class RightSideExpanded extends StatelessWidget {
                   ],
                 ),
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     const SizedBox(width: 7),
                     Text(
@@ -357,8 +354,7 @@ class RightSideExpanded extends StatelessWidget {
             height: 25,
             decoration: BoxDecoration(
               color: Theme.of(context).backgroundColor.withOpacity(0.5),
-              border:
-                  Border.all(width: 1, color: Theme.of(context).primaryColor),
+              border: Border.all(color: Theme.of(context).primaryColor),
               borderRadius: BorderRadius.circular(6),
             ),
             child: Transform.translate(
@@ -379,7 +375,7 @@ class RightSideShort extends StatelessWidget {
   const RightSideShort({
     Key? key,
     required this.rssHeight,
-    this.username: '',
+    this.username = '',
     this.id,
   }) : super(key: key);
 
@@ -388,7 +384,6 @@ class RightSideShort extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.only(left: 0),
       width: double.infinity,
       height: rssHeight.value,
       decoration: BoxDecoration(
@@ -401,7 +396,7 @@ class RightSideShort extends StatelessWidget {
       child: SingleChildScrollView(
         child: Row(
           children: [
-            Container(
+            SizedBox(
               width: 55,
               height: 80,
               child: Column(
@@ -446,7 +441,7 @@ class RightSideShort extends StatelessWidget {
                     height: 80,
                     width: 80,
                     clipBehavior: Clip.hardEdge,
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                       shape: BoxShape.circle,
                       image: DecorationImage(
                         image:
@@ -466,10 +461,10 @@ class RightSideShort extends StatelessWidget {
                     ),
                   ),
                 ),
-                Positioned(
+                const Positioned(
                   bottom: 1,
                   left: 59,
-                  child: const OutcomingIndicator(),
+                  child: OutcomingIndicator(),
                 ),
               ],
             ),
@@ -520,11 +515,11 @@ class OutcomingIndicator extends StatelessWidget {
       height: 20,
       decoration: BoxDecoration(
         color: const Color(0xFFD5B00B),
-        border: Border.all(width: 1, color: Theme.of(context).primaryColor),
+        border: Border.all(color: Theme.of(context).primaryColor),
         borderRadius: BorderRadius.circular(6),
       ),
       child: Transform.translate(
-        offset: Offset(-2, -2),
+        offset: const Offset(-2, -2),
         child: Icon(
           Icons.keyboard_arrow_right_sharp,
           color: Theme.of(context).primaryColor,

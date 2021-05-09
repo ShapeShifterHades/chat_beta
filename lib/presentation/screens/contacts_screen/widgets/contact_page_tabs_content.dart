@@ -18,7 +18,7 @@ class ContactPageTabsContent extends StatelessWidget {
     return Expanded(
       child: SingleChildScrollView(
         child: Column(
-          children: [
+          children: const [
             UserSearch(),
             _UserList(),
           ],
@@ -39,12 +39,12 @@ class _UserList extends StatelessWidget {
         bloc: BlocProvider.of<ContactTabsBloc>(context),
         builder: (context, state) {
           if (state is FriendlistState) {
-            return FriendlistContent();
+            return const FriendlistContent();
           }
           if (state is PendinglistState) {
             return PendinglistContent();
           }
-          return _ContactsLoadingIndication();
+          return const _ContactsLoadingIndication();
         });
   }
 }

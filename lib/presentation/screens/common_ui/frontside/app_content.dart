@@ -33,9 +33,9 @@ class AppContent extends StatelessWidget {
 class ContentClipper extends CustomClipper<Path> {
   @override
   Path getClip(Size size) {
-    double sw = size.width;
-    double sh = size.height;
-    Path path = Path()
+    final double sw = size.width;
+    final double sh = size.height;
+    final Path path = Path()
       ..lineTo(0, sh)
       ..lineTo(sw - 30, sh)
       ..lineTo(sw, sh - 30)

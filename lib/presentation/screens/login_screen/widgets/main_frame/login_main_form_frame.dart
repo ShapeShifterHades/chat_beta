@@ -4,20 +4,20 @@ import 'package:simple_animations/simple_animations.dart';
 import 'package:supercharged/supercharged.dart';
 import 'package:void_chat_beta/core/constants/styles.dart';
 import 'package:void_chat_beta/generated/l10n.dart';
+import 'package:void_chat_beta/presentation/screens/login_screen/widgets/auth_custom_frame/custom_clip_path.dart';
+import 'package:void_chat_beta/presentation/screens/login_screen/widgets/form_header_signup.dart';
 import 'package:void_chat_beta/presentation/screens/login_screen/widgets/main_frame/OrDivider.dart';
 import 'package:void_chat_beta/presentation/screens/login_screen/widgets/main_frame/buttons_divider.dart';
 import 'package:void_chat_beta/presentation/screens/login_screen/widgets/main_frame/constants.dart';
 import 'package:void_chat_beta/presentation/screens/login_screen/widgets/main_frame/login_submit_button.dart';
 import 'package:void_chat_beta/presentation/screens/login_screen/widgets/main_frame/login_text_forms.dart';
 import 'package:void_chat_beta/presentation/screens/login_screen/widgets/main_frame/settings_box.dart';
-import 'package:void_chat_beta/presentation/screens/login_screen/widgets/auth_custom_frame/custom_clip_path.dart';
-import 'package:void_chat_beta/presentation/screens/login_screen/widgets/form_header_signup.dart';
 
 import 'button_model.dart';
 
 /// Widget that represents main part of the Signup View
 class LoginMainFormFrame extends StatefulWidget {
-  LoginMainFormFrame({
+  const LoginMainFormFrame({
     Key? key,
   }) : super(key: key);
 
@@ -64,37 +64,35 @@ class _LoginMainFormFrameState extends State<LoginMainFormFrame>
     final bool isKeyboardVisible =
         KeyboardVisibilityProvider.isKeyboardVisible(context);
     return Positioned.fill(
-      child: Container(
-        child: AnimatedAlign(
-          duration: Times.medium,
-          curve: Curves.easeIn,
-          alignment: isKeyboardVisible ? Alignment.topCenter : Alignment.center,
-          child: Container(
-            margin: buildMainFrameMargin(context),
-            width: MediaQuery.of(context).size.width * .8,
-            child: ClipPath(
-              clipper: MainLoginFrameClipPath(),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  if (!isKeyboardVisible)
-                    FormHeaderSignUp(
-                      color: Theme.of(context).primaryColor,
-                      title: S.of(context).loginpage_login_form,
-                      formController: _formController,
-                      settingsController: _settingsController,
-                    ),
-                  SettingsBox(settingsFrameHeight: settingsFrameHeight),
-                  LoginTextForms(formFrameHeight: formFrameHeight),
-                  LoginSubmitButton(),
-                  ButtonsDivider(orLineAlterHeight: orLineAlterHeight),
-                  OrDivider(orLineHeight: orLineHeight),
-                  ButtonModel(
-                    text: S.of(context).loginpage_login_with_google,
-                    onPressed: _formController!.value == 0.0 ? null : () {},
+      child: AnimatedAlign(
+        duration: Times.medium,
+        curve: Curves.easeIn,
+        alignment: isKeyboardVisible ? Alignment.topCenter : Alignment.center,
+        child: Container(
+          margin: buildMainFrameMargin(context),
+          width: MediaQuery.of(context).size.width * .8,
+          child: ClipPath(
+            clipper: MainLoginFrameClipPath(),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                if (!isKeyboardVisible)
+                  FormHeaderSignUp(
+                    color: Theme.of(context).primaryColor,
+                    title: S.of(context).loginpage_login_form,
+                    formController: _formController,
+                    settingsController: _settingsController,
                   ),
-                ],
-              ),
+                SettingsBox(settingsFrameHeight: settingsFrameHeight),
+                LoginTextForms(formFrameHeight: formFrameHeight),
+                const LoginSubmitButton(),
+                ButtonsDivider(orLineAlterHeight: orLineAlterHeight),
+                OrDivider(orLineHeight: orLineHeight),
+                ButtonModel(
+                  text: S.of(context).loginpage_login_with_google,
+                  onPressed: _formController!.value == 0.0 ? null : () {},
+                ),
+              ],
             ),
           ),
         ),

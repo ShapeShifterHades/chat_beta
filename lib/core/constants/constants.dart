@@ -13,13 +13,13 @@ const String faqRoute = '/faq';
 const String splashRoute = '/splash';
 const String chatRoute = '/chatroom';
 
-String generateChatroomFireStoreName(String id1, String id2) {
-  List _list = [id1, id2];
-  _list.sort((a, b) => a.compareTo(b));
-  var result = _list.join('@');
-  print(result);
-  return result;
-}
+// String generateChatroomFireStoreName(String id1, String id2) {
+//   final List _list = [id1, id2];
+//   _list.sort((a, b) => a.compareTo(b) ) ;
+//   final String result = _list.join('@');
+//   safePrint(result);
+//   return result;
+// }
 
 // String? getInterlocutorIdFromChatname(String? chatname, String authId) {
 //   var result = chatname!.replaceAll(authId, '').replaceAll('@', '');

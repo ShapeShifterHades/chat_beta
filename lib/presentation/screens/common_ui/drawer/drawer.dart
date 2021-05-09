@@ -1,28 +1,28 @@
-import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:void_chat_beta/core/constants/constants.dart';
 import 'package:void_chat_beta/core/constants/styles.dart';
 import 'package:void_chat_beta/generated/l10n.dart';
 import 'package:void_chat_beta/logic/bloc/authentication/authentication_bloc.dart';
-import 'package:void_chat_beta/presentation/screens/common_ui/drawer/widgets/drawer_menu_button.dart';
 import 'package:void_chat_beta/presentation/screens/common_ui/drawer/widgets/arctext.dart';
+import 'package:void_chat_beta/presentation/screens/common_ui/drawer/widgets/drawer_menu_button.dart';
 
 class DrawerBack extends StatelessWidget {
-  DrawerBack({
+  const DrawerBack({
     Key? key,
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    double _width = MediaQuery.of(context).size.width;
+    final double _width = MediaQuery.of(context).size.width;
     return Row(
       children: [
         SizedBox(width: _width * 0.04),
         Column(
-          children: [
-            const SizedBox(height: 32),
-            const _ProfileAvatarBlock(),
-            const _MenuButtonsBlock()
+          children: const [
+            SizedBox(height: 32),
+            _ProfileAvatarBlock(),
+            _MenuButtonsBlock()
           ],
         ),
       ],
@@ -39,7 +39,6 @@ class _MenuButtonsBlock extends StatelessWidget {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Column(
-        mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
           DrawerMenuButton(
@@ -79,7 +78,7 @@ class _MenuButtonsBlock extends StatelessWidget {
           ),
           const SizedBox(height: 55),
           Container(
-            padding: EdgeInsets.only(left: 15),
+            padding: const EdgeInsets.only(left: 15),
             height: 40,
             width: 170,
             child: Text(
@@ -120,16 +119,13 @@ class _ProfileAvatarBlock extends StatelessWidget {
                     )),
                 // child:,
               ),
-              Align(
-                alignment: Alignment.center,
-                child: ArcText(
-                  radius: 52,
-                  text:
-                      'Id:   ${context.watch<AuthenticationBloc>().state.user.id.toLowerCase()}',
-                  textStyle: TextStyles.body2
-                      .copyWith(color: Theme.of(context).primaryColor),
-                  startAngle: -2.16,
-                ),
+              ArcText(
+                radius: 52,
+                text:
+                    'Id:   ${context.watch<AuthenticationBloc>().state.user.id.toLowerCase()}',
+                textStyle: TextStyles.body2
+                    .copyWith(color: Theme.of(context).primaryColor),
+                startAngle: -2.16,
               ),
               Container(
                 width: 102,
@@ -164,7 +160,7 @@ class TestMenuTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(6),
+      padding: const EdgeInsets.all(6),
       decoration: BoxDecoration(
         border: Border.all(
           color: Theme.of(context).primaryColor,
@@ -176,14 +172,6 @@ class TestMenuTile extends StatelessWidget {
         width: 200,
         height: 40,
         alignment: Alignment.center,
-        child: Text(
-          text!,
-          style: TextStyle(
-            fontSize: 18,
-            fontWeight: FontWeight.normal,
-            color: Theme.of(context).backgroundColor,
-          ),
-        ),
         decoration: BoxDecoration(
           color: Theme.of(context).primaryColor,
           border: Border.all(
@@ -191,6 +179,14 @@ class TestMenuTile extends StatelessWidget {
             width: 6,
           ),
           borderRadius: BorderRadius.circular(30),
+        ),
+        child: Text(
+          text!,
+          style: TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.normal,
+            color: Theme.of(context).backgroundColor,
+          ),
         ),
       ),
     );

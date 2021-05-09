@@ -6,11 +6,9 @@ class SettingsView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: UI(
-        body: Container(
-          child: Text(
-            ModalRoute.of(context)!.settings.name ?? 'settings route',
-            style: TextStyle(color: Colors.white),
-          ),
+        body: Text(
+          ModalRoute.of(context)!.settings.name ?? 'settings route',
+          style: const TextStyle(color: Colors.white),
         ),
       ),
     );

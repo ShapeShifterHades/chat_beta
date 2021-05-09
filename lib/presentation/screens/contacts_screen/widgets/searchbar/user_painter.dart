@@ -8,25 +8,25 @@ class SearchUiPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    double sw = size.width;
-    double sh = size.height;
-    Paint innerFramePaint = Paint()
+    final double sw = size.width;
+    final double sh = size.height;
+    final Paint innerFramePaint = Paint()
       ..color = Theme.of(context).primaryColor.withOpacity(0.4)
       ..style = PaintingStyle.stroke
       ..strokeWidth = 0.5;
-    Path innerFramePath = Path()
+    final Path innerFramePath = Path()
       ..lineTo(sw, sh)
       ..moveTo(sw, 0)
       ..lineTo(0, sh);
 
     canvas.drawPath(innerFramePath, innerFramePaint);
 
-    Paint outerFramePaint = Paint()
+    final Paint outerFramePaint = Paint()
       ..color = Theme.of(context).primaryColor.withOpacity(0.4)
       ..style = PaintingStyle.stroke
       ..strokeWidth = 0.5;
 
-    Path outerFramePath = Path()
+    final Path outerFramePath = Path()
       ..lineTo(sw * 0.1, 0)
       ..moveTo(sw * 0.9, 0)
       ..lineTo(sw, 0)

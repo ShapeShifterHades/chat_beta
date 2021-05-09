@@ -12,6 +12,7 @@ import 'package:void_chat_beta/logic/bloc/chatroom/chatroom_bloc.dart';
 import 'package:void_chat_beta/logic/bloc/contact/contact_bloc.dart';
 import 'package:void_chat_beta/logic/bloc/contact_tabs/contact_tabs_bloc.dart';
 import 'package:void_chat_beta/logic/bloc/find_user/finduser_bloc.dart';
+import 'package:void_chat_beta/logic/bloc/message/message_bloc.dart';
 import 'package:void_chat_beta/logic/bloc/search_button/search_button_bloc.dart';
 import 'package:void_chat_beta/logic/cubit/brightness/brightness.dart';
 import 'package:void_chat_beta/logic/cubit/locale/locale.dart';
@@ -33,7 +34,7 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(
-        SystemUiOverlayStyle(statusBarColor: Colors.transparent));
+        const SystemUiOverlayStyle(statusBarColor: Colors.transparent));
     return MultiRepositoryProvider(
         providers: [
           RepositoryProvider<AuthenticationRepository?>(
@@ -44,6 +45,8 @@ class App extends StatelessWidget {
               create: (_) => FirestoreNewUserRepository()),
           RepositoryProvider<FirestoreChatroomRepository?>(
               create: (_) => FirestoreChatroomRepository()),
+          RepositoryProvider<FirestoreMessageRepository?>(
+              create: (_) => FirestoreMessageRepository()),
         ],
         child: Builder(builder: (context) {
           return MultiBlocProvider(providers: [
@@ -79,8 +82,17 @@ class App extends StatelessWidget {
                 firestoreChatroomRepository:
                     RepositoryProvider.of<FirestoreChatroomRepository?>(
                         context),
-                authenticationBloc: context.read<AuthenticationBloc>(),
+                authenticationBloc:
+                    BlocProvider.of<AuthenticationBloc>(context),
               )..add(LoadChatrooms()),
+            ),
+            BlocProvider<MessageBloc>(
+              create: (context) => MessageBloc(
+                firestoreMessageRepository:
+                    RepositoryProvider.of<FirestoreMessageRepository?>(context),
+                authenticationBloc:
+                    BlocProvider.of<AuthenticationBloc>(context),
+              ),
             ),
             BlocProvider<ContactTabsBloc>(
               create: (context) => ContactTabsBloc(
@@ -98,13 +110,13 @@ class App extends StatelessWidget {
                 BlocProvider.of<FinduserBloc>(context),
               ),
             ),
-          ], child: AppView());
+          ], child: const AppView());
         }));
   }
 }
 
 class AppView extends StatelessWidget {
-  AppView({Key? key}) : super(key: key);
+  const AppView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -112,8 +124,9 @@ class AppView extends StatelessWidget {
       builder: (context, brightness) {
         return BlocBuilder<LocaleCubit, String>(
           builder: (context, locale) {
-            var isDark = BlocProvider.of<BrightnessCubit>(context).state ==
-                Brightness.dark;
+            final bool isDark =
+                BlocProvider.of<BrightnessCubit>(context).state ==
+                    Brightness.dark;
             return MaterialApp(
               locale: Locale(context.read<LocaleCubit>().state),
               initialRoute: '/',
@@ -126,14 +139,16 @@ class AppView extends StatelessWidget {
                           AuthenticationState>(
                         builder: (context, state) {
                           if (state.status ==
-                              AuthenticationStatus.unauthenticated)
-                            return LoginView();
+                              AuthenticationStatus.unauthenticated) {
+                            return const LoginView();
+                          }
                           if (state.status ==
                               AuthenticationStatus.authenticated) {
                             // Instantiating Blocs
                             BlocProvider.of<ContactBloc>(context);
                             BlocProvider.of<ContactTabsBloc>(context);
                             BlocProvider.of<ChatroomBloc>(context);
+                            // BlocProvider.of<MessageBloc>(context);
                             BlocProvider.of<FinduserBloc>(context);
                             BlocProvider.of<SearchButtonBloc>(context);
                             return MessagesView();
@@ -147,11 +162,11 @@ class AppView extends StatelessWidget {
                 } else if (settings.name == homeRoute) {
                   page = MessagesView();
                 } else if (settings.name == loginRoute) {
-                  page = LoginView();
+                  page = const LoginView();
                 } else if (settings.name == signupRoute) {
-                  page = SignUpView();
+                  page = const SignUpView();
                 } else if (settings.name == contactsRoute) {
-                  page = ContactsView();
+                  page = const ContactsView();
                 } else if (settings.name == settingsRoute) {
                   page = SettingsView();
                 } else if (settings.name == securityRoute) {
@@ -161,7 +176,7 @@ class AppView extends StatelessWidget {
                 } else if (settings.name == splashRoute) {
                   page = SplashView();
                 } else if (settings.name == chatRoute) {
-                  Chatroom args = settings.arguments as Chatroom;
+                  final Chatroom? args = settings.arguments as Chatroom?;
 
                   page = ChatView(
                     chat: args,
@@ -175,7 +190,7 @@ class AppView extends StatelessWidget {
                   settings: settings,
                 );
               },
-              localizationsDelegates: [
+              localizationsDelegates: const [
                 S.delegate,
                 GlobalMaterialLocalizations.delegate,
                 GlobalWidgetsLocalizations.delegate,

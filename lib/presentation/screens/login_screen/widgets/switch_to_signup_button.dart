@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:void_chat_beta/core/constants/constants.dart';
 import 'package:void_chat_beta/core/constants/styles.dart';
+import 'package:void_chat_beta/data/utils/safe_print.dart';
 import 'package:void_chat_beta/generated/l10n.dart';
 
 class SwitchToSignUpButton extends StatelessWidget {
@@ -11,7 +12,7 @@ class SwitchToSignUpButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(Theme.of(context).primaryColor.toString());
+    safePrint(Theme.of(context).primaryColor.toString());
     return Positioned(
       bottom: 40,
       left: 0,
@@ -24,7 +25,6 @@ class SwitchToSignUpButton extends StatelessWidget {
           child: Shimmer.fromColors(
             baseColor: Theme.of(context).primaryColor.withOpacity(0.5),
             highlightColor: Theme.of(context).primaryColor,
-            loop: 0,
             period: Times.slower,
             child: Text(S.of(context).loginpage_switch_to_registration,
                 style: TextStyles.body1.copyWith(fontSize: 26)),

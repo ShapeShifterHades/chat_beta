@@ -20,7 +20,7 @@ class LoginView extends StatelessWidget {
         child: Scaffold(
           resizeToAvoidBottomInset: false,
           body: Stack(
-            children: [
+            children: const [
               SvgBackground(),
               LoginMainFormFrame(),
               SwitchToSignUpButton(),

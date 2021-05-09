@@ -1,10 +1,11 @@
 import 'package:authentication_repository/authentication_repository.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:formz/formz.dart';
 import 'package:void_chat_beta/data/models/email.dart';
 import 'package:void_chat_beta/data/models/password.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:void_chat_beta/data/utils/safe_print.dart';
 
 part 'login_state.dart';
 
@@ -34,9 +35,9 @@ class LoginCubit extends Cubit<LoginState> {
       emit(state.copyWith(status: FormzStatus.submissionSuccess));
       // ignore: nullable_type_in_catch_clause
     } on FirebaseAuthException catch (e) {
-      print('Failed with error code: ${e.message}');
+      safePrint('Failed with error code: ${e.message}');
 
-      print(e.code);
+      safePrint(e.code);
       emit(state.copyWith(status: FormzStatus.submissionFailure));
     }
   }
@@ -48,6 +49,7 @@ class LoginCubit extends Cubit<LoginState> {
       emit(state.copyWith(status: FormzStatus.submissionSuccess));
     } on Exception {
       emit(state.copyWith(status: FormzStatus.submissionFailure));
+      // ignore: avoid_catching_errors
     } on NoSuchMethodError {
       emit(state.copyWith(status: FormzStatus.pure));
     }

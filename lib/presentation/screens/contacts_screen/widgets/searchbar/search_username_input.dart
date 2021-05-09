@@ -15,7 +15,7 @@ class SearchUsernameInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextField(
-      onTap: myController!.value.text.length < 1
+      onTap: myController!.value.text.isEmpty
           ? () {
               BlocProvider.of<SearchButtonBloc>(context)
                   .add(SearchButtonResetEvent());

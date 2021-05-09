@@ -8,13 +8,14 @@ import 'package:flutter/material.dart';
 
 /// /// Used for all animations in the  app
 class Times {
-  static const Duration fastest = const Duration(milliseconds: 150);
-  static const fast = const Duration(milliseconds: 250);
-  static const medium = const Duration(milliseconds: 350);
-  static const slow = const Duration(milliseconds: 700);
-  static const slower = const Duration(milliseconds: 1000);
+  static const Duration fastest = Duration(milliseconds: 150);
+  static const fast = Duration(milliseconds: 250);
+  static const medium = Duration(milliseconds: 350);
+  static const slow = Duration(milliseconds: 700);
+  static const slower = Duration(milliseconds: 1000);
 }
 
+// ignore: avoid_classes_with_only_static_members
 class Insets {
   static double scale = 1;
   static double offsetScale = 1;
@@ -35,16 +36,16 @@ class IconSizes {
 
 class Corners {
   static const double sm = 3;
-  static const BorderRadius smBorder = const BorderRadius.all(smRadius);
-  static const Radius smRadius = const Radius.circular(sm);
+  static const BorderRadius smBorder = BorderRadius.all(smRadius);
+  static const Radius smRadius = Radius.circular(sm);
 
   static const double med = 5;
-  static const BorderRadius medBorder = const BorderRadius.all(medRadius);
-  static const Radius medRadius = const Radius.circular(med);
+  static const BorderRadius medBorder = BorderRadius.all(medRadius);
+  static const Radius medRadius = Radius.circular(med);
 
   static const double lg = 8;
-  static const BorderRadius lgBorder = const BorderRadius.all(lgRadius);
-  static const Radius lgRadius = const Radius.circular(lg);
+  static const BorderRadius lgBorder = BorderRadius.all(lgRadius);
+  static const Radius lgRadius = Radius.circular(lg);
 }
 
 class Strokes {
@@ -52,6 +53,7 @@ class Strokes {
   static const double thick = 4;
 }
 
+// ignore: avoid_classes_with_only_static_members
 /// Font Sizes
 /// You can use these directly if you need, but usually there should be a predefined style in TextStyles.
 class FontSizes {
@@ -72,12 +74,13 @@ class Fonts {
   static const String jura = "Jura";
 }
 
+// ignore: avoid_classes_with_only_static_members
 class TextStyles {
   /// Declare a base style for each Family
-  static const TextStyle iceland = const TextStyle(
+  static const TextStyle iceland = TextStyle(
       fontFamily: Fonts.iceland, fontWeight: FontWeight.w400, height: 1);
-  static const TextStyle jura = const TextStyle(
-      fontFamily: Fonts.jura, fontWeight: FontWeight.w400, height: 1);
+  static const TextStyle jura =
+      TextStyle(fontFamily: Fonts.jura, fontWeight: FontWeight.w400, height: 1);
 
   static TextStyle get h1 => iceland.copyWith(
       fontWeight: FontWeight.w600,

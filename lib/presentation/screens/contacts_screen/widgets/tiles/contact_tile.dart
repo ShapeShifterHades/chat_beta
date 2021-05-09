@@ -1,6 +1,6 @@
-import 'package:flutter/material.dart';
 import 'dart:ui' as ui;
 
+import 'package:flutter/material.dart';
 import 'package:void_chat_beta/core/constants/styles.dart';
 
 class ContactTile extends StatelessWidget {
@@ -37,7 +37,7 @@ class ContactTilePainter extends CustomPainter {
   ContactTilePainter({this.context, this.color, this.id});
   @override
   void paint(Canvas canvas, Size size) {
-    Path path1 = Path();
+    final Path path1 = Path();
 
     path1.moveTo(size.width, size.height - 16);
     path1.lineTo(size.height / 2 + 31, size.height - 16);
@@ -47,11 +47,11 @@ class ContactTilePainter extends CustomPainter {
     path1.lineTo(size.width, size.height - 8);
     path1.lineTo(size.width, size.height - 16);
 
-    Paint paint1 = Paint()
+    final Paint paint1 = Paint()
       ..style = PaintingStyle.fill
       ..strokeWidth = 0.5
       ..shader = ui.Gradient.linear(
-        Offset(0.0, 0.0),
+        const Offset(0.0, 0.0),
         Offset(size.width, size.height),
         [
           Theme.of(context!).primaryColor,
@@ -62,7 +62,7 @@ class ContactTilePainter extends CustomPainter {
 
     canvas.drawPath(path1, paint1);
 
-    Path path2 = Path();
+    final Path path2 = Path();
 
     path2.moveTo(size.height / 2, 0);
     path2.quadraticBezierTo(2.5, 2.5, 0, size.height / 2);
@@ -75,11 +75,11 @@ class ContactTilePainter extends CustomPainter {
     path2.lineTo(size.width - 8, 0);
     path2.lineTo(size.height / 2, 0);
 
-    Paint paint2 = Paint()
+    final Paint paint2 = Paint()
       ..style = PaintingStyle.stroke
       ..strokeWidth = 0.5
       ..shader = ui.Gradient.linear(
-        Offset(0.0, 0.0),
+        const Offset(0.0, 0.0),
         Offset(size.width, size.height),
         [
           Theme.of(context!).primaryColor,
@@ -120,7 +120,7 @@ class ContactTilePainter extends CustomPainter {
 class ContactTileClipper extends CustomClipper<Path> {
   @override
   Path getClip(Size size) {
-    Path path = Path();
+    final Path path = Path();
 
     path.moveTo(size.height / 2 - 6, 0);
     path.quadraticBezierTo(2.5, 2.5, 0, size.height / 2);

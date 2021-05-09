@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:void_chat_beta/data/utils/safe_print.dart';
 import 'package:void_chat_beta/logic/bloc/find_user/finduser_bloc.dart';
 import 'package:void_chat_beta/logic/bloc/search_button/search_button_bloc.dart';
 import 'package:void_chat_beta/presentation/screens/contacts_screen/widgets/searchbar/search_username_input.dart';
@@ -34,7 +35,7 @@ class _UserSearchState extends State<UserSearch> {
   }
 
   void _onFocusChange() {
-    print("Focus: " + _focusNode.hasFocus.toString());
+    safePrint("Focus: ${_focusNode.hasFocus}");
   }
 
   @override
@@ -56,7 +57,7 @@ class _UserSearchState extends State<UserSearch> {
                         ),
                       ),
                       Transform.translate(
-                        offset: Offset(0, -10),
+                        offset: const Offset(0, -10),
                         child: Container(
                             alignment: Alignment.centerRight,
                             width: 50,
@@ -66,31 +67,27 @@ class _UserSearchState extends State<UserSearch> {
                     ],
                   ),
                   if (state.isExpanded!)
-                    Container(
-                      child: BlocBuilder<FinduserBloc, FinduserState>(
-                        bloc: BlocProvider.of<FinduserBloc>(context),
-                        builder: (BuildContext context, FinduserState state) {
-                          if (state.isLoading!) {
-                            return Center(
-                              child: CircularProgressIndicator(),
-                            );
-                          }
-                          if (state.hasError!) {
-                            return Container(
-                              child: Text('Error'),
-                            );
-                          }
-                          if (state.contact == null) {
-                            return Text('User not found');
-                          }
-
-                          return FoundUserUi(
-                            result: state.contact,
-                            finduserController: finduserController,
-                            focusNode: _focusNode,
+                    BlocBuilder<FinduserBloc, FinduserState>(
+                      bloc: BlocProvider.of<FinduserBloc>(context),
+                      builder: (BuildContext context, FinduserState state) {
+                        if (state.isLoading!) {
+                          return const Center(
+                            child: CircularProgressIndicator(),
                           );
-                        },
-                      ),
+                        }
+                        if (state.hasError!) {
+                          return const Text('Error');
+                        }
+                        if (state.contact == null) {
+                          return const Text('User not found');
+                        }
+
+                        return FoundUserUi(
+                          result: state.contact,
+                          finduserController: finduserController,
+                          focusNode: _focusNode,
+                        );
+                      },
                     )
                 ],
               ),
@@ -111,9 +108,9 @@ class _UserSearchState extends State<UserSearch> {
         },
       );
     } else if (state.status == SearchButtonStatus.loading) {
-      return CircularProgressIndicator();
+      return const CircularProgressIndicator();
     } else if (state.status == SearchButtonStatus.hasError) {
-      return Text('An error occured');
+      return const Text('An error occured');
     }
 
     return IconButton(

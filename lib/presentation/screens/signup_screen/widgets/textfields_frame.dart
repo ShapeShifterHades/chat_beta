@@ -22,7 +22,7 @@ class TextfieldsFrame extends StatelessWidget {
         filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
         child: Container(
           height: formFrameHeight!.value,
-          padding: EdgeInsets.symmetric(horizontal: 5),
+          padding: const EdgeInsets.symmetric(horizontal: 5),
           decoration: BoxDecoration(
             color: Theme.of(context).backgroundColor.withOpacity(0.4),
             border: Border.symmetric(
@@ -32,7 +32,7 @@ class TextfieldsFrame extends StatelessWidget {
           ),
           child: SingleChildScrollView(
             child: Column(
-              children: [
+              children: const [
                 EmailInput(),
                 PasswordInput(),
                 ConfirmPasswordInput(),

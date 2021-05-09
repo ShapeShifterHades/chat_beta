@@ -20,7 +20,7 @@ class ButtonModel extends StatelessWidget {
         alignment: Alignment.center,
         width: double.infinity,
         height: 54,
-        padding: EdgeInsets.only(bottom: 10),
+        padding: const EdgeInsets.only(bottom: 10),
         color: Theme.of(context).primaryColor,
         child: Text(text,
             style: TextStyles.body1

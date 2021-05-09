@@ -9,9 +9,9 @@ abstract class ContactEvent extends Equatable {
 }
 
 class FindUsernameById extends ContactEvent {
-  final contactId;
+  final String contactId;
 
-  FindUsernameById(this.contactId);
+  const FindUsernameById(this.contactId);
 
   @override
   List<Object> get props => [contactId];
@@ -23,7 +23,7 @@ class FindUsernameById extends ContactEvent {
 class FindIdByUsername extends ContactEvent {
   final String username;
 
-  FindIdByUsername(this.username);
+  const FindIdByUsername(this.username);
 
   @override
   List<Object> get props => [username];
@@ -52,7 +52,7 @@ class SendFriendshipRequest extends ContactEvent {
   final String contactId;
   final String? uid;
   final String message;
-  SendFriendshipRequest({
+  const SendFriendshipRequest({
     required this.contactId,
     this.uid,
     this.message = '',
@@ -81,7 +81,7 @@ class SendFriendshipRequest extends ContactEvent {
 class AcceptFriendshipRequest extends ContactEvent {
   final String? contactId;
   final String? uid;
-  AcceptFriendshipRequest({
+  const AcceptFriendshipRequest({
     required this.contactId,
     this.uid,
   });
@@ -107,7 +107,7 @@ class AcceptFriendshipRequest extends ContactEvent {
 class RemoveContactRequest extends ContactEvent {
   final String? contactId;
   final String? uid;
-  RemoveContactRequest({
+  const RemoveContactRequest({
     required this.contactId,
     this.uid,
   });
@@ -132,7 +132,7 @@ class RemoveContactRequest extends ContactEvent {
 class RemoveFromBlocklist extends ContactEvent {
   final String contactId;
   final String uid;
-  RemoveFromBlocklist({
+  const RemoveFromBlocklist({
     required this.contactId,
     required this.uid,
   });
@@ -157,7 +157,7 @@ class RemoveFromBlocklist extends ContactEvent {
 class AddToBlocklist extends ContactEvent {
   final String contactId;
   final String uid;
-  AddToBlocklist({
+  const AddToBlocklist({
     required this.contactId,
     required this.uid,
   });
@@ -171,7 +171,7 @@ class AddToBlocklist extends ContactEvent {
 class LoadContacts extends ContactEvent {
   final String uid;
 
-  LoadContacts({required this.uid});
+  const LoadContacts({required this.uid});
 
   @override
   List<Object> get props => [uid];
@@ -180,7 +180,7 @@ class LoadContacts extends ContactEvent {
 class ContactsUpdated extends ContactEvent {
   final List<Contact> contacts;
 
-  ContactsUpdated(this.contacts);
+  const ContactsUpdated(this.contacts);
 
   @override
   List<Object> get props => [contacts];

@@ -60,7 +60,8 @@ class _Card extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // String? _dateTop = DateFormat('EEE, MM-dd').format(chat.lastMessageAt!);
-    String? _dateBottom = DateFormat('kk:mm').format(chat.lastMessageAt!);
+    final String _dateBottom =
+        DateFormat('kk:mm').format(chat.lastMessageSentAt!);
     return InkWell(
       onTap: onPress,
       child: Row(
@@ -68,7 +69,6 @@ class _Card extends StatelessWidget {
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Padding(
                   padding: const EdgeInsets.only(right: 6.0),
@@ -87,25 +87,23 @@ class _Card extends StatelessWidget {
                     ],
                   ),
                 ),
-                Container(
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      if (lastMessageFromYou)
-                        Text('You: ', style: TextStyles.body3),
-                      Expanded(
-                        child: Opacity(
-                          opacity: 0.64,
-                          child: Text(
-                            chat.lastMessage!,
-                            maxLines: 2,
-                            overflow: TextOverflow.ellipsis,
-                            style: TextStyles.body3,
-                          ),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    if (lastMessageFromYou)
+                      Text('You: ', style: TextStyles.body3),
+                    Expanded(
+                      child: Opacity(
+                        opacity: 0.64,
+                        child: Text(
+                          chat.lastMessage!,
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyles.body3,
                         ),
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ],
             ),
@@ -116,7 +114,7 @@ class _Card extends StatelessWidget {
             alignment: Alignment.center,
             child: Stack(
               children: [
-                CircleAvatar(
+                const CircleAvatar(
                   radius: 25,
                   // backgroundImage: AssetImage(),
                 ),

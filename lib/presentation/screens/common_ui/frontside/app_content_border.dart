@@ -9,8 +9,8 @@ class AppContentBorder extends CustomPainter {
   });
   @override
   void paint(Canvas canvas, Size size) {
-    Path _bottomRightCornerPath = Path();
-    Paint _bottomRightCorner = Paint()
+    final Path _bottomRightCornerPath = Path();
+    final Paint _bottomRightCorner = Paint()
       // ..color = Theme.of(context!).scaffoldBackgroundColor
       ..color = Colors.transparent
       ..style = PaintingStyle.fill;
@@ -22,53 +22,53 @@ class AppContentBorder extends CustomPainter {
 
     canvas.drawPath(_bottomRightCornerPath, _bottomRightCorner);
 
-    Paint _anglePaint = Paint()
+    final Paint _anglePaint = Paint()
       ..color = Theme.of(context!).primaryColor
       ..strokeWidth = 0.3
       ..strokeCap = StrokeCap.round;
 
-    Offset angleStartingPoint = Offset(size.width - 30, size.height);
-    Offset angleEndingPoint = Offset(size.width, size.height - 30);
+    final Offset angleStartingPoint = Offset(size.width - 30, size.height);
+    final Offset angleEndingPoint = Offset(size.width, size.height - 30);
 
     canvas.drawLine(angleStartingPoint, angleEndingPoint, _anglePaint);
 
-    Paint _topPaint = Paint()
+    final Paint _topPaint = Paint()
       ..color = Theme.of(context!).primaryColor
       ..strokeWidth = 0.3
       ..strokeCap = StrokeCap.round;
 
-    Offset topStartingPoint = Offset(0, 0);
-    Offset topEndingPoint = Offset(size.width, 0);
+    const Offset topStartingPoint = Offset(0, 0);
+    final Offset topEndingPoint = Offset(size.width, 0);
 
     canvas.drawLine(topStartingPoint, topEndingPoint, _topPaint);
 
-    Paint _bottomPaint = Paint()
+    final Paint _bottomPaint = Paint()
       ..color = Theme.of(context!).primaryColor
       ..strokeWidth = 0.3
       ..strokeCap = StrokeCap.round;
 
-    Offset bottomStartingPoint = Offset(size.width - 30, size.height);
-    Offset bottomEndingPoint = Offset(0, size.height);
+    final Offset bottomStartingPoint = Offset(size.width - 30, size.height);
+    final Offset bottomEndingPoint = Offset(0, size.height);
 
     canvas.drawLine(bottomStartingPoint, bottomEndingPoint, _bottomPaint);
 
-    Paint _rightPaint = Paint()
+    final Paint _rightPaint = Paint()
       ..color = Theme.of(context!).primaryColor
       ..strokeWidth = 0.3
       ..strokeCap = StrokeCap.round;
 
-    Offset rightStartingPoint = Offset(size.width, 0);
-    Offset rightEndingPoint = Offset(size.width, size.height - 30);
+    final Offset rightStartingPoint = Offset(size.width, 0);
+    final Offset rightEndingPoint = Offset(size.width, size.height - 30);
 
     canvas.drawLine(rightStartingPoint, rightEndingPoint, _rightPaint);
 
-    Paint _leftPaint = Paint()
+    final Paint _leftPaint = Paint()
       ..color = Theme.of(context!).primaryColor
       ..strokeWidth = 0.3
       ..strokeCap = StrokeCap.round;
 
-    Offset leftStartingPoint = Offset(0, size.height);
-    Offset leftEndingPoint = Offset(0, 0);
+    final Offset leftStartingPoint = Offset(0, size.height);
+    const Offset leftEndingPoint = Offset(0, 0);
 
     canvas.drawLine(leftStartingPoint, leftEndingPoint, _leftPaint);
   }

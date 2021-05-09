@@ -5,7 +5,7 @@ import 'package:void_chat_beta/generated/l10n.dart';
 import 'package:void_chat_beta/logic/cubit/signup/signup_cubit.dart';
 
 class PasswordInput extends StatelessWidget {
-  PasswordInput({
+  const PasswordInput({
     Key? key,
   }) : super(key: key);
   @override

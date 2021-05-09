@@ -1,7 +1,7 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 // ignore: implementation_imports
 import 'package:firestore_repository/src/models/contact.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:void_chat_beta/core/constants/styles.dart';
 import 'package:void_chat_beta/generated/l10n.dart';
@@ -18,21 +18,19 @@ class PendinglistContent extends StatelessWidget {
       child: BlocBuilder<ContactBloc, ContactsState>(
         builder: (context, state) {
           if (state is ContactsLoaded) {
-            var sorted = state.contacts
+            final List<Contact> sorted = state.contacts
                 .where((element) => element.status!.contains('pending'))
                 .toList();
 
-            return Container(
-              child: Column(
-                children: [
-                  _RequestsCounter(sorted: sorted),
-                  _Divider(),
-                  _ContactsListView(sorted: sorted),
-                ],
-              ),
+            return Column(
+              children: [
+                _RequestsCounter(sorted: sorted),
+                const _Divider(),
+                _ContactsListView(sorted: sorted),
+              ],
             );
           }
-          return CircularProgressIndicator();
+          return const CircularProgressIndicator();
         },
       ),
     );
@@ -64,15 +62,13 @@ class _ContactsListView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-      physics: NeverScrollableScrollPhysics(),
+      physics: const NeverScrollableScrollPhysics(),
       shrinkWrap: true,
       itemCount: sorted.length,
       itemBuilder: (context, index) {
-        var _date = sorted[index].requestSentAt == null
+        final String? _date = sorted[index].requestSentAt == null
             ? null
-            : DateFormat.MMMMEEEEd()
-                // .format(sorted[index].requestSentAt?.toDate())
-                .toString();
+            : DateFormat.MMMMEEEEd().toString();
         return _date != null
             ? (sorted[index].requestFrom ==
                     context.watch<AuthenticationBloc>().state.user.id)
@@ -108,7 +104,7 @@ class _RequestsCounter extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
         Text(
-          S.of(context).contacts_pending + ': ' + sorted.length.toString(),
+          "${S.of(context).contacts_pending} : ${sorted.length}",
           style: TextStyles.body1,
         ),
         const SizedBox(width: 20),

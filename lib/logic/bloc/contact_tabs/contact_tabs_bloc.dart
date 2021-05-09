@@ -18,7 +18,7 @@ class ContactTabsBloc extends Bloc<ContactTabsEvent, ContactTabsState> {
             ContactsUpdated((_contactsBloc.state as ContactsLoaded).contacts);
           }
         }),
-        super(FriendlistState(fullContactlist: []));
+        super(FriendlistState(fullContactlist: const []));
 
   @override
   // ignore: override_on_non_overriding_member

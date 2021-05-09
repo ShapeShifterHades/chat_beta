@@ -50,7 +50,7 @@ class AuthenticationRepository {
     String? displayName,
   }) async {
     try {
-      firebase_auth.UserCredential credentials =
+      final firebase_auth.UserCredential credentials =
           await _firebaseAuth.createUserWithEmailAndPassword(
         email: email,
         password: password,
@@ -59,6 +59,7 @@ class AuthenticationRepository {
     } on Exception {
       throw SignUpFailure();
     } catch (e) {
+      // ignore: avoid_print
       print('Repository error $e');
       throw SignUpFailure();
     }
@@ -95,8 +96,8 @@ class AuthenticationRepository {
         password: password,
       );
     } on firebase_auth.FirebaseAuthException catch (e) {
-      print(e.code);
-      print(e.message);
+      // ignore: avoid_print
+      print("${e.message} + ${e.code}");
       throw LogInWithEmailAndPasswordFailure();
     }
   }

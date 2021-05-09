@@ -3,13 +3,13 @@ import 'package:firestore_repository/src/models/contact.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:void_chat_beta/core/constants/styles.dart';
+import 'package:void_chat_beta/generated/l10n.dart';
 import 'package:void_chat_beta/logic/bloc/contact/contact_bloc.dart';
 
 import '../contact_item_initial.dart';
-import 'package:void_chat_beta/generated/l10n.dart';
 
 class FriendlistContent extends StatelessWidget {
-  FriendlistContent({
+  const FriendlistContent({
     Key? key,
   }) : super(key: key);
   @override
@@ -18,18 +18,18 @@ class FriendlistContent extends StatelessWidget {
       child: BlocBuilder<ContactBloc, ContactsState>(
         builder: (context, state) {
           if (state is ContactsLoaded) {
-            var sorted = state.contacts
+            final List<Contact> sorted = state.contacts
                 .where((element) => element.status!.contains('friend'))
                 .toList();
             return Column(
               children: [
                 _ContactsCounter(sorted: sorted),
-                _Divider(),
+                const _Divider(),
                 _FriendsListViewBuilder(sorted: sorted),
               ],
             );
           }
-          return CircularProgressIndicator();
+          return const CircularProgressIndicator();
         },
       ),
     );
@@ -61,7 +61,6 @@ class _FriendsListViewBuilder extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-      padding: const EdgeInsets.only(top: 0),
       shrinkWrap: true,
       itemCount: sorted.length,
       itemBuilder: (context, index) {
@@ -88,7 +87,7 @@ class _ContactsCounter extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
         Text(
-          S.of(context).contacts_friends + ': ' + sorted.length.toString(),
+          '${S.of(context).contacts_friends}: ${sorted.length}',
           style: TextStyles.body1,
         ),
         const SizedBox(width: 20),

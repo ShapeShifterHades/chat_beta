@@ -5,7 +5,7 @@ import 'package:void_chat_beta/generated/l10n.dart';
 import 'package:void_chat_beta/logic/cubit/signup/signup_cubit.dart';
 
 class EmailInput extends StatelessWidget {
-  EmailInput({
+  const EmailInput({
     Key? key,
   }) : super(key: key);
   @override

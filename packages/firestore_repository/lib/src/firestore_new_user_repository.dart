@@ -9,7 +9,8 @@ class FirestoreNewUserRepository implements NewUserRepository {
 
   Future<bool> usernameAlreadyExists(String username) async {
     try {
-      DocumentSnapshot doc = await newUsernameCollection.doc(username).get();
+      final DocumentSnapshot doc =
+          await newUsernameCollection.doc(username).get();
       return doc.exists;
     } catch (e) {
       return true;
@@ -18,6 +19,7 @@ class FirestoreNewUserRepository implements NewUserRepository {
 
   /// Commits a batch of two documents to users collection and Username collection
   /// with a given [newProfile] on user creation
+  @override
   Future<void> addNewUser(NewProfile newProfile) async {
     try {
       await newUserCollection
@@ -27,6 +29,7 @@ class FirestoreNewUserRepository implements NewUserRepository {
           .doc(newProfile.username)
           .set({"uid": newProfile.uid});
     } catch (e) {
+      // ignore: avoid_print
       print(e);
     }
   }

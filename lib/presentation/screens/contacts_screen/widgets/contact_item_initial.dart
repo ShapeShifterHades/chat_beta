@@ -33,7 +33,7 @@ class _ContactItemState extends State<ContactItem> {
         children: [
           ContactTile(
             id: 'ID: ${widget.sorted[widget.index].id!.toUpperCase()}',
-            child: Container(
+            child: SizedBox(
               width: 300,
               height: 70,
               child: Row(
@@ -57,7 +57,7 @@ class _ContactItemState extends State<ContactItem> {
                   Container(
                     alignment: Alignment.center,
                     padding: const EdgeInsets.only(bottom: 30),
-                    child: Text('${widget.sorted[widget.index].username}',
+                    child: Text(widget.sorted[widget.index].username!,
                         style: TextStyles.body1.copyWith(fontSize: 20)),
                   ),
                   const Spacer(),
@@ -83,7 +83,7 @@ class _ContactItemState extends State<ContactItem> {
                 clipper: DrawerMenuButtonClipper(),
                 child: AnimatedContainer(
                   curve: Curves.easeInCubic,
-                  key: Key('left_button'),
+                  key: const Key('left_button'),
                   duration: Times.fastest,
                   width: 120,
                   padding: const EdgeInsets.all(0),
@@ -123,7 +123,7 @@ class _ContactItemState extends State<ContactItem> {
                 clipper: DrawerMenuButtonClipper(),
                 child: AnimatedContainer(
                   curve: Curves.easeInCubic,
-                  key: Key('right_button'),
+                  key: const Key('right_button'),
                   duration: Times.fastest,
                   width: 120,
                   height: isExpanded ? 50 : 0,
@@ -156,7 +156,7 @@ class _ContactItemState extends State<ContactItem> {
 class DrawerMenuButtonClipper extends CustomClipper<Path> {
   @override
   Path getClip(Size size) {
-    Path path = Path();
+    final Path path = Path();
 
     path.lineTo(0, size.height);
     path.lineTo(size.width - 8, size.height);

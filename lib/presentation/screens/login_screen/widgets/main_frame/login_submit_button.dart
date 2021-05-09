@@ -19,14 +19,12 @@ class LoginSubmitButton extends StatelessWidget {
           shadowColor: Colors.red,
           color: Colors.white,
           elevation: 3,
-          child: Container(
-            child: ButtonModel(
-              key: const Key('loginForm_continue_raisedButton'),
-              text: S.of(context).loginpage_submit,
-              onPressed: state.status.isValidated
-                  ? () => context.read<LoginCubit>().logInWithCredentials()
-                  : null,
-            ),
+          child: ButtonModel(
+            key: const Key('loginForm_continue_raisedButton'),
+            text: S.of(context).loginpage_submit,
+            onPressed: state.status.isValidated
+                ? () => context.read<LoginCubit>().logInWithCredentials()
+                : null,
           ),
         );
       },

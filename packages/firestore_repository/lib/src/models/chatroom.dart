@@ -6,7 +6,8 @@ class Chatroom {
   final String? username;
   final String? lastMessage;
   final String? lastMessageFrom;
-  final DateTime? lastMessageAt;
+  final DateTime? lastMessageSentAt;
+  final DateTime? lastMessageRecievedAt;
   final DateTime? createdAt;
 
   Chatroom({
@@ -15,8 +16,9 @@ class Chatroom {
     this.username,
     this.lastMessage,
     this.lastMessageFrom,
-    this.lastMessageAt,
-  }) : this.createdAt = createdAt ?? DateTime.now();
+    this.lastMessageSentAt,
+    this.lastMessageRecievedAt,
+  }) : createdAt = createdAt ?? DateTime.now();
 
   // Chatroom toString({})
   //
@@ -27,20 +29,36 @@ class Chatroom {
       username,
       lastMessage,
       lastMessageFrom,
-      Timestamp.fromDate(lastMessageAt!),
+      Timestamp.fromDate(lastMessageSentAt!),
+      Timestamp.fromDate(lastMessageRecievedAt!),
     );
   }
 
-  static Chatroom fromEntity(ChatroomEntity entity) {
-    return Chatroom(
-      createdAt: DateTime?.fromMillisecondsSinceEpoch(
-          entity.createdAt!.millisecondsSinceEpoch),
-      id: entity.id,
-      username: entity.username,
-      lastMessage: entity.lastMessage,
-      lastMessageFrom: entity.lastMessageFrom,
-      lastMessageAt: DateTime?.fromMillisecondsSinceEpoch(
-          entity.lastMessageAt!.millisecondsSinceEpoch),
-    );
-  }
+  Chatroom.fromEntity(ChatroomEntity entity)
+      : createdAt = DateTime?.fromMillisecondsSinceEpoch(
+            entity.createdAt!.millisecondsSinceEpoch),
+        id = entity.id,
+        username = entity.username,
+        lastMessage = entity.lastMessage,
+        lastMessageFrom = entity.lastMessageFrom,
+        lastMessageSentAt = DateTime?.fromMillisecondsSinceEpoch(
+            entity.lastMessageSentAt!.millisecondsSinceEpoch),
+        lastMessageRecievedAt = DateTime?.fromMillisecondsSinceEpoch(
+            entity.lastMessageRecievedAt!.millisecondsSinceEpoch);
 }
+
+//  {
+//   return Chatroom(
+//     createdAt: DateTime?.fromMillisecondsSinceEpoch(
+//         entity.createdAt!.millisecondsSinceEpoch),
+//     id: entity.id,
+//     username: entity.username,
+//     lastMessage: entity.lastMessage,
+//     lastMessageFrom: entity.lastMessageFrom,
+//     lastMessageSentAt: DateTime?.fromMillisecondsSinceEpoch(
+//         entity.lastMessageSentAt!.millisecondsSinceEpoch),
+//     lastMessageRecievedAt: DateTime?.fromMillisecondsSinceEpoch(
+//         entity.lastMessageRecievedAt!.millisecondsSinceEpoch),
+//   );
+// }
+// }

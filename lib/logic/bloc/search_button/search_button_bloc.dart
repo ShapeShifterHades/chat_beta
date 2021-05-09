@@ -2,8 +2,8 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:meta/meta.dart';
 import 'package:flutter/material.dart';
+import 'package:meta/meta.dart';
 import 'package:void_chat_beta/logic/bloc/find_user/finduser_bloc.dart';
 
 part 'search_button_event.dart';
@@ -42,8 +42,9 @@ class SearchButtonBloc extends Bloc<SearchButtonEvent, SearchButtonState> {
       toReturn = SearchButtonState.initial();
     } else if (event.finduserState == FinduserState.error()) {
       toReturn = SearchButtonState.hasError();
-    } else
+    } else {
       toReturn = SearchButtonState.hasResult();
+    }
 
     return toReturn;
   }

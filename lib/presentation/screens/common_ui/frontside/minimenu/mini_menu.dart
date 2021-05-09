@@ -1,6 +1,7 @@
-import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:void_chat_beta/core/constants/constants.dart';
+
 import 'mini_menu_tile.dart';
 
 class MiniMenu extends StatelessWidget {
@@ -10,12 +11,12 @@ class MiniMenu extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
+    final Size size = MediaQuery.of(context).size;
 
     return Positioned(
       left: -3,
       bottom: 40 - size.width * 0.01,
-      child: Container(
+      child: SizedBox(
         width: 50,
         height: 490,
         child: Column(
@@ -25,7 +26,7 @@ class MiniMenu extends StatelessWidget {
               alignment: Alignment.center,
               children: [
                 MiniMenuTile(
-                  key: Key('messages_minimenu_buton'),
+                  key: const Key('messages_minimenu_buton'),
                   func: () => Navigator.of(context).pushNamed(homeRoute),
                   icon: Icons.message,
                   isCurrentPage:
@@ -60,7 +61,7 @@ class MiniMenu extends StatelessWidget {
             ),
             const SizedBox(height: 15),
             MiniMenuTile(
-              key: Key('contacts_minimenu_buton'),
+              key: const Key('contacts_minimenu_buton'),
               func: () => Navigator.of(context).pushNamed(contactsRoute),
               icon: Icons.contacts,
               isCurrentPage:
@@ -68,7 +69,7 @@ class MiniMenu extends StatelessWidget {
             ),
             const SizedBox(height: 15),
             MiniMenuTile(
-              key: Key('settings_minimenu_buton'),
+              key: const Key('settings_minimenu_buton'),
               func: () => Navigator.of(context).pushNamed(settingsRoute),
               icon: Icons.settings,
               isCurrentPage:
@@ -76,7 +77,7 @@ class MiniMenu extends StatelessWidget {
             ),
             const SizedBox(height: 15),
             MiniMenuTile(
-              key: Key('security_minimenu_buton'),
+              key: const Key('security_minimenu_buton'),
               func: () => Navigator.of(context).pushNamed(securityRoute),
               icon: Icons.lock,
               isCurrentPage:
@@ -84,7 +85,7 @@ class MiniMenu extends StatelessWidget {
             ),
             const SizedBox(height: 15),
             MiniMenuTile(
-              key: Key('faq_minimenu_buton'),
+              key: const Key('faq_minimenu_buton'),
               func: () => Navigator.of(context).pushNamed(faqRoute),
               icon: Icons.help,
               isCurrentPage: ModalRoute.of(context)?.settings.name == '/faq',

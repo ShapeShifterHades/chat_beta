@@ -6,7 +6,7 @@ class CustomPainterForClipper extends CustomPainter {
   CustomPainterForClipper({this.color = const Color(0xFFA7F5FF)});
   @override
   void paint(Canvas canvas, Size size) {
-    Path path2 = Path();
+    final Path path2 = Path();
 
     path2.moveTo(0, 30);
     path2.lineTo(0, size.height);
@@ -18,7 +18,7 @@ class CustomPainterForClipper extends CustomPainter {
 
     path2.close();
 
-    Paint paint = Paint()
+    final Paint paint = Paint()
       ..style = PaintingStyle.stroke
       ..strokeWidth = 0.3
       ..color = color;

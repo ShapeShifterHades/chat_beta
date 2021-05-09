@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:void_chat_beta/core/constants/styles.dart';
+import 'package:void_chat_beta/data/utils/safe_print.dart';
 
 import 'package:void_chat_beta/generated/l10n.dart';
 import 'package:void_chat_beta/logic/bloc/contact_tabs/contact_tabs_bloc.dart';
@@ -46,15 +47,14 @@ class _ContactPageTabsState extends State<ContactPageTabs> {
             highlightColor: Theme.of(context).primaryColor.withOpacity(0.4)),
         child: DropdownButton<String>(
             value: dropdownValue,
-            icon: Icon(Icons.arrow_drop_down),
+            icon: const Icon(Icons.arrow_drop_down),
             iconEnabledColor: Theme.of(context).primaryColor,
             iconSize: 30,
-            underline: SizedBox(),
             onChanged: (String? newValue) {
               dropdownValue = newValue;
               sendEvent(newValue);
               setState(() {
-                print(newValue);
+                safePrint(newValue);
               });
             },
             items: <String>[

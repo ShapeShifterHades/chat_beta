@@ -1,19 +1,17 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
 
-
 /// Represents class for Firestore that is used when creating a new user
 class NewProfileEntity extends Equatable {
   final String? uid;
   final String? username;
 
-  const NewProfileEntity(this.uid, this.username);
+  const NewProfileEntity({this.uid, this.username});
 
   Map<String, Object?> toJson() {
     return {
       'uid': uid,
       'username': username,
-
     };
   }
 
@@ -25,19 +23,13 @@ class NewProfileEntity extends Equatable {
     return 'ProfileEntity { uid: $uid, username: $username }';
   }
 
-  static NewProfileEntity fromJson(Map<String, Object> json) {
-    return NewProfileEntity(
-      json['uid'] as String?,
-      json['username'] as String?,
-    );
-  }
+  NewProfileEntity.fromJson(Map<String, Object> json)
+      : uid = json['uid'] as String?,
+        username = json['username'] as String?;
 
-  static NewProfileEntity fromSnapshot(DocumentSnapshot snap) {
-    return NewProfileEntity(
-      snap.data()!['uid'],
-      snap.data()!['username'],
-    );
-  }
+  NewProfileEntity.fromSnapshot(DocumentSnapshot snap)
+      : uid = snap.data()!['uid'] as String?,
+        username = snap.data()!['username'] as String?;
 
   Map<String, Object?> toDocument() {
     return {

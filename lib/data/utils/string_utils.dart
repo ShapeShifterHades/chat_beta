@@ -15,14 +15,14 @@ class StringUtils {
 
   // Measures text using an off-screen canvas. It's not fast, but not overly slow either. Use with (mild) caution :)
   static Size measure(String text, TextStyle style,
-      {int maxLines: 1,
+      {int maxLines = 1,
       TextDirection direction = TextDirection.ltr,
       double maxWidth = double.infinity}) {
     final TextPainter textPainter = TextPainter(
         text: TextSpan(text: text, style: style),
         maxLines: maxLines,
         textDirection: direction)
-      ..layout(minWidth: 0, maxWidth: maxWidth);
+      ..layout(maxWidth: maxWidth);
     return textPainter.size;
   }
 
@@ -34,8 +34,8 @@ class StringUtils {
     if (maxItems != null && maxItems < items.length) {
       items.length = maxItems;
     }
-    for (var item in items) {
-      double m = measure(item, style).width;
+    for (final item in items) {
+      final double m = measure(item, style).width;
       if (m > l) l = m;
     }
     return l;
@@ -48,7 +48,7 @@ class StringUtils {
 
   static String pluralize(String s, int length) {
     if (length == 1) return s;
-    return s + "s";
+    return "${s}s";
   }
 
   static String titleCaseSingle(String s) =>

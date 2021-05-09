@@ -38,27 +38,21 @@ class ContactEntity extends Equatable {
     return 'ContactEntity { id: $id, username: $username, status: $status, message: $message, requestSentAt: $requestSentAt, requestFrom: $requestFrom}';
   }
 
-  static ContactEntity fromJson(Map<String, Object> json) {
-    return ContactEntity(
-      json['id'] as String?,
-      json['username'] as String?,
-      json['status'] as String?,
-      json['message'] as String?,
-      json['requestSentAt'] as Timestamp?,
-      json['requestFrom'] as String?,
-    );
-  }
+  ContactEntity.fromJson(Map<String, Object> json)
+      : id = json['id'] as String?,
+        username = json['username'] as String?,
+        status = json['status'] as String?,
+        message = json['message'] as String?,
+        requestSentAt = json['requestSentAt'] as Timestamp?,
+        requestFrom = json['requestFrom'] as String?;
 
-  static ContactEntity fromSnapshot(DocumentSnapshot snap) {
-    return ContactEntity(
-      snap.data()!['id'],
-      snap.data()!['username'],
-      snap.data()!['status'],
-      snap.data()!['message'],
-      snap.data()!['requestSentAt'],
-      snap.data()!['requestFrom'],
-    );
-  }
+  ContactEntity.fromSnapshot(DocumentSnapshot snap)
+      : id = snap.data()!['id'] as String?,
+        username = snap.data()!['username'] as String?,
+        status = snap.data()!['status'] as String?,
+        message = snap.data()!['message'] as String?,
+        requestSentAt = snap.data()!['requestSentAt'] as Timestamp?,
+        requestFrom = snap.data()!['requestFrom'] as String?;
 
   Map<String, Object?> toDocument() {
     return {

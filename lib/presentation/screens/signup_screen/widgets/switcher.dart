@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:void_chat_beta/data/utils/safe_print.dart';
 
 class Switcher extends StatefulWidget {
   final Function? onChange;
@@ -18,7 +19,7 @@ class _SwitcherState extends State<Switcher> {
         setState(() {
           isSwitched = value;
           widget.onChange!();
-          print(isSwitched);
+          safePrint('$isSwitched');
         });
       },
       activeTrackColor: Theme.of(context).primaryColor.withOpacity(0.65),

@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:simple_animations/simple_animations.dart';
-
 import 'package:supercharged/supercharged.dart';
 import 'package:void_chat_beta/core/constants/styles.dart';
 import 'package:void_chat_beta/generated/l10n.dart';
+import 'package:void_chat_beta/presentation/screens/login_screen/widgets/auth_custom_frame/custom_clip_path.dart';
+import 'package:void_chat_beta/presentation/screens/login_screen/widgets/form_header_signup.dart';
 import 'package:void_chat_beta/presentation/screens/login_screen/widgets/main_frame/OrDivider.dart';
 import 'package:void_chat_beta/presentation/screens/login_screen/widgets/main_frame/buttons_divider.dart';
 import 'package:void_chat_beta/presentation/screens/login_screen/widgets/main_frame/settings_box.dart';
@@ -12,12 +13,10 @@ import 'package:void_chat_beta/presentation/screens/signup_screen/widgets/consta
 import 'package:void_chat_beta/presentation/screens/signup_screen/widgets/signup_with_google.dart';
 import 'package:void_chat_beta/presentation/screens/signup_screen/widgets/submit_button.dart';
 import 'package:void_chat_beta/presentation/screens/signup_screen/widgets/textfields_frame.dart';
-import 'package:void_chat_beta/presentation/screens/login_screen/widgets/auth_custom_frame/custom_clip_path.dart';
-import 'package:void_chat_beta/presentation/screens/login_screen/widgets/form_header_signup.dart';
 
 /// Widget that represents main part of the Signup View
 class SignupMainFormFrame extends StatefulWidget {
-  SignupMainFormFrame({
+  const SignupMainFormFrame({
     Key? key,
   }) : super(key: key);
 
@@ -71,25 +70,23 @@ class _SignupMainFormFrameState extends State<SignupMainFormFrame>
         width: MediaQuery.of(context).size.width * .8,
         child: ClipPath(
           clipper: MainLoginFrameClipPath(),
-          child: Container(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                if (!isKeyboardVisible)
-                  FormHeaderSignUp(
-                    color: Theme.of(context).primaryColor,
-                    title: S.of(context).signup_registration,
-                    formController: formController,
-                    settingsController: settingsController,
-                  ),
-                SettingsBox(settingsFrameHeight: settingsFrameHeight),
-                TextfieldsFrame(formFrameHeight: formFrameHeight),
-                SubmitButton(),
-                ButtonsDivider(orLineAlterHeight: orLineAlterHeight),
-                OrDivider(orLineHeight: orLineHeight),
-                SignupWithGoogle(formController: formController),
-              ],
-            ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              if (!isKeyboardVisible)
+                FormHeaderSignUp(
+                  color: Theme.of(context).primaryColor,
+                  title: S.of(context).signup_registration,
+                  formController: formController,
+                  settingsController: settingsController,
+                ),
+              SettingsBox(settingsFrameHeight: settingsFrameHeight),
+              TextfieldsFrame(formFrameHeight: formFrameHeight),
+              const SubmitButton(),
+              ButtonsDivider(orLineAlterHeight: orLineAlterHeight),
+              OrDivider(orLineHeight: orLineHeight),
+              SignupWithGoogle(formController: formController),
+            ],
           ),
         ),
       ),

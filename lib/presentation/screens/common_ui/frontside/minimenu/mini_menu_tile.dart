@@ -60,13 +60,13 @@ class MiniMenuTilePainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    Paint paint1 = Paint()
+    final Paint paint1 = Paint()
       ..style = PaintingStyle.stroke
       ..strokeWidth = 0.3
       ..strokeCap = StrokeCap.round
       ..color = color!.withOpacity(0.8);
 
-    Path path1 = Path();
+    final Path path1 = Path();
     path1.lineTo(size.width * 0.15, 0);
     path1.moveTo(size.width * 0.85, 0);
     path1.lineTo(size.width, 0);
@@ -93,7 +93,7 @@ class MiniMenuTilePainter extends CustomPainter {
 class MiniMenuTileClipper extends CustomClipper<Path> {
   @override
   Path getClip(Size size) {
-    Path path = Path();
+    final Path path = Path();
 
     path.lineTo(0, size.height);
     path.lineTo(size.width, size.height);

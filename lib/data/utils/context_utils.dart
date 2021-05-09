@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:void_chat_beta/data/utils/safe_print.dart';
 
 class ContextUtils {
   // Utility methods to get the size/pos of our render boxes in global & local space
   static Size getSize(BuildContext c) {
     try {
-      RenderBox? rb = c.findRenderObject() as RenderBox?;
+      final RenderBox? rb = c.findRenderObject() as RenderBox?;
       return rb?.size ?? Size.zero;
     } catch (e) {
-      print(e);
+      safePrint(e as String);
     }
-    return Size(1, 1);
+    return const Size(1, 1);
   }
 
   static Offset localToGlobal(BuildContext c, {Offset local = Offset.zero}) {

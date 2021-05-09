@@ -1,9 +1,9 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
+import 'package:equatable/equatable.dart';
 import 'package:firestore_repository/firestore_repository.dart';
 import 'package:meta/meta.dart';
-import 'package:equatable/equatable.dart';
 import 'package:void_chat_beta/logic/bloc/authentication/authentication_bloc.dart';
 
 part 'finduser_event.dart';
@@ -35,7 +35,7 @@ class FinduserBloc extends Bloc<FinduserEvent, FinduserState> {
       yield FinduserState.loading();
 
       try {
-        Contact? contact = await _getSearchResults(event.query);
+        final Contact? contact = await _getSearchResults(event.query);
         yield FinduserState.success(contact);
       } catch (_) {
         yield FinduserState.error();
@@ -45,9 +45,10 @@ class FinduserBloc extends Bloc<FinduserEvent, FinduserState> {
 
   Future<Contact?> _getSearchResults(String query) async {
     try {
-      contact = await _firestoreContactRepository?.findIdByUsername(query, uid);
-      return contact;
+      return contact =
+          await _firestoreContactRepository?.findIdByUsername(query, uid);
     } catch (e) {
+      // ignore: avoid_print
       print(e);
     }
     return contact;

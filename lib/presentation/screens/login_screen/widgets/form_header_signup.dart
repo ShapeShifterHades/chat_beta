@@ -28,14 +28,12 @@ class FormHeaderSignUp extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              SizedBox(width: 34),
+              const SizedBox(width: 34),
               Expanded(
                 child: Container(
                   alignment: Alignment.center,
-                  padding: EdgeInsets.only(bottom: 6),
+                  padding: const EdgeInsets.only(bottom: 6),
                   child: Text(
                     title,
                     style: TextStyles.body1.copyWith(
@@ -55,18 +53,16 @@ class FormHeaderSignUp extends StatelessWidget {
                     await formController!.play(duration: Times.fast);
                   }
                 },
-                child: Container(
-                  child: FaIcon(
-                    FontAwesomeIcons.cog,
-                    color: Theme.of(context).backgroundColor,
-                    size: 26,
-                  ),
+                child: FaIcon(
+                  FontAwesomeIcons.cog,
+                  color: Theme.of(context).backgroundColor,
+                  size: 26,
                 ),
               ),
-              SizedBox(width: 14),
+              const SizedBox(width: 14),
             ],
           ),
-          SizedBox(height: 1),
+          const SizedBox(height: 1),
         ],
       ),
     );

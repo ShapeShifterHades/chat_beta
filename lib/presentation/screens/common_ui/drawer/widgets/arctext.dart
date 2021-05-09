@@ -58,7 +58,6 @@ class _Painter extends CustomPainter {
   double _drawLetter(Canvas canvas, String letter, double prevAngle) {
     _textPainter.text = TextSpan(text: letter, style: textStyle);
     _textPainter.layout(
-      minWidth: 0,
       maxWidth: double.maxFinite,
     );
 

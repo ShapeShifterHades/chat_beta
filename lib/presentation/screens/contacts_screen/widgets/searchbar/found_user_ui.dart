@@ -15,64 +15,61 @@ class FoundUserUi extends StatelessWidget {
   }) : super(key: key);
 
   final Contact? result;
-  final isVisible;
+  final bool? isVisible;
   final FocusNode? focusNode;
   final TextEditingController? finduserController;
 
   final messageController = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(left: 0, right: 0, bottom: 8),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Row(
-            children: [
-              Text(
-                S.of(context).contacts_user,
-                style: TextStyles.body2,
-              ),
-              const Spacer(),
-              Text(
-                result?.username ?? '',
-                style: TextStyles.body2,
-              ),
-            ],
-          ),
-          const SizedBox(height: 5),
-          Row(
-            children: [
-              Text(
-                S.of(context).contacts_status,
-                style: TextStyles.body2,
-              ),
-              const Spacer(),
-              Text(
-                result?.status ?? '',
-                style: TextStyles.body2,
-              ),
-            ],
-          ),
-          const SizedBox(height: 5),
-          Row(
-            children: [
-              Text(
-                S.of(context).contacts_id,
-                style: TextStyles.body2,
-              ),
-              const Spacer(),
-              Text(
-                result?.id ?? '',
-                style: TextStyles.body2,
-              ),
-            ],
-          ),
-          const SizedBox(height: 5),
-          if (result!.status == 'Not in contacts')
-            _BefriendForm(messageController: messageController, result: result),
-        ],
-      ),
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Row(
+          children: [
+            Text(
+              S.of(context).contacts_user,
+              style: TextStyles.body2,
+            ),
+            const Spacer(),
+            Text(
+              result?.username ?? '',
+              style: TextStyles.body2,
+            ),
+          ],
+        ),
+        const SizedBox(height: 5),
+        Row(
+          children: [
+            Text(
+              S.of(context).contacts_status,
+              style: TextStyles.body2,
+            ),
+            const Spacer(),
+            Text(
+              result?.status ?? '',
+              style: TextStyles.body2,
+            ),
+          ],
+        ),
+        const SizedBox(height: 5),
+        Row(
+          children: [
+            Text(
+              S.of(context).contacts_id,
+              style: TextStyles.body2,
+            ),
+            const Spacer(),
+            Text(
+              result?.id ?? '',
+              style: TextStyles.body2,
+            ),
+          ],
+        ),
+        const SizedBox(height: 5),
+        if (result!.status == 'Not in contacts')
+          _BefriendForm(messageController: messageController, result: result),
+      ],
     );
   }
 }
@@ -169,7 +166,7 @@ class _BefriendForm extends StatelessWidget {
                 ),
                 TextFormField(
                   style: TextStyles.body2,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     border: InputBorder.none,
                     counterStyle: TextStyle(color: Colors.black),
                     hintStyle: TextStyle(color: Colors.black),

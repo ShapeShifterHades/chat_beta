@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:void_chat_beta/core/constants/styles.dart';
 import 'package:void_chat_beta/presentation/screens/common_ui/frontside/minimenu/toggle_drawer_button.dart';
 
 import 'drawer/drawer.dart';
-import 'package:void_chat_beta/core/constants/styles.dart';
-
 import 'frontside/app_content.dart';
 import 'frontside/minimenu/mini_menu.dart';
 
@@ -23,7 +22,7 @@ class UI extends StatefulWidget {
       context.findAncestorStateOfType<UIState>();
 
   @override
-  UIState createState() => new UIState();
+  UIState createState() => UIState();
 }
 
 class UIState extends State<UI> with SingleTickerProviderStateMixin {
@@ -69,11 +68,11 @@ class UIState extends State<UI> with SingleTickerProviderStateMixin {
             // This stack defines relations between drawer side and content side
             return Stack(
               children: <Widget>[
-                DrawerBack(),
+                const DrawerBack(),
                 Transform(
                   transform: Matrix4.identity()..translate(slideAmount),
                   alignment: Alignment.centerLeft,
-                  child: child!,
+                  child: child,
                 ),
               ],
             );
@@ -89,7 +88,7 @@ class UIState extends State<UI> with SingleTickerProviderStateMixin {
                   child: AppContent(child: widget.body),
                 ),
               ),
-              MiniMenu(),
+              const MiniMenu(),
               ToggleDrawerButton(animationController: _animationController),
             ],
           ),
@@ -106,9 +105,9 @@ class UIState extends State<UI> with SingleTickerProviderStateMixin {
 
   /// Handles gesture drawer control starting drawer animation
   void _onDragStart(DragStartDetails details) {
-    bool isDragOpenFromLeft = _animationController!.isDismissed &&
+    final bool isDragOpenFromLeft = _animationController!.isDismissed &&
         details.globalPosition.dx < minDragStartEdge;
-    bool isDragCloseFromRight = _animationController!.isCompleted &&
+    final bool isDragCloseFromRight = _animationController!.isCompleted &&
         details.globalPosition.dx > maxDragStartEdge;
 
     _canBeDragged = isDragOpenFromLeft || isDragCloseFromRight;
@@ -118,7 +117,7 @@ class UIState extends State<UI> with SingleTickerProviderStateMixin {
 
   void _onDragUpdate(DragUpdateDetails details) {
     if (_canBeDragged) {
-      double delta = details.primaryDelta! / maxSlide;
+      final double delta = details.primaryDelta! / maxSlide;
       _animationController!.value += delta;
     }
   }
@@ -126,14 +125,14 @@ class UIState extends State<UI> with SingleTickerProviderStateMixin {
   /// Handles gesture drawer control ending drawer animation
 
   void _onDragEnd(DragEndDetails details) {
-    double _kMinFlingVelocity = 365.0;
+    const double _kMinFlingVelocity = 365.0;
 
     if (_animationController!.isDismissed ||
         _animationController!.isCompleted) {
       return;
     }
     if (details.velocity.pixelsPerSecond.dx.abs() >= _kMinFlingVelocity) {
-      double visualVelocity = details.velocity.pixelsPerSecond.dx /
+      final double visualVelocity = details.velocity.pixelsPerSecond.dx /
           MediaQuery.of(context).size.width;
 
       _animationController!.fling(velocity: visualVelocity);

@@ -8,7 +8,7 @@ class FinduserState {
   const FinduserState({this.isLoading, this.contact, this.hasError});
 
   factory FinduserState.initial() {
-    return FinduserState(
+    return const FinduserState(
       contact: Contact(),
       isLoading: false,
       hasError: false,
@@ -16,7 +16,7 @@ class FinduserState {
   }
 
   factory FinduserState.loading() {
-    return FinduserState(
+    return const FinduserState(
       contact: Contact(),
       isLoading: true,
       hasError: false,
@@ -32,7 +32,7 @@ class FinduserState {
   }
 
   factory FinduserState.error() {
-    return FinduserState(
+    return const FinduserState(
       contact: Contact(),
       isLoading: false,
       hasError: true,

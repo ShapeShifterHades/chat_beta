@@ -14,12 +14,13 @@ class Username extends FormzInput<String, UsernameValidationError> {
   UsernameValidationError? validator(String value) {
     // return _UsernameRegExp.hasMatch(value) ? null : UsernameValidationError.invalid;
 
-    if (!_usernameRegExp.hasMatch(value))
+    if (!_usernameRegExp.hasMatch(value)) {
       return UsernameValidationError.invalid;
+    }
     return null;
   }
 
-  static String? getErrorMessage(error) {
+  static String? getErrorMessage(UsernameValidationError error) {
     switch (error) {
       case UsernameValidationError.invalid:
         return 'This is not a valid Username';

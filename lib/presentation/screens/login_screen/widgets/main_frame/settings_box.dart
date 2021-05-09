@@ -36,13 +36,12 @@ class _SettingsBoxState extends State<SettingsBox> {
             ),
           ),
           child: SingleChildScrollView(
-            child: Container(
+            child: SizedBox(
               height: 168,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       const SizedBox(width: 50),
                       Text(S.of(context).signup_brightness,
@@ -57,7 +56,6 @@ class _SettingsBoxState extends State<SettingsBox> {
                     ],
                   ),
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       const SizedBox(width: 50),
                       Text(S.of(context).signup_locale,

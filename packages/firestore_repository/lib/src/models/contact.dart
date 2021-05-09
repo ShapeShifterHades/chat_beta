@@ -11,7 +11,7 @@ class Contact {
   final Timestamp? requestSentAt;
   final String? requestFrom;
 
-  Contact({
+  const Contact({
     this.message,
     this.id,
     this.username,
@@ -25,9 +25,9 @@ class Contact {
       id: id ?? this.id,
       username: username ?? this.username,
       status: status ?? this.status,
-      message: message ?? this.message,
-      requestSentAt: requestSentAt ?? this.requestSentAt,
-      requestFrom: requestFrom ?? this.requestFrom,
+      message: message ?? message,
+      requestSentAt: requestSentAt ?? requestSentAt,
+      requestFrom: requestFrom ?? requestFrom,
     );
   }
 
@@ -69,14 +69,11 @@ class Contact {
     );
   }
 
-  static Contact fromEntity(ContactEntity entity) {
-    return Contact(
-      id: entity.id,
-      username: entity.username,
-      status: entity.status,
-      message: entity.message,
-      requestSentAt: entity.requestSentAt,
-      requestFrom: entity.requestFrom,
-    );
-  }
+  Contact.fromEntity(ContactEntity entity)
+      : id = entity.id,
+        username = entity.username,
+        status = entity.status,
+        message = entity.message,
+        requestSentAt = entity.requestSentAt,
+        requestFrom = entity.requestFrom;
 }

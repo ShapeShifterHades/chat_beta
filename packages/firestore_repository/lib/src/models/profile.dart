@@ -5,12 +5,13 @@ import '../entities/entities.dart';
 class NewProfile {
   final String? uid;
   final String? username;
+
   /// Timestamp in milliseconds since epoch shows when account is created
   // final int createdAt;
 
   NewProfile({this.uid, this.username});
 
-  // User cannot chance his acc uid, username and created at timestamp. 
+  // User cannot chance his acc uid, username and created at timestamp.
   //
   // Profile copyWith({String uid, String username, int createdAt}) {
   //   return Profile(
@@ -31,7 +32,6 @@ class NewProfile {
       other is NewProfile &&
           runtimeType == other.runtimeType &&
           uid == other.uid &&
-          
           username == other.username;
 
   @override
@@ -40,14 +40,10 @@ class NewProfile {
   }
 
   NewProfileEntity toEntity() {
-    return NewProfileEntity(uid, username);
+    return NewProfileEntity(uid: uid, username: username);
   }
 
-  static NewProfile fromEntity(NewProfileEntity entity) {
-    return NewProfile(
-      uid: entity.uid,
-      username: entity.username,
-    
-    );
-  }
+  NewProfile.fromEntity(NewProfileEntity entity)
+      : uid = entity.uid,
+        username = entity.username;
 }

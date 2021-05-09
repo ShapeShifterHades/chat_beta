@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 class ToggleDrawerButton extends StatelessWidget {
   /// Controller to trigger animation
   final AnimationController? animationController;
-  ToggleDrawerButton({
+  const ToggleDrawerButton({
     Key? key,
     required this.animationController,
   }) : super(key: key);
@@ -28,9 +28,9 @@ class ToggleDrawerButton extends StatelessWidget {
               color: Theme.of(context).scaffoldBackgroundColor,
               width: 40,
               height: 40,
-              padding: EdgeInsets.all(5),
+              padding: const EdgeInsets.all(5),
               child: Container(
-                margin: EdgeInsets.all(5.5),
+                margin: const EdgeInsets.all(5.5),
                 child: AnimatedIcon(
                   icon: AnimatedIcons.menu_close,
                   progress: animationController!,
@@ -53,16 +53,16 @@ class MenuButtonPainter extends CustomPainter {
   MenuButtonPainter(this.context);
   @override
   void paint(Canvas canvas, Size size) {
-    double sh = size.height;
-    double sw = size.width;
+    final double sh = size.height;
+    final double sw = size.width;
 
-    Path path = Path()
+    final Path path = Path()
       ..moveTo(14, sh)
       ..lineTo(sw - 10, sh)
       ..lineTo(sw, sh - 10)
       ..lineTo(sw, 5);
 
-    Paint paint = Paint()
+    final Paint paint = Paint()
       ..style = PaintingStyle.stroke
       ..strokeWidth = 0.4
       ..strokeCap = StrokeCap.round
@@ -80,10 +80,10 @@ class MenuButtonPainter extends CustomPainter {
 class MenuButtonClipper extends CustomClipper<Path> {
   @override
   Path getClip(Size size) {
-    double sh = size.height;
-    double sw = size.width;
+    final double sh = size.height;
+    final double sw = size.width;
 
-    Path path = Path()
+    final Path path = Path()
       ..lineTo(0, sh)
       ..lineTo(sw - 10, sh)
       ..lineTo(sw, sh - 10)

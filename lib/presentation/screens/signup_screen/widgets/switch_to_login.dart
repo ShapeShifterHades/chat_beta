@@ -23,7 +23,6 @@ class SwitchToLogin extends StatelessWidget {
           child: Shimmer.fromColors(
             baseColor: Theme.of(context).primaryColor.withOpacity(0.5),
             highlightColor: Theme.of(context).primaryColor,
-            loop: 0,
             period: Times.slower,
             child: Text(
               S.of(context).signup_switch_to_login,
