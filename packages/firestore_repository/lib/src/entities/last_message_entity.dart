@@ -3,7 +3,7 @@ import 'package:equatable/equatable.dart';
 import 'package:firestore_repository/src/models/models.dart';
 
 class LastMessageEntity extends Equatable {
-  final Message? message;
+  final MessageToSend? message;
 
   const LastMessageEntity(
     this.message,
@@ -11,9 +11,10 @@ class LastMessageEntity extends Equatable {
 
   Map<String, Object?> toJson() {
     return {
-      "lastMessage": message?.message,
-      "lastMessageSentAt": message?.timeSent,
+      "lastMessage": message?.text,
+      "lastMessageAt": message?.timeSent,
       "lastMessageFrom": message?.senderId,
+      "isNew": message?.isNew,
     };
   }
 
@@ -27,11 +28,10 @@ class LastMessageEntity extends Equatable {
 
   Map<String, Object?> toDocument() {
     return {
-      "lastMessage": message?.message,
-      // NOTE: Will refactor this anyway
-      // ignore: cast_nullable_to_non_nullable
-      "lastMessageSentAt": Timestamp?.fromDate(message?.timeSent as DateTime),
+      "lastMessage": message?.text,
+      "lastMessageAt": FieldValue.serverTimestamp(),
       "lastMessageFrom": message?.senderId,
+      "isNew": message?.isNew,
     };
   }
 }

@@ -55,12 +55,12 @@ class _MessageListState extends State<MessageList> {
 }
 
 class MessageCard extends StatelessWidget {
-  final Message? message;
+  final MessageToSend? message;
   final VoidCallback? onPress;
 
   const MessageCard({Key? key, this.message, this.onPress}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return Text(message?.message ?? '');
+    return Text(message?.text ?? '');
   }
 }

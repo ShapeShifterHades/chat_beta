@@ -59,9 +59,10 @@ class _Card extends StatelessWidget {
   final bool lastMessageFromYou;
   @override
   Widget build(BuildContext context) {
-    // String? _dateTop = DateFormat('EEE, MM-dd').format(chat.lastMessageAt!);
-    final String _dateBottom =
-        DateFormat('kk:mm').format(chat.lastMessageSentAt!);
+    // Last message time, if empty - chatroom creation time.
+    final String _dateBottom = (chat.lastMessageAt != null)
+        ? DateFormat('kk:mm').format(chat.lastMessageAt!)
+        : DateFormat('kk:mm').format(chat.createdAt!);
     return InkWell(
       onTap: onPress,
       child: Row(
@@ -96,7 +97,7 @@ class _Card extends StatelessWidget {
                       child: Opacity(
                         opacity: 0.64,
                         child: Text(
-                          chat.lastMessage!,
+                          chat.lastMessage ?? "Conversation is empty.",
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
                           style: TextStyles.body3,

@@ -10,7 +10,7 @@ abstract class MessagesState extends Equatable {
 class MessagesLoading extends MessagesState {}
 
 class MessagesLoaded extends MessagesState {
-  final List<Message> messages;
+  final List<MessageToSend> messages;
 
   const MessagesLoaded([this.messages = const []]);
 

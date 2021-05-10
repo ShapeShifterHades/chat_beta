@@ -19,8 +19,8 @@ class ChatView extends StatelessWidget {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         onPressed: () =>
-            BlocProvider.of<MessageBloc>(context).add(AddMessage(Message(
-          message: 'Yo nigga its working!',
+            BlocProvider.of<MessageBloc>(context).add(AddMessage(MessageToSend(
+          text: 'This is a step to victory!',
           senderId: authId,
           recieverId: chat?.id,
           timeSent: DateTime.now(),

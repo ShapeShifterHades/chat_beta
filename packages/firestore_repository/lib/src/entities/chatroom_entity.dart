@@ -6,19 +6,19 @@ class ChatroomEntity extends Equatable {
   final String? username;
   final String? lastMessage;
   final String? lastMessageFrom;
-  final Timestamp? lastMessageSentAt;
-  final Timestamp? lastMessageRecievedAt;
+  final Timestamp? lastMessageAt;
+  final bool? isNew;
   final Timestamp? createdAt;
 
-  const ChatroomEntity(
+  const ChatroomEntity({
     this.createdAt,
     this.id,
-    this.username, [
+    this.username,
     this.lastMessage,
     this.lastMessageFrom,
-    this.lastMessageSentAt,
-    this.lastMessageRecievedAt,
-  ]);
+    this.lastMessageAt,
+    this.isNew,
+  });
 
   Map<String, Object?> toJson() {
     return {
@@ -27,8 +27,8 @@ class ChatroomEntity extends Equatable {
       "username": username,
       "lastMessage": lastMessage,
       "lastMessageFrom": lastMessageFrom,
-      "lastMessageSentAt": lastMessageSentAt,
-      "lastMessageRecievedAt": lastMessageRecievedAt,
+      "lastMessageSendAt": lastMessageAt,
+      "isNew": isNew,
     };
   }
 
@@ -39,8 +39,8 @@ class ChatroomEntity extends Equatable {
         username,
         lastMessage,
         lastMessageFrom,
-        lastMessageSentAt,
-        lastMessageRecievedAt,
+        lastMessageAt,
+        isNew,
       ];
 
   @override
@@ -49,8 +49,8 @@ class ChatroomEntity extends Equatable {
       TodoEntity { name: $id,
       username: $username,
       last message from: $lastMessageFrom,
-      last message sent at: $lastMessageSentAt,
-      last message recieved at: $lastMessageRecievedAt,
+      last message sent at: $lastMessageAt,
+      last message is new: $isNew,
       last message: $lastMessage,
       createdAt: $createdAt}''';
   }
@@ -61,8 +61,8 @@ class ChatroomEntity extends Equatable {
         username = json["username"] as String?,
         lastMessage = json["lastMessage"] as String?,
         lastMessageFrom = json["lastMessageFrom"] as String?,
-        lastMessageSentAt = json["lastMessageSentAt"] as Timestamp?,
-        lastMessageRecievedAt = json["lastMessageRecievedAt"] as Timestamp?;
+        lastMessageAt = json["lastMessageAt"] as Timestamp?,
+        isNew = json["isNew"] as bool?;
 
   ChatroomEntity.fromSnapshot(DocumentSnapshot snap)
       : createdAt = snap.data()!["createdAt"] as Timestamp?,
@@ -70,9 +70,8 @@ class ChatroomEntity extends Equatable {
         username = snap.data()!["username"] as String?,
         lastMessage = snap.data()!["lastMessage"] as String?,
         lastMessageFrom = snap.data()!["lastMessageFrom"] as String?,
-        lastMessageSentAt = snap.data()!["lastMessageSentAt"] as Timestamp?,
-        lastMessageRecievedAt =
-            snap.data()!["lastMessageRecievedAt"] as Timestamp?;
+        lastMessageAt = snap.data()!["lastMessageAt"] as Timestamp?,
+        isNew = snap.data()!["isNew"] as bool?;
 
   Map<String, Object?> toDocument() {
     return {
@@ -81,8 +80,8 @@ class ChatroomEntity extends Equatable {
       "username": username,
       "lastMessage": lastMessage,
       "lastMessageFrom": lastMessageFrom,
-      "lastMessageSentAt": lastMessageSentAt,
-      "lastMessageRecievedAt": lastMessageRecievedAt,
+      "lastMessageAt": lastMessageAt,
+      "isNew": isNew,
     };
   }
 }

@@ -1,11 +1,13 @@
 // ignore: implementation_imports
-import 'package:firestore_repository/src/models/contact.dart';
+import 'package:firestore_repository/firestore_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:void_chat_beta/core/constants/constants.dart';
 import 'package:void_chat_beta/core/constants/styles.dart';
 import 'package:void_chat_beta/generated/l10n.dart';
+import 'package:void_chat_beta/logic/bloc/authentication/authentication_bloc.dart';
+import 'package:void_chat_beta/logic/bloc/chatroom/chatroom_bloc.dart';
 import 'package:void_chat_beta/logic/bloc/contact/contact_bloc.dart';
-
 import '../contact_item_initial.dart';
 
 class FriendlistContent extends StatelessWidget {
@@ -51,12 +53,14 @@ class _Divider extends StatelessWidget {
 }
 
 class _FriendsListViewBuilder extends StatelessWidget {
-  const _FriendsListViewBuilder({
+  _FriendsListViewBuilder({
     Key? key,
     required this.sorted,
   }) : super(key: key);
 
   final List<Contact> sorted;
+  final FirestoreChatroomRepository firestoreChatroomRepository =
+      FirestoreChatroomRepository();
 
   @override
   Widget build(BuildContext context) {
@@ -64,9 +68,22 @@ class _FriendsListViewBuilder extends StatelessWidget {
       shrinkWrap: true,
       itemCount: sorted.length,
       itemBuilder: (context, index) {
-        return ContactItem(
-          sorted: sorted,
-          index: index,
+        return GestureDetector(
+          onTap: () async {
+            BlocProvider.of<ChatroomBloc>(context).add(
+              AddChatroom(
+                Chatroom(id: sorted[index].id!),
+              ),
+            );
+            final Chatroom args = await firestoreChatroomRepository.getChatroom(
+                BlocProvider.of<AuthenticationBloc>(context).state.user.id,
+                sorted[index].id!);
+            Navigator.of(context).pushNamed(chatRoute, arguments: args);
+          },
+          child: ContactItem(
+            sorted: sorted,
+            index: index,
+          ),
         );
       },
     );

@@ -17,7 +17,7 @@ class LoadMessages extends MessagesEvent {
 }
 
 class AddMessage extends MessagesEvent {
-  final Message message;
+  final MessageToSend message;
 
   const AddMessage(this.message);
 
@@ -26,7 +26,7 @@ class AddMessage extends MessagesEvent {
 }
 
 class UpdateMessage extends MessagesEvent {
-  final Message updatedMessage;
+  final MessageToSend updatedMessage;
 
   const UpdateMessage(this.updatedMessage);
 
@@ -35,7 +35,7 @@ class UpdateMessage extends MessagesEvent {
 }
 
 class DeleteMessage extends MessagesEvent {
-  final Message message;
+  final MessageToSend message;
 
   const DeleteMessage(this.message);
 
@@ -44,7 +44,7 @@ class DeleteMessage extends MessagesEvent {
 }
 
 class MessagesUpdated extends MessagesEvent {
-  final List<Message> messages;
+  final List<MessageToSend> messages;
 
   const MessagesUpdated(this.messages);
 
