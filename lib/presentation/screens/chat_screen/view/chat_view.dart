@@ -2,56 +2,37 @@ import 'package:firestore_repository/firestore_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:keyboard_attachable/keyboard_attachable.dart';
-import 'package:void_chat_beta/logic/bloc/authentication/authentication_bloc.dart';
 import 'package:void_chat_beta/logic/bloc/message/message_bloc.dart';
+import 'package:void_chat_beta/presentation/screens/chat_screen/widgets/chat_screen.dart';
 import 'package:void_chat_beta/presentation/screens/chat_screen/widgets/input_board.dart';
-import 'package:void_chat_beta/presentation/screens/chat_screen/widgets/message_list.dart';
 import 'package:void_chat_beta/presentation/screens/common_ui/ui.dart';
 
-class ChatView extends StatelessWidget {
-  final Chatroom? chat;
+class ChatView extends StatefulWidget {
+  final Chatroom chat;
 
-  const ChatView({Key? key, this.chat}) : super(key: key);
+  const ChatView({Key? key, required this.chat}) : super(key: key);
+
+  @override
+  _ChatViewState createState() => _ChatViewState();
+}
+
+class _ChatViewState extends State<ChatView> {
+  ScrollController scrollController = ScrollController();
+
+  @override
+  void initState() {
+    BlocProvider.of<MessageBloc>(context).add(LoadMessages(widget.chat.id));
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-    final String authId =
-        BlocProvider.of<AuthenticationBloc>(context).state.user.id;
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        onPressed: () =>
-            BlocProvider.of<MessageBloc>(context).add(AddMessage(MessageToSend(
-          text: 'This is a step to victory!',
-          senderId: authId,
-          recieverId: chat?.id,
-          timeSent: DateTime.now(),
-        ))),
-      ),
       resizeToAvoidBottomInset: false,
       body: UI(
         body: FooterLayout(
-          footer: const InputBoard(),
-          child: Center(
-            child: SizedBox.expand(
-              child: Column(
-                children: [
-                  const SizedBox(
-                    height: 35.5,
-                    width: double.infinity,
-                  ),
-                  Expanded(
-                    child: Container(
-                      margin: const EdgeInsets.only(
-                          left: 25, bottom: 5, right: 5, top: 5),
-                      decoration: BoxDecoration(
-                          color: Colors.white.withOpacity(0.06),
-                          borderRadius: BorderRadius.circular(10)),
-                      child: MessageList(chat: chat),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
+          footer: InputBoard(chat: widget.chat, controller: scrollController),
+          child: ChatScreen(chat: widget.chat, controller: scrollController),
         ),
       ),
     );

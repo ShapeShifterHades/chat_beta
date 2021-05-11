@@ -26,7 +26,7 @@ class FirestoreChatroomRepository {
     try {
       final DocumentSnapshot snap =
           await _getChatroomCollection(authId).doc(chatId).get();
-      return  Chatroom.fromEntity(ChatroomEntity.fromSnapshot(snap));
+      return Chatroom.fromEntity(ChatroomEntity.fromSnapshot(snap));
     } catch (e) {
       rethrow;
     }
@@ -56,8 +56,10 @@ class FirestoreChatroomRepository {
           .toJson();
 
       // Create documents with our data
-      batch.set(_ourDoc, _chatroom);
-      batch.set(_userDoc, _chatroomMirror);
+      batch.set(
+          _ourDoc, _chatroom, SetOptions(mergeFields: ['id', 'username']));
+      batch.set(_userDoc, _chatroomMirror,
+          SetOptions(mergeFields: ['id', 'username']));
 
       // Atomically commit changes
       batch.commit();

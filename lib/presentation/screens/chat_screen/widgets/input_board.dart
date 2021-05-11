@@ -1,11 +1,46 @@
+import 'package:firestore_repository/firestore_repository.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:keyboard_attachable/keyboard_attachable.dart';
 import 'package:void_chat_beta/core/constants/styles.dart';
+import 'package:void_chat_beta/logic/bloc/authentication/authentication_bloc.dart';
+import 'package:void_chat_beta/logic/bloc/message/message_bloc.dart';
 
-class InputBoard extends StatelessWidget {
+class InputBoard extends StatefulWidget {
   const InputBoard({
     Key? key,
+    required this.chat,
+    required this.controller,
   }) : super(key: key);
+  final Chatroom chat;
+  final ScrollController controller;
+
+  @override
+  _InputBoardState createState() => _InputBoardState();
+}
+
+class _InputBoardState extends State<InputBoard> {
+  final TextEditingController _textEditingController = TextEditingController();
+
+  void _sendMessage(String text) {
+    if (_textEditingController.value.text.isNotEmpty) {
+      final String _authId =
+          BlocProvider.of<AuthenticationBloc>(context).state.user.id;
+      BlocProvider.of<MessageBloc>(context).add(
+        AddMessage(
+          MessageToSend(
+            isNew: true,
+            recieverId: widget.chat.id,
+            senderId: _authId,
+            text: _textEditingController.value.text,
+          ),
+        ),
+      );
+      widget.controller.position.maxScrollExtent;
+      _textEditingController.clear();
+    }
+    return;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -46,6 +81,7 @@ class InputBoard extends StatelessWidget {
                             height: 40,
                             child: Center(
                               child: TextFormField(
+                                controller: _textEditingController,
                                 style: TextStyles.body1,
                                 cursorColor: Theme.of(context).primaryColor,
                                 showCursor: true,
@@ -65,14 +101,19 @@ class InputBoard extends StatelessWidget {
                         Container(
                           width: 40,
                           alignment: const Alignment(0, 0),
-                          child: IconButton(
-                            onPressed: () {},
-                            icon: Icon(
-                              Icons.send,
-                              size: 28,
-                              color: Theme.of(context)
-                                  .primaryColor
-                                  .withOpacity(0.82),
+                          child: Transform.translate(
+                            offset: const Offset(0, 1.5),
+                            child: IconButton(
+                              onPressed: () {
+                                _sendMessage(_textEditingController.value.text);
+                              },
+                              icon: Icon(
+                                Icons.send,
+                                size: 28,
+                                color: Theme.of(context)
+                                    .primaryColor
+                                    .withOpacity(0.62),
+                              ),
                             ),
                           ),
                         ),

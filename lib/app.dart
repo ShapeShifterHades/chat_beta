@@ -179,7 +179,7 @@ class AppView extends StatelessWidget {
                   final Chatroom? args = settings.arguments as Chatroom?;
 
                   page = ChatView(
-                    chat: args,
+                    chat: args!,
                   );
                 }
 

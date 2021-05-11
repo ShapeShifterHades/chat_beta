@@ -6,11 +6,11 @@ import 'package:void_chat_beta/core/constants/styles.dart';
 import 'package:void_chat_beta/generated/l10n.dart';
 import 'package:void_chat_beta/presentation/screens/login_screen/widgets/auth_custom_frame/custom_clip_path.dart';
 import 'package:void_chat_beta/presentation/screens/login_screen/widgets/form_header_signup.dart';
-import 'package:void_chat_beta/presentation/screens/login_screen/widgets/main_frame/OrDivider.dart';
 import 'package:void_chat_beta/presentation/screens/login_screen/widgets/main_frame/buttons_divider.dart';
 import 'package:void_chat_beta/presentation/screens/login_screen/widgets/main_frame/constants.dart';
 import 'package:void_chat_beta/presentation/screens/login_screen/widgets/main_frame/login_submit_button.dart';
 import 'package:void_chat_beta/presentation/screens/login_screen/widgets/main_frame/login_text_forms.dart';
+import 'package:void_chat_beta/presentation/screens/login_screen/widgets/main_frame/or_divider.dart';
 import 'package:void_chat_beta/presentation/screens/login_screen/widgets/main_frame/settings_box.dart';
 
 import 'button_model.dart';

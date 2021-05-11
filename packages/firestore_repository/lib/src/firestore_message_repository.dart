@@ -78,6 +78,7 @@ class FirestoreMessageRepository {
 
   Stream<List<MessageToSend>> messages(String? authId, String? roomId) {
     return _getMessagesCollection(authId!, roomId!)
+        .orderBy('timeSent', descending: true)
         .snapshots()
         .map((QuerySnapshot snapshot) {
       return snapshot.docs

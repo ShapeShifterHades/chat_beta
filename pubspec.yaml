@@ -13,6 +13,7 @@ dependencies:
 
   cupertino_icons: ^0.1.2
   flutter_keyboard_visibility: any
+  timeago: ^3.0.2
   keyboard_attachable: ^2.0.0
   font_awesome_flutter: ^9.0.0
   bloc: any
