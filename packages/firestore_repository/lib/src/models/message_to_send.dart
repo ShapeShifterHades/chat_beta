@@ -14,8 +14,8 @@ class MessageToSend {
     this.text,
     this.isNew = false,
     this.docId,
-    DateTime? timeSent,
-  }) : timeSent = timeSent ?? DateTime.now();
+    this.timeSent,
+  });
 
   MessageToSendEntity toEntity() {
     return MessageToSendEntity(

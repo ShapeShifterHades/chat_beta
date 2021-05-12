@@ -45,12 +45,6 @@ class MessageBloc extends Bloc<MessagesEvent, MessagesState> {
   }
 
   Stream<MessagesState> _mapAddMessageToState(AddMessage event) async* {
-    safePrint('''
-    in MessagesBloc values are
-    ${event.message.toString()}
-    $authId
-    ${event.message.recieverId}
-    ''');
     _firestoreMessageRepository?.addMessage(
         event.message, authId, event.message.recieverId);
   }

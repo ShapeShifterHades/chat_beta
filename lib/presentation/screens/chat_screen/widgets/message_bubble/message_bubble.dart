@@ -25,14 +25,6 @@ class MessageBubble extends StatelessWidget {
         mainAxisAlignment:
             isMe ? MainAxisAlignment.end : MainAxisAlignment.start,
         children: [
-          if (!isMe) ...[
-            const CircleAvatar(
-              radius: 16,
-              backgroundImage:
-                  AssetImage('assets/images/avatar-placeholder.png'),
-            ),
-            const SizedBox(width: 3),
-          ],
           TextMessage(message: message),
           if (isMe) MessageStatusDot(message)
         ],
@@ -101,18 +93,20 @@ class TextMessage extends StatelessWidget {
           ),
           decoration: BoxDecoration(
             color: isMe
-                ? Theme.of(context).primaryColor.withOpacity(0.1)
-                : Theme.of(context).scaffoldBackgroundColor,
+                ? Theme.of(context).primaryColor.withOpacity(0.15)
+                : Theme.of(context).splashColor.withRed(100),
             borderRadius: BorderRadius.circular(8),
           ),
-          child: Text(message.text!, style: TextStyles.body2),
+          child:
+              Text(message.text! + message.toString(), style: TextStyles.body2),
         ),
         Row(
           mainAxisAlignment:
               isMe ? MainAxisAlignment.end : MainAxisAlignment.start,
           children: [
             Padding(
-              padding: const EdgeInsets.symmetric(vertical: 2.0),
+              padding:
+                  const EdgeInsets.symmetric(vertical: 2.0, horizontal: 4.0),
               child: Text(
                 time,
                 textAlign: TextAlign.end,

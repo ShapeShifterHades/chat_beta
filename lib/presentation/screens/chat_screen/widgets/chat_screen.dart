@@ -17,18 +17,15 @@ class ChatScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.only(left: 25, bottom: 5, right: 5, top: 40.5),
-      decoration: BoxDecoration(
-          color: Theme.of(context).primaryColor.withOpacity(0.06),
-          borderRadius: BorderRadius.circular(10)),
+    return Padding(
+      padding: const EdgeInsets.only(left: 25, bottom: 5, right: 5, top: 56.5),
       child: BlocBuilder<MessageBloc, MessagesState>(
         builder: (context, state) {
           if (state is MessagesLoaded) {
             final messages = state.messages;
-
             if (messages.isNotEmpty) {
               return ListView.builder(
+                shrinkWrap: true,
                 controller: controller,
                 reverse: true,
                 itemCount: messages.length,

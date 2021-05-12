@@ -45,7 +45,7 @@ class FirestoreMessageRepository {
           SetOptions(merge: true));
 
       // Atomically commit the changes.
-      await batch.commit();
+      batch.commit();
     } catch (e) {
       rethrow;
     }
@@ -81,10 +81,13 @@ class FirestoreMessageRepository {
         .orderBy('timeSent', descending: true)
         .snapshots()
         .map((QuerySnapshot snapshot) {
-      return snapshot.docs
-          .map((doc) =>
-              MessageToSend.fromEntity(MessageToSendEntity.fromSnapshot(doc)))
-          .toList();
+      if (snapshot.metadata.isFromCache) {}
+      return snapshot.docs.map((doc) {
+        if (doc.metadata.hasPendingWrites) {
+          print('AAAAAAAAAAAAA ${doc.data()} IS CACHED!!!');
+        }
+        return MessageToSend.fromEntity(MessageToSendEntity.fromSnapshot(doc));
+      }).toList();
     });
   }
 }
