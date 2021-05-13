@@ -11,41 +11,69 @@ import 'package:void_chat_beta/presentation/screens/chat_screen/widgets/message_
 enum MessageOwner { myself, other }
 
 @immutable
-class MessageBubble extends StatelessWidget {
+class MessageBubble extends StatefulWidget {
   const MessageBubble({
     Key? key,
     required this.message,
     required this.child,
-    required this.animationController,
+    required this.index,
   }) : super(key: key);
 
   final MessageToSend message;
-  final AnimationController animationController;
   final Widget child;
+  final int index;
+
+  @override
+  _MessageBubbleState createState() => _MessageBubbleState();
+}
+
+class _MessageBubbleState extends State<MessageBubble> {
+  late bool _animate;
+  static late bool _isStart;
+
+  late final String authId;
+  late final bool isMine;
+  late final Alignment messageAlignment;
+  late final String time;
+
+  @override
+  void initState() {
+    _animate = false;
+    _isStart = true;
+    authId = BlocProvider.of<AuthenticationBloc>(context).state.user.id;
+    isMine = widget.message.senderId == authId;
+    messageAlignment = isMine ? Alignment.topRight : Alignment.topLeft;
+    time = (widget.message.timeSent != null)
+        ? timeago.format(widget.message.timeSent!).trim()
+        : '';
+
+    _isStart
+        ? Future.delayed(Duration(milliseconds: widget.index * 70), () {
+            setState(() {
+              _animate = true;
+              _isStart = false;
+            });
+          })
+        : _animate = true;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
-    final String authId =
-        BlocProvider.of<AuthenticationBloc>(context).state.user.id;
-    final bool isMine = message.senderId == authId;
-    final messageAlignment = isMine ? Alignment.topRight : Alignment.topLeft;
-    final String time = (message.timeSent != null)
-        ? timeago.format(message.timeSent!).trim()
-        : '';
-
     return FractionallySizedBox(
       alignment: messageAlignment,
       widthFactor: 0.90,
       child: Align(
         alignment: messageAlignment,
-        child: SizeTransition(
-          sizeFactor: CurvedAnimation(
-            parent: animationController,
-            curve: Curves.easeOut,
-          ),
-          axisAlignment: 0,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 2.0, horizontal: 8.0),
+        child: AnimatedOpacity(
+          duration: Times.slower,
+          opacity: _animate ? 1 : 0,
+          curve: Curves.easeInOutQuart,
+          child: AnimatedPadding(
+            duration: Times.slower,
+            padding: _animate
+                ? const EdgeInsets.symmetric(vertical: 2.0, horizontal: 8.0)
+                : const EdgeInsets.only(bottom: 20),
             child: Column(
               crossAxisAlignment:
                   isMine ? CrossAxisAlignment.end : CrossAxisAlignment.start,
@@ -61,7 +89,7 @@ class MessageBubble extends StatelessWidget {
                           color:
                               Theme.of(context).primaryColor.withOpacity(0.64)),
                     ),
-                    if (isMine) MessageStatusDot(message),
+                    if (isMine) MessageStatusDot(widget.message),
                   ],
                 ),
                 const SizedBox(height: 3),
@@ -98,7 +126,7 @@ class MessageBubble extends StatelessWidget {
                         child: Padding(
                           padding: const EdgeInsets.symmetric(
                               vertical: 3.0, horizontal: 8),
-                          child: child,
+                          child: widget.child,
                         ),
                       ),
                     ),

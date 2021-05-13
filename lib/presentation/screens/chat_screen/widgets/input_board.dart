@@ -11,11 +11,9 @@ class InputBoard extends StatefulWidget {
     Key? key,
     required this.chat,
     required this.controller,
-    required this.animationController,
   }) : super(key: key);
   final Chatroom chat;
   final ScrollController controller;
-  final AnimationController animationController;
 
   @override
   _InputBoardState createState() => _InputBoardState();
@@ -39,7 +37,6 @@ class _InputBoardState extends State<InputBoard> {
         ),
       );
       widget.controller.position.maxScrollExtent;
-      widget.animationController.forward();
       _textEditingController.clear();
     }
     return;

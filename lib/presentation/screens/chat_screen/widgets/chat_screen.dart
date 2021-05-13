@@ -11,12 +11,10 @@ class ChatScreen extends StatelessWidget {
     Key? key,
     required this.chat,
     required this.controller,
-    required this.animationController,
   }) : super(key: key);
 
   final Chatroom chat;
   final ScrollController controller;
-  final AnimationController animationController;
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +32,7 @@ class ChatScreen extends StatelessWidget {
                 itemCount: messages.length,
                 itemBuilder: (context, index) {
                   return MessageBubble(
-                    animationController: animationController,
+                    index: index,
                     message: messages[index],
                     child: Text(
                       messages[index].text!,

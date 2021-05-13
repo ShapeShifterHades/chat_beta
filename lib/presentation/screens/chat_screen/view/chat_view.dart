@@ -19,24 +19,11 @@ class ChatView extends StatefulWidget {
 
 class _ChatViewState extends State<ChatView> with TickerProviderStateMixin {
   ScrollController scrollController = ScrollController();
-  late final AnimationController animationController;
 
   @override
   void initState() {
-    animationController = AnimationController(
-      duration: const Duration(milliseconds: 700),
-      vsync: this,
-    );
     BlocProvider.of<MessageBloc>(context).add(LoadMessages(widget.chat.id));
     super.initState();
-  }
-
-  @override
-  void dispose() {
-    for (var message in messages) {
-      message.animationController.dispose();
-    }
-    super.dispose();
   }
 
   @override
@@ -45,20 +32,14 @@ class _ChatViewState extends State<ChatView> with TickerProviderStateMixin {
       resizeToAvoidBottomInset: false,
       body: UI(
         body: FooterLayout(
-          footer: InputBoard(
-              chat: widget.chat,
-              controller: scrollController,
-              animationController: animationController),
+          footer: InputBoard(chat: widget.chat, controller: scrollController),
           child: SizedBox.expand(
             child: Stack(
               alignment: Alignment.topCenter,
               children: [
                 TopBar(widget: widget),
                 const _ChatBackground(),
-                ChatScreen(
-                    chat: widget.chat,
-                    controller: scrollController,
-                    animationController: animationController),
+                ChatScreen(chat: widget.chat, controller: scrollController),
               ],
             ),
           ),
