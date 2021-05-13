@@ -11,9 +11,11 @@ class InputBoard extends StatefulWidget {
     Key? key,
     required this.chat,
     required this.controller,
+    required this.animationController,
   }) : super(key: key);
   final Chatroom chat;
   final ScrollController controller;
+  final AnimationController animationController;
 
   @override
   _InputBoardState createState() => _InputBoardState();
@@ -37,6 +39,7 @@ class _InputBoardState extends State<InputBoard> {
         ),
       );
       widget.controller.position.maxScrollExtent;
+      widget.animationController.forward();
       _textEditingController.clear();
     }
     return;
@@ -46,80 +49,74 @@ class _InputBoardState extends State<InputBoard> {
   Widget build(BuildContext context) {
     return KeyboardAttachable(
       child: SizedBox(
-        height: 60,
+        height: 50,
         width: double.infinity,
         child: Stack(
           children: [
             Positioned.fill(
               child: Container(
                 alignment: Alignment.topCenter,
-                child: Column(
+                child: Row(
                   children: [
+                    const SizedBox(width: 25),
                     Container(
-                      width: double.infinity,
-                      height: 0.3,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        color: Theme.of(context).primaryColor.withOpacity(0.64),
-                      ),
-                    ),
-                    const SizedBox(height: 4),
-                    Container(
-                      width: double.infinity,
-                      height: 0.3,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        color: Theme.of(context).primaryColor.withOpacity(0.64),
-                      ),
-                    ),
-                    Row(
-                      children: [
-                        const SizedBox(width: 25),
-                        Expanded(
-                          child: SizedBox(
-                            width: double.infinity,
-                            height: 40,
-                            child: Center(
-                              child: TextFormField(
-                                controller: _textEditingController,
-                                style: TextStyles.body1,
-                                cursorColor: Theme.of(context).primaryColor,
-                                showCursor: true,
-                                decoration: InputDecoration(
-                                  hintText: '    Enter message',
-                                  focusColor: Theme.of(context).primaryColor,
-                                  hintStyle: TextStyles.body1,
-                                  enabledBorder: InputBorder.none,
-                                  border: InputBorder.none,
-                                  focusedBorder: InputBorder.none,
-                                ),
-                                keyboardType: TextInputType.text,
-                              ),
-                            ),
+                      width: 50,
+                      alignment: const Alignment(0, 0),
+                      child: IconButton(
+                        onPressed: () {
+                          _sendMessage(_textEditingController.value.text);
+                        },
+                        icon: Transform.rotate(
+                          angle: -1.564,
+                          child: Icon(
+                            Icons.attachment_outlined,
+                            size: 28,
+                            color: Theme.of(context)
+                                .primaryColor
+                                .withOpacity(0.42),
                           ),
                         ),
-                        Container(
-                          width: 40,
-                          alignment: const Alignment(0, 0),
-                          child: Transform.translate(
-                            offset: const Offset(0, 1.5),
-                            child: IconButton(
-                              onPressed: () {
-                                _sendMessage(_textEditingController.value.text);
-                              },
-                              icon: Icon(
-                                Icons.send,
-                                size: 28,
-                                color: Theme.of(context)
-                                    .primaryColor
-                                    .withOpacity(0.62),
-                              ),
+                      ),
+                    ),
+                    Expanded(
+                      child: SizedBox(
+                        width: double.infinity,
+                        height: 40,
+                        child: Center(
+                          child: TextFormField(
+                            controller: _textEditingController,
+                            style: TextStyles.body1,
+                            cursorColor: Theme.of(context).primaryColor,
+                            showCursor: true,
+                            decoration: InputDecoration(
+                              hintText: ' Message',
+                              focusColor: Theme.of(context).primaryColor,
+                              hintStyle: TextStyles.body1,
+                              enabledBorder: InputBorder.none,
+                              border: InputBorder.none,
+                              focusedBorder: InputBorder.none,
                             ),
+                            keyboardType: TextInputType.text,
                           ),
                         ),
-                        const SizedBox(width: 20),
-                      ],
+                      ),
                     ),
+                    Container(
+                      width: 40,
+                      alignment: const Alignment(0, 0),
+                      child: IconButton(
+                        onPressed: () {
+                          _sendMessage(_textEditingController.value.text);
+                        },
+                        icon: Icon(
+                          Icons.send,
+                          size: 28,
+                          color:
+                              Theme.of(context).primaryColor.withOpacity(0.42),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(width: 20),
                   ],
                 ),
               ),

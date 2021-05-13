@@ -1,8 +1,9 @@
 import 'package:firestore_repository/firestore_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:void_chat_beta/core/constants/styles.dart';
 import 'package:void_chat_beta/logic/bloc/message/message_bloc.dart';
-import 'package:void_chat_beta/presentation/screens/chat_screen/widgets/message_bubble/message_bubble.dart';
+import 'package:void_chat_beta/presentation/screens/chat_screen/widgets/message_bubble/bubble.dart';
 import 'package:void_chat_beta/presentation/styled_widgets/loading_indicator.dart';
 
 class ChatScreen extends StatelessWidget {
@@ -10,15 +11,17 @@ class ChatScreen extends StatelessWidget {
     Key? key,
     required this.chat,
     required this.controller,
+    required this.animationController,
   }) : super(key: key);
 
   final Chatroom chat;
   final ScrollController controller;
+  final AnimationController animationController;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(left: 25, bottom: 5, right: 5, top: 56.5),
+      padding: const EdgeInsets.only(left: 25, bottom: 5, top: 53.5, right: 3),
       child: BlocBuilder<MessageBloc, MessagesState>(
         builder: (context, state) {
           if (state is MessagesLoaded) {
@@ -31,7 +34,12 @@ class ChatScreen extends StatelessWidget {
                 itemCount: messages.length,
                 itemBuilder: (context, index) {
                   return MessageBubble(
+                    animationController: animationController,
                     message: messages[index],
+                    child: Text(
+                      messages[index].text!,
+                      style: TextStyles.body1,
+                    ),
                   );
                 },
               );

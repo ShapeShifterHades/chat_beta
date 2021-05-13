@@ -40,17 +40,34 @@ class MessageStatusDot extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.only(left: 4, top: 4),
+      margin: const EdgeInsets.only(left: 6, top: 3),
       height: 12,
       width: 12,
-      decoration: BoxDecoration(
-        color: _getDotColor(message),
+      decoration: const BoxDecoration(
+        color: Colors.transparent,
         shape: BoxShape.circle,
       ),
-      child: Icon(
-        message.timeSent == null ? Icons.close : Icons.done,
-        size: 8,
-        color: Theme.of(context).primaryColor,
+      child: Stack(
+        clipBehavior: Clip.none,
+        children: [
+          Positioned.fill(
+            child: Icon(
+              message.timeSent == null ? Icons.update : Icons.done,
+              size: 10,
+              color: _getDotColor(message),
+            ),
+          ),
+          if (message.isNew && message.timeSent != null)
+            Positioned(
+              left: -3,
+              top: 1,
+              child: Icon(
+                Icons.done,
+                size: 10,
+                color: _getDotColor(message),
+              ),
+            ),
+        ],
       ),
     );
   }
@@ -61,8 +78,8 @@ class MessageStatusDot extends StatelessWidget {
 
     if (_sent == null) {
       return Colors.yellow;
-    } else if (_isNew) {
-      return const Color(0xFF00695C);
+    } else if (_isNew == true) {
+      return Colors.lightGreen;
     }
     return Colors.transparent;
   }
@@ -81,24 +98,31 @@ class TextMessage extends StatelessWidget {
     final String authId =
         BlocProvider.of<AuthenticationBloc>(context).state.user.id;
     final bool isMe = message.senderId == authId;
-    final String time = timeago.format(message.timeSent!).trim();
+    final String time = (message.timeSent != null)
+        ? timeago.format(message.timeSent!).trim()
+        : '';
     return Column(
       crossAxisAlignment:
           isMe ? CrossAxisAlignment.end : CrossAxisAlignment.start,
       children: [
-        Container(
-          padding: const EdgeInsets.symmetric(
-            horizontal: 12,
-            vertical: 6,
-          ),
-          decoration: BoxDecoration(
-            color: isMe
-                ? Theme.of(context).primaryColor.withOpacity(0.15)
-                : Theme.of(context).splashColor.withRed(100),
-            borderRadius: BorderRadius.circular(8),
-          ),
-          child:
-              Text(message.text! + message.toString(), style: TextStyles.body2),
+        Row(
+          children: [
+            Container(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 12,
+                vertical: 6,
+              ),
+              decoration: BoxDecoration(
+                color: isMe
+                    ? Theme.of(context).primaryColor.withOpacity(0.15)
+                    : Theme.of(context).splashColor.withRed(100),
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: Text(message.text!,
+                  textWidthBasis: TextWidthBasis.longestLine,
+                  style: TextStyles.body2),
+            ),
+          ],
         ),
         Row(
           mainAxisAlignment:

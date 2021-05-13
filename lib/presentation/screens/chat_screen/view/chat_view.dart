@@ -17,13 +17,26 @@ class ChatView extends StatefulWidget {
   _ChatViewState createState() => _ChatViewState();
 }
 
-class _ChatViewState extends State<ChatView> {
+class _ChatViewState extends State<ChatView> with TickerProviderStateMixin {
   ScrollController scrollController = ScrollController();
+  late final AnimationController animationController;
 
   @override
   void initState() {
+    animationController = AnimationController(
+      duration: const Duration(milliseconds: 700),
+      vsync: this,
+    );
     BlocProvider.of<MessageBloc>(context).add(LoadMessages(widget.chat.id));
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    for (var message in messages) {
+      message.animationController.dispose();
+    }
+    super.dispose();
   }
 
   @override
@@ -32,14 +45,20 @@ class _ChatViewState extends State<ChatView> {
       resizeToAvoidBottomInset: false,
       body: UI(
         body: FooterLayout(
-          footer: InputBoard(chat: widget.chat, controller: scrollController),
+          footer: InputBoard(
+              chat: widget.chat,
+              controller: scrollController,
+              animationController: animationController),
           child: SizedBox.expand(
             child: Stack(
               alignment: Alignment.topCenter,
               children: [
                 TopBar(widget: widget),
                 const _ChatBackground(),
-                ChatScreen(chat: widget.chat, controller: scrollController),
+                ChatScreen(
+                    chat: widget.chat,
+                    controller: scrollController,
+                    animationController: animationController),
               ],
             ),
           ),
@@ -67,7 +86,7 @@ class _TopBarState extends State<TopBar> {
   @override
   Widget build(BuildContext context) {
     return Positioned(
-        top: 10,
+        top: 2,
         left: 40,
         right: 10,
         child: Row(
@@ -121,10 +140,21 @@ class _ChatBackground extends StatelessWidget {
   Widget build(BuildContext context) {
     return Positioned.fill(
       child: Container(
-        margin: const EdgeInsets.only(left: 25, bottom: 5, right: 5, top: 56.5),
+        margin: const EdgeInsets.only(left: 25, bottom: 2, right: 5, top: 50.5),
         decoration: BoxDecoration(
-            color: Theme.of(context).primaryColor.withOpacity(0.06),
-            borderRadius: BorderRadius.circular(10)),
+          color: Theme.of(context).primaryColor.withOpacity(0.06),
+          borderRadius: BorderRadius.circular(10),
+          boxShadow: const [
+            BoxShadow(
+              color: Color(0xff141414),
+            ),
+            BoxShadow(
+              color: Color(0xff303030),
+              spreadRadius: -1.0,
+              blurRadius: 4.0,
+            ),
+          ],
+        ),
         // child: SvgBackground(),
       ),
     );

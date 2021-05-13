@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:firestore_repository/firestore_repository.dart';
-import 'package:void_chat_beta/data/utils/safe_print.dart';
 import 'package:void_chat_beta/logic/bloc/authentication/authentication_bloc.dart';
 
 part 'message_event.dart';

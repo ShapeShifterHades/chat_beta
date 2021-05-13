@@ -84,7 +84,15 @@ class FirestoreMessageRepository {
       if (snapshot.metadata.isFromCache) {}
       return snapshot.docs.map((doc) {
         if (doc.metadata.hasPendingWrites) {
-          print('AAAAAAAAAAAAA ${doc.data()} IS CACHED!!!');
+          final MessageToSend cached =
+              MessageToSend.fromEntity(MessageToSendEntity.fromSnapshot(doc));
+          final MessageToSend res = MessageToSend(
+              docId: cached.docId,
+              isNew: cached.isNew,
+              recieverId: cached.recieverId,
+              senderId: cached.senderId,
+              text: cached.text);
+          return res;
         }
         return MessageToSend.fromEntity(MessageToSendEntity.fromSnapshot(doc));
       }).toList();

@@ -76,20 +76,16 @@ class _Card extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Column(
-                        children: [
-                          Text(_dateBottom, style: TextStyles.callout1),
-                        ],
-                      ),
                       Text(
                         chat.username!,
                         style: TextStyles.callout1,
                       ),
+                      Text(_dateBottom, style: TextStyles.callout1),
                     ],
                   ),
                 ),
                 Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
                     if (lastMessageFromYou)
                       Text('You: ', style: TextStyles.body3),
