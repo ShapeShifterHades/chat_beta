@@ -87,6 +87,10 @@ class _TopBarState extends State<TopBar> {
               style: const TextStyle(color: Colors.deepPurple),
               underline: Container(),
               onChanged: (String? newValue) {
+                if (newValue == 'Clear history') {
+                  BlocProvider.of<MessageBloc>(context)
+                      .add(DeleteAllMessages(widget.widget.chat.id));
+                }
                 setState(() {
                   dropdownValue = newValue!;
                 });
@@ -123,7 +127,7 @@ class _ChatBackground extends StatelessWidget {
       child: Container(
         margin: const EdgeInsets.only(left: 25, bottom: 2, right: 5, top: 50.5),
         decoration: BoxDecoration(
-          color: Theme.of(context).primaryColor.withOpacity(0.06),
+          color: Theme.of(context).primaryColor.withOpacity(0.02),
           borderRadius: BorderRadius.circular(10),
           boxShadow: const [
             BoxShadow(

@@ -7,7 +7,7 @@ class Chatroom {
   final String? lastMessage;
   final String? lastMessageFrom;
   final DateTime? lastMessageAt;
-  final bool? isNew;
+  final int? newMessages;
   final DateTime? createdAt;
 
   Chatroom({
@@ -17,7 +17,7 @@ class Chatroom {
     this.lastMessage,
     this.lastMessageFrom,
     this.lastMessageAt,
-    this.isNew,
+    this.newMessages,
   }) : createdAt = createdAt ?? DateTime.now();
 
   Chatroom copyWith({
@@ -41,7 +41,6 @@ class Chatroom {
       lastMessageFrom: lastMessageFrom,
       lastMessageAt:
           (lastMessageAt != null) ? Timestamp.fromDate(lastMessageAt!) : null,
-      isNew: isNew,
     );
   }
 
@@ -56,5 +55,5 @@ class Chatroom {
             ? DateTime?.fromMillisecondsSinceEpoch(
                 entity.lastMessageAt!.millisecondsSinceEpoch)
             : null,
-        isNew = entity.isNew;
+        newMessages = entity.newMessages;
 }

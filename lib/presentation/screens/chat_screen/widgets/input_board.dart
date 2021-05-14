@@ -24,6 +24,12 @@ class _InputBoardState extends State<InputBoard> {
 
   void _sendMessage(String text) {
     if (_textEditingController.value.text.isNotEmpty) {
+      FocusScope.of(context).unfocus();
+      // ignore: invalid_use_of_protected_member
+      if (widget.controller.positions.isNotEmpty) {
+        widget.controller.position.maxScrollExtent;
+      }
+
       final String _authId =
           BlocProvider.of<AuthenticationBloc>(context).state.user.id;
       BlocProvider.of<MessageBloc>(context).add(
@@ -36,7 +42,6 @@ class _InputBoardState extends State<InputBoard> {
           ),
         ),
       );
-      widget.controller.position.maxScrollExtent;
       _textEditingController.clear();
     }
     return;

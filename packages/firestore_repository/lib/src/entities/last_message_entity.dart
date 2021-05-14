@@ -12,9 +12,17 @@ class LastMessageEntity extends Equatable {
   Map<String, Object?> toJson() {
     return {
       "lastMessage": message?.text,
-      "lastMessageAt": message?.timeSent,
+      "lastMessageAt": FieldValue.serverTimestamp(),
       "lastMessageFrom": message?.senderId,
-      "isNew": message?.isNew,
+      "newMessages": FieldValue.increment(1),
+    };
+  }
+
+  Map<String, Object?> toJsonWithIncrement() {
+    return {
+      "lastMessage": message?.text,
+      "lastMessageAt": FieldValue.serverTimestamp(),
+      "lastMessageFrom": message?.senderId,
     };
   }
 
@@ -31,7 +39,15 @@ class LastMessageEntity extends Equatable {
       "lastMessage": message?.text,
       "lastMessageAt": FieldValue.serverTimestamp(),
       "lastMessageFrom": message?.senderId,
-      "isNew": message?.isNew,
+    };
+  }
+
+  Map<String, Object?> toDocumentWithIncrement() {
+    return {
+      "lastMessage": message?.text,
+      "lastMessageAt": FieldValue.serverTimestamp(),
+      "lastMessageFrom": message?.senderId,
+      "newMessages": FieldValue.increment(1),
     };
   }
 }

@@ -11,10 +11,6 @@ class MessageStatusDot extends StatelessWidget {
       margin: const EdgeInsets.only(left: 6),
       height: 12,
       width: 12,
-      decoration: const BoxDecoration(
-        color: Colors.black,
-        // shape: BoxShape.circle,
-      ),
       child: Stack(
         clipBehavior: Clip.none,
         children: [
@@ -25,7 +21,7 @@ class MessageStatusDot extends StatelessWidget {
               color: _getDotColor(message),
             ),
           ),
-          if (message.isNew && message.timeSent != null)
+          if (!message.isNew && message.timeSent != null)
             Positioned(
               left: -3,
               top: 1,
@@ -35,11 +31,6 @@ class MessageStatusDot extends StatelessWidget {
                 color: _getDotColor(message),
               ),
             ),
-          // Container(
-          //   width: 16,
-          //   height: 16,
-          //   color: Colors.black,
-          // ),
         ],
       ),
     );
@@ -54,6 +45,6 @@ class MessageStatusDot extends StatelessWidget {
     } else if (_isNew == true) {
       return Colors.lightGreen;
     }
-    return Colors.transparent;
+    return Colors.green;
   }
 }

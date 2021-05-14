@@ -9,13 +9,13 @@ part 'message_event.dart';
 part 'message_state.dart';
 
 class MessageBloc extends Bloc<MessagesEvent, MessagesState> {
-  final FirestoreMessageRepository? _firestoreMessageRepository;
+  final FirestoreMessageRepository _firestoreMessageRepository;
   final String authId;
   StreamSubscription? _messagesSubscription;
   MessageBloc(
       {required FirestoreMessageRepository? firestoreMessageRepository,
       required AuthenticationBloc authenticationBloc})
-      : _firestoreMessageRepository = firestoreMessageRepository,
+      : _firestoreMessageRepository = firestoreMessageRepository!,
         authId = authenticationBloc.state.user.id,
         super(MessagesLoading());
 
@@ -33,29 +33,36 @@ class MessageBloc extends Bloc<MessagesEvent, MessagesState> {
       yield* _mapDeleteMessageToState(event);
     } else if (event is MessagesUpdated) {
       yield* _mapMessagesUpdatedToState(event);
+    } else if (event is DeleteAllMessages) {
+      yield* _mapDeleteAllMessagesToState(event);
     }
   }
 
   Stream<MessagesState> _mapLoadMessagesToState(LoadMessages event) async* {
     _messagesSubscription?.cancel();
     _messagesSubscription = _firestoreMessageRepository
-        ?.messages(authId, event.id)
+        .messages(authId, event.id)
         .listen((messages) => add(MessagesUpdated(messages)));
   }
 
   Stream<MessagesState> _mapAddMessageToState(AddMessage event) async* {
-    _firestoreMessageRepository?.addMessage(
-        event.message, authId, event.message.recieverId);
+    _firestoreMessageRepository.addMessage(
+        event.message, authId, event.message.recieverId!);
   }
 
   Stream<MessagesState> _mapUpdateMessageToState(UpdateMessage event) async* {
-    _firestoreMessageRepository?.updateMessage(
+    _firestoreMessageRepository.updateMessage(
         event.updatedMessage, authId, event.updatedMessage.recieverId);
   }
 
   Stream<MessagesState> _mapDeleteMessageToState(DeleteMessage event) async* {
-    _firestoreMessageRepository?.deleteMessage(
+    _firestoreMessageRepository.deleteMessage(
         event.message, authId, event.message.recieverId);
+  }
+
+  Stream<MessagesState> _mapDeleteAllMessagesToState(
+      DeleteAllMessages event) async* {
+    _firestoreMessageRepository.deleteAllMessages(authId, event.userId);
   }
 
   Stream<MessagesState> _mapMessagesUpdatedToState(

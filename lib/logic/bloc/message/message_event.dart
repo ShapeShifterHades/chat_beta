@@ -43,6 +43,15 @@ class DeleteMessage extends MessagesEvent {
   List<Object> get props => [message];
 }
 
+class DeleteAllMessages extends MessagesEvent {
+  final String userId;
+
+  const DeleteAllMessages(this.userId);
+
+  @override
+  List<Object> get props => [userId];
+}
+
 class MessagesUpdated extends MessagesEvent {
   final List<MessageToSend> messages;
 

@@ -7,7 +7,7 @@ class ChatroomEntity extends Equatable {
   final String? lastMessage;
   final String? lastMessageFrom;
   final Timestamp? lastMessageAt;
-  final bool? isNew;
+  final int? newMessages;
   final Timestamp? createdAt;
 
   const ChatroomEntity({
@@ -17,7 +17,7 @@ class ChatroomEntity extends Equatable {
     this.lastMessage,
     this.lastMessageFrom,
     this.lastMessageAt,
-    this.isNew,
+    this.newMessages,
   });
 
   Map<String, Object?> toJson() {
@@ -28,7 +28,6 @@ class ChatroomEntity extends Equatable {
       "lastMessage": lastMessage,
       "lastMessageFrom": lastMessageFrom,
       "lastMessageSendAt": lastMessageAt,
-      "isNew": isNew,
     };
   }
 
@@ -40,7 +39,7 @@ class ChatroomEntity extends Equatable {
         lastMessage,
         lastMessageFrom,
         lastMessageAt,
-        isNew,
+        newMessages,
       ];
 
   @override
@@ -50,7 +49,7 @@ class ChatroomEntity extends Equatable {
       username: $username,
       last message from: $lastMessageFrom,
       last message sent at: $lastMessageAt,
-      last message is new: $isNew,
+      newMessages: $newMessages,
       last message: $lastMessage,
       createdAt: $createdAt}''';
   }
@@ -62,7 +61,7 @@ class ChatroomEntity extends Equatable {
         lastMessage = json["lastMessage"] as String?,
         lastMessageFrom = json["lastMessageFrom"] as String?,
         lastMessageAt = json["lastMessageAt"] as Timestamp?,
-        isNew = json["isNew"] as bool?;
+        newMessages = json["newMessages"] as int?;
 
   ChatroomEntity.fromSnapshot(DocumentSnapshot snap)
       : createdAt = snap.data()!["createdAt"] as Timestamp?,
@@ -71,7 +70,7 @@ class ChatroomEntity extends Equatable {
         lastMessage = snap.data()!["lastMessage"] as String?,
         lastMessageFrom = snap.data()!["lastMessageFrom"] as String?,
         lastMessageAt = snap.data()!["lastMessageAt"] as Timestamp?,
-        isNew = snap.data()!["isNew"] as bool?;
+        newMessages = snap.data()!["newMessages"] as int?;
 
   Map<String, Object?> toDocument() {
     return {
@@ -81,7 +80,6 @@ class ChatroomEntity extends Equatable {
       "lastMessage": lastMessage,
       "lastMessageFrom": lastMessageFrom,
       "lastMessageAt": lastMessageAt,
-      "isNew": isNew,
     };
   }
 }

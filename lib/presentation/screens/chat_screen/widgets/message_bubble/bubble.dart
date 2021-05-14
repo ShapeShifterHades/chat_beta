@@ -6,7 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:timeago/timeago.dart' as timeago;
 import 'package:void_chat_beta/core/constants/styles.dart';
 import 'package:void_chat_beta/logic/bloc/authentication/authentication_bloc.dart';
-import 'package:void_chat_beta/presentation/screens/chat_screen/widgets/message_bubble/message_bubble.dart';
+import 'package:void_chat_beta/presentation/screens/chat_screen/widgets/message_bubble/message_status_dot.dart';
 
 enum MessageOwner { myself, other }
 
@@ -27,7 +27,8 @@ class MessageBubble extends StatefulWidget {
   _MessageBubbleState createState() => _MessageBubbleState();
 }
 
-class _MessageBubbleState extends State<MessageBubble> {
+class _MessageBubbleState extends State<MessageBubble>
+    with AutomaticKeepAliveClientMixin {
   late bool _animate;
   static late bool _isStart;
 
@@ -35,6 +36,9 @@ class _MessageBubbleState extends State<MessageBubble> {
   late final bool isMine;
   late final Alignment messageAlignment;
   late final String time;
+
+  @override
+  bool get wantKeepAlive => true;
 
   @override
   void initState() {
@@ -48,29 +52,32 @@ class _MessageBubbleState extends State<MessageBubble> {
         : '';
 
     _isStart
-        ? Future.delayed(Duration(milliseconds: widget.index * 70), () {
-            setState(() {
-              _animate = true;
-              _isStart = false;
-            });
-          })
+        ? mounted
+            ? Future.delayed(Times.fast, () {
+                setState(() {
+                  _animate = true;
+                  _isStart = false;
+                });
+              })
+            : null
         : _animate = true;
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return FractionallySizedBox(
       alignment: messageAlignment,
       widthFactor: 0.90,
       child: Align(
         alignment: messageAlignment,
         child: AnimatedOpacity(
-          duration: Times.slower,
+          duration: Times.slow,
           opacity: _animate ? 1 : 0,
           curve: Curves.easeInOutQuart,
           child: AnimatedPadding(
-            duration: Times.slower,
+            duration: Times.fast,
             padding: _animate
                 ? const EdgeInsets.symmetric(vertical: 2.0, horizontal: 8.0)
                 : const EdgeInsets.only(bottom: 20),
@@ -111,13 +118,13 @@ class _MessageBubbleState extends State<MessageBubble> {
                     child: BubbleBackground(
                       colors: [
                         if (isMine)
-                          const Color(0xFF6C7689)
+                          const Color(0xFF393d3f)
                         else
                           const Color(0xFF19B7FF),
                         if (isMine)
-                          const Color(0xFF3A364B)
+                          const Color(0xFF393d3f)
                         else
-                          const Color(0xFF491CCB),
+                          const Color(0xFF003459),
                       ],
                       child: DefaultTextStyle.merge(
                         style: const TextStyle(
