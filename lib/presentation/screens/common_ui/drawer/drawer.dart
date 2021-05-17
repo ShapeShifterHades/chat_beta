@@ -74,6 +74,8 @@ class _MenuButtonsBlock extends StatelessWidget {
             label: S.of(context).drawer_logout,
             func: () async {
               await FirebaseAuth.instance.signOut();
+              Navigator.of(context)
+                  .pushNamedAndRemoveUntil(loginRoute, (route) => false);
             },
           ),
           const SizedBox(height: 55),
@@ -145,49 +147,6 @@ class _ProfileAvatarBlock extends StatelessWidget {
             ],
           ),
         ],
-      ),
-    );
-  }
-}
-
-class TestMenuTile extends StatelessWidget {
-  final String? text;
-  const TestMenuTile({
-    Key? key,
-    this.text,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(6),
-      decoration: BoxDecoration(
-        border: Border.all(
-          color: Theme.of(context).primaryColor,
-          width: 0.4,
-        ),
-        borderRadius: BorderRadius.circular(30),
-      ),
-      child: Container(
-        width: 200,
-        height: 40,
-        alignment: Alignment.center,
-        decoration: BoxDecoration(
-          color: Theme.of(context).primaryColor,
-          border: Border.all(
-            color: Theme.of(context).backgroundColor,
-            width: 6,
-          ),
-          borderRadius: BorderRadius.circular(30),
-        ),
-        child: Text(
-          text!,
-          style: TextStyle(
-            fontSize: 18,
-            fontWeight: FontWeight.normal,
-            color: Theme.of(context).backgroundColor,
-          ),
-        ),
       ),
     );
   }

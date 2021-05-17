@@ -94,6 +94,8 @@ class MiniMenu extends StatelessWidget {
             MiniMenuTile(
               func: () async {
                 await FirebaseAuth.instance.signOut();
+                Navigator.of(context)
+                    .pushNamedAndRemoveUntil(loginRoute, (route) => false);
               },
               icon: Icons.logout,
             ),

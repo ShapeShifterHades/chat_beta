@@ -41,7 +41,7 @@ class MessageBloc extends Bloc<MessagesEvent, MessagesState> {
   Stream<MessagesState> _mapLoadMessagesToState(LoadMessages event) async* {
     _messagesSubscription?.cancel();
     _messagesSubscription = _firestoreMessageRepository
-        .messages(authId, event.id)
+        .messages(authId, event.id!)
         .listen((messages) => add(MessagesUpdated(messages)));
   }
 

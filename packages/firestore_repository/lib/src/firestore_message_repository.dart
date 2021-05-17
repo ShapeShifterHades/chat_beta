@@ -98,21 +98,16 @@ class FirestoreMessageRepository {
     return batch.commit();
   }
 
-  Stream<List<MessageToSend>> messages(String? authId, String? roomId) {
-    return _getMessagesCollection(authId!, roomId!)
+  Stream<List<MessageToSend>> messages(String authId, String roomId) {
+    return _getMessagesCollection(authId, roomId)
         .orderBy('timeSent', descending: true)
         .snapshots()
         .map((QuerySnapshot snapshot) {
       return snapshot.docs.map((doc) {
-        // if (doc.metadata.hasPendingWrites) {
-        //   return _messageIsNotSent(doc);
-        // }
-        if (doc.data()['isNew'] == true && doc.data()['senderId'] != authId) {
-          _markDocumentAsRead(doc, authId, roomId);
-          // do i need to return new copy with isNew? false?
-          print('FIRE!!!!');
+        if (doc.metadata.hasPendingWrites) {
+          return _messageIsNotSent(doc);
         }
-        doc.data()['isNew'] = false;
+
         return MessageToSend.fromEntity(MessageToSendEntity.fromSnapshot(doc));
       }).toList();
     });
@@ -130,28 +125,71 @@ class FirestoreMessageRepository {
     return res;
   }
 
-  /// Marks message [doc] isNew field as false and decrements new message counter'
-  /// by 1
+  // /// Marks message [doc] isNew field as false and decrements new message counter'
+  // /// by 1
+  // ///
+  // Future<void> _markDocumentAsRead(QueryDocumentSnapshot doc) async {
+  //   final String _senderId = doc.data()['senderId'] as String;
+  //   final String _recieverId = doc.data()['recieverId'] as String;
+
+  //   final WriteBatch batch = FirebaseFirestore.instance.batch();
+  //   // Mark document as opened in our message collection.
+  //   batch.update(doc.reference, {'isNew': false});
+
+  //   // Here we decrement new message counter in chatroom info.
+  //   final DocumentReference chatDocRef =
+  //       userCollection.doc(_recieverId).collection('chatrooms').doc(_senderId);
+  //   batch.update(chatDocRef, {'newMessages': FieldValue.increment(-1)});
+  //   // Here we notify interlocutor that his message was opened.
+  //   final DocumentReference messageDocRef = userCollection
+  //       .doc(_senderId)
+  //       .collection('chatrooms')
+  //       .doc(_recieverId)
+  //       .collection('messages')
+  //       .doc(doc.id);
+  //   batch.update(messageDocRef, {'isNew': false});
+
+  //   return batch.commit();
+  // }
+
+  /// Marks message as read and decrements message counter.
   ///
-  Future<void> _markDocumentAsRead(
-      QueryDocumentSnapshot doc, String? authId, String? roomId) {
-    final WriteBatch batch = FirebaseFirestore.instance.batch();
-    // Mark document as opened in our message collection.
-    batch.update(doc.reference, {'isNew': false});
+  /// <String>[messageId] is the documentId of message in messages collection of sender.
+  /// <String>[senderId] fireauth id of message sender.
+  /// <String>[recieverId] fireauth id of message reciever.
+  static Future<void> markAsRead(
+      String messageId, String senderId, String recieverId) async {
+    final WriteBatch _batch = FirebaseFirestore.instance.batch();
 
-    // Here we decrement new message counter in chatroom info.
-    final DocumentReference chatDocRef =
-        userCollection.doc(authId).collection('chatrooms').doc(roomId);
-    batch.update(chatDocRef, {'newMessages': FieldValue.increment(-1)});
-    // Here we notify interlocutor that his message was opened.
-    final DocumentReference messageDocRef = userCollection
-        .doc(roomId)
+    /// Reduce by 1 counter at ['newMessages'] field from ['chatrooms'] collection of [recieverId]
+    /// in document [senderId].
+    ///
+    final DocumentReference _chatroomRef = FirebaseFirestore.instance
+        .collection('users')
+        .doc(recieverId)
         .collection('chatrooms')
-        .doc(authId)
-        .collection('messages')
-        .doc(doc.id);
-    batch.update(messageDocRef, {'isNew': false});
+        .doc(senderId);
+    _batch.update(_chatroomRef, {'newMessages': FieldValue.increment(-1)});
 
-    return batch.commit();
+    /// Notify message [messageId] sender [senderId] that his message has been read.
+    ///
+    final DocumentReference _messageRef = FirebaseFirestore.instance
+        .collection('users')
+        .doc(senderId)
+        .collection('chatrooms')
+        .doc(recieverId)
+        .collection('messages')
+        .doc(messageId);
+    _batch.update(_messageRef, {'isNew': false});
+
+    final DocumentReference _messageRef2 = FirebaseFirestore.instance
+        .collection('users')
+        .doc(recieverId)
+        .collection('chatrooms')
+        .doc(senderId)
+        .collection('messages')
+        .doc(messageId);
+    _batch.update(_messageRef2, {'isNew': false});
+    return _batch.commit();
   }
 }

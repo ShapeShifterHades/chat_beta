@@ -148,7 +148,6 @@ class AppView extends StatelessWidget {
                             BlocProvider.of<ContactBloc>(context);
                             BlocProvider.of<ContactTabsBloc>(context);
                             BlocProvider.of<ChatroomBloc>(context);
-                            // BlocProvider.of<MessageBloc>(context);
                             BlocProvider.of<FinduserBloc>(context);
                             BlocProvider.of<SearchButtonBloc>(context);
                             return MessagesView();

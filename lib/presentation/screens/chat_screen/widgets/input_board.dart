@@ -24,7 +24,6 @@ class _InputBoardState extends State<InputBoard> {
 
   void _sendMessage(String text) {
     if (_textEditingController.value.text.isNotEmpty) {
-      FocusScope.of(context).unfocus();
       // ignore: invalid_use_of_protected_member
       if (widget.controller.positions.isNotEmpty) {
         widget.controller.position.maxScrollExtent;
@@ -43,6 +42,8 @@ class _InputBoardState extends State<InputBoard> {
         ),
       );
       _textEditingController.clear();
+      FocusScope.of(context).unfocus();
+      setState(() {});
     }
     return;
   }
