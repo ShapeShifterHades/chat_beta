@@ -40,7 +40,6 @@ class _ChatScreenState extends State<ChatScreen> {
       },
       child: NotificationListener<SelectNotification>(
         onNotification: (notification) {
-          print('BAM!');
           setState(() {
             selectMode = notification.selectMode;
           });
@@ -48,7 +47,7 @@ class _ChatScreenState extends State<ChatScreen> {
         },
         child: Padding(
           padding:
-              const EdgeInsets.only(left: 34, bottom: 5, top: 53.5, right: 12),
+              const EdgeInsets.only(left: 28, bottom: 5, top: 53.5, right: 8),
           child: BlocBuilder<MessageBloc, MessagesState>(
             builder: (context, state) {
               if (state is MessagesLoaded) {
