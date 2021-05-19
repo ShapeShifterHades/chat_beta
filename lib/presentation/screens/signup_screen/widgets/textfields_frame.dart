@@ -7,7 +7,7 @@ import 'package:void_chat_beta/presentation/screens/signup_screen/widgets/textfi
 import 'package:void_chat_beta/presentation/screens/signup_screen/widgets/textfields/password_input.dart';
 import 'package:void_chat_beta/presentation/screens/signup_screen/widgets/textfields/username_input.dart';
 
-class TextfieldsFrame extends StatelessWidget {
+class TextfieldsFrame extends StatefulWidget {
   const TextfieldsFrame({
     Key? key,
     required this.formFrameHeight,
@@ -16,12 +16,18 @@ class TextfieldsFrame extends StatelessWidget {
   final Animation<double>? formFrameHeight;
 
   @override
+  _TextfieldsFrameState createState() => _TextfieldsFrameState();
+}
+
+class _TextfieldsFrameState extends State<TextfieldsFrame> {
+  final _formKey = GlobalKey<FormState>();
+  @override
   Widget build(BuildContext context) {
     return ClipRect(
       child: BackdropFilter(
         filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
         child: Container(
-          height: formFrameHeight!.value,
+          height: widget.formFrameHeight!.value,
           padding: const EdgeInsets.symmetric(horizontal: 5),
           decoration: BoxDecoration(
             color: Theme.of(context).backgroundColor.withOpacity(0.4),
@@ -31,14 +37,17 @@ class TextfieldsFrame extends StatelessWidget {
             ),
           ),
           child: SingleChildScrollView(
-            child: Column(
-              children: const [
-                EmailInput(),
-                PasswordInput(),
-                ConfirmPasswordInput(),
-                UsernameInput(),
-                LicenceAgreementTile(),
-              ],
+            child: Form(
+              key: _formKey,
+              child: Column(
+                children: const [
+                  EmailInput(),
+                  PasswordInput(),
+                  ConfirmPasswordInput(),
+                  UsernameInput(),
+                  LicenceAgreementTile(),
+                ],
+              ),
             ),
           ),
         ),

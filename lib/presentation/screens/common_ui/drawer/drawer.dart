@@ -74,8 +74,6 @@ class _MenuButtonsBlock extends StatelessWidget {
             label: S.of(context).drawer_logout,
             func: () async {
               await FirebaseAuth.instance.signOut();
-              Navigator.of(context)
-                  .pushNamedAndRemoveUntil(loginRoute, (route) => false);
             },
           ),
           const SizedBox(height: 55),

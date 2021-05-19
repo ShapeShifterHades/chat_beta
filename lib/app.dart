@@ -127,78 +127,81 @@ class AppView extends StatelessWidget {
             final bool isDark =
                 BlocProvider.of<BrightnessCubit>(context).state ==
                     Brightness.dark;
-            return MaterialApp(
-              locale: Locale(context.read<LocaleCubit>().state),
-              initialRoute: '/',
-              onGenerateRoute: (RouteSettings settings) {
-                late Widget page;
-                if (settings.name == initialRoute) {
+            return BlocListener<AuthenticationBloc, AuthenticationState>(
+              listener: (context, state) {},
+              child: MaterialApp(
+                locale: Locale(context.read<LocaleCubit>().state),
+                initialRoute: '/',
+                onGenerateRoute: (RouteSettings settings) {
+                  late Widget page;
+                  if (settings.name == initialRoute) {
+                    return MaterialPageRoute<dynamic>(
+                      builder: (context) {
+                        return BlocBuilder<AuthenticationBloc,
+                            AuthenticationState>(
+                          builder: (context, state) {
+                            if (state.status ==
+                                AuthenticationStatus.unauthenticated) {
+                              return const LoginView();
+                            }
+                            if (state.status ==
+                                AuthenticationStatus.authenticated) {
+                              // Instantiating Blocs
+                              BlocProvider.of<ContactBloc>(context);
+                              BlocProvider.of<ContactTabsBloc>(context);
+                              BlocProvider.of<ChatroomBloc>(context);
+                              BlocProvider.of<FinduserBloc>(context);
+                              BlocProvider.of<SearchButtonBloc>(context);
+                              return MessagesView();
+                            }
+
+                            return SplashView();
+                          },
+                        );
+                      },
+                    );
+                  } else if (settings.name == homeRoute) {
+                    page = MessagesView();
+                  } else if (settings.name == loginRoute) {
+                    page = const LoginView();
+                  } else if (settings.name == signupRoute) {
+                    page = const SignUpView();
+                  } else if (settings.name == contactsRoute) {
+                    page = const ContactsView();
+                  } else if (settings.name == settingsRoute) {
+                    page = SettingsView();
+                  } else if (settings.name == securityRoute) {
+                    page = SecurityView();
+                  } else if (settings.name == faqRoute) {
+                    page = FaqView();
+                  } else if (settings.name == splashRoute) {
+                    page = SplashView();
+                  } else if (settings.name == chatRoute) {
+                    final Chatroom? args = settings.arguments as Chatroom?;
+
+                    page = ChatView(
+                      chat: args!,
+                    );
+                  }
+
                   return MaterialPageRoute<dynamic>(
                     builder: (context) {
-                      return BlocBuilder<AuthenticationBloc,
-                          AuthenticationState>(
-                        builder: (context, state) {
-                          if (state.status ==
-                              AuthenticationStatus.unauthenticated) {
-                            return const LoginView();
-                          }
-                          if (state.status ==
-                              AuthenticationStatus.authenticated) {
-                            // Instantiating Blocs
-                            BlocProvider.of<ContactBloc>(context);
-                            BlocProvider.of<ContactTabsBloc>(context);
-                            BlocProvider.of<ChatroomBloc>(context);
-                            BlocProvider.of<FinduserBloc>(context);
-                            BlocProvider.of<SearchButtonBloc>(context);
-                            return MessagesView();
-                          }
-
-                          return SplashView();
-                        },
-                      );
+                      return page;
                     },
+                    settings: settings,
                   );
-                } else if (settings.name == homeRoute) {
-                  page = MessagesView();
-                } else if (settings.name == loginRoute) {
-                  page = const LoginView();
-                } else if (settings.name == signupRoute) {
-                  page = const SignUpView();
-                } else if (settings.name == contactsRoute) {
-                  page = const ContactsView();
-                } else if (settings.name == settingsRoute) {
-                  page = SettingsView();
-                } else if (settings.name == securityRoute) {
-                  page = SecurityView();
-                } else if (settings.name == faqRoute) {
-                  page = FaqView();
-                } else if (settings.name == splashRoute) {
-                  page = SplashView();
-                } else if (settings.name == chatRoute) {
-                  final Chatroom? args = settings.arguments as Chatroom?;
-
-                  page = ChatView(
-                    chat: args!,
-                  );
-                }
-
-                return MaterialPageRoute<dynamic>(
-                  builder: (context) {
-                    return page;
-                  },
-                  settings: settings,
-                );
-              },
-              localizationsDelegates: const [
-                S.delegate,
-                GlobalMaterialLocalizations.delegate,
-                GlobalWidgetsLocalizations.delegate,
-                GlobalCupertinoLocalizations.delegate,
-              ],
-              supportedLocales: S.delegate.supportedLocales,
-              debugShowCheckedModeBanner: false,
-              theme: isDark ? AppTheme.lightTheme : AppTheme.darkTheme,
-              darkTheme: AppTheme.darkTheme,
+                },
+                localizationsDelegates: const [
+                  S.delegate,
+                  GlobalMaterialLocalizations.delegate,
+                  GlobalWidgetsLocalizations.delegate,
+                  GlobalCupertinoLocalizations.delegate,
+                ],
+                supportedLocales: S.delegate.supportedLocales,
+                debugShowCheckedModeBanner: false,
+                theme: isDark ? AppTheme.lightTheme : AppTheme.darkTheme,
+                darkTheme: AppTheme.darkTheme,
+              ),
             );
           },
         );
