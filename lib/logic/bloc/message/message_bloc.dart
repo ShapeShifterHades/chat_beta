@@ -29,8 +29,8 @@ class MessageBloc extends Bloc<MessagesEvent, MessagesState> {
       yield* _mapAddMessageToState(event);
     } else if (event is UpdateMessage) {
       yield* _mapUpdateMessageToState(event);
-    } else if (event is DeleteMessage) {
-      yield* _mapDeleteMessageToState(event);
+    } else if (event is DeleteSelectedMessages) {
+      yield* _mapDeleteSelectedMessagesToState(event);
     } else if (event is MessagesUpdated) {
       yield* _mapMessagesUpdatedToState(event);
     } else if (event is DeleteAllMessages) {
@@ -55,14 +55,15 @@ class MessageBloc extends Bloc<MessagesEvent, MessagesState> {
         event.updatedMessage, authId, event.updatedMessage.recieverId);
   }
 
-  Stream<MessagesState> _mapDeleteMessageToState(DeleteMessage event) async* {
-    _firestoreMessageRepository.deleteMessage(
-        event.message, authId, event.message.recieverId);
+  Stream<MessagesState> _mapDeleteSelectedMessagesToState(
+      DeleteSelectedMessages event) async* {
+    _firestoreMessageRepository.deleteSelectedmessages(
+        event.idList, authId, event.interlocutorId);
   }
 
   Stream<MessagesState> _mapDeleteAllMessagesToState(
       DeleteAllMessages event) async* {
-    _firestoreMessageRepository.deleteAllMessages(authId, event.userId);
+    _firestoreMessageRepository.deleteAllMessages(authId, event.interlocutorId);
   }
 
   Stream<MessagesState> _mapMessagesUpdatedToState(

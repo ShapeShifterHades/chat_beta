@@ -6,6 +6,8 @@ import 'package:void_chat_beta/core/constants/styles.dart';
 import 'package:void_chat_beta/logic/bloc/message/message_bloc.dart';
 import 'package:void_chat_beta/presentation/screens/chat_screen/widgets/chat_screen.dart';
 import 'package:void_chat_beta/presentation/screens/chat_screen/widgets/input_board.dart';
+import 'package:void_chat_beta/presentation/screens/chat_screen/widgets/options_bar.dart';
+import 'package:void_chat_beta/presentation/screens/chat_screen/widgets/top_bar.dart';
 import 'package:void_chat_beta/presentation/screens/common_ui/ui.dart';
 
 class ChatView extends StatefulWidget {
@@ -19,6 +21,8 @@ class ChatView extends StatefulWidget {
 
 class _ChatViewState extends State<ChatView> with TickerProviderStateMixin {
   ScrollController scrollController = ScrollController();
+  bool selectMode = false;
+  List<String> selectedArray = [];
 
   @override
   void initState() {
@@ -26,93 +30,86 @@ class _ChatViewState extends State<ChatView> with TickerProviderStateMixin {
     super.initState();
   }
 
+  Future<bool> _onWillPop() async {
+    if (selectMode) {
+      setState(() {
+        selectMode = false;
+      });
+      return false;
+    }
+    return true;
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      body: UI(
-        body: FooterLayout(
-          footer: InputBoard(chat: widget.chat, controller: scrollController),
-          child: SizedBox.expand(
-            child: Stack(
-              alignment: Alignment.topCenter,
-              children: [
-                TopBar(widget: widget),
-                const _ChatBackground(),
-                ChatScreen(chat: widget.chat, controller: scrollController),
-              ],
+    return WillPopScope(
+      onWillPop: _onWillPop,
+      child: Scaffold(
+        resizeToAvoidBottomInset: false,
+        body: UI(
+          body: NotificationListener<SelectNotification>(
+            onNotification: (notification) {
+              setState(() {
+                selectMode = notification.selectMode;
+              });
+              return selectMode;
+            },
+            child: NotificationListener<SelectedArray>(
+              onNotification: (notification) {
+                if (selectedArray.contains(notification.docId)) {
+                  selectedArray.remove(notification.docId);
+                } else {
+                  selectedArray.add(notification.docId);
+                }
+                setState(() {});
+                print(selectedArray);
+                return true;
+              },
+              child: FooterLayout(
+                footer:
+                    InputBoard(chat: widget.chat, controller: scrollController),
+                child: SizedBox.expand(
+                  child: Stack(
+                    alignment: Alignment.topCenter,
+                    children: [
+                      Positioned(
+                        top: 2,
+                        left: 40,
+                        right: 10,
+                        child: AnimatedSwitcher(
+                          duration: Times.slow,
+                          switchInCurve: Curves.bounceIn,
+                          transitionBuilder:
+                              (Widget child, Animation<double> animation) {
+                            return ScaleTransition(
+                                scale: animation, child: child);
+                          },
+                          child: !selectMode
+                              ? TopBar(
+                                  key: const ValueKey<String>('TopBar'),
+                                  widget: widget)
+                              : OptionsBar(
+                                  key: const ValueKey<String>('OptionsBar'),
+                                  selectedArray: selectedArray,
+                                  chat: widget.chat,
+                                ),
+                        ),
+                      ),
+                      const _ChatBackground(),
+                      ChatScreen(
+                        chat: widget.chat,
+                        controller: scrollController,
+                        selectMode: selectMode,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
             ),
           ),
         ),
       ),
     );
-  }
-}
-
-class TopBar extends StatefulWidget {
-  const TopBar({
-    Key? key,
-    required this.widget,
-  }) : super(key: key);
-
-  final ChatView widget;
-
-  @override
-  _TopBarState createState() => _TopBarState();
-}
-
-class _TopBarState extends State<TopBar> {
-  String dropdownValue = 'One';
-
-  @override
-  Widget build(BuildContext context) {
-    return Positioned(
-        top: 2,
-        left: 40,
-        right: 10,
-        child: Row(
-          children: [
-            const CircleAvatar(
-              radius: 20,
-              backgroundImage:
-                  AssetImage('assets/images/avatar-placeholder.png'),
-            ),
-            const SizedBox(width: 10),
-            Text(widget.widget.chat.username ?? '', style: TextStyles.callout1),
-            const Spacer(),
-            DropdownButton<String>(
-              icon: const Icon(Icons.more_vert),
-              iconSize: 28,
-              elevation: 16,
-              style: const TextStyle(color: Colors.deepPurple),
-              underline: Container(),
-              onChanged: (String? newValue) {
-                if (newValue == 'Clear history') {
-                  BlocProvider.of<MessageBloc>(context)
-                      .add(DeleteAllMessages(widget.widget.chat.id));
-                }
-                setState(() {
-                  dropdownValue = newValue!;
-                });
-              },
-              items: <String>[
-                'Info',
-                'Clear history',
-                'Delete chat',
-                'Share contact'
-              ].map<DropdownMenuItem<String>>((String value) {
-                return DropdownMenuItem<String>(
-                  value: value,
-                  child: Text(
-                    value,
-                    style: TextStyles.body2
-                        .copyWith(color: Theme.of(context).primaryColor),
-                  ),
-                );
-              }).toList(),
-            )
-          ],
-        ));
   }
 }
 

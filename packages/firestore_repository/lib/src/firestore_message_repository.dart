@@ -3,116 +3,24 @@ import 'package:firestore_repository/firestore_repository.dart';
 import 'package:firestore_repository/src/models/models.dart';
 
 class FirestoreMessageRepository {
-  final CollectionReference userCollection =
+  // ----------- HELPER VARIABLES AND FUNCTIONS ----------
+  final CollectionReference _userCollection =
       FirebaseFirestore.instance.collection('users');
+
+  DocumentReference _getChatroomDocRef(String authId, String roomId) {
+    return _userCollection.doc(authId).collection('chatrooms').doc(roomId);
+  }
+
   CollectionReference _getMessagesCollection(String authId, String roomId) {
-    return userCollection
+    return _userCollection
         .doc(authId)
         .collection('chatrooms')
         .doc(roomId)
         .collection('messages');
   }
 
-  DocumentReference _getChatroomRef(String authId, String roomId) {
-    return userCollection.doc(authId).collection('chatrooms').doc(roomId);
-  }
-
-  /// Sends a [message] from user [authId] to user [interlocutorId] and
-  /// updates chatrooms last message info.
+  /// Used to help indicate in chat that app was unable to send a message.
   ///
-  Future<void> addMessage(
-      MessageToSend message, String authId, String interlocutorId) async {
-    try {
-      final WriteBatch batch = FirebaseFirestore.instance.batch();
-      // Seting up document references for batch
-      final DocumentReference authIdMessagesCollRef =
-          _getMessagesCollection(authId, interlocutorId).doc();
-      final DocumentReference roomIdMessagesCollRef =
-          _getMessagesCollection(interlocutorId, authId)
-              .doc(authIdMessagesCollRef.id);
-      final DocumentReference roomIdChatroomCollRef =
-          _getChatroomRef(authId, interlocutorId);
-      final DocumentReference authIdChatroomCollRef =
-          _getChatroomRef(interlocutorId, authId);
-      // Create docs for message in both users collections
-      batch.set(authIdMessagesCollRef,
-          message.toEntity().toJson(authIdMessagesCollRef.id));
-      batch.set(roomIdMessagesCollRef,
-          message.toEntity().toJson(roomIdMessagesCollRef.id));
-      // batch.set(roomIdMessagesCollRef,
-      // message.toEntity().toJson(roomIdMessagesCollRef.id));
-      // Update last message brief for chats, based on sent message
-      batch.set(authIdChatroomCollRef, LastMessage(message).toEntity().toJson(),
-          SetOptions(merge: true));
-      batch.set(
-          roomIdChatroomCollRef,
-          LastMessage(message).toEntity().toJsonWithIncrement(),
-          SetOptions(merge: true));
-
-      // Atomically commit the changes.
-      batch.commit();
-    } catch (e) {
-      rethrow;
-    }
-  }
-
-  Future<void> deleteMessage(
-      MessageToSend message, String? authId, String? roomId) {
-    final WriteBatch batch = FirebaseFirestore.instance.batch();
-    final DocumentReference doc1 =
-        _getMessagesCollection(authId!, roomId!).doc(message.docId);
-    final DocumentReference doc2 =
-        _getMessagesCollection(authId, roomId).doc(message.docId);
-    batch.delete(doc1);
-    batch.delete(doc2);
-    return batch.commit();
-  }
-
-  Future<void> deleteAllMessages(String authId, String interlocutorId) {
-    final _collRef = _getMessagesCollection(authId, interlocutorId);
-    final _docRef = _getChatroomRef(authId, interlocutorId);
-
-    _collRef.get().then((snapshot) {
-      for (final DocumentSnapshot ds in snapshot.docs) {
-        ds.reference.delete();
-      }
-    });
-
-    return _docRef.update({
-      "lastMessage": '',
-      "lastMessageAt": null,
-      "newMessages": 0,
-      "lastMessageFrom": null,
-    });
-  }
-
-  Future<void> updateMessage(
-      MessageToSend message, String? authId, String? roomId) {
-    final WriteBatch batch = FirebaseFirestore.instance.batch();
-    final DocumentReference doc1 =
-        _getMessagesCollection(authId!, roomId!).doc(message.docId);
-    final DocumentReference doc2 =
-        _getMessagesCollection(authId, roomId).doc(message.docId);
-    batch.update(doc1, message.toEntity().toJson(message.docId!));
-    batch.update(doc2, message.toEntity().toJson(message.docId!));
-    return batch.commit();
-  }
-
-  Stream<List<MessageToSend>> messages(String authId, String roomId) {
-    return _getMessagesCollection(authId, roomId)
-        .orderBy('timeSent', descending: true)
-        .snapshots()
-        .map((QuerySnapshot snapshot) {
-      return snapshot.docs.map((doc) {
-        if (doc.metadata.hasPendingWrites) {
-          return _messageIsNotSent(doc);
-        }
-
-        return MessageToSend.fromEntity(MessageToSendEntity.fromSnapshot(doc));
-      }).toList();
-    });
-  }
-
   MessageToSend _messageIsNotSent(QueryDocumentSnapshot doc) {
     final MessageToSend cached =
         MessageToSend.fromEntity(MessageToSendEntity.fromSnapshot(doc));
@@ -125,32 +33,37 @@ class FirestoreMessageRepository {
     return res;
   }
 
-  // /// Marks message [doc] isNew field as false and decrements new message counter'
-  // /// by 1
-  // ///
-  // Future<void> _markDocumentAsRead(QueryDocumentSnapshot doc) async {
-  //   final String _senderId = doc.data()['senderId'] as String;
-  //   final String _recieverId = doc.data()['recieverId'] as String;
+  Future<void> _findAndUpdateLastMessageInDialog(
+      String authId, String interlocutorId) async {
+    final CollectionReference _messagesCol =
+        _getMessagesCollection(authId, interlocutorId);
+    final DocumentReference _chatroomDoc =
+        _getChatroomDocRef(authId, interlocutorId);
+    final Query _queryLastMsg = _messagesCol.orderBy('timeSent').limit(1);
+    try {
+      final QuerySnapshot _snap = await _queryLastMsg.get();
+      MessageToSend _message;
+      LastMessage _lastMessage;
+      if (_snap.docs.isNotEmpty) {
+        _message = MessageToSend.fromEntity(
+            MessageToSendEntity.fromSnapshot(_snap.docs.first));
+        _lastMessage = LastMessage(_message);
+      } else {
+        _lastMessage = LastMessage(MessageToSend());
+      }
+      await _chatroomDoc.set(
+          _lastMessage.toEntity().toJson(),
+          SetOptions(mergeFields: [
+            'lastMessage',
+            'lastMessageAt',
+            'lastMessageFrom'
+          ]));
+    } catch (e) {
+      rethrow;
+    }
+  }
 
-  //   final WriteBatch batch = FirebaseFirestore.instance.batch();
-  //   // Mark document as opened in our message collection.
-  //   batch.update(doc.reference, {'isNew': false});
-
-  //   // Here we decrement new message counter in chatroom info.
-  //   final DocumentReference chatDocRef =
-  //       userCollection.doc(_recieverId).collection('chatrooms').doc(_senderId);
-  //   batch.update(chatDocRef, {'newMessages': FieldValue.increment(-1)});
-  //   // Here we notify interlocutor that his message was opened.
-  //   final DocumentReference messageDocRef = userCollection
-  //       .doc(_senderId)
-  //       .collection('chatrooms')
-  //       .doc(_recieverId)
-  //       .collection('messages')
-  //       .doc(doc.id);
-  //   batch.update(messageDocRef, {'isNew': false});
-
-  //   return batch.commit();
-  // }
+  // ------------ STATIC HELPER FUNCTIONS -----------------
 
   /// Marks message as read and decrements message counter.
   ///
@@ -191,5 +104,105 @@ class FirestoreMessageRepository {
         .doc(messageId);
     _batch.update(_messageRef2, {'isNew': false});
     return _batch.commit();
+  }
+
+  // ------------ MESSAGES CRUD ---------------------------
+
+  /// Sends a [message] from user [authId] to user [interlocutorId] and
+  /// updates chatrooms last message info.
+  ///
+  Future<void> addMessage(
+      MessageToSend message, String authId, String interlocutorId) async {
+    try {
+      final WriteBatch batch = FirebaseFirestore.instance.batch();
+      // Seting up document references for batch
+      final DocumentReference authIdMessagesCollRef =
+          _getMessagesCollection(authId, interlocutorId).doc();
+      final DocumentReference roomIdMessagesCollRef =
+          _getMessagesCollection(interlocutorId, authId)
+              .doc(authIdMessagesCollRef.id);
+      final DocumentReference roomIdChatroomCollRef =
+          _getChatroomDocRef(authId, interlocutorId);
+      final DocumentReference authIdChatroomCollRef =
+          _getChatroomDocRef(interlocutorId, authId);
+      // Create docs for message in both users collections
+      batch.set(authIdMessagesCollRef,
+          message.toEntity().toJson(authIdMessagesCollRef.id));
+      batch.set(roomIdMessagesCollRef,
+          message.toEntity().toJson(roomIdMessagesCollRef.id));
+      // Update last message brief for chats, based on sent message
+      batch.set(authIdChatroomCollRef, LastMessage(message).toEntity().toJson(),
+          SetOptions(merge: true));
+      batch.set(
+          roomIdChatroomCollRef,
+          LastMessage(message).toEntity().toJsonWithIncrement(),
+          SetOptions(merge: true));
+
+      // Atomically commit the changes.
+      batch.commit();
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  /// Delete messages with ids, passed in [idList] from [authId] messages
+  /// and then updates last message info from chatroom doc.
+  ///
+  Future<void> deleteSelectedmessages(
+      List<String> idList, String authId, String interlocutorId) {
+    final WriteBatch _batch = FirebaseFirestore.instance.batch();
+    final CollectionReference _messagesCollRef =
+        _getMessagesCollection(authId, interlocutorId);
+
+    for (final String docId in idList) {
+      _batch.delete(_messagesCollRef.doc(docId));
+    }
+    _batch.commit();
+    return _findAndUpdateLastMessageInDialog(authId, interlocutorId);
+  }
+
+  Future<void> deleteAllMessages(String authId, String interlocutorId) {
+    final _collRef = _getMessagesCollection(authId, interlocutorId);
+    final _docRef = _getChatroomDocRef(authId, interlocutorId);
+
+    _collRef.get().then((snapshot) {
+      for (final DocumentSnapshot ds in snapshot.docs) {
+        ds.reference.delete();
+      }
+    });
+
+    return _docRef.update({
+      "lastMessage": '',
+      "lastMessageAt": null,
+      "newMessages": 0,
+      "lastMessageFrom": null,
+    });
+  }
+
+  Future<void> updateMessage(
+      MessageToSend message, String? authId, String? roomId) {
+    final WriteBatch batch = FirebaseFirestore.instance.batch();
+    final DocumentReference doc1 =
+        _getMessagesCollection(authId!, roomId!).doc(message.docId);
+    final DocumentReference doc2 =
+        _getMessagesCollection(authId, roomId).doc(message.docId);
+    batch.update(doc1, message.toEntity().toJson(message.docId!));
+    batch.update(doc2, message.toEntity().toJson(message.docId!));
+    return batch.commit();
+  }
+
+  Stream<List<MessageToSend>> messages(String authId, String roomId) {
+    return _getMessagesCollection(authId, roomId)
+        .orderBy('timeSent', descending: true)
+        .snapshots()
+        .map((QuerySnapshot snapshot) {
+      return snapshot.docs.map((doc) {
+        if (doc.metadata.hasPendingWrites) {
+          return _messageIsNotSent(doc);
+        }
+
+        return MessageToSend.fromEntity(MessageToSendEntity.fromSnapshot(doc));
+      }).toList();
+    });
   }
 }

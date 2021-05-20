@@ -84,7 +84,7 @@ class _MessageBubbleState extends State<MessageBubble>
                 color: isMine
                     ? Theme.of(context).primaryColor
                     : const Color(0xFF202C59),
-                borderRadius: const BorderRadius.all(Radius.circular(10)),
+                borderRadius: const BorderRadius.all(Radius.circular(6)),
                 boxShadow: [
                   BoxShadow(
                     color: Theme.of(context).backgroundColor,
@@ -95,7 +95,7 @@ class _MessageBubbleState extends State<MessageBubble>
                 ],
               ),
               child: ClipRRect(
-                borderRadius: const BorderRadius.all(Radius.circular(10.0)),
+                borderRadius: const BorderRadius.all(Radius.circular(6)),
                 child: BubbleBackground(
                   colors: isMine
                       ? [const Color(0xFF6C7689), const Color(0xFF3A364B)]
@@ -107,15 +107,15 @@ class _MessageBubbleState extends State<MessageBubble>
                     style: TextStyles.body1
                         .copyWith(color: Theme.of(context).primaryColor),
                     child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 3.0, horizontal: 8),
+                      padding:
+                          const EdgeInsets.only(bottom: 6.0, left: 6, right: 6),
                       child: widget.child,
                     ),
                   ),
                 ),
               ),
             ),
-            const SizedBox(height: 10),
+            const SizedBox(height: 12),
           ],
         ),
       ),

@@ -34,22 +34,23 @@ class UpdateMessage extends MessagesEvent {
   List<Object> get props => [updatedMessage];
 }
 
-class DeleteMessage extends MessagesEvent {
-  final MessageToSend message;
+class DeleteSelectedMessages extends MessagesEvent {
+  final List<String> idList;
+  final String interlocutorId;
 
-  const DeleteMessage(this.message);
+  const DeleteSelectedMessages(this.idList, this.interlocutorId);
 
   @override
-  List<Object> get props => [message];
+  List<Object> get props => [idList];
 }
 
 class DeleteAllMessages extends MessagesEvent {
-  final String userId;
+  final String interlocutorId;
 
-  const DeleteAllMessages(this.userId);
+  const DeleteAllMessages(this.interlocutorId);
 
   @override
-  List<Object> get props => [userId];
+  List<Object> get props => [interlocutorId];
 }
 
 class MessagesUpdated extends MessagesEvent {

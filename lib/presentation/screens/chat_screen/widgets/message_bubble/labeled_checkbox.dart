@@ -39,28 +39,29 @@ class _LabeledCheckboxState extends State<LabeledCheckbox> {
         widget.onChanged(!widget.value);
       },
       child: AnimatedContainer(
-        padding: const EdgeInsets.symmetric(horizontal: 10),
+        padding: const EdgeInsets.symmetric(horizontal: 5),
         duration: Times.medium,
-        color: widget.value
+        color: widget.value && widget.activate
             ? Theme.of(context).primaryColor.withOpacity(0.04)
             : Colors.transparent,
         child: Row(
           children: <Widget>[
-            if (true)
-              AnimatedOpacity(
-                duration: Times.slower,
+            AnimatedOpacity(
+              duration: Times.slow,
+              curve: Curves.easeIn,
+              opacity: widget.activate ? 1 : 0,
+              child: AnimatedContainer(
+                // color: Colors.black,
+                padding: const EdgeInsets.only(right: 5),
+                duration: Times.fast,
                 curve: Curves.easeIn,
-                opacity: widget.activate ? 1 : 0,
-                child: AnimatedContainer(
-                  // color: Colors.black,
-                  padding: const EdgeInsets.only(right: 10),
-                  duration: Times.fast,
-                  curve: Curves.easeIn,
-                  height: 30,
-                  width: widget.activate ? 30 : 10,
+                height: 30,
+                width: widget.activate ? 35 : 5,
+                child: Transform.scale(
+                  scale: 0.7,
                   child: Checkbox(
                     shape: const RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(5))),
+                        borderRadius: BorderRadius.all(Radius.circular(3))),
                     fillColor: MaterialStateProperty.resolveWith(getColor),
                     side: BorderSide(
                       width: 0.4,
@@ -73,6 +74,7 @@ class _LabeledCheckboxState extends State<LabeledCheckbox> {
                   ),
                 ),
               ),
+            ),
             Expanded(
               child: widget.child,
             ),
