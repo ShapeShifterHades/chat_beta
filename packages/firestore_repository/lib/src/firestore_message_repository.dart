@@ -39,7 +39,8 @@ class FirestoreMessageRepository {
         _getMessagesCollection(authId, interlocutorId);
     final DocumentReference _chatroomDoc =
         _getChatroomDocRef(authId, interlocutorId);
-    final Query _queryLastMsg = _messagesCol.orderBy('timeSent').limit(1);
+    final Query _queryLastMsg =
+        _messagesCol.orderBy('timeSent', descending: true).limit(1);
     try {
       final QuerySnapshot _snap = await _queryLastMsg.get();
       MessageToSend _message;

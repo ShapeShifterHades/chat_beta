@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:void_chat_beta/core/constants/styles.dart';
 
-class MiniMenuTile extends StatelessWidget {
+class MiniMenuTile extends StatefulWidget {
   final bool isCurrentPage;
   final IconData? icon;
   final Function? func;
@@ -12,9 +13,45 @@ class MiniMenuTile extends StatelessWidget {
   }) : super(key: key);
 
   @override
+  _MiniMenuTileState createState() => _MiniMenuTileState();
+}
+
+class _MiniMenuTileState extends State<MiniMenuTile>
+    with TickerProviderStateMixin {
+  late AnimationController _controller;
+  late Animation<double> _animation;
+
+  @override
+  void initState() {
+    super.initState();
+    _initAnimation();
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  void _initAnimation() {
+    _controller = AnimationController(duration: Times.fast, vsync: this);
+    _animation = Tween<double>(begin: 0, end: 28)
+        .animate(CurvedAnimation(parent: _controller, curve: Curves.easeIn));
+    _executeAnimation(_controller, 200);
+  }
+
+  void _executeAnimation(AnimationController animation, int interval) {
+    Future.delayed(Duration(milliseconds: interval), () {
+      if (animation != null) {
+        animation.forward();
+      }
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: func as void Function()?,
+      onTap: widget.func as void Function()?,
       child: Container(
         decoration: BoxDecoration(
           color: Theme.of(context).backgroundColor,
@@ -35,12 +72,17 @@ class MiniMenuTile extends StatelessWidget {
               width: 34,
               height: 38,
               child: Center(
-                child: Icon(
-                  icon,
-                  color: isCurrentPage
-                      ? Theme.of(context).primaryColor
-                      : Theme.of(context).primaryColor.withOpacity(0.7),
-                  size: isCurrentPage ? 28 : 18,
+                child: AnimatedBuilder(
+                  animation: _animation,
+                  builder: (context, child) {
+                    return Icon(
+                      widget.icon,
+                      color: widget.isCurrentPage
+                          ? Theme.of(context).primaryColor
+                          : Theme.of(context).primaryColor.withOpacity(0.7),
+                      size: widget.isCurrentPage ? _animation.value : 18,
+                    );
+                  },
                 ),
               ),
             ),

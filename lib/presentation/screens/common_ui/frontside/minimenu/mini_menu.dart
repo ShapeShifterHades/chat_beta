@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:void_chat_beta/core/constants/constants.dart';
+import 'package:void_chat_beta/core/constants/styles.dart';
 
 import 'mini_menu_tile.dart';
 
@@ -22,43 +23,7 @@ class MiniMenu extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
-            Stack(
-              alignment: Alignment.center,
-              children: [
-                MiniMenuTile(
-                  key: const Key('messages_minimenu_buton'),
-                  func: () => Navigator.of(context).pushNamed(homeRoute),
-                  icon: Icons.message,
-                  isCurrentPage:
-                      ModalRoute.of(context)?.settings.name == '/messages',
-                ),
-                if (ModalRoute.of(context)?.settings.name == chatRoute)
-                  // TODO: make animated translation and rotation on init
-                  Transform(
-                      // rotationY(3.14159)..translate(2)
-                      transform: Matrix4(
-                        1,
-                        0,
-                        0,
-                        0,
-                        0,
-                        1,
-                        0,
-                        0,
-                        0,
-                        0,
-                        1,
-                        0,
-                        24,
-                        7,
-                        0,
-                        1,
-                      )..rotateY(3.14159),
-                      child: Icon(Icons.message,
-                          color: Theme.of(context).primaryColor, size: 18)),
-                // Container(color: Colors.red, width: 20, height: 20),
-              ],
-            ),
+            const _MessagesIcon(),
             const SizedBox(height: 15),
             MiniMenuTile(
               key: const Key('contacts_minimenu_buton'),
@@ -101,6 +66,50 @@ class MiniMenu extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+}
+
+class _MessagesIcon extends StatelessWidget {
+  const _MessagesIcon({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final bool _isChatrooms =
+        ModalRoute.of(context)?.settings.name == chatRoute;
+    return AnimatedSwitcher(
+      duration: Times.slower,
+      transitionBuilder: (Widget child, Animation<double> animation) {
+        return ScaleTransition(scale: animation, child: child);
+      },
+      child: !_isChatrooms
+          ? MiniMenuTile(
+              key: const Key('chatrooms_minimenu_buton'),
+              func: () => Navigator.of(context).pushNamed(homeRoute),
+              icon: Icons.message,
+              isCurrentPage:
+                  ModalRoute.of(context)?.settings.name == homeRoute ||
+                      ModalRoute.of(context)?.settings.name == initialRoute,
+            )
+          : const _InDialogMenuTile(),
+    );
+  }
+}
+
+class _InDialogMenuTile extends StatelessWidget {
+  const _InDialogMenuTile({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return MiniMenuTile(
+      key: const Key('dialog_minimenu_buton'),
+      func: () => Navigator.of(context).pushNamed(homeRoute),
+      icon: Icons.question_answer,
+      isCurrentPage: ModalRoute.of(context)?.settings.name == chatRoute,
     );
   }
 }
