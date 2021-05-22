@@ -60,7 +60,9 @@ class _MessageBubbleState extends State<MessageBubble>
                   isSelected = newValue;
                 });
               }
-            : (bool newValue) {},
+            : (bool newValue) {
+                isSelected = false;
+              },
         value: isSelected,
         child: Column(
           crossAxisAlignment:

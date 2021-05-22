@@ -54,6 +54,7 @@ class _ChatScreenState extends State<ChatScreen> {
                             return Container(
                               color: Colors.white,
                               child: MessageBubble(
+                                key: ValueKey(message.docId),
                                 selectMode: widget.selectMode,
                                 message: message,
                                 child: Text(
@@ -63,6 +64,7 @@ class _ChatScreenState extends State<ChatScreen> {
                             );
                           }
                           return MessageBubble(
+                            key: ValueKey(message.docId),
                             selectMode: widget.selectMode,
                             message: message,
                             child: Text(
@@ -72,6 +74,7 @@ class _ChatScreenState extends State<ChatScreen> {
                         });
                   }
                   return MessageBubble(
+                    key: ValueKey(message.docId),
                     selectMode: widget.selectMode,
                     message: message,
                     child: Text(
@@ -104,6 +107,7 @@ class SelectNotification extends Notification {
 
 class SelectedArray extends Notification {
   final String docId;
+  final bool reset;
 
-  const SelectedArray({this.docId = ''});
+  const SelectedArray({this.docId = '', this.reset = false});
 }

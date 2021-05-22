@@ -34,6 +34,8 @@ class _LabeledCheckboxState extends State<LabeledCheckbox> {
 
   @override
   Widget build(BuildContext context) {
+    // bool _value = widget.value;
+    // if (!widget.focusController) _value = false;
     return InkWell(
       onTap: () {
         widget.onChanged(!widget.value);

@@ -35,6 +35,7 @@ class _ChatViewState extends State<ChatView> with TickerProviderStateMixin {
       setState(() {
         selectMode = false;
       });
+
       return false;
     }
     return true;
@@ -51,6 +52,7 @@ class _ChatViewState extends State<ChatView> with TickerProviderStateMixin {
             onNotification: (notification) {
               setState(() {
                 selectMode = notification.selectMode;
+                selectedArray = [];
               });
               return selectMode;
             },
@@ -72,28 +74,10 @@ class _ChatViewState extends State<ChatView> with TickerProviderStateMixin {
                   child: Stack(
                     alignment: Alignment.topCenter,
                     children: [
-                      Positioned(
-                        top: 2,
-                        left: 40,
-                        right: 10,
-                        child: AnimatedSwitcher(
-                          duration: Times.slow,
-                          switchInCurve: Curves.bounceIn,
-                          transitionBuilder:
-                              (Widget child, Animation<double> animation) {
-                            return ScaleTransition(
-                                scale: animation, child: child);
-                          },
-                          child: !selectMode
-                              ? TopBar(
-                                  key: const ValueKey<String>('TopBar'),
-                                  widget: widget)
-                              : OptionsBar(
-                                  key: const ValueKey<String>('OptionsBar'),
-                                  selectedArray: selectedArray,
-                                  chat: widget.chat,
-                                ),
-                        ),
+                      _TopBar(
+                        selectMode: selectMode,
+                        widget: widget,
+                        selectedArray: selectedArray,
                       ),
                       const _ChatBackground(),
                       ChatScreen(
@@ -108,6 +92,42 @@ class _ChatViewState extends State<ChatView> with TickerProviderStateMixin {
             ),
           ),
         ),
+      ),
+    );
+  }
+}
+
+class _TopBar extends StatelessWidget {
+  const _TopBar({
+    Key? key,
+    required this.selectMode,
+    required this.widget,
+    required this.selectedArray,
+  }) : super(key: key);
+
+  final bool selectMode;
+  final ChatView widget;
+  final List<String> selectedArray;
+
+  @override
+  Widget build(BuildContext context) {
+    return Positioned(
+      top: 2,
+      left: 40,
+      right: 10,
+      child: AnimatedSwitcher(
+        duration: Times.slow,
+        switchInCurve: Curves.bounceIn,
+        transitionBuilder: (Widget child, Animation<double> animation) {
+          return ScaleTransition(scale: animation, child: child);
+        },
+        child: !selectMode
+            ? TopBar(key: const ValueKey<String>('TopBar'), widget: widget)
+            : OptionsBar(
+                key: const ValueKey<String>('OptionsBar'),
+                selectedArray: selectedArray,
+                chat: widget.chat,
+              ),
       ),
     );
   }

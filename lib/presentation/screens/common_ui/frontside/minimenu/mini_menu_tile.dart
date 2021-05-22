@@ -35,7 +35,7 @@ class _MiniMenuTileState extends State<MiniMenuTile>
 
   void _initAnimation() {
     _controller = AnimationController(duration: Times.fast, vsync: this);
-    _animation = Tween<double>(begin: 0, end: 28)
+    _animation = Tween<double>(begin: 18, end: 28)
         .animate(CurvedAnimation(parent: _controller, curve: Curves.easeIn));
     _executeAnimation(_controller, 200);
   }
