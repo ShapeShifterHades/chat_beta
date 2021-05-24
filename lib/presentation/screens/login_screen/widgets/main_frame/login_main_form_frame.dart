@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
+import 'package:formz/formz.dart';
 import 'package:simple_animations/simple_animations.dart';
 import 'package:supercharged/supercharged.dart';
 import 'package:void_chat_beta/core/constants/styles.dart';
 import 'package:void_chat_beta/generated/l10n.dart';
+import 'package:void_chat_beta/logic/cubit/login/login_cubit.dart';
 import 'package:void_chat_beta/presentation/screens/login_screen/widgets/auth_custom_frame/custom_clip_path.dart';
 import 'package:void_chat_beta/presentation/screens/login_screen/widgets/form_header_signup.dart';
 import 'package:void_chat_beta/presentation/screens/login_screen/widgets/main_frame/buttons_divider.dart';
@@ -91,6 +94,29 @@ class _LoginMainFormFrameState extends State<LoginMainFormFrame>
                 ButtonModel(
                   text: S.of(context).loginpage_login_with_google,
                   onPressed: _formController!.value == 0.0 ? null : () {},
+                ),
+                BlocBuilder<LoginCubit, LoginState>(
+                  builder: (context, state) {
+                    if (state.status == FormzStatus.submissionInProgress) {
+                      return Container(
+                        color: Colors.teal,
+                        height: 30,
+                        width: 250,
+                      );
+                    }
+                    if (state.status == FormzStatus.submissionFailure) {
+                      return Container(
+                        color: Colors.red,
+                        height: 30,
+                        width: 250,
+                      );
+                    }
+                    return Container(
+                      color: Colors.white,
+                      height: 30,
+                      width: 250,
+                    );
+                  },
                 ),
               ],
             ),

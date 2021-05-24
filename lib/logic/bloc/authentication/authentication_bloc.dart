@@ -11,15 +11,15 @@ part 'authentication_state.dart';
 class AuthenticationBloc
     extends Bloc<AuthenticationEvent, AuthenticationState> {
   AuthenticationBloc({
-    required AuthenticationRepository? authenticationRepository,
+    required AuthenticationRepository authenticationRepository,
   })  : _authenticationRepository = authenticationRepository,
         super(const AuthenticationState.unknown()) {
-    _userSubscription = _authenticationRepository?.user.listen(
+    _userSubscription = _authenticationRepository.user.listen(
       (user) => add(AuthenticationUserChanged(user)),
     );
   }
 
-  final AuthenticationRepository? _authenticationRepository;
+  final AuthenticationRepository _authenticationRepository;
   StreamSubscription<User>? _userSubscription;
 
   @override
@@ -29,7 +29,7 @@ class AuthenticationBloc
     if (event is AuthenticationUserChanged) {
       yield _mapAuthenticationUserChangedToState(event);
     } else if (event is AuthenticationLogoutRequested) {
-      unawaited(_authenticationRepository?.logOut());
+      unawaited(_authenticationRepository.logOut());
     }
   }
 

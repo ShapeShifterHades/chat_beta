@@ -12,12 +12,13 @@ dependencies:
     sdk: flutter
 
   cupertino_icons: ^0.1.2
-  flutter_keyboard_visibility: any
-  timeago: ^3.0.2
-  keyboard_attachable: ^2.0.0
   font_awesome_flutter: ^9.0.0
+  flutter_keyboard_visibility: any
+  keyboard_attachable: ^2.0.0
+  timeago: ^3.0.2
   bloc: any
   flutter_bloc: any
+  hydrated_bloc: any
   formz: ^0.4.0
   meta: any
   pedantic: any
@@ -28,9 +29,7 @@ dependencies:
     path: packages/firestore_repository
   path_provider: any
   equatable: any
-  hydrated_bloc: any
   simple_animations: ^3.1.1
-  mockito: any
   cloud_firestore: any
   intl: null
   flutter_svg: ^0.22.0
@@ -40,7 +39,8 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-
+  mocktail: ^0.1.2
+  bloc_test: ^8.0.0
   build_runner: any
 
 flutter:

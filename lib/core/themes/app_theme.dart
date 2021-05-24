@@ -4,11 +4,11 @@ class AppTheme {
   const AppTheme._();
   static final darkTheme = ThemeData(
     brightness: Brightness.dark,
-    primaryColor: const Color(0xFFE6E8EB),
-    backgroundColor: const Color(0xFF282929),
-    scaffoldBackgroundColor: const Color(0xFF3B3B3B),
-    highlightColor: const Color(0xFFF28123),
-    inputDecorationTheme: const InputDecorationTheme(
+    primaryColor: Color(0xFFE6E8EB),
+    backgroundColor: Color(0xFF282929),
+    scaffoldBackgroundColor: Color(0xFF3B3B3B),
+    highlightColor: Color(0xFFF28123),
+    inputDecorationTheme: InputDecorationTheme(
       enabledBorder: OutlineInputBorder(
         borderSide: BorderSide(
           width: 0.3,

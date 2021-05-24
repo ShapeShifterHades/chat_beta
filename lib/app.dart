@@ -37,7 +37,7 @@ class App extends StatelessWidget {
         const SystemUiOverlayStyle(statusBarColor: Colors.transparent));
     return MultiRepositoryProvider(
         providers: [
-          RepositoryProvider<AuthenticationRepository?>(
+          RepositoryProvider<AuthenticationRepository>(
               create: (_) => AuthenticationRepository()),
           RepositoryProvider<FirestoreContactRepository?>(
               create: (_) => FirestoreContactRepository()),
@@ -54,7 +54,7 @@ class App extends StatelessWidget {
               lazy: false,
               create: (context) => AuthenticationBloc(
                 authenticationRepository:
-                    RepositoryProvider.of<AuthenticationRepository?>(context),
+                    RepositoryProvider.of<AuthenticationRepository>(context),
               ),
             ),
             BlocProvider<LocaleCubit>(

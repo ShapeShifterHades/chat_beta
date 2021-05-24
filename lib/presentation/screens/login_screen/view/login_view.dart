@@ -14,15 +14,16 @@ class LoginView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider<LoginCubit>(
-      create: (context) =>
-          LoginCubit(context.read<AuthenticationRepository?>()),
+      create: (context) => LoginCubit(context.read<AuthenticationRepository>()),
       child: KeyboardVisibilityProvider(
         child: Scaffold(
           resizeToAvoidBottomInset: false,
           body: Stack(
             children: const [
               SvgBackground(),
-              LoginMainFormFrame(),
+              LoginMainFormFrame(
+                key: ValueKey('login_main_form_frame'),
+              ),
               SwitchToSignUpButton(),
             ],
           ),
