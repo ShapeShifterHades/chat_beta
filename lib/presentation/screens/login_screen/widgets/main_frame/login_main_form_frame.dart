@@ -34,8 +34,6 @@ class _LoginMainFormFrameState extends State<LoginMainFormFrame>
   AnimationController? _formController;
   AnimationController? _settingsController;
   // Whether keyboard is opened or not.
-  // bool keyboardIsVisible = false;
-  // Notification provider for keyboard opening.
 
   Animation<double>? formFrameHeight;
   Animation<double>? settingsFrameHeight;
@@ -93,29 +91,6 @@ class _LoginMainFormFrameState extends State<LoginMainFormFrame>
               ButtonModel(
                 text: S.of(context).loginpage_login_with_google,
                 onPressed: _formController!.value == 0.0 ? null : () {},
-              ),
-              BlocBuilder<LoginCubit, LoginState>(
-                builder: (context, state) {
-                  if (state.status == FormzStatus.submissionInProgress) {
-                    return Container(
-                      color: Colors.teal,
-                      height: 30,
-                      width: 250,
-                    );
-                  }
-                  if (state.status == FormzStatus.submissionFailure) {
-                    return Container(
-                      color: Colors.red,
-                      height: 30,
-                      width: 250,
-                    );
-                  }
-                  return Container(
-                    color: Colors.white,
-                    height: 30,
-                    width: 250,
-                  );
-                },
               ),
             ],
           ),
