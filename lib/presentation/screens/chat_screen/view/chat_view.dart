@@ -45,49 +45,43 @@ class _ChatViewState extends State<ChatView> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: _onWillPop,
-      child: Scaffold(
-        resizeToAvoidBottomInset: false,
-        body: UI(
-          body: NotificationListener<SelectNotification>(
-            onNotification: (notification) {
-              setState(() {
-                selectMode = notification.selectMode;
-                selectedArray = [];
-              });
-              return selectMode;
-            },
-            child: NotificationListener<SelectedArray>(
-              onNotification: (notification) {
-                if (selectedArray.contains(notification.docId)) {
-                  selectedArray.remove(notification.docId);
-                } else {
-                  selectedArray.add(notification.docId);
-                }
-                setState(() {});
-                print(selectedArray);
-                return true;
-              },
-              child: FooterLayout(
-                footer:
-                    InputBoard(chat: widget.chat, controller: scrollController),
-                child: SizedBox.expand(
-                  child: Stack(
-                    alignment: Alignment.topCenter,
-                    children: [
-                      _TopBar(
-                        selectMode: selectMode,
-                        widget: widget,
-                        selectedArray: selectedArray,
-                      ),
-                      const _ChatBackground(),
-                      ChatScreen(
-                        chat: widget.chat,
-                        controller: scrollController,
-                        selectMode: selectMode,
-                      ),
-                    ],
+      child: NotificationListener<SelectNotification>(
+        onNotification: (notification) {
+          setState(() {
+            selectMode = notification.selectMode;
+            selectedArray = [];
+          });
+          return selectMode;
+        },
+        child: NotificationListener<SelectedArray>(
+          onNotification: (notification) {
+            if (selectedArray.contains(notification.docId)) {
+              selectedArray.remove(notification.docId);
+            } else {
+              selectedArray.add(notification.docId);
+            }
+            setState(() {});
+            print(selectedArray);
+            return true;
+          },
+          child: FooterLayout(
+            footer: InputBoard(chat: widget.chat, controller: scrollController),
+            child: SizedBox.expand(
+              child: Stack(
+                alignment: Alignment.topCenter,
+                children: [
+                  _TopBar(
+                    selectMode: selectMode,
+                    widget: widget,
+                    selectedArray: selectedArray,
                   ),
-                ),
+                  const _ChatBackground(),
+                  ChatScreen(
+                    chat: widget.chat,
+                    controller: scrollController,
+                    selectMode: selectMode,
+                  ),
+                ],
               ),
             ),
           ),

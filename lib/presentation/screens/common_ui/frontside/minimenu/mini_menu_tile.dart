@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:void_chat_beta/core/constants/styles.dart';
+import 'package:void_chat_beta/logic/bloc/main_bloc/bloc/main_bloc.dart';
 
 class MiniMenuTile extends StatefulWidget {
   final bool isCurrentPage;
   final IconData? icon;
-  final Function? func;
+  final CurrentView view;
   const MiniMenuTile({
     Key? key,
     this.icon,
-    this.func,
+    this.view = CurrentView.messages,
     this.isCurrentPage = false,
   }) : super(key: key);
 
@@ -34,24 +36,28 @@ class _MiniMenuTileState extends State<MiniMenuTile>
   }
 
   void _initAnimation() {
-    _controller = AnimationController(duration: Times.fast, vsync: this);
+    _controller = AnimationController(duration: Times.medium, vsync: this);
     _animation = Tween<double>(begin: 18, end: 28)
         .animate(CurvedAnimation(parent: _controller, curve: Curves.easeIn));
-    _executeAnimation(_controller, 200);
   }
 
-  void _executeAnimation(AnimationController animation, int interval) {
-    Future.delayed(Duration(milliseconds: interval), () {
-      if (animation != null) {
-        animation.forward();
-      }
-    });
-  }
+  // void _executeAnimation(AnimationController animation, int interval) {
+  //   Future.delayed(Duration(milliseconds: interval), () {
+  //     if (animation != null) {
+  //       animation.forward();
+  //     }
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: widget.func as void Function()?,
+      onTap: () {
+        BlocProvider.of<MainAppBloc>(context)
+            .add(SwitchView(view: widget.view));
+        _controller.reset();
+        _controller.forward();
+      },
       child: Container(
         decoration: BoxDecoration(
           color: Theme.of(context).backgroundColor,

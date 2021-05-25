@@ -6,7 +6,6 @@ import 'package:void_chat_beta/logic/bloc/contact/contact_bloc.dart';
 import 'package:void_chat_beta/logic/bloc/contact_tabs/contact_tabs_bloc.dart';
 import 'package:void_chat_beta/logic/bloc/find_user/finduser_bloc.dart';
 import 'package:void_chat_beta/logic/bloc/search_button/search_button_bloc.dart';
-import 'package:void_chat_beta/presentation/screens/common_ui/ui.dart';
 import 'package:void_chat_beta/presentation/screens/contacts_screen/widgets/contact_page_tabs.dart';
 import 'package:void_chat_beta/presentation/screens/contacts_screen/widgets/contact_page_tabs_content.dart';
 
@@ -26,23 +25,18 @@ class ContactsView extends StatelessWidget {
             create: (context) =>
                 SearchButtonBloc(BlocProvider.of<FinduserBloc>(context))),
       ],
-      child: Scaffold(
-        resizeToAvoidBottomInset: false,
-        body: UI(
-          body: GestureDetector(
-            onTap: () {
-              final FocusScopeNode currentFocus = FocusScope.of(context);
-              if (!currentFocus.hasPrimaryFocus) {
-                currentFocus.unfocus();
-              }
-            },
-            child: Column(
-              children: const [
-                ContactPageTabs(),
-                ContactPageTabsContent(),
-              ],
-            ),
-          ),
+      child: GestureDetector(
+        onTap: () {
+          final FocusScopeNode currentFocus = FocusScope.of(context);
+          if (!currentFocus.hasPrimaryFocus) {
+            currentFocus.unfocus();
+          }
+        },
+        child: Column(
+          children: const [
+            ContactPageTabs(),
+            ContactPageTabsContent(),
+          ],
         ),
       ),
     );

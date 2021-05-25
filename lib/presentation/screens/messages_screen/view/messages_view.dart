@@ -3,32 +3,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:void_chat_beta/core/constants/constants.dart';
 import 'package:void_chat_beta/logic/bloc/chatroom/chatroom_bloc.dart';
-import 'package:void_chat_beta/presentation/screens/common_ui/ui.dart';
 import 'package:void_chat_beta/presentation/screens/messages_screen/widgets/chatroom_card.dart';
 import 'package:void_chat_beta/presentation/styled_widgets/loading_indicator.dart';
 
-class MessagesView extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return const Scaffold(
-      resizeToAvoidBottomInset: false,
-      body: UI(
-        body: MessagesContent(),
-      ),
-    );
-  }
-}
-
-class MessagesContent extends StatefulWidget {
-  const MessagesContent({
+class MessagesView extends StatefulWidget {
+  const MessagesView({
     Key? key,
   }) : super(key: key);
 
   @override
-  _MessagesContentState createState() => _MessagesContentState();
+  _MessagesViewState createState() => _MessagesViewState();
 }
 
-class _MessagesContentState extends State<MessagesContent> {
+class _MessagesViewState extends State<MessagesView> {
   final GlobalKey<RefreshIndicatorState> refreshKey =
       GlobalKey<RefreshIndicatorState>();
   Future<void> _reloadChatrooms() async {
