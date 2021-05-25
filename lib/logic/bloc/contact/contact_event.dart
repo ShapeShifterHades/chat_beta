@@ -169,12 +169,10 @@ class AddToBlocklist extends ContactEvent {
 
 // Event, that triggers loading of contact list
 class LoadContacts extends ContactEvent {
-  final String uid;
-
-  const LoadContacts({required this.uid});
+  const LoadContacts();
 
   @override
-  List<Object> get props => [uid];
+  List<Object> get props => [];
 }
 
 class ContactsUpdated extends ContactEvent {

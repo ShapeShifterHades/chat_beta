@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:keyboard_attachable/keyboard_attachable.dart';
 import 'package:void_chat_beta/core/constants/styles.dart';
+import 'package:void_chat_beta/logic/bloc/main_bloc/bloc/main_bloc.dart';
 import 'package:void_chat_beta/logic/bloc/message/message_bloc.dart';
 import 'package:void_chat_beta/presentation/screens/chat_screen/widgets/chat_screen.dart';
 import 'package:void_chat_beta/presentation/screens/chat_screen/widgets/input_board.dart';
 import 'package:void_chat_beta/presentation/screens/chat_screen/widgets/options_bar.dart';
 import 'package:void_chat_beta/presentation/screens/chat_screen/widgets/top_bar.dart';
-import 'package:void_chat_beta/presentation/screens/common_ui/ui.dart';
 
 class ChatView extends StatefulWidget {
   final Chatroom chat;
@@ -38,7 +38,8 @@ class _ChatViewState extends State<ChatView> with TickerProviderStateMixin {
 
       return false;
     }
-    return true;
+    BlocProvider.of<MainAppBloc>(context).add(const SwitchView());
+    return false;
   }
 
   @override

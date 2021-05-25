@@ -51,11 +51,12 @@ class _MiniMenuTileState extends State<MiniMenuTile>
 
   @override
   Widget build(BuildContext context) {
+    if (!widget.isCurrentPage) _controller.reverse();
     return GestureDetector(
       onTap: () {
         BlocProvider.of<MainAppBloc>(context)
             .add(SwitchView(view: widget.view));
-        _controller.reset();
+
         _controller.forward();
       },
       child: Container(
@@ -86,7 +87,7 @@ class _MiniMenuTileState extends State<MiniMenuTile>
                       color: widget.isCurrentPage
                           ? Theme.of(context).primaryColor
                           : Theme.of(context).primaryColor.withOpacity(0.7),
-                      size: widget.isCurrentPage ? _animation.value : 18,
+                      size: _animation.value,
                     );
                   },
                 ),

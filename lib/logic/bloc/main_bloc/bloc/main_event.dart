@@ -18,6 +18,15 @@ class SwitchView extends MainAppEvent {
   List<Object> get props => [view];
 }
 
+class DialogRequested extends MainAppEvent {
+  final Chatroom chat;
+
+  const DialogRequested(this.chat);
+
+  @override
+  List<Object> get props => [chat];
+}
+
 class UpdateNewMessages extends MainAppEvent {
   final int newMessages;
 

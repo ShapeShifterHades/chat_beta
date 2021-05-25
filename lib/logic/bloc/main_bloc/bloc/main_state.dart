@@ -35,3 +35,20 @@ class MainAppNotLoaded extends MainAppState {
   @override
   List<Object> get props => [];
 }
+
+class MainAppDialog extends MainAppState {
+  final int newMessages;
+  final int newContactRequests;
+  final CurrentView currentView;
+  final Chatroom chat;
+
+  MainAppDialog({
+    this.newMessages = 0,
+    this.newContactRequests = 0,
+    this.currentView = CurrentView.dialog,
+    required this.chat,
+  });
+
+  @override
+  List<Object> get props => [newContactRequests, newMessages, currentView];
+}

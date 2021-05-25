@@ -67,17 +67,9 @@ class App extends StatelessWidget {
               lazy: false,
             ),
             BlocProvider<ContactBloc>(
-              create: (context) => ContactBloc(
-                  RepositoryProvider.of<FirestoreContactRepository?>(context),
-                  context.read<AuthenticationBloc>())
-                ..add(
-                  LoadContacts(
-                      uid: BlocProvider.of<AuthenticationBloc>(context)
-                          .state
-                          .user
-                          .id),
-                ),
-            ),
+                create: (context) => ContactBloc(
+                    RepositoryProvider.of<FirestoreContactRepository?>(context),
+                    context.read<AuthenticationBloc>())),
             BlocProvider<ChatroomBloc>(
               create: (context) => ChatroomBloc(
                 firestoreChatroomRepository:

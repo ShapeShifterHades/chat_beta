@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:void_chat_beta/core/constants/constants.dart';
 import 'package:void_chat_beta/logic/bloc/chatroom/chatroom_bloc.dart';
+import 'package:void_chat_beta/logic/bloc/main_bloc/bloc/main_bloc.dart';
 import 'package:void_chat_beta/presentation/screens/messages_screen/widgets/chatroom_card.dart';
 import 'package:void_chat_beta/presentation/styled_widgets/loading_indicator.dart';
 
@@ -41,10 +41,8 @@ class _MessagesViewState extends State<MessagesView> {
                   itemBuilder: (context, index) {
                     return ChatroomCard(
                       chat: chats[index],
-                      onPress: () {
-                        Navigator.of(context)
-                            .pushNamed(chatRoute, arguments: chats[index]);
-                      },
+                      onPress: () => BlocProvider.of<MainAppBloc>(context)
+                          .add(DialogRequested(chats[index])),
                     );
                   },
                 ),
