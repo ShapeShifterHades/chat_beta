@@ -66,60 +66,58 @@ class _LoginMainFormFrameState extends State<LoginMainFormFrame>
   Widget build(BuildContext context) {
     final bool isKeyboardVisible =
         KeyboardVisibilityProvider.isKeyboardVisible(context);
-    return Positioned.fill(
-      child: AnimatedAlign(
-        duration: Times.medium,
-        curve: Curves.easeIn,
-        alignment: isKeyboardVisible ? Alignment.topCenter : Alignment.center,
-        child: Container(
-          margin: buildMainFrameMargin(context),
-          width: MediaQuery.of(context).size.width * .8,
-          child: ClipPath(
-            clipper: MainLoginFrameClipPath(),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                if (!isKeyboardVisible)
-                  FormHeaderSignUp(
-                    color: Theme.of(context).primaryColor,
-                    title: S.of(context).loginpage_login_form,
-                    formController: _formController,
-                    settingsController: _settingsController,
-                  ),
-                SettingsBox(settingsFrameHeight: settingsFrameHeight),
-                LoginTextForms(formFrameHeight: formFrameHeight),
-                const LoginSubmitButton(),
-                ButtonsDivider(orLineAlterHeight: orLineAlterHeight),
-                OrDivider(orLineHeight: orLineHeight),
-                ButtonModel(
-                  text: S.of(context).loginpage_login_with_google,
-                  onPressed: _formController!.value == 0.0 ? null : () {},
+    return AnimatedAlign(
+      duration: Times.medium,
+      curve: Curves.easeIn,
+      alignment: isKeyboardVisible ? Alignment.topCenter : Alignment.center,
+      child: Container(
+        margin: buildMainFrameMargin(context),
+        width: MediaQuery.of(context).size.width * .8,
+        child: ClipPath(
+          clipper: MainLoginFrameClipPath(),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              if (!isKeyboardVisible)
+                FormHeaderSignUp(
+                  color: Theme.of(context).primaryColor,
+                  title: S.of(context).loginpage_login_form,
+                  formController: _formController,
+                  settingsController: _settingsController,
                 ),
-                BlocBuilder<LoginCubit, LoginState>(
-                  builder: (context, state) {
-                    if (state.status == FormzStatus.submissionInProgress) {
-                      return Container(
-                        color: Colors.teal,
-                        height: 30,
-                        width: 250,
-                      );
-                    }
-                    if (state.status == FormzStatus.submissionFailure) {
-                      return Container(
-                        color: Colors.red,
-                        height: 30,
-                        width: 250,
-                      );
-                    }
+              SettingsBox(settingsFrameHeight: settingsFrameHeight),
+              LoginTextForms(formFrameHeight: formFrameHeight),
+              const LoginSubmitButton(),
+              ButtonsDivider(orLineAlterHeight: orLineAlterHeight),
+              OrDivider(orLineHeight: orLineHeight),
+              ButtonModel(
+                text: S.of(context).loginpage_login_with_google,
+                onPressed: _formController!.value == 0.0 ? null : () {},
+              ),
+              BlocBuilder<LoginCubit, LoginState>(
+                builder: (context, state) {
+                  if (state.status == FormzStatus.submissionInProgress) {
                     return Container(
-                      color: Colors.white,
+                      color: Colors.teal,
                       height: 30,
                       width: 250,
                     );
-                  },
-                ),
-              ],
-            ),
+                  }
+                  if (state.status == FormzStatus.submissionFailure) {
+                    return Container(
+                      color: Colors.red,
+                      height: 30,
+                      width: 250,
+                    );
+                  }
+                  return Container(
+                    color: Colors.white,
+                    height: 30,
+                    width: 250,
+                  );
+                },
+              ),
+            ],
           ),
         ),
       ),

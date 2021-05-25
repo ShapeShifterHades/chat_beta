@@ -5,8 +5,12 @@ import 'package:void_chat_beta/generated/l10n.dart';
 import 'package:void_chat_beta/logic/cubit/signup/signup_cubit.dart';
 
 class PasswordInput extends StatelessWidget {
+  final FocusNode node;
+  final FocusNode nextNode;
   const PasswordInput({
     Key? key,
+    required this.node,
+    required this.nextNode,
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -16,6 +20,12 @@ class PasswordInput extends StatelessWidget {
         buildWhen: (previous, current) => previous.password != current.password,
         builder: (context, state) {
           return TextField(
+            focusNode: node,
+            textInputAction: TextInputAction.next,
+            onEditingComplete: () {
+              node.unfocus();
+              FocusScope.of(context).requestFocus(nextNode);
+            },
             style: TextStyles.body1,
             cursorColor: Theme.of(context).primaryColor,
             key: const Key('signUpForm_passwordInput_textField'),

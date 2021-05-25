@@ -5,6 +5,14 @@ import 'package:void_chat_beta/generated/l10n.dart';
 import 'package:void_chat_beta/logic/cubit/login/login_cubit.dart';
 
 class EmailInput extends StatelessWidget {
+  final FocusNode node;
+  final FocusNode nextNode;
+
+  const EmailInput({
+    Key? key,
+    required this.node,
+    required this.nextNode,
+  }) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<LoginCubit, LoginState>(
@@ -12,6 +20,12 @@ class EmailInput extends StatelessWidget {
       builder: (context, state) {
         return TextField(
           key: const Key('loginForm_emailInput_textField'),
+          focusNode: node,
+          textInputAction: TextInputAction.next,
+          onEditingComplete: () {
+            node.unfocus();
+            FocusScope.of(context).requestFocus(nextNode);
+          },
           onChanged: (email) => context.read<LoginCubit>().emailChanged(email),
           keyboardType: TextInputType.emailAddress,
           cursorColor: Theme.of(context).primaryColor,

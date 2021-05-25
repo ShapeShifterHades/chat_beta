@@ -13,8 +13,8 @@ class SignUpCubit extends Cubit<SignUpState> {
   SignUpCubit(this._authenticationRepository, this._newUserRepository)
       : super(const SignUpState());
 
-  final AuthenticationRepository? _authenticationRepository;
-  final FirestoreNewUserRepository? _newUserRepository;
+  final AuthenticationRepository _authenticationRepository;
+  final FirestoreNewUserRepository _newUserRepository;
 
   void emailChanged(String value) {
     final email = Email.dirty(value);
@@ -80,7 +80,7 @@ class SignUpCubit extends Cubit<SignUpState> {
     emit(state.copyWith(status: FormzStatus.submissionInProgress));
     try {
       final bool _exists =
-          await _newUserRepository!.usernameAlreadyExists(state.username.value);
+          await _newUserRepository.usernameAlreadyExists(state.username.value);
       if (_exists) {
         emit(state.copyWith(status: FormzStatus.submissionFailure));
       }
@@ -88,14 +88,14 @@ class SignUpCubit extends Cubit<SignUpState> {
       emit(state.copyWith(status: FormzStatus.submissionFailure));
     }
     try {
-      final UserCredential? userCredential =
-          await _authenticationRepository?.signUp(
+      final UserCredential userCredential =
+          await _authenticationRepository.signUp(
         email: state.email.value,
         password: state.password.value,
       );
       final NewProfile newProfile = NewProfile(
-          uid: userCredential?.user!.uid, username: state.username.value);
-      await _newUserRepository?.addNewUser(newProfile);
+          uid: userCredential.user!.uid, username: state.username.value);
+      await _newUserRepository.addNewUser(newProfile);
       emit(state.copyWith(status: FormzStatus.submissionSuccess));
     } on Exception {
       emit(state.copyWith(status: FormzStatus.submissionFailure));

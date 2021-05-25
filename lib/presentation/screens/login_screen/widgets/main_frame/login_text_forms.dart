@@ -18,6 +18,22 @@ class LoginTextForms extends StatefulWidget {
 }
 
 class _LoginTextFormsState extends State<LoginTextForms> {
+  late FocusNode emailNode;
+  late FocusNode passwordNode;
+  @override
+  void initState() {
+    super.initState();
+    emailNode = FocusNode();
+    passwordNode = FocusNode();
+  }
+
+  @override
+  void dispose() {
+    emailNode.dispose();
+    passwordNode.dispose();
+    super.dispose();
+  }
+
   final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
@@ -42,12 +58,15 @@ class _LoginTextFormsState extends State<LoginTextForms> {
                     alignment: Alignment.center,
                     padding:
                         const EdgeInsets.only(left: 10, right: 10, top: 20),
-                    child: EmailInput(),
+                    child: EmailInput(
+                      node: emailNode,
+                      nextNode: passwordNode,
+                    ),
                   ),
                   Container(
                     alignment: Alignment.topCenter,
                     padding: const EdgeInsets.only(left: 10, right: 10),
-                    child: PasswordInput(),
+                    child: PasswordInput(node: passwordNode),
                   ),
                 ],
               ),

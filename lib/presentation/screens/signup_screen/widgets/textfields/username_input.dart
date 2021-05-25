@@ -5,8 +5,11 @@ import 'package:void_chat_beta/generated/l10n.dart';
 import 'package:void_chat_beta/logic/cubit/signup/signup_cubit.dart';
 
 class UsernameInput extends StatelessWidget {
+  final FocusNode node;
+
   const UsernameInput({
     Key? key,
+    required this.node,
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -16,6 +19,12 @@ class UsernameInput extends StatelessWidget {
         buildWhen: (previous, current) => previous.username != current.username,
         builder: (context, state) {
           return TextField(
+            focusNode: node,
+            textInputAction: TextInputAction.next,
+            onEditingComplete: () {
+              node.unfocus();
+              context.read<SignUpCubit>().signUpFormSubmitted();
+            },
             style: TextStyles.body1,
             cursorColor: Theme.of(context).primaryColor,
             key: const Key('signUpForm_emailInput_textField'),

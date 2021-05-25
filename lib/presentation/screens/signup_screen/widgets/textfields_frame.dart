@@ -20,6 +20,29 @@ class TextfieldsFrame extends StatefulWidget {
 }
 
 class _TextfieldsFrameState extends State<TextfieldsFrame> {
+  late FocusNode emailNode;
+  late FocusNode passwordNode;
+  late FocusNode confirmPasswordNode;
+  late FocusNode usernameNode;
+
+  @override
+  void initState() {
+    super.initState();
+    emailNode = FocusNode();
+    passwordNode = FocusNode();
+    confirmPasswordNode = FocusNode();
+    usernameNode = FocusNode();
+  }
+
+  @override
+  void dispose() {
+    emailNode.dispose();
+    passwordNode.dispose();
+    confirmPasswordNode.dispose();
+    usernameNode.dispose();
+    super.dispose();
+  }
+
   final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
@@ -36,17 +59,22 @@ class _TextfieldsFrameState extends State<TextfieldsFrame> {
                   BorderSide(color: Theme.of(context).primaryColor, width: 0.2),
             ),
           ),
-          child: SingleChildScrollView(
-            child: Form(
-              key: _formKey,
-              child: Column(
-                children: const [
-                  EmailInput(),
-                  PasswordInput(),
-                  ConfirmPasswordInput(),
-                  UsernameInput(),
-                  LicenceAgreementTile(),
-                ],
+          child: Scrollbar(
+            radius: const Radius.circular(20),
+            child: SingleChildScrollView(
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  children: [
+                    EmailInput(node: emailNode, nextNode: passwordNode),
+                    PasswordInput(
+                        node: passwordNode, nextNode: confirmPasswordNode),
+                    ConfirmPasswordInput(
+                        node: confirmPasswordNode, nextNode: usernameNode),
+                    UsernameInput(node: usernameNode),
+                    LicenceAgreementTile(),
+                  ],
+                ),
               ),
             ),
           ),

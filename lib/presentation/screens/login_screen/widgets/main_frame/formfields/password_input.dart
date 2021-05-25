@@ -5,6 +5,9 @@ import 'package:void_chat_beta/generated/l10n.dart';
 import 'package:void_chat_beta/logic/cubit/login/login_cubit.dart';
 
 class PasswordInput extends StatelessWidget {
+  final FocusNode node;
+
+  const PasswordInput({Key? key, required this.node}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<LoginCubit, LoginState>(
@@ -12,6 +15,10 @@ class PasswordInput extends StatelessWidget {
       builder: (context, state) {
         return TextField(
           key: const Key('loginForm_passwordInput_textField'),
+          onEditingComplete: () =>
+              context.read<LoginCubit>().logInWithCredentials(),
+          textInputAction: TextInputAction.done,
+          focusNode: node,
           onChanged: (password) =>
               context.read<LoginCubit>().passwordChanged(password),
           obscureText: true,

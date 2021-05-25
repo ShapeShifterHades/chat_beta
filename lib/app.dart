@@ -42,7 +42,7 @@ class App extends StatelessWidget {
               create: (_) => AuthenticationRepository()),
           RepositoryProvider<FirestoreContactRepository?>(
               create: (_) => FirestoreContactRepository()),
-          RepositoryProvider<FirestoreNewUserRepository?>(
+          RepositoryProvider<FirestoreNewUserRepository>(
               create: (_) => FirestoreNewUserRepository()),
           RepositoryProvider<FirestoreChatroomRepository?>(
               create: (_) => FirestoreChatroomRepository()),
