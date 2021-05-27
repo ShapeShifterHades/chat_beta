@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:void_chat_beta/core/constants/constants.dart';
+
 import 'package:void_chat_beta/core/themes/app_theme.dart';
 import 'package:void_chat_beta/generated/l10n.dart';
 import 'package:void_chat_beta/logic/bloc/authentication/authentication_bloc.dart';
@@ -16,15 +16,10 @@ import 'package:void_chat_beta/logic/bloc/message/message_bloc.dart';
 import 'package:void_chat_beta/logic/bloc/search_button/search_button_bloc.dart';
 import 'package:void_chat_beta/logic/cubit/brightness/brightness.dart';
 import 'package:void_chat_beta/logic/cubit/locale/locale.dart';
-import 'package:void_chat_beta/presentation/screens/chat_screen/view/chat_view.dart';
-import 'package:void_chat_beta/presentation/screens/contacts_screen/view/contacts_view.dart';
-import 'package:void_chat_beta/presentation/screens/faq_screen/view/faq_view.dart';
+
 import 'package:void_chat_beta/presentation/screens/login_screen/view/login_view.dart';
 import 'package:void_chat_beta/presentation/screens/main_screen/view/main_screen.dart';
-import 'package:void_chat_beta/presentation/screens/messages_screen/view/messages_view.dart';
-import 'package:void_chat_beta/presentation/screens/security_screen/view/security_view.dart';
-import 'package:void_chat_beta/presentation/screens/settings_screen/view/settings_view.dart';
-import 'package:void_chat_beta/presentation/screens/signup_screen/view/signup_view.dart';
+
 import 'package:void_chat_beta/presentation/screens/splash_screen/splash.dart';
 
 class App extends StatelessWidget {
@@ -128,56 +123,23 @@ class AppView extends StatelessWidget {
                     locale: Locale(context.read<LocaleCubit>().state),
                     initialRoute: '/',
                     onGenerateRoute: (RouteSettings settings) {
-                      late Widget page;
-                      if (settings.name == initialRoute) {
-                        return MaterialPageRoute<dynamic>(
-                          builder: (context) {
-                            return BlocBuilder<AuthenticationBloc,
-                                AuthenticationState>(
-                              builder: (context, state) {
-                                if (state.status ==
-                                    AuthenticationStatus.unauthenticated) {
-                                  return const LoginView();
-                                }
-                                if (state.status ==
-                                    AuthenticationStatus.authenticated) {
-                                  return MainScreen();
-                                }
-
-                                return SplashView();
-                              },
-                            );
-                          },
-                        );
-                      } else if (settings.name == homeRoute) {
-                        page = MessagesView();
-                      } else if (settings.name == loginRoute) {
-                        page = const LoginView();
-                      } else if (settings.name == signupRoute) {
-                        page = const SignUpView();
-                      } else if (settings.name == contactsRoute) {
-                        page = const ContactsView();
-                      } else if (settings.name == settingsRoute) {
-                        page = SettingsView();
-                      } else if (settings.name == securityRoute) {
-                        page = SecurityView();
-                      } else if (settings.name == faqRoute) {
-                        page = FaqView();
-                      } else if (settings.name == splashRoute) {
-                        page = SplashView();
-                      } else if (settings.name == chatRoute) {
-                        final Chatroom? args = settings.arguments as Chatroom?;
-
-                        page = ChatView(
-                          chat: args!,
-                        );
-                      }
-
                       return MaterialPageRoute<dynamic>(
                         builder: (context) {
-                          return page;
+                          return BlocBuilder<AuthenticationBloc,
+                              AuthenticationState>(
+                            builder: (context, state) {
+                              if (state.status ==
+                                  AuthenticationStatus.unauthenticated) {
+                                return const LoginView();
+                              }
+                              if (state.status ==
+                                  AuthenticationStatus.authenticated) {
+                                return MainScreen();
+                              }
+                              return SplashView();
+                            },
+                          );
                         },
-                        settings: settings,
                       );
                     },
                     localizationsDelegates: const [

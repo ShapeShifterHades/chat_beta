@@ -20,7 +20,7 @@ void main() {
     test('returns object with updated status when status is passed', () {
       expect(
         const LoginState().copyWith(status: FormzStatus.pure),
-        const LoginState(status: FormzStatus.pure),
+        const LoginState(),
       );
     });
 

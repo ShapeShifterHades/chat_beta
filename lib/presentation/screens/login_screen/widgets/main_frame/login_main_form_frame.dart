@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
-import 'package:formz/formz.dart';
 import 'package:simple_animations/simple_animations.dart';
 import 'package:supercharged/supercharged.dart';
 import 'package:void_chat_beta/core/constants/styles.dart';
 import 'package:void_chat_beta/generated/l10n.dart';
-import 'package:void_chat_beta/logic/cubit/login/login_cubit.dart';
 import 'package:void_chat_beta/presentation/screens/login_screen/widgets/auth_custom_frame/custom_clip_path.dart';
 import 'package:void_chat_beta/presentation/screens/login_screen/widgets/form_header_signup.dart';
 import 'package:void_chat_beta/presentation/screens/login_screen/widgets/main_frame/buttons_divider.dart';
@@ -15,8 +12,6 @@ import 'package:void_chat_beta/presentation/screens/login_screen/widgets/main_fr
 import 'package:void_chat_beta/presentation/screens/login_screen/widgets/main_frame/login_text_forms.dart';
 import 'package:void_chat_beta/presentation/screens/login_screen/widgets/main_frame/or_divider.dart';
 import 'package:void_chat_beta/presentation/screens/login_screen/widgets/main_frame/settings_box.dart';
-
-import 'button_model.dart';
 
 /// Widget that represents main part of the Signup View
 class LoginMainFormFrame extends StatefulWidget {
@@ -88,9 +83,9 @@ class _LoginMainFormFrameState extends State<LoginMainFormFrame>
               const LoginSubmitButton(),
               ButtonsDivider(orLineAlterHeight: orLineAlterHeight),
               OrDivider(orLineHeight: orLineHeight),
-              ButtonModel(
+              SubmitButton(
                 text: S.of(context).loginpage_login_with_google,
-                onPressed: _formController!.value == 0.0 ? null : () {},
+                func: _formController!.value == 0.0 ? null : () {},
               ),
             ],
           ),

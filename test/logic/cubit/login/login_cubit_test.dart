@@ -31,12 +31,14 @@ void main() {
 
       when(
         () => authenticationRepository.logInWithGoogle(),
+        // ignore: avoid_returning_null_for_void
       ).thenAnswer((_) async => null);
       when(
         () => authenticationRepository.logInWithEmailAndPassword(
           email: any(named: 'email'),
           password: any(named: 'password'),
         ),
+        // ignore: avoid_returning_null_for_void
       ).thenAnswer((_) async => null);
     });
     test('initial state is LoginState', () {
@@ -218,7 +220,7 @@ void main() {
         act: (bloc) => bloc.logInWithGoogle(),
         expect: () => const <LoginState>[
           LoginState(status: FormzStatus.submissionInProgress),
-          LoginState(status: FormzStatus.pure),
+          LoginState(),
         ],
       );
     });

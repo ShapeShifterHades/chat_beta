@@ -60,7 +60,7 @@ class _MainScreenState extends State<MainScreen> {
                     default:
                   }
                 }
-                return Text(
+                return const Text(
                   'Loading !!!',
                   style: TextStyle(color: Colors.white),
                 );

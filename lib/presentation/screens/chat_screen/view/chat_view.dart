@@ -62,7 +62,6 @@ class _ChatViewState extends State<ChatView> with TickerProviderStateMixin {
               selectedArray.add(notification.docId);
             }
             setState(() {});
-            print(selectedArray);
             return true;
           },
           child: FooterLayout(

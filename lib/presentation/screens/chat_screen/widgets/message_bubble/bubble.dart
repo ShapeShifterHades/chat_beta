@@ -48,7 +48,6 @@ class _MessageBubbleState extends State<MessageBubble>
           isSelected = !isSelected;
           SelectNotification(selectMode: !widget.selectMode).dispatch(context);
           SelectedArray(docId: widget.message.docId!).dispatch(context);
-          print(widget.selectMode);
         });
       },
       child: LabeledCheckbox(

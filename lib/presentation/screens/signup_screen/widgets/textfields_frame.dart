@@ -72,7 +72,7 @@ class _TextfieldsFrameState extends State<TextfieldsFrame> {
                     ConfirmPasswordInput(
                         node: confirmPasswordNode, nextNode: usernameNode),
                     UsernameInput(node: usernameNode),
-                    LicenceAgreementTile(),
+                    const LicenceAgreementTile(),
                   ],
                 ),
               ),

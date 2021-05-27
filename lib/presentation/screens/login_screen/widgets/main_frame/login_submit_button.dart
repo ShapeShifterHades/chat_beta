@@ -4,8 +4,7 @@ import 'package:formz/formz.dart';
 import 'package:void_chat_beta/core/constants/styles.dart';
 import 'package:void_chat_beta/generated/l10n.dart';
 import 'package:void_chat_beta/logic/cubit/login/login_cubit.dart';
-
-import 'button_model.dart';
+import 'package:void_chat_beta/presentation/animated_widgets/submission_in_progress_button.dart';
 
 class LoginSubmitButton extends StatelessWidget {
   const LoginSubmitButton({
@@ -17,102 +16,126 @@ class LoginSubmitButton extends StatelessWidget {
     return BlocBuilder<LoginCubit, LoginState>(
       builder: (context, state) {
         if (state.status == FormzStatus.submissionInProgress) {
-          return _SubmissionInProgressButton(
-            startColor: Theme.of(context).primaryColor,
-            endColor: Color(0xffffeb3b),
+          return SubmissionInProgressButton(
+            color: Theme.of(context).primaryColor,
             //TODO: make it from S.delegate
-            text: 'Sending',
+            text: 'CONNECTING',
           );
         }
         if (state.status == FormzStatus.submissionFailure) {
-          return _InitialButton();
+          return const SubmissionFailure(key: Key('login_submit_fail_button'));
         }
-        return const _InitialButton();
+        return const SubmitButton(key: Key('login_submit_button'));
       },
     );
   }
 }
 
-class _SubmissionInProgressButton extends StatefulWidget {
-  final Color startColor;
-  final Color endColor;
-  final String text;
-  const _SubmissionInProgressButton({
+class SubmissionFailure extends StatelessWidget {
+  const SubmissionFailure({
     Key? key,
-    required this.startColor,
-    required this.endColor,
-    required this.text,
   }) : super(key: key);
 
   @override
-  __SubmissionInProgressButtonState createState() =>
-      __SubmissionInProgressButtonState();
+  Widget build(BuildContext context) {
+    return Column(
+      children: const [
+        _AnimatedErrorMessage(),
+        SubmitButton(key: Key('login_submit_after_error_button')),
+      ],
+    );
+  }
 }
 
-class __SubmissionInProgressButtonState
-    extends State<_SubmissionInProgressButton> with TickerProviderStateMixin {
-  late AnimationController _controller;
-  late Animation<Color> _colorAnimation;
+class _AnimatedErrorMessage extends StatefulWidget {
+  const _AnimatedErrorMessage({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  __AnimatedErrorMessageState createState() => __AnimatedErrorMessageState();
+}
+
+class __AnimatedErrorMessageState extends State<_AnimatedErrorMessage>
+    with SingleTickerProviderStateMixin {
+  late AnimationController animationController;
+  late Animation<double> animation;
 
   @override
   void initState() {
+    animationController =
+        AnimationController(duration: Times.fast, vsync: this);
+    animation = animationController;
     super.initState();
-    _initAnimation();
-    _controller.forward();
-  }
-
-  void _initAnimation() {
-    _controller = AnimationController(duration: Times.medium, vsync: this);
-    _colorAnimation = Tween<Color>(
-            begin: widget.startColor, end: widget.endColor)
-        .animate(CurvedAnimation(parent: _controller, curve: Curves.easeIn));
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
+    animationController.forward();
   }
 
   @override
   Widget build(BuildContext context) {
-    final bool _isValid = context.read<LoginCubit>().state.status.isValidated;
-    return GestureDetector(
-      onTap: _isValid
-          ? () => context.read<LoginCubit>().logInWithCredentials()
-          : null,
-      child: AnimatedBuilder(
-          animation: _colorAnimation,
-          builder: (context, child) {
-            return Container(
-              alignment: Alignment.center,
-              width: double.infinity,
-              height: 54,
-              padding: const EdgeInsets.only(bottom: 10),
-              color: _colorAnimation.value,
-              child: Text(widget.text,
-                  style: TextStyles.body1
-                      .copyWith(color: Theme.of(context).backgroundColor)),
-            );
-          }),
-    );
+    return AnimatedBuilder(
+        animation: animation,
+        builder: (context, child) {
+          return Container(
+            color: Colors.red,
+            width: double.infinity,
+            height: 27 * animation.value,
+            alignment: Alignment.center,
+            child: Padding(
+              padding: const EdgeInsets.only(bottom: 3.0),
+              child: Text(
+                'Error, please check your credentials',
+                style: TextStyles.body3
+                    .copyWith(color: Theme.of(context).backgroundColor),
+              ),
+            ),
+          );
+        });
   }
 }
 
-class _InitialButton extends StatelessWidget {
-  const _InitialButton({
+class SubmitButton extends StatelessWidget {
+  final String? text;
+  final VoidCallback? func;
+  const SubmitButton({
     Key? key,
+    this.text,
+    this.func,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final bool _isValid = context.read<LoginCubit>().state.status.isValidated;
-    return ButtonModel(
-      key: const Key('loginForm_continue_raisedButton'),
-      text: S.of(context).loginpage_submit,
-      onPressed: _isValid
-          ? () => context.read<LoginCubit>().logInWithCredentials()
-          : null,
+    final bool _isValid = context.watch<LoginCubit>().state.status.isValidated;
+    return GestureDetector(
+      onTap: func ??
+          (_isValid
+              ? () {
+                  context.read<LoginCubit>().logInWithCredentials();
+                }
+              : null),
+      child: Container(
+        alignment: Alignment.center,
+        width: double.infinity,
+        height: 54,
+        padding: const EdgeInsets.only(bottom: 10),
+        color: Theme.of(context).primaryColor,
+        child: Text(text ?? S.of(context).loginpage_submit,
+            style: TextStyles.body1
+                .copyWith(color: Theme.of(context).backgroundColor)),
+      ),
     );
+  }
+}
+
+class StyledLoadSpinner extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+        width: 24,
+        height: 24,
+        child: CircularProgressIndicator(
+          backgroundColor: Theme.of(context).backgroundColor.withOpacity(0.5),
+          valueColor:
+              AlwaysStoppedAnimation<Color>(Theme.of(context).backgroundColor),
+        ));
   }
 }

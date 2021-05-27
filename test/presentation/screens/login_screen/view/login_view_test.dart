@@ -1,6 +1,5 @@
 import 'package:authentication_repository/authentication_repository.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:void_chat_beta/core/themes/app_theme.dart';
@@ -9,7 +8,6 @@ import 'package:void_chat_beta/logic/cubit/brightness/brightness.dart';
 import 'package:void_chat_beta/logic/cubit/login/login_cubit.dart';
 
 import 'package:void_chat_beta/presentation/screens/login_screen/view/login_view.dart';
-import 'package:void_chat_beta/presentation/screens/login_screen/widgets/main_frame/login_main_form_frame.dart';
 
 class MockAuthenticationRepository extends Mock
     implements AuthenticationRepository {}
