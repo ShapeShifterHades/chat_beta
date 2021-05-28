@@ -4,10 +4,25 @@ import 'package:void_chat_beta/core/constants/styles.dart';
 import 'package:void_chat_beta/generated/l10n.dart';
 import 'package:void_chat_beta/logic/cubit/login/login_cubit.dart';
 
-class PasswordInput extends StatelessWidget {
+class PasswordInput extends StatefulWidget {
   final FocusNode node;
 
   const PasswordInput({Key? key, required this.node}) : super(key: key);
+
+  @override
+  _PasswordInputState createState() => _PasswordInputState();
+}
+
+class _PasswordInputState extends State<PasswordInput> {
+  bool _obscureText = true;
+
+  // Toggles the password show status
+  void _toggle() {
+    setState(() {
+      _obscureText = !_obscureText;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<LoginCubit, LoginState>(
@@ -18,10 +33,10 @@ class PasswordInput extends StatelessWidget {
           onEditingComplete: () =>
               context.read<LoginCubit>().logInWithCredentials(),
           textInputAction: TextInputAction.done,
-          focusNode: node,
+          focusNode: widget.node,
           onChanged: (password) =>
               context.read<LoginCubit>().passwordChanged(password),
-          obscureText: true,
+          obscureText: _obscureText,
           style: TextStyles.body2,
           decoration: InputDecoration(
             fillColor: Theme.of(context).backgroundColor,
@@ -42,6 +57,15 @@ class PasswordInput extends StatelessWidget {
             errorText: state.password.invalid
                 ? S.of(context).loginpage_invalid_password
                 : null,
+            suffixIcon: IconButton(
+              icon: Icon(
+                // Based on passwordVisible state choose the icon
+                _obscureText ? Icons.visibility : Icons.visibility_off,
+                color: Theme.of(context).primaryColor,
+                size: 18,
+              ),
+              onPressed: _toggle,
+            ),
           ),
         );
       },

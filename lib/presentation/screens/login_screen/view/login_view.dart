@@ -6,7 +6,7 @@ import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:void_chat_beta/core/constants/styles.dart';
 import 'package:void_chat_beta/logic/cubit/login/login_cubit.dart';
 import 'package:void_chat_beta/logic/cubit/signup/signup_cubit.dart';
-import 'package:void_chat_beta/presentation/screens/login_screen/widgets/main_frame/login_main_form_frame.dart';
+import 'package:void_chat_beta/presentation/screens/login_screen/widgets/main_frame/login_form_frame.dart';
 import 'package:void_chat_beta/presentation/screens/login_screen/widgets/svg_background.dart';
 import 'package:void_chat_beta/presentation/screens/login_screen/widgets/switch_to_signup_button.dart';
 import 'package:void_chat_beta/presentation/screens/signup_screen/widgets/signup_form_frame.dart';
@@ -46,7 +46,7 @@ class _LoginViewState extends State<LoginView> {
                         return ScaleTransition(scale: animation, child: child);
                       },
                       child: isLogin
-                          ? const LoginMainFormFrame(
+                          ? const LoginFormFrame(
                               key: ValueKey('login_main_form_frame'),
                             )
                           : const SignupMainFormFrame(

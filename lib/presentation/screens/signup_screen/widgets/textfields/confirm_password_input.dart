@@ -4,7 +4,7 @@ import 'package:void_chat_beta/core/constants/styles.dart';
 import 'package:void_chat_beta/generated/l10n.dart';
 import 'package:void_chat_beta/logic/cubit/signup/signup_cubit.dart';
 
-class ConfirmPasswordInput extends StatelessWidget {
+class ConfirmPasswordInput extends StatefulWidget {
   final FocusNode node;
   final FocusNode nextNode;
   const ConfirmPasswordInput({
@@ -12,6 +12,21 @@ class ConfirmPasswordInput extends StatelessWidget {
     required this.node,
     required this.nextNode,
   }) : super(key: key);
+
+  @override
+  _ConfirmPasswordInputState createState() => _ConfirmPasswordInputState();
+}
+
+class _ConfirmPasswordInputState extends State<ConfirmPasswordInput> {
+  bool _obscureText = true;
+
+  // Toggles the password show status
+  void _toggle() {
+    setState(() {
+      _obscureText = !_obscureText;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -22,11 +37,11 @@ class ConfirmPasswordInput extends StatelessWidget {
             previous.confirmedPassword != current.confirmedPassword,
         builder: (context, state) {
           return TextField(
-            focusNode: node,
+            focusNode: widget.node,
             textInputAction: TextInputAction.next,
             onEditingComplete: () {
-              node.unfocus();
-              FocusScope.of(context).requestFocus(nextNode);
+              widget.node.unfocus();
+              FocusScope.of(context).requestFocus(widget.nextNode);
             },
             style: TextStyles.body1,
             cursorColor: Theme.of(context).primaryColor,
@@ -41,6 +56,15 @@ class ConfirmPasswordInput extends StatelessWidget {
               errorText: state.confirmedPassword.invalid
                   ? S.of(context).signup_invalid_confirm_password
                   : null,
+              suffixIcon: IconButton(
+                icon: Icon(
+                  // Based on passwordVisible state choose the icon
+                  _obscureText ? Icons.visibility : Icons.visibility_off,
+                  color: Theme.of(context).primaryColor,
+                  size: 18,
+                ),
+                onPressed: _toggle,
+              ),
             ),
           );
         },

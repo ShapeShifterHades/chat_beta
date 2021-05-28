@@ -112,49 +112,55 @@ class AppView extends StatelessWidget {
       builder: (context, state) {
         return BlocBuilder<BrightnessCubit, Brightness>(
           builder: (context, brightness) {
-            return BlocBuilder<LocaleCubit, String>(
-              builder: (context, locale) {
-                final bool isDark =
-                    BlocProvider.of<BrightnessCubit>(context).state ==
-                        Brightness.dark;
-                return BlocListener<AuthenticationBloc, AuthenticationState>(
-                  listener: (context, state) {},
-                  child: MaterialApp(
-                    locale: Locale(context.read<LocaleCubit>().state),
-                    initialRoute: '/',
-                    onGenerateRoute: (RouteSettings settings) {
-                      return MaterialPageRoute<dynamic>(
-                        builder: (context) {
-                          return BlocBuilder<AuthenticationBloc,
-                              AuthenticationState>(
-                            builder: (context, state) {
-                              if (state.status ==
-                                  AuthenticationStatus.unauthenticated) {
-                                return const LoginView();
-                              }
-                              if (state.status ==
-                                  AuthenticationStatus.authenticated) {
-                                return MainScreen();
-                              }
-                              return SplashView();
-                            },
-                          );
-                        },
-                      );
-                    },
-                    localizationsDelegates: const [
-                      S.delegate,
-                      GlobalMaterialLocalizations.delegate,
-                      GlobalWidgetsLocalizations.delegate,
-                      GlobalCupertinoLocalizations.delegate,
-                    ],
-                    supportedLocales: S.delegate.supportedLocales,
-                    debugShowCheckedModeBanner: false,
-                    theme: isDark ? AppTheme.lightTheme : AppTheme.darkTheme,
-                    darkTheme: AppTheme.darkTheme,
-                  ),
-                );
-              },
+            return AnnotatedRegion<SystemUiOverlayStyle>(
+              value: BlocProvider.of<BrightnessCubit>(context).state ==
+                      Brightness.dark
+                  ? SystemUiOverlayStyle.dark
+                  : SystemUiOverlayStyle.light,
+              child: BlocBuilder<LocaleCubit, String>(
+                builder: (context, locale) {
+                  final bool isDark =
+                      BlocProvider.of<BrightnessCubit>(context).state ==
+                          Brightness.dark;
+                  return BlocListener<AuthenticationBloc, AuthenticationState>(
+                    listener: (context, state) {},
+                    child: MaterialApp(
+                      locale: Locale(context.read<LocaleCubit>().state),
+                      initialRoute: '/',
+                      onGenerateRoute: (RouteSettings settings) {
+                        return MaterialPageRoute<dynamic>(
+                          builder: (context) {
+                            return BlocBuilder<AuthenticationBloc,
+                                AuthenticationState>(
+                              builder: (context, state) {
+                                if (state.status ==
+                                    AuthenticationStatus.unauthenticated) {
+                                  return const LoginView();
+                                }
+                                if (state.status ==
+                                    AuthenticationStatus.authenticated) {
+                                  return MainScreen();
+                                }
+                                return SplashView();
+                              },
+                            );
+                          },
+                        );
+                      },
+                      localizationsDelegates: const [
+                        S.delegate,
+                        GlobalMaterialLocalizations.delegate,
+                        GlobalWidgetsLocalizations.delegate,
+                        GlobalCupertinoLocalizations.delegate,
+                      ],
+                      supportedLocales: S.delegate.supportedLocales,
+                      debugShowCheckedModeBanner: false,
+                      theme: isDark ? AppTheme.lightTheme : AppTheme.darkTheme,
+                      darkTheme: AppTheme.darkTheme,
+                    ),
+                  );
+                },
+              ),
             );
           },
         );

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:void_chat_beta/core/constants/styles.dart';
-import 'package:void_chat_beta/presentation/screens/login_screen/widgets/main_frame/login_submit_button.dart';
+import 'package:void_chat_beta/presentation/styled_widgets/styled_load_spinner.dart';
 
 class SubmissionInProgressButton extends StatefulWidget {
   final Color color;

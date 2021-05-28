@@ -65,6 +65,7 @@ class _SettingsBoxState extends State<SettingsBox> {
                       Switcher(
                         onChange: () async {
                           BlocProvider.of<LocaleCubit>(context).toggleLocale();
+                          setState(() {});
                         },
                       ),
                       const SizedBox(width: 50),

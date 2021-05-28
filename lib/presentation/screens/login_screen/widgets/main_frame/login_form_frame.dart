@@ -6,53 +6,50 @@ import 'package:simple_animations/simple_animations.dart';
 import 'package:supercharged/supercharged.dart';
 import 'package:void_chat_beta/core/constants/styles.dart';
 import 'package:void_chat_beta/generated/l10n.dart';
-import 'package:void_chat_beta/logic/cubit/signup/signup_cubit.dart';
+import 'package:void_chat_beta/logic/cubit/login/login_cubit.dart';
 import 'package:void_chat_beta/presentation/screens/login_screen/widgets/auth_custom_frame/custom_clip_path.dart';
 import 'package:void_chat_beta/presentation/screens/login_screen/widgets/form_header_signup.dart';
 import 'package:void_chat_beta/presentation/screens/login_screen/widgets/main_frame/buttons_divider.dart';
+import 'package:void_chat_beta/presentation/screens/login_screen/widgets/main_frame/constants.dart';
+import 'package:void_chat_beta/presentation/screens/login_screen/widgets/main_frame/login_text_forms.dart';
 import 'package:void_chat_beta/presentation/screens/login_screen/widgets/main_frame/or_divider.dart';
 import 'package:void_chat_beta/presentation/screens/login_screen/widgets/main_frame/settings_box.dart';
-import 'package:void_chat_beta/presentation/screens/signup_screen/widgets/constants.dart';
-import 'package:void_chat_beta/presentation/screens/signup_screen/widgets/textfields_frame.dart';
-import 'package:void_chat_beta/presentation/styled_widgets/signup_submit_button.dart';
+import 'package:void_chat_beta/presentation/styled_widgets/login_submit_button.dart';
 import 'package:void_chat_beta/presentation/styled_widgets/submit_ready_button.dart';
 
 /// Widget that represents main part of the Signup View
-class SignupMainFormFrame extends StatefulWidget {
-  const SignupMainFormFrame({
+class LoginFormFrame extends StatefulWidget {
+  const LoginFormFrame({
     Key? key,
   }) : super(key: key);
 
   @override
-  _SignupMainFormFrameState createState() => _SignupMainFormFrameState();
+  _LoginFormFrameState createState() => _LoginFormFrameState();
 }
 
-class _SignupMainFormFrameState extends State<SignupMainFormFrame>
-    with AnimationMixin {
+class _LoginFormFrameState extends State<LoginFormFrame> with AnimationMixin {
   /// Controller that is taking care of animation, is set to be played after widget first build
-  AnimationController? formController;
-  AnimationController? settingsController;
+  AnimationController? _formController;
+  AnimationController? _settingsController;
+  // Whether keyboard is opened or not.
 
   Animation<double>? formFrameHeight;
   Animation<double>? settingsFrameHeight;
   Animation<double>? orLineHeight;
   Animation<double>? orLineAlterHeight;
-  late bool isValid;
-
-  // bool keyboardIsVisible = false;
 
   @override
   void initState() {
-    formController = createController()
+    _formController = createController()
       ..play(duration: Times.fast)
       ..curve(Curves.easeInQuad);
-    settingsController = createController();
+    _settingsController = createController();
 
-    formFrameHeight = .0.tweenTo(310.0).animatedBy(formController!);
-    settingsFrameHeight = .0.tweenTo(160.0).animatedBy(settingsController!);
-    orLineHeight = .0.tweenTo(40.0).animatedBy(formController!);
-    orLineAlterHeight = .0.tweenTo(40.0).animatedBy(settingsController!);
-    isValid = false;
+    formFrameHeight = 0.0.tweenTo(168.0).animatedBy(_formController!);
+    settingsFrameHeight = 0.0.tweenTo(160.0).animatedBy(_settingsController!);
+    orLineHeight = 0.0.tweenTo(40.0).animatedBy(_formController!);
+    orLineAlterHeight = 0.0.tweenTo(40.0).animatedBy(_settingsController!);
+
     super.initState();
   }
 
@@ -63,20 +60,18 @@ class _SignupMainFormFrameState extends State<SignupMainFormFrame>
 
   @override
   Widget build(BuildContext context) {
-    isValid = context.watch<SignUpCubit>().state.status.isValidated;
     final bool isKeyboardVisible =
         KeyboardVisibilityProvider.isKeyboardVisible(context);
-    return BlocBuilder<SignUpCubit, SignUpState>(
+    return BlocBuilder<LoginCubit, LoginState>(
       builder: (context, state) {
         final bool _isSubmitted =
             state.status == FormzStatus.submissionInProgress;
-
         return AnimatedAlign(
-          duration: Times.fast,
+          duration: Times.medium,
           curve: Curves.easeIn,
           alignment: isKeyboardVisible ? Alignment.topCenter : Alignment.center,
           child: Container(
-            margin: buildFormMargin(context),
+            margin: buildMainFrameMargin(context),
             width: MediaQuery.of(context).size.width * .8,
             child: ClipPath(
               clipper: MainLoginFrameClipPath(),
@@ -86,9 +81,9 @@ class _SignupMainFormFrameState extends State<SignupMainFormFrame>
                   if (!isKeyboardVisible)
                     FormHeaderSignUp(
                       color: Theme.of(context).primaryColor,
-                      title: S.of(context).signup_registration,
-                      formController: formController,
-                      settingsController: settingsController,
+                      title: S.of(context).loginpage_login_form,
+                      formController: _formController,
+                      settingsController: _settingsController,
                     ),
                   AnimatedOpacity(
                     opacity: _isSubmitted ? .5 : 1,
@@ -99,16 +94,9 @@ class _SignupMainFormFrameState extends State<SignupMainFormFrame>
                   AnimatedOpacity(
                     opacity: _isSubmitted ? .5 : 1,
                     duration: Times.fast,
-                    child: TextfieldsFrame(formFrameHeight: formFrameHeight),
+                    child: LoginTextForms(formFrameHeight: formFrameHeight),
                   ),
-                  SignUpSubmitButton(
-                    func: isValid
-                        ? () {
-                            context.read<SignUpCubit>().signUpFormSubmitted();
-                          }
-                        : null,
-                    submitErrorMessage: 'Error occured with provided data',
-                  ),
+                  const LoginSubmitButton(),
                   AnimatedOpacity(
                     opacity: _isSubmitted ? .5 : 1,
                     duration: Times.fast,
@@ -123,8 +111,8 @@ class _SignupMainFormFrameState extends State<SignupMainFormFrame>
                     opacity: _isSubmitted ? .5 : 1,
                     duration: Times.fast,
                     child: SubmitReadyButton(
-                      submitText: S.of(context).signup_with_google,
-                      func: formController!.value == 0.0 ? null : () {},
+                      submitText: S.of(context).loginpage_login_with_google,
+                      func: _formController!.value == 0.0 ? null : () {},
                     ),
                   ),
                 ],

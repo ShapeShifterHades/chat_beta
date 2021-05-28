@@ -4,7 +4,7 @@ import 'package:void_chat_beta/core/constants/styles.dart';
 import 'package:void_chat_beta/generated/l10n.dart';
 import 'package:void_chat_beta/logic/cubit/signup/signup_cubit.dart';
 
-class PasswordInput extends StatelessWidget {
+class PasswordInput extends StatefulWidget {
   final FocusNode node;
   final FocusNode nextNode;
   const PasswordInput({
@@ -12,6 +12,21 @@ class PasswordInput extends StatelessWidget {
     required this.node,
     required this.nextNode,
   }) : super(key: key);
+
+  @override
+  _PasswordInputState createState() => _PasswordInputState();
+}
+
+class _PasswordInputState extends State<PasswordInput> {
+  bool _obscureText = true;
+
+  // Toggles the password show status
+  void _toggle() {
+    setState(() {
+      _obscureText = !_obscureText;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -20,11 +35,11 @@ class PasswordInput extends StatelessWidget {
         buildWhen: (previous, current) => previous.password != current.password,
         builder: (context, state) {
           return TextField(
-            focusNode: node,
+            focusNode: widget.node,
             textInputAction: TextInputAction.next,
             onEditingComplete: () {
-              node.unfocus();
-              FocusScope.of(context).requestFocus(nextNode);
+              widget.node.unfocus();
+              FocusScope.of(context).requestFocus(widget.nextNode);
             },
             style: TextStyles.body1,
             cursorColor: Theme.of(context).primaryColor,
@@ -38,6 +53,15 @@ class PasswordInput extends StatelessWidget {
               errorText: state.password.invalid
                   ? S.of(context).loginpage_invalid_password
                   : null,
+              suffixIcon: IconButton(
+                icon: Icon(
+                  // Based on passwordVisible state choose the icon
+                  _obscureText ? Icons.visibility : Icons.visibility_off,
+                  color: Theme.of(context).primaryColor,
+                  size: 18,
+                ),
+                onPressed: _toggle,
+              ),
             ),
           );
         },
