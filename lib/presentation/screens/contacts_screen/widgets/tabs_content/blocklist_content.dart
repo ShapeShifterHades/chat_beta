@@ -12,8 +12,8 @@ import 'package:void_chat_beta/presentation/styled_widgets/loading_indicator.dar
 
 import '../tiles/incoming_pending_requests.dart';
 
-class PendinglistContent extends StatelessWidget {
-  const PendinglistContent({
+class BlocklistContent extends StatelessWidget {
+  const BlocklistContent({
     Key? key,
   }) : super(key: key);
   @override
@@ -22,17 +22,17 @@ class PendinglistContent extends StatelessWidget {
       builder: (context, state) {
         if (state is ContactsLoaded) {
           final List<Contact> sorted = state.contacts
-              .where((element) => element.status!.contains('pending'))
+              .where((element) => element.status!.contains('blocked'))
               .toList();
 
           return Column(
             children: [
-              _RequestsCounter(sorted: sorted),
+              _BlockedCounter(sorted: sorted),
               const _Divider(),
               if (sorted.isEmpty)
                 const Expanded(
                   child: LoadingIndicator(
-                    text: 'Pendinglist is empty...',
+                    text: 'Blocklist is empty...',
                   ),
                 )
               else
@@ -79,29 +79,32 @@ class _ContactsListView extends StatelessWidget {
         final String? _date = sorted[index].requestSentAt == null
             ? null
             : DateFormat.MMMMEEEEd().toString();
-        return _date != null
-            ? (sorted[index].requestFrom ==
-                    context.watch<AuthenticationBloc>().state.user.id)
-                ? OutcomingPendingRequestTile(
-                    id: sorted[index].id,
-                    message: sorted[index].message,
-                    requestSentAt: _date,
-                    username: sorted[index].username,
-                  )
-                : IncomingPendingRequestTile(
-                    id: sorted[index].id,
-                    message: sorted[index].message,
-                    requestSentAt: _date,
-                    username: sorted[index].username,
-                  )
-            : Container();
+        return Column(
+          children: [
+            if (_date != null)
+              (sorted[index].requestFrom ==
+                      context.watch<AuthenticationBloc>().state.user.id)
+                  ? OutcomingPendingRequestTile(
+                      id: sorted[index].id,
+                      message: sorted[index].message,
+                      requestSentAt: _date,
+                      username: sorted[index].username,
+                    )
+                  : IncomingPendingRequestTile(
+                      id: sorted[index].id,
+                      message: sorted[index].message,
+                      requestSentAt: _date,
+                      username: sorted[index].username,
+                    ),
+          ],
+        );
       },
     );
   }
 }
 
-class _RequestsCounter extends StatelessWidget {
-  const _RequestsCounter({
+class _BlockedCounter extends StatelessWidget {
+  const _BlockedCounter({
     Key? key,
     required this.sorted,
   }) : super(key: key);
@@ -114,7 +117,7 @@ class _RequestsCounter extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
         Text(
-          "${S.of(context).contacts_pending} : ${sorted.length}",
+          "${S.of(context).contacts_blocked} : ${sorted.length}",
           style: TextStyles.body1,
         ),
         const SizedBox(width: 20),

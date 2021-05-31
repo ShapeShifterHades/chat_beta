@@ -1,10 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:void_chat_beta/core/constants/constants.dart';
 import 'package:void_chat_beta/core/constants/styles.dart';
 import 'package:void_chat_beta/generated/l10n.dart';
 import 'package:void_chat_beta/logic/bloc/authentication/authentication_bloc.dart';
+import 'package:void_chat_beta/logic/bloc/main_bloc/bloc/main_bloc.dart';
 import 'package:void_chat_beta/presentation/screens/common_ui/drawer/widgets/arctext.dart';
 import 'package:void_chat_beta/presentation/screens/common_ui/drawer/widgets/drawer_menu_button.dart';
 
@@ -42,40 +42,30 @@ class _MenuButtonsBlock extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
           DrawerMenuButton(
-            label: S.of(context).drawer_messages,
-            func: () {
-              Navigator.of(context).pushNamed(homeRoute);
-            },
+            text: S.of(context).drawer_messages,
           ),
           const SizedBox(height: 15),
           DrawerMenuButton(
-            label: S.of(context).drawer_contacts,
-            func: () => Navigator.of(context).pushNamed(contactsRoute),
+            text: S.of(context).drawer_contacts,
+            view: CurrentView.contacts,
           ),
           const SizedBox(height: 15),
           DrawerMenuButton(
-            label: S.of(context).drawer_settings,
-            func: () {
-              Navigator.of(context).pushNamed(settingsRoute);
-            },
+            text: S.of(context).drawer_settings,
+            view: CurrentView.settings,
           ),
           const SizedBox(height: 15),
           DrawerMenuButton(
-            label: S.of(context).drawer_security,
-            func: () => Navigator.of(context).pushNamed(securityRoute),
+            text: S.of(context).drawer_security,
+            view: CurrentView.security,
           ),
           const SizedBox(height: 15),
           DrawerMenuButton(
-            label: S.of(context).drawer_faq,
-            func: () => Navigator.of(context).pushNamed(faqRoute),
+            text: S.of(context).drawer_faq,
+            view: CurrentView.faq,
           ),
           const SizedBox(height: 45),
-          DrawerMenuButton(
-            label: S.of(context).drawer_logout,
-            func: () async {
-              await FirebaseAuth.instance.signOut();
-            },
-          ),
+          const _ExitDrawerMenuButton(),
           const SizedBox(height: 55),
           Container(
             padding: const EdgeInsets.only(left: 15),
@@ -89,6 +79,19 @@ class _MenuButtonsBlock extends StatelessWidget {
           const SizedBox(height: 30),
         ],
       ),
+    );
+  }
+}
+
+class _ExitDrawerMenuButton extends StatelessWidget {
+  const _ExitDrawerMenuButton({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return DrawerMenuButton(
+      text: S.of(context).drawer_logout,
     );
   }
 }

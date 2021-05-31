@@ -1,89 +1,100 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:void_chat_beta/core/constants/styles.dart';
+import 'package:void_chat_beta/logic/bloc/contact_tabs/contact_tabs_bloc.dart';
+import 'package:void_chat_beta/logic/bloc/main_bloc/bloc/main_bloc.dart';
 
 /// Represetation of an animated buttor for a drawer-side main menu.
 class DrawerMenuButton extends StatefulWidget {
   /// State of a button, that represents current page it is and changes styling
-  final bool isCurrentPage;
+  final CurrentView view;
 
-  /// Function to use onPress
-  final Function? func;
+  ///  Text for button text
+  final String? text;
 
-  ///  Text for button label
-  final String? label;
-
-  /// Context for dynamic styling
-  final BuildContext? context;
-
-  const DrawerMenuButton(
-      {Key? key,
-      this.context,
-      this.label,
-      this.func,
-      this.isCurrentPage = false})
-      : super(key: key);
+  const DrawerMenuButton({
+    Key? key,
+    this.text,
+    this.view = CurrentView.messages,
+  }) : super(key: key);
 
   @override
   _DrawerMenuButtonState createState() => _DrawerMenuButtonState();
 }
 
-class _DrawerMenuButtonState extends State<DrawerMenuButton> {
-  bool _pressed = false;
+class _DrawerMenuButtonState extends State<DrawerMenuButton>
+    with TickerProviderStateMixin {
+  late AnimationController _controller;
+  late Animation<double> _animation;
+  late bool isCurrentPage;
+
+  @override
+  void initState() {
+    super.initState();
+    _initAnimation();
+    isCurrentPage = false;
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  void _initAnimation() {
+    _controller = AnimationController(duration: Times.medium, vsync: this);
+    _animation = Tween<double>(begin: 18, end: 28)
+        .animate(CurvedAnimation(parent: _controller, curve: Curves.easeIn));
+  }
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTapCancel: () {
-        setState(() {
-          _pressed = false;
-        });
-      },
-      onTapUp: (val) {
-        setState(() {
-          _pressed = false;
-        });
-        widget.func!();
-      },
-      onTapDown: (val) {
-        setState(() {
-          _pressed = true;
-        });
-      },
-      child: AnimatedOpacity(
-        duration: Times.fast,
-        opacity: _pressed ? 0.4 : 1,
-        child: Row(
-          children: [
-            CustomPaint(
-              painter: DrawerMenuButtonPainter(
-                  pressed: _pressed,
-                  color: Theme.of(context).primaryColor,
-                  current: widget.isCurrentPage),
-              child: ClipPath(
-                clipper: DrawerMenuButtonClipper(),
-                child: Container(
-                  width: 140,
-                  height: 38,
-                  padding: const EdgeInsets.only(bottom: 6),
-                  child: Material(
-                    color: Colors.transparent,
-                    child: Row(
-                      children: [
-                        const SizedBox(width: 30),
-                        Text(
-                          widget.label!,
-                          style: TextStyles.body1,
-                          textAlign: TextAlign.left,
-                        ),
-                      ],
+    return BlocBuilder<MainAppBloc, MainAppState>(
+      builder: (context, state) {
+        isCurrentPage =
+            state is MainAppLoaded && state.currentView == widget.view;
+        return GestureDetector(
+          onTap: () {
+            if (widget.view == CurrentView.contacts) {
+              context.read<ContactTabsBloc>().add(FriendlistClicked());
+            }
+            BlocProvider.of<MainAppBloc>(context)
+                .add(SwitchView(view: widget.view));
+
+            _controller.forward();
+          },
+          child: Row(
+            children: [
+              CustomPaint(
+                painter: DrawerMenuButtonPainter(
+                    color: Theme.of(context).primaryColor,
+                    current: isCurrentPage),
+                child: ClipPath(
+                  clipper: DrawerMenuButtonClipper(),
+                  child: Container(
+                    width: 140,
+                    height: 38,
+                    padding: const EdgeInsets.only(bottom: 6),
+                    child: Material(
+                      color: Colors.transparent,
+                      child: Row(
+                        children: [
+                          const SizedBox(width: 30),
+                          Text(
+                            widget.text!,
+                            style: TextStyles.body1,
+                            textAlign: TextAlign.left,
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
               ),
-            ),
-          ],
-        ),
-      ),
+            ],
+          ),
+        );
+      },
     );
   }
 }

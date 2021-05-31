@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:void_chat_beta/core/constants/styles.dart';
+import 'package:void_chat_beta/logic/bloc/contact_tabs/contact_tabs_bloc.dart';
 import 'package:void_chat_beta/logic/bloc/main_bloc/bloc/main_bloc.dart';
 
 class MiniMenuTile extends StatefulWidget {
-  final bool isCurrentPage;
   final IconData? icon;
   final CurrentView view;
   const MiniMenuTile({
     Key? key,
     this.icon,
     this.view = CurrentView.messages,
-    this.isCurrentPage = false,
   }) : super(key: key);
 
   @override
@@ -22,10 +21,11 @@ class _MiniMenuTileState extends State<MiniMenuTile>
     with TickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _animation;
-
+  late bool isCurrentPage;
   @override
   void initState() {
     super.initState();
+    isCurrentPage = false;
     _initAnimation();
   }
 
@@ -51,51 +51,60 @@ class _MiniMenuTileState extends State<MiniMenuTile>
 
   @override
   Widget build(BuildContext context) {
-    if (!widget.isCurrentPage) _controller.reverse();
-    return GestureDetector(
-      onTap: () {
-        BlocProvider.of<MainAppBloc>(context)
-            .add(SwitchView(view: widget.view));
+    return BlocBuilder<MainAppBloc, MainAppState>(
+      builder: (context, state) {
+        isCurrentPage =
+            state is MainAppLoaded && state.currentView == widget.view;
+        if (!isCurrentPage) _controller.reverse();
+        return GestureDetector(
+          onTap: () {
+            if (widget.view == CurrentView.contacts) {
+              context.read<ContactTabsBloc>().add(FriendlistClicked());
+            }
+            BlocProvider.of<MainAppBloc>(context)
+                .add(SwitchView(view: widget.view));
 
-        _controller.forward();
-      },
-      child: Container(
-        decoration: BoxDecoration(
-          color: Theme.of(context).backgroundColor,
-          border: Border.symmetric(
-            horizontal: BorderSide(
-              color: Theme.of(context).primaryColor,
-              width: 0.04,
+            _controller.forward();
+          },
+          child: Container(
+            decoration: BoxDecoration(
+              color: Theme.of(context).backgroundColor,
+              border: Border.symmetric(
+                horizontal: BorderSide(
+                  color: Theme.of(context).primaryColor,
+                  width: 0.04,
+                ),
+              ),
             ),
-          ),
-        ),
-        child: CustomPaint(
-          painter: MiniMenuTilePainter(
-              pressed: null, color: Theme.of(context).primaryColor),
-          child: ClipPath(
-            clipper: MiniMenuTileClipper(),
-            child: Container(
-              color: Theme.of(context).primaryColor.withOpacity(0.08),
-              width: 34,
-              height: 38,
-              child: Center(
-                child: AnimatedBuilder(
-                  animation: _animation,
-                  builder: (context, child) {
-                    return Icon(
-                      widget.icon,
-                      color: widget.isCurrentPage
-                          ? Theme.of(context).primaryColor
-                          : Theme.of(context).primaryColor.withOpacity(0.7),
-                      size: _animation.value,
-                    );
-                  },
+            child: CustomPaint(
+              painter: MiniMenuTilePainter(
+                  pressed: null, color: Theme.of(context).primaryColor),
+              child: ClipPath(
+                clipper: MiniMenuTileClipper(),
+                child: Container(
+                  color: Theme.of(context).primaryColor.withOpacity(0.08),
+                  width: 34,
+                  height: 38,
+                  child: Center(
+                    child: AnimatedBuilder(
+                      animation: _animation,
+                      builder: (context, child) {
+                        return Icon(
+                          widget.icon,
+                          color: isCurrentPage
+                              ? Theme.of(context).primaryColor
+                              : Theme.of(context).primaryColor.withOpacity(0.7),
+                          size: _animation.value,
+                        );
+                      },
+                    ),
+                  ),
                 ),
               ),
             ),
           ),
-        ),
-      ),
+        );
+      },
     );
   }
 }

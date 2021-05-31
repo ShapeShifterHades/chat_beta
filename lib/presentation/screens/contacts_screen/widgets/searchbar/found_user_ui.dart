@@ -4,20 +4,21 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:void_chat_beta/core/constants/styles.dart';
 import 'package:void_chat_beta/generated/l10n.dart';
 import 'package:void_chat_beta/logic/bloc/contact/contact_bloc.dart';
+import 'package:void_chat_beta/logic/bloc/find_user/finduser_bloc.dart';
 
 class FoundUserUi extends StatelessWidget {
   FoundUserUi({
     Key? key,
     required this.result,
     this.focusNode,
-    this.finduserController,
+    required this.finduserController,
     this.isVisible,
   }) : super(key: key);
 
   final Contact? result;
   final bool? isVisible;
   final FocusNode? focusNode;
-  final TextEditingController? finduserController;
+  final TextEditingController finduserController;
 
   final messageController = TextEditingController();
   @override
@@ -68,7 +69,10 @@ class FoundUserUi extends StatelessWidget {
         ),
         const SizedBox(height: 5),
         if (result!.status == 'Not in contacts')
-          _BefriendForm(messageController: messageController, result: result),
+          _BefriendForm(
+              messageController: messageController,
+              result: result,
+              usernameTextController: finduserController),
       ],
     );
   }
@@ -77,12 +81,14 @@ class FoundUserUi extends StatelessWidget {
 class _BefriendForm extends StatelessWidget {
   const _BefriendForm({
     Key? key,
+    required this.usernameTextController,
     required this.messageController,
     required this.result,
   }) : super(key: key);
 
   final TextEditingController messageController;
   final Contact? result;
+  final TextEditingController usernameTextController;
 
   @override
   Widget build(BuildContext context) {
@@ -132,6 +138,9 @@ class _BefriendForm extends StatelessWidget {
                                 contactId: result?.id ?? '',
                               ),
                             );
+                        context.read<FinduserBloc>().add(ResetEvent());
+                        usernameTextController.clear();
+                        Focus.of(context).unfocus();
                       },
                     ),
                   ),

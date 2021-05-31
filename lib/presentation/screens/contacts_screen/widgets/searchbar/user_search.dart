@@ -44,53 +44,54 @@ class _UserSearchState extends State<UserSearch> {
         bloc: BlocProvider.of<SearchButtonBloc>(context),
         builder: (context, state) {
           return SingleChildScrollView(
-            child: Padding(
-              padding: const EdgeInsets.only(top: 20),
-              child: Column(
-                children: [
-                  Row(
-                    children: [
-                      Expanded(
+            child: Column(
+              children: [
+                Row(
+                  children: [
+                    Expanded(
+                      child: SizedBox(
+                        height: 60,
+                        width: double.infinity,
                         child: SearchUsernameInput(
                           focusNode: _focusNode,
                           myController: finduserController,
                         ),
                       ),
-                      Transform.translate(
-                        offset: const Offset(0, -10),
-                        child: Container(
-                            alignment: Alignment.centerRight,
-                            width: 50,
-                            height: 50,
-                            child: _buildIcon(context, state)),
-                      ),
-                    ],
-                  ),
-                  if (state.isExpanded!)
-                    BlocBuilder<FinduserBloc, FinduserState>(
-                      bloc: BlocProvider.of<FinduserBloc>(context),
-                      builder: (BuildContext context, FinduserState state) {
-                        if (state.isLoading!) {
-                          return const Center(
-                            child: CircularProgressIndicator(),
-                          );
-                        }
-                        if (state.hasError!) {
-                          return const Text('Error');
-                        }
-                        if (state.contact == null) {
-                          return const Text('User not found');
-                        }
-
-                        return FoundUserUi(
-                          result: state.contact,
-                          finduserController: finduserController,
-                          focusNode: _focusNode,
+                    ),
+                    Transform.translate(
+                      offset: const Offset(0, -10),
+                      child: Container(
+                          alignment: Alignment.centerRight,
+                          width: 30,
+                          height: 40,
+                          child: _buildIcon(context, state)),
+                    ),
+                  ],
+                ),
+                if (state.isExpanded!)
+                  BlocBuilder<FinduserBloc, FinduserState>(
+                    bloc: BlocProvider.of<FinduserBloc>(context),
+                    builder: (BuildContext context, FinduserState state) {
+                      if (state.isLoading!) {
+                        return const Center(
+                          child: CircularProgressIndicator(),
                         );
-                      },
-                    )
-                ],
-              ),
+                      }
+                      if (state.hasError!) {
+                        return const Text('Error');
+                      }
+                      if (state.contact == null) {
+                        return const Text('User not found');
+                      }
+
+                      return FoundUserUi(
+                        result: state.contact,
+                        finduserController: finduserController,
+                        focusNode: _focusNode,
+                      );
+                    },
+                  ),
+              ],
             ),
           );
         });

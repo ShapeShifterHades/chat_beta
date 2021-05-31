@@ -8,6 +8,7 @@ import 'package:void_chat_beta/generated/l10n.dart';
 import 'package:void_chat_beta/logic/bloc/authentication/authentication_bloc.dart';
 import 'package:void_chat_beta/logic/bloc/chatroom/chatroom_bloc.dart';
 import 'package:void_chat_beta/logic/bloc/contact/contact_bloc.dart';
+import 'package:void_chat_beta/presentation/styled_widgets/loading_indicator.dart';
 import '../contact_item_initial.dart';
 
 class FriendlistContent extends StatelessWidget {
@@ -16,24 +17,29 @@ class FriendlistContent extends StatelessWidget {
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: BlocBuilder<ContactBloc, ContactsState>(
-        builder: (context, state) {
-          if (state is ContactsLoaded) {
-            final List<Contact> sorted = state.contacts
-                .where((element) => element.status!.contains('friend'))
-                .toList();
-            return Column(
-              children: [
-                _ContactsCounter(sorted: sorted),
-                const _Divider(),
+    return BlocBuilder<ContactBloc, ContactsState>(
+      builder: (context, state) {
+        if (state is ContactsLoaded) {
+          final List<Contact> sorted = state.contacts
+              .where((element) => element.status!.contains('friend'))
+              .toList();
+          return Column(
+            children: [
+              _ContactsCounter(sorted: sorted),
+              const _Divider(),
+              if (sorted.isEmpty)
+                const Expanded(
+                  child: LoadingIndicator(
+                    text: 'Friendlist is empty...',
+                  ),
+                )
+              else
                 _FriendsListViewBuilder(sorted: sorted),
-              ],
-            );
-          }
-          return const CircularProgressIndicator();
-        },
-      ),
+            ],
+          );
+        }
+        return const CircularProgressIndicator();
+      },
     );
   }
 }
@@ -46,6 +52,7 @@ class _Divider extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Divider(
+      height: 4,
       color: Theme.of(context).primaryColor,
       thickness: 0.2,
     );

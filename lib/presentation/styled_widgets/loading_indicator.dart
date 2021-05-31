@@ -12,10 +12,10 @@ class LoadingIndicator extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
         alignment: Alignment.center,
-        child: Text(
-          text,
-          style: TextStyles.caption.copyWith(fontSize: size),
-        )
+        child: Text(text,
+            style: TextStyles.caption.copyWith(
+                fontSize: size,
+                color: Theme.of(context).primaryColor.withOpacity(.6)))
         //child: SizedBox(width: size, height: size, child: CircularProgressIndicator()),
         );
   }
