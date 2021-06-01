@@ -60,13 +60,13 @@ class _LabeledCheckboxState extends State<LabeledCheckbox> {
                 child: Transform.scale(
                   scale: 0.7,
                   child: Checkbox(
-                    shape: const RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(3))),
+                    // shape: const RoundedRectangleBorder(
+                    //     borderRadius: BorderRadius.all(Radius.circular(3))),
                     fillColor: MaterialStateProperty.resolveWith(getColor),
-                    side: BorderSide(
-                      width: 0.4,
-                      color: Theme.of(context).primaryColor,
-                    ),
+                    // side: BorderSide(
+                    //   width: 0.4,
+                    //   color: Theme.of(context).primaryColor,
+                    // ),
                     value: widget.value,
                     onChanged: (bool? newValue) {
                       if (widget.activate) {

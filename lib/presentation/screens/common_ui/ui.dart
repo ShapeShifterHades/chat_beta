@@ -10,12 +10,10 @@ import 'frontside/minimenu/mini_menu.dart';
 class UI extends StatefulWidget {
   // content is a Widget, passed to PortraitMobileUI that is a current page's materials
   final Widget body;
-  final Widget? statusBar;
 
   const UI({
     Key? key,
     required this.body,
-    this.statusBar,
   }) : super(key: key);
 
   static UIState? of(BuildContext context) =>
@@ -32,13 +30,13 @@ class UIState extends State<UI> with SingleTickerProviderStateMixin {
   static const double minDragStartEdge = 170;
   // On what distance it needs to be dragged
   static double maxDragStartEdge = maxSlide - 16;
-  AnimationController? _animationController;
+  late AnimationController animationController;
   bool _canBeDragged = false;
 
   @override
   void initState() {
     super.initState();
-    _animationController = AnimationController(
+    animationController = AnimationController(
       vsync: this,
       duration: Times.medium,
     );
@@ -46,7 +44,7 @@ class UIState extends State<UI> with SingleTickerProviderStateMixin {
 
   @override
   void dispose() {
-    _animationController!.dispose();
+    animationController.dispose();
     super.dispose();
   }
 
@@ -55,20 +53,20 @@ class UIState extends State<UI> with SingleTickerProviderStateMixin {
     return SafeArea(
       child: WillPopScope(
         onWillPop: () async {
-          if (_animationController!.isCompleted) {
+          if (animationController.isCompleted) {
             close();
             return false;
           }
           return true;
         },
         child: AnimatedBuilder(
-          animation: _animationController!,
+          animation: animationController,
           builder: (context, child) {
-            final slideAmount = maxSlide * _animationController!.value;
+            final slideAmount = maxSlide * animationController.value;
             // This stack defines relations between drawer side and content side
             return Stack(
               children: <Widget>[
-                const DrawerBack(),
+                DrawerBack(animationController: animationController),
                 Transform(
                   transform: Matrix4.identity()..translate(slideAmount),
                   alignment: Alignment.centerLeft,
@@ -81,7 +79,7 @@ class UIState extends State<UI> with SingleTickerProviderStateMixin {
             children: [
               Positioned.fill(
                 child: GestureDetector(
-                  onTap: _animationController!.isCompleted ? close : null,
+                  onTap: animationController.isCompleted ? close : null,
                   onHorizontalDragStart: _onDragStart,
                   onHorizontalDragUpdate: _onDragUpdate,
                   onHorizontalDragEnd: _onDragEnd,
@@ -89,7 +87,7 @@ class UIState extends State<UI> with SingleTickerProviderStateMixin {
                 ),
               ),
               const MiniMenu(),
-              ToggleDrawerButton(animationController: _animationController),
+              ToggleDrawerButton(animationController: animationController),
             ],
           ),
         ),
@@ -98,16 +96,16 @@ class UIState extends State<UI> with SingleTickerProviderStateMixin {
   }
 
   /// Closes drawer
-  void close() => _animationController!.reverse();
+  void close() => animationController.reverse();
 
   /// Opens drawer
-  void open() => _animationController!.forward();
+  void open() => animationController.forward();
 
   /// Handles gesture drawer control starting drawer animation
   void _onDragStart(DragStartDetails details) {
-    final bool isDragOpenFromLeft = _animationController!.isDismissed &&
+    final bool isDragOpenFromLeft = animationController.isDismissed &&
         details.globalPosition.dx < minDragStartEdge;
-    final bool isDragCloseFromRight = _animationController!.isCompleted &&
+    final bool isDragCloseFromRight = animationController.isCompleted &&
         details.globalPosition.dx > maxDragStartEdge;
 
     _canBeDragged = isDragOpenFromLeft || isDragCloseFromRight;
@@ -118,7 +116,7 @@ class UIState extends State<UI> with SingleTickerProviderStateMixin {
   void _onDragUpdate(DragUpdateDetails details) {
     if (_canBeDragged) {
       final double delta = details.primaryDelta! / maxSlide;
-      _animationController!.value += delta;
+      animationController.value += delta;
     }
   }
 
@@ -127,16 +125,15 @@ class UIState extends State<UI> with SingleTickerProviderStateMixin {
   void _onDragEnd(DragEndDetails details) {
     const double _kMinFlingVelocity = 365.0;
 
-    if (_animationController!.isDismissed ||
-        _animationController!.isCompleted) {
+    if (animationController.isDismissed || animationController.isCompleted) {
       return;
     }
     if (details.velocity.pixelsPerSecond.dx.abs() >= _kMinFlingVelocity) {
       final double visualVelocity = details.velocity.pixelsPerSecond.dx /
           MediaQuery.of(context).size.width;
 
-      _animationController!.fling(velocity: visualVelocity);
-    } else if (_animationController!.value < 0.5) {
+      animationController.fling(velocity: visualVelocity);
+    } else if (animationController.value < 0.5) {
       close();
     } else {
       open();

@@ -8,6 +8,7 @@ import 'package:void_chat_beta/logic/bloc/main_bloc/bloc/main_bloc.dart';
 class DrawerMenuButton extends StatefulWidget {
   /// State of a button, that represents current page it is and changes styling
   final CurrentView view;
+  final AnimationController drawerController;
 
   ///  Text for button text
   final String? text;
@@ -15,6 +16,7 @@ class DrawerMenuButton extends StatefulWidget {
   const DrawerMenuButton({
     Key? key,
     this.text,
+    required this.drawerController,
     this.view = CurrentView.messages,
   }) : super(key: key);
 
@@ -60,7 +62,7 @@ class _DrawerMenuButtonState extends State<DrawerMenuButton>
             }
             BlocProvider.of<MainAppBloc>(context)
                 .add(SwitchView(view: widget.view));
-
+            widget.drawerController.reverse();
             _controller.forward();
           },
           child: Row(

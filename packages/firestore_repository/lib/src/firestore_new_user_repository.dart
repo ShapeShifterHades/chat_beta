@@ -33,23 +33,4 @@ class FirestoreNewUserRepository implements NewUserRepository {
       print(e);
     }
   }
-  // @override
-  // Future<void> addNewProfile(NewProfile profile) {
-
-  //   return newUserCollection
-  //       .doc(profile.uid)
-  //       .set(profile.toEntity().toDocument());
-  // }
-
-  // @override
-  // Future<void> deleteProfile(NewProfile profile) async {
-  //   return newUserCollection.doc(profile.uid).delete();
-  // }
-
-  // @override
-  // Future<void> updateProfile(NewProfile update) {
-  //   return newUserCollection
-  //       .doc(update.uid)
-  //       .update(update.toEntity().toDocument());
-  // }
 }

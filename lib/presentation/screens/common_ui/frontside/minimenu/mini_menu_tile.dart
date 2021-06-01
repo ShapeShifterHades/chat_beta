@@ -41,12 +41,12 @@ class _MiniMenuTileState extends State<MiniMenuTile>
         .animate(CurvedAnimation(parent: _controller, curve: Curves.easeIn));
   }
 
-  // void _executeAnimation(AnimationController animation, int interval) {
-  //   Future.delayed(Duration(milliseconds: interval), () {
-  //     if (animation != null) {
-  //       animation.forward();
-  //     }
-  //   });
+  // @override
+  // void didUpdateWidget(MiniMenuTile oldWidget) {
+  //   if (BlocProvider.of<MainAppBloc>(context).state is MainAppLoaded) {
+  //     print('YABADABADUUU');
+  //   }
+  //   super.didUpdateWidget(oldWidget);
   // }
 
   @override
