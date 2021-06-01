@@ -34,15 +34,13 @@ class _LabeledCheckboxState extends State<LabeledCheckbox> {
 
   @override
   Widget build(BuildContext context) {
-    // bool _value = widget.value;
-    // if (!widget.focusController) _value = false;
     return InkWell(
       onTap: () {
         widget.onChanged(!widget.value);
       },
       child: AnimatedContainer(
         padding: const EdgeInsets.symmetric(horizontal: 5),
-        duration: Times.medium,
+        duration: Times.fast,
         color: widget.value && widget.activate
             ? Theme.of(context).primaryColor.withOpacity(0.04)
             : Colors.transparent,
@@ -71,6 +69,9 @@ class _LabeledCheckboxState extends State<LabeledCheckbox> {
                     ),
                     value: widget.value,
                     onChanged: (bool? newValue) {
+                      if (widget.activate) {
+                        print('closed');
+                      }
                       widget.onChanged(newValue);
                     },
                   ),

@@ -1,6 +1,9 @@
+import 'dart:io';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:void_chat_beta/core/constants/styles.dart';
 import 'package:void_chat_beta/generated/l10n.dart';
 import 'package:void_chat_beta/logic/bloc/authentication/authentication_bloc.dart';
@@ -96,10 +99,30 @@ class _ExitDrawerMenuButton extends StatelessWidget {
   }
 }
 
-class _ProfileAvatarBlock extends StatelessWidget {
+class _ProfileAvatarBlock extends StatefulWidget {
   const _ProfileAvatarBlock({
     Key? key,
   }) : super(key: key);
+
+  @override
+  __ProfileAvatarBlockState createState() => __ProfileAvatarBlockState();
+}
+
+class __ProfileAvatarBlockState extends State<_ProfileAvatarBlock> {
+  File? _image;
+  final picker = ImagePicker();
+
+  Future getImage() async {
+    final pickedFile = await picker.getImage(source: ImageSource.camera);
+
+    setState(() {
+      if (pickedFile != null) {
+        _image = File(pickedFile.path);
+      } else {
+        print('No image selected.');
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -130,18 +153,23 @@ class _ProfileAvatarBlock extends StatelessWidget {
                     .copyWith(color: Theme.of(context).primaryColor),
                 startAngle: -2.16,
               ),
-              Container(
-                width: 102,
-                height: 102,
-                clipBehavior: Clip.hardEdge,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(60),
-                ),
-                child: Center(
-                  child: Image.asset(
-                    'assets/images/avatar-placeholder.png',
-                    color: Theme.of(context).bottomAppBarColor,
-                    colorBlendMode: BlendMode.color,
+              GestureDetector(
+                onTap: () {
+                  getImage();
+                  // print(_image!.path);
+                  setState(() {});
+                },
+                child: Container(
+                  width: 102,
+                  height: 102,
+                  clipBehavior: Clip.hardEdge,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(60),
+                  ),
+                  child: Center(
+                    child: _image == null
+                        ? Text('No image selected.')
+                        : Image.file(_image!),
                   ),
                 ),
               ),

@@ -33,6 +33,14 @@ class _MessageBubbleState extends State<MessageBubble>
   bool isSelected = false;
 
   @override
+  void didUpdateWidget(covariant MessageBubble oldWidget) {
+    if (!widget.selectMode) {
+      isSelected = false;
+    }
+    super.didUpdateWidget(oldWidget);
+  }
+
+  @override
   Widget build(BuildContext context) {
     final String authId =
         BlocProvider.of<AuthenticationBloc>(context).state.user.id;
@@ -52,16 +60,12 @@ class _MessageBubbleState extends State<MessageBubble>
       },
       child: LabeledCheckbox(
         activate: widget.selectMode,
-        onChanged: widget.selectMode
-            ? (bool newValue) {
-                setState(() {
-                  SelectedArray(docId: widget.message.docId!).dispatch(context);
-                  isSelected = newValue;
-                });
-              }
-            : (bool newValue) {
-                isSelected = false;
-              },
+        onChanged: (bool newValue) {
+          setState(() {
+            SelectedArray(docId: widget.message.docId!).dispatch(context);
+            isSelected = newValue;
+          });
+        },
         value: isSelected,
         child: Column(
           crossAxisAlignment:
