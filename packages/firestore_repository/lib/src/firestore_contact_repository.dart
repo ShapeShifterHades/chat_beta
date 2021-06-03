@@ -8,12 +8,12 @@ class FirestoreContactRepository {
   final usersCollection = FirebaseFirestore.instance.collection('users');
   final usernamesCollection =
       FirebaseFirestore.instance.collection('usernames');
-  CollectionReference contactsCollectionOf(String uid) =>
+  CollectionReference<Map<String, dynamic>> contactsCollectionOf(String uid) =>
       FirebaseFirestore.instance
           .collection('users')
           .doc(uid)
           .collection('contacts');
-  CollectionReference blocklistCollectionOf(String uid) =>
+  CollectionReference<Map<String, dynamic>> blocklistCollectionOf(String uid) =>
       FirebaseFirestore.instance
           .collection('users')
           .doc(uid)
@@ -24,28 +24,35 @@ class FirestoreContactRepository {
   ///
   Future<Contact?> findIdByUsername(String username, String selfId) async {
     try {
-      final DocumentSnapshot idDocumentSnapshot =
+      final DocumentSnapshot<Map<String, dynamic>> idDocumentSnapshot =
           await usernamesCollection.doc(username).get();
 
       if (idDocumentSnapshot.exists) {
-        final String uid = idDocumentSnapshot.data()!['uid'].toString();
-        String? status;
+        final String uid = await FirebaseFirestore.instance
+            .runTransaction((transaction) async {
+          final _userSnapshot = transaction
+              .get(idDocumentSnapshot.reference)
+              .then((value) => value.data());
+          return (_userSnapshot as Map<String, dynamic>)['uid'] as String;
+        });
 
-        try {
-          final DocumentSnapshot contactDocumentSnapshot =
-              await contactsCollectionOf(selfId).doc(uid).get();
+        String status;
 
-          if (contactDocumentSnapshot.exists) {
-            status = contactDocumentSnapshot.data()!['status'] as String;
+        final DocumentSnapshot<Map<String, dynamic>> contactDocumentSnapshot =
+            await contactsCollectionOf(selfId).doc(uid).get();
+
+        if (contactDocumentSnapshot.exists) {
+          final Map<String, dynamic>? _data = contactDocumentSnapshot.data();
+          if (_data != null) {
+            status = _data['status'] as String;
           } else {
             status = 'Not in contacts';
           }
-        } catch (e) {
-          // ignore: avoid_print
-          print(e);
+        } else {
+          status = 'Not in contacts';
         }
-        return Contact(
-            id: uid, status: status ?? 'Not in contacts', username: username);
+
+        return Contact(id: uid, status: status, username: username);
       } else {
         return null;
       }
@@ -56,7 +63,7 @@ class FirestoreContactRepository {
   }
 
   Future<String?> findUsernameById(String? id) async {
-    final QuerySnapshot documentSnapshot =
+    final QuerySnapshot<Map<String, dynamic>> documentSnapshot =
         await usernamesCollection.where("uid", isEqualTo: id).get();
 
     return documentSnapshot.docs.isNotEmpty
@@ -164,9 +171,12 @@ class FirestoreContactRepository {
 
   /// Gets a stream of snapshots of user [uid] contacts collection.
   Stream<List<Contact>> contacts({String? uid}) {
-    return contactsCollectionOf(uid!).snapshots().map((snapshot) {
+    return contactsCollectionOf(uid!)
+        .snapshots()
+        .map((QuerySnapshot<Map<String, dynamic>> snapshot) {
       return snapshot.docs
-          .map((doc) => Contact.fromEntity(ContactEntity.fromSnapshot(doc)))
+          .map((QueryDocumentSnapshot<Map<String, dynamic>> doc) =>
+              Contact.fromEntity(ContactEntity.fromJson(doc.data())))
           .toList();
     });
   }

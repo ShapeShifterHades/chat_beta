@@ -27,9 +27,9 @@ class NewProfileEntity extends Equatable {
       : uid = json['uid'] as String?,
         username = json['username'] as String?;
 
-  NewProfileEntity.fromSnapshot(DocumentSnapshot snap)
-      : uid = snap.data()!['uid'] as String?,
-        username = snap.data()!['username'] as String?;
+  // NewProfileEntity.fromSnapshot(DocumentSnapshot snap)
+  //     : uid = snap.data()!['uid'] as String?,
+  //       username = snap.data()!['username'] as String?;
 
   Map<String, Object?> toDocument() {
     return {

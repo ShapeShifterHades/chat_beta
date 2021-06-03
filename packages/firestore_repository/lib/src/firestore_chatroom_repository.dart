@@ -3,20 +3,20 @@ import 'package:firestore_repository/src/entities/chatroom_entity.dart';
 import 'package:firestore_repository/src/models/chatroom.dart';
 
 class FirestoreChatroomRepository {
-  final CollectionReference userCollection =
+  final CollectionReference<Map<String, dynamic>> userCollection =
       FirebaseFirestore.instance.collection('users');
-  CollectionReference _getChatroomCollection(String authId) {
+  CollectionReference<Map<String, dynamic>> _getChatroomCollection(
+      String authId) {
     return userCollection.doc(authId).collection('chatrooms');
   }
 
   Future<String> _getUsername(String userId) async {
-    final DocumentSnapshot _userSnap;
-    try {
-      _userSnap = await userCollection.doc(userId).get();
-      return _userSnap.data()!["username"] as String;
-    } catch (e) {
-      rethrow;
-    }
+    return FirebaseFirestore.instance.runTransaction((transaction) async {
+      final _userSnapshot = transaction
+          .get(userCollection.doc(userId))
+          .then((value) => value.data());
+      return (_userSnapshot as Map<String, dynamic>)['username'] as String;
+    });
   }
 
   /// Gets a new created [Chatroom] from users 'chatrooms' collection
@@ -24,9 +24,10 @@ class FirestoreChatroomRepository {
   ///
   Future<Chatroom> getChatroom(String authId, String chatId) async {
     try {
-      final DocumentSnapshot snap =
+      final DocumentSnapshot<Map<String, dynamic>> snap =
           await _getChatroomCollection(authId).doc(chatId).get();
-      return Chatroom.fromEntity(ChatroomEntity.fromSnapshot(snap));
+
+      return Chatroom.fromEntity(ChatroomEntity.fromJson(snap.data()!));
     } catch (e) {
       rethrow;
     }
@@ -43,9 +44,9 @@ class FirestoreChatroomRepository {
       final _ourUsername = await _getUsername(authId);
       final _userUsername = await _getUsername(chatroom.id);
       // Set up DocumentReference to our and other user chatroom collections
-      final DocumentReference _ourDoc =
+      final DocumentReference<Map<String, dynamic>> _ourDoc =
           _getChatroomCollection(authId).doc(chatroom.id);
-      final DocumentReference _userDoc =
+      final DocumentReference<Map<String, dynamic>> _userDoc =
           _getChatroomCollection(chatroom.id).doc(authId);
       // Set up chatroom data for both sides
       final Map<String, Object?> _chatroom =
@@ -81,9 +82,10 @@ class FirestoreChatroomRepository {
   Stream<List<Chatroom>> chatrooms(String authId) {
     return _getChatroomCollection(authId)
         .snapshots()
-        .map((QuerySnapshot snapshot) {
+        .map((QuerySnapshot<Map<String, dynamic>> snapshot) {
       return snapshot.docs
-          .map((doc) => Chatroom.fromEntity(ChatroomEntity.fromSnapshot(doc)))
+          .map(
+              (doc) => Chatroom.fromEntity(ChatroomEntity.fromJson(doc.data())))
           .toList();
     });
   }

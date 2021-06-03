@@ -29,7 +29,7 @@ class MessageToSendEntity extends Equatable {
     };
   }
 
-  MessageToSendEntity.fromJson(Map<String, Object> json)
+  MessageToSendEntity.fromJson(Map<String, dynamic> json)
       : senderId = json["senderId"] as String?,
         recieverId = json["recieverId"] as String?,
         text = json["text"]! as String,
@@ -37,13 +37,13 @@ class MessageToSendEntity extends Equatable {
         isNew = json["isNew"]! as bool,
         docId = json["docId"] as String?;
 
-  MessageToSendEntity.fromSnapshot(DocumentSnapshot snap)
-      : senderId = snap.data()!["senderId"] as String?,
-        recieverId = snap.data()!["recieverId"] as String?,
-        text = snap.data()!["text"] as String?,
-        timeSent = snap.data()!["timeSent"] as Timestamp?,
-        isNew = snap.data()!["isNew"] as bool,
-        docId = snap.data()!["docId"] as String?;
+  // MessageToSendEntity.fromSnapshot(DocumentSnapshot snap)
+  //     : senderId = snap.data()!["senderId"] as String?,
+  //       recieverId = snap.data()!["recieverId"] as String?,
+  //       text = snap.data()!["text"] as String?,
+  //       timeSent = snap.data()!["timeSent"] as Timestamp?,
+  //       isNew = snap.data()!["isNew"] as bool,
+  //       docId = snap.data()!["docId"] as String?;
 
   @override
   List<Object?> get props => [

@@ -53,13 +53,13 @@ class MessageEntity extends Equatable {
         timeRecieved = json["timeRecieved"] as Timestamp?,
         docId = json["docId"] as String?;
 
-  MessageEntity.fromSnapshot(DocumentSnapshot snap)
-      : senderId = snap.data()!["senderId"] as String?,
-        recieverId = snap.data()!["recieverId"] as String?,
-        message = snap.data()!["message"] as String?,
-        timeSent = snap.data()!["timeSent"] as Timestamp?,
-        timeRecieved = snap.data()!["timeRecieved"] as Timestamp?,
-        docId = snap.data()!["docId"] as String?;
+  // MessageEntity.fromSnapshot(DocumentSnapshot snap)
+  //     : senderId = snap.data()!["senderId"] as String?,
+  //       recieverId = snap.data()!["recieverId"] as String?,
+  //       message = snap.data()!["message"] as String?,
+  //       timeSent = snap.data()!["timeSent"] as Timestamp?,
+  //       timeRecieved = snap.data()!["timeRecieved"] as Timestamp?,
+  //       docId = snap.data()!["docId"] as String?;
 
   Map<String, Object?> toDocument(String docId) {
     return {

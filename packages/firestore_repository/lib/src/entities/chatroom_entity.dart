@@ -54,7 +54,7 @@ class ChatroomEntity extends Equatable {
       createdAt: $createdAt}''';
   }
 
-  ChatroomEntity.fromJson(Map<String, Object> json)
+  ChatroomEntity.fromJson(Map<String, dynamic> json)
       : createdAt = json["createdAt"] as Timestamp?,
         id = json["id"] as String?,
         username = json["username"] as String?,
@@ -63,14 +63,14 @@ class ChatroomEntity extends Equatable {
         lastMessageAt = json["lastMessageAt"] as Timestamp?,
         newMessages = json["newMessages"] as int?;
 
-  ChatroomEntity.fromSnapshot(DocumentSnapshot snap)
-      : createdAt = snap.data()!["createdAt"] as Timestamp?,
-        id = snap.data()!["id"] as String?,
-        username = snap.data()!["username"] as String?,
-        lastMessage = snap.data()!["lastMessage"] as String?,
-        lastMessageFrom = snap.data()!["lastMessageFrom"] as String?,
-        lastMessageAt = snap.data()!["lastMessageAt"] as Timestamp?,
-        newMessages = snap.data()!["newMessages"] as int?;
+  // ChatroomEntity.fromSnapshot(DocumentSnapshot snap)
+  //     : createdAt = snap.data()!["createdAt"] as Timestamp?,
+  //       id = snap.data()!["id"] as String?,
+  //       username = snap.data()!["username"] as String?,
+  //       lastMessage = snap.data()!["lastMessage"] as String?,
+  //       lastMessageFrom = snap.data()!["lastMessageFrom"] as String?,
+  //       lastMessageAt = snap.data()!["lastMessageAt"] as Timestamp?,
+  //       newMessages = snap.data()!["newMessages"] as int?;
 
   Map<String, Object?> toDocument() {
     return {

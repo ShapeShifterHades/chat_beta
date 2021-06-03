@@ -9,8 +9,8 @@ dependencies:
   freezed_annotation:
   flutter:
     sdk: flutter
-  cloud_firestore: any
-  firebase_storage: ^8.1.0
+  cloud_firestore: ^2.2.0
+  # firebase_storage: ^8.1.0
   async: ^2.5.0
   equatable: ^2.0.0
   firebase_core: ^1.2.0

@@ -4,14 +4,16 @@ import 'package:firestore_repository/src/models/models.dart';
 
 class FirestoreMessageRepository {
   // ----------- HELPER VARIABLES AND FUNCTIONS ----------
-  final CollectionReference _userCollection =
+  final CollectionReference<Map<String, dynamic>> _userCollection =
       FirebaseFirestore.instance.collection('users');
 
-  DocumentReference _getChatroomDocRef(String authId, String roomId) {
+  DocumentReference<Map<String, dynamic>> _getChatroomDocRef(
+      String authId, String roomId) {
     return _userCollection.doc(authId).collection('chatrooms').doc(roomId);
   }
 
-  CollectionReference _getMessagesCollection(String authId, String roomId) {
+  CollectionReference<Map<String, dynamic>> _getMessagesCollection(
+      String authId, String roomId) {
     return _userCollection
         .doc(authId)
         .collection('chatrooms')
@@ -21,9 +23,10 @@ class FirestoreMessageRepository {
 
   /// Used to help indicate in chat that app was unable to send a message.
   ///
-  MessageToSend _messageIsNotSent(QueryDocumentSnapshot doc) {
+  MessageToSend _messageIsNotSent(
+      QueryDocumentSnapshot<Map<String, dynamic>> doc) {
     final MessageToSend cached =
-        MessageToSend.fromEntity(MessageToSendEntity.fromSnapshot(doc));
+        MessageToSend.fromEntity(MessageToSendEntity.fromJson(doc.data()));
     final MessageToSend res = MessageToSend(
         docId: cached.docId,
         isNew: cached.isNew,
@@ -35,19 +38,20 @@ class FirestoreMessageRepository {
 
   Future<void> _findAndUpdateLastMessageInDialog(
       String authId, String interlocutorId) async {
-    final CollectionReference _messagesCol =
+    final CollectionReference<Map<String, dynamic>> _messagesCol =
         _getMessagesCollection(authId, interlocutorId);
-    final DocumentReference _chatroomDoc =
+    final DocumentReference<Map<String, dynamic>> _chatroomDoc =
         _getChatroomDocRef(authId, interlocutorId);
     final Query _queryLastMsg =
         _messagesCol.orderBy('timeSent', descending: true).limit(1);
     try {
-      final QuerySnapshot _snap = await _queryLastMsg.get();
+      final QuerySnapshot<Map<String, dynamic>> _snap =
+          await _queryLastMsg.get() as QuerySnapshot<Map<String, dynamic>>;
       MessageToSend _message;
       LastMessage _lastMessage;
       if (_snap.docs.isNotEmpty) {
         _message = MessageToSend.fromEntity(
-            MessageToSendEntity.fromSnapshot(_snap.docs.first));
+            MessageToSendEntity.fromJson(_snap.docs.first.data()));
         _lastMessage = LastMessage(_message);
       } else {
         _lastMessage = LastMessage(MessageToSend());
@@ -196,13 +200,15 @@ class FirestoreMessageRepository {
     return _getMessagesCollection(authId, roomId)
         .orderBy('timeSent', descending: true)
         .snapshots()
-        .map((QuerySnapshot snapshot) {
-      return snapshot.docs.map((doc) {
+        .map((QuerySnapshot<Map<String, dynamic>> snapshot) {
+      return snapshot.docs
+          .map((QueryDocumentSnapshot<Map<String, dynamic>> doc) {
         if (doc.metadata.hasPendingWrites) {
           return _messageIsNotSent(doc);
         }
 
-        return MessageToSend.fromEntity(MessageToSendEntity.fromSnapshot(doc));
+        return MessageToSend.fromEntity(
+            MessageToSendEntity.fromJson(doc.data()));
       }).toList();
     });
   }
