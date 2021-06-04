@@ -1,5 +1,5 @@
 name: void_chat_beta
-description: A new Flutter project.
+description: A chat apllication with non Material look and Firebase background.
 publish_to: none
 
 version: 1.0.0+2
@@ -13,24 +13,24 @@ dependencies:
 
   cupertino_icons: ^0.1.2
   font_awesome_flutter: ^9.0.0
-  flutter_keyboard_visibility: any
+  provider: ^5.0.0
+  flutter_keyboard_visibility: ^5.0.2
   keyboard_attachable: ^2.0.0
   timeago: ^3.0.2
-  bloc: any
-  flutter_bloc: any
-  hydrated_bloc: any
+  bloc: ^7.0.0
+  flutter_bloc: ^7.0.1
+  hydrated_bloc: ^7.0.1
   formz: ^0.4.0
-  meta: any
-  pedantic: any
+  meta: ^1.3.0
   shimmer: ^2.0.0
   authentication_repository:
     path: packages/authentication_repository
   firestore_repository:
     path: packages/firestore_repository
-  path_provider: any
-  equatable: any
+  path_provider: ^2.0.2
+  equatable: ^2.0.2
   simple_animations: ^3.1.1
-  cloud_firestore: any
+  cloud_firestore: ^2.2.0
   intl: null
   flutter_svg: ^0.22.0
   flutter_localizations:
@@ -43,7 +43,7 @@ dev_dependencies:
     sdk: flutter
   mocktail: ^0.1.2
   bloc_test: ^8.0.0
-  build_runner: any
+  build_runner: ^2.0.4
 
 flutter:
   uses-material-design: true
