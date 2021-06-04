@@ -2,14 +2,12 @@ import '../entities/entities.dart';
 
 /// Represents a class passed to entity converter
 /// added to Firestore when new user creates account
-class NewProfile {
-  final String? uid;
+class UserProfile {
+  final String uid;
   final String? username;
+  final String? avatar;
 
-  /// Timestamp in milliseconds since epoch shows when account is created
-  // final int createdAt;
-
-  NewProfile({this.uid, this.username});
+  UserProfile({required this.uid, this.username, this.avatar});
 
   // User cannot chance his acc uid, username and created at timestamp.
   //
@@ -29,21 +27,23 @@ class NewProfile {
   // ignore: hash_and_equals
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is NewProfile &&
+      other is UserProfile &&
           runtimeType == other.runtimeType &&
           uid == other.uid &&
-          username == other.username;
+          username == other.username &&
+          avatar == other.avatar;
 
   @override
   String toString() {
     return 'Profile{uid: $uid, username: $username}';
   }
 
-  NewProfileEntity toEntity() {
-    return NewProfileEntity(uid: uid, username: username);
+  UserProfileEntity toEntity() {
+    return UserProfileEntity(uid: uid, username: username, avatar: avatar);
   }
 
-  NewProfile.fromEntity(NewProfileEntity entity)
+  UserProfile.fromEntity(UserProfileEntity entity)
       : uid = entity.uid,
+        avatar = entity.avatar,
         username = entity.username;
 }

@@ -1,14 +1,11 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:void_chat_beta/core/constants/styles.dart';
 import 'package:void_chat_beta/generated/l10n.dart';
 import 'package:void_chat_beta/logic/bloc/authentication/authentication_bloc.dart';
 import 'package:void_chat_beta/logic/bloc/main_bloc/bloc/main_bloc.dart';
-import 'package:void_chat_beta/presentation/screens/common_ui/drawer/widgets/arctext.dart';
 import 'package:void_chat_beta/presentation/screens/common_ui/drawer/widgets/drawer_menu_button.dart';
+import 'package:void_chat_beta/presentation/screens/common_ui/drawer/widgets/profile_avatar.dart';
 
 class DrawerBack extends StatelessWidget {
   final AnimationController animationController;
@@ -25,7 +22,7 @@ class DrawerBack extends StatelessWidget {
         Column(
           children: [
             const SizedBox(height: 32),
-            const _ProfileAvatarBlock(),
+            const ProfileAvatar(),
             _MenuButtonsBlock(animationController: animationController)
           ],
         ),
@@ -158,98 +155,6 @@ class _ExitDrawerMenuButtonState extends State<ExitDrawerMenuButton> {
           ),
         );
       },
-    );
-  }
-}
-
-class _ProfileAvatarBlock extends StatefulWidget {
-  const _ProfileAvatarBlock({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  __ProfileAvatarBlockState createState() => __ProfileAvatarBlockState();
-}
-
-class __ProfileAvatarBlockState extends State<_ProfileAvatarBlock> {
-  File? _image;
-  final picker = ImagePicker();
-
-  Future getImage() async {
-    final pickedFile = await picker.getImage(source: ImageSource.gallery);
-
-    setState(() {
-      if (pickedFile != null) {
-        _image = File(pickedFile.path);
-      } else {
-        print('No image selected.');
-      }
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Expanded(
-      child: Row(
-        children: [
-          const SizedBox(width: 15),
-          Stack(
-            alignment: Alignment.center,
-            children: [
-              Container(
-                width: 136,
-                height: 136,
-                decoration: BoxDecoration(
-                    color: Colors.transparent,
-                    borderRadius: BorderRadius.circular(70),
-                    border: Border.all(
-                      width: 0.3,
-                      color: Theme.of(context).primaryColor,
-                    )),
-                // child:,
-              ),
-              ArcText(
-                radius: 52,
-                text:
-                    'Id:   ${context.watch<AuthenticationBloc>().state.user.id.toLowerCase()}',
-                textStyle: TextStyles.body2
-                    .copyWith(color: Theme.of(context).primaryColor),
-                startAngle: -2.16,
-              ),
-              GestureDetector(
-                onTap: () {
-                  getImage();
-                  // print(_image!.path);
-                  setState(() {});
-                },
-                child: Container(
-                  width: 102,
-                  height: 102,
-                  clipBehavior: Clip.hardEdge,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(60),
-                  ),
-                  child: Center(
-                    child: _image == null
-                        ? CircleAvatar(
-                            backgroundImage: Image.asset(
-                                    'assets/images/avatar-placeholder.png')
-                                .image,
-                            radius: 60,
-                            backgroundColor: Colors.transparent,
-                          )
-                        : CircleAvatar(
-                            backgroundImage: Image.file(_image!).image,
-                            radius: 60,
-                            backgroundColor: Colors.transparent,
-                          ),
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ],
-      ),
     );
   }
 }

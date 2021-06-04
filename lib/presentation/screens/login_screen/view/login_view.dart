@@ -27,7 +27,7 @@ class _LoginViewState extends State<LoginView> {
     return BlocProvider(
         create: (context) => SignUpCubit(
               RepositoryProvider.of<AuthenticationRepository>(context),
-              RepositoryProvider.of<FirestoreNewUserRepository>(context),
+              RepositoryProvider.of<FirestoreHelperRepository>(context),
             ),
         child: BlocProvider<LoginCubit>(
           create: (context) =>

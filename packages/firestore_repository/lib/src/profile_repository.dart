@@ -4,7 +4,7 @@ import 'models/models.dart';
 
 abstract class NewUserRepository {
   // Adds batch of documents to Firebase when user created
-  Future<void> addNewUser(NewProfile newProfile);
+  Future<void> addNewUser(UserProfile newProfile);
 
   // Future<void> addNewProfile(NewProfile newProfile);
 

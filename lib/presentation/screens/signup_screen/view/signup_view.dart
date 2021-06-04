@@ -18,7 +18,7 @@ class SignUpView extends StatelessWidget {
     return BlocProvider(
       create: (context) => SignUpCubit(
         RepositoryProvider.of<AuthenticationRepository>(context),
-        RepositoryProvider.of<FirestoreNewUserRepository>(context),
+        RepositoryProvider.of<FirestoreHelperRepository>(context),
       ),
       child: KeyboardVisibilityProvider(
         child: Scaffold(

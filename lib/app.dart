@@ -33,12 +33,14 @@ class App extends StatelessWidget {
         const SystemUiOverlayStyle(statusBarColor: Colors.transparent));
     return MultiRepositoryProvider(
         providers: [
+          RepositoryProvider<FirebaseStorageRepository>(
+              create: (_) => FirebaseStorageRepository()),
           RepositoryProvider<AuthenticationRepository>(
               create: (_) => AuthenticationRepository()),
           RepositoryProvider<FirestoreContactRepository?>(
               create: (_) => FirestoreContactRepository()),
-          RepositoryProvider<FirestoreNewUserRepository>(
-              create: (_) => FirestoreNewUserRepository()),
+          RepositoryProvider<FirestoreHelperRepository>(
+              create: (_) => FirestoreHelperRepository()),
           RepositoryProvider<FirestoreChatroomRepository?>(
               create: (_) => FirestoreChatroomRepository()),
           RepositoryProvider<FirestoreMessageRepository?>(
@@ -122,42 +124,39 @@ class AppView extends StatelessWidget {
                   final bool isDark =
                       BlocProvider.of<BrightnessCubit>(context).state ==
                           Brightness.dark;
-                  return BlocListener<AuthenticationBloc, AuthenticationState>(
-                    listener: (context, state) {},
-                    child: MaterialApp(
-                      locale: Locale(context.read<LocaleCubit>().state),
-                      initialRoute: '/',
-                      onGenerateRoute: (RouteSettings settings) {
-                        return MaterialPageRoute<dynamic>(
-                          builder: (context) {
-                            return BlocBuilder<AuthenticationBloc,
-                                AuthenticationState>(
-                              builder: (context, state) {
-                                if (state.status ==
-                                    AuthenticationStatus.unauthenticated) {
-                                  return const LoginView();
-                                }
-                                if (state.status ==
-                                    AuthenticationStatus.authenticated) {
-                                  return MainScreen();
-                                }
-                                return SplashView();
-                              },
-                            );
-                          },
-                        );
-                      },
-                      localizationsDelegates: const [
-                        S.delegate,
-                        GlobalMaterialLocalizations.delegate,
-                        GlobalWidgetsLocalizations.delegate,
-                        GlobalCupertinoLocalizations.delegate,
-                      ],
-                      supportedLocales: S.delegate.supportedLocales,
-                      debugShowCheckedModeBanner: false,
-                      theme: isDark ? AppTheme.lightTheme : AppTheme.darkTheme,
-                      darkTheme: AppTheme.darkTheme,
-                    ),
+                  return MaterialApp(
+                    locale: Locale(context.read<LocaleCubit>().state),
+                    initialRoute: '/',
+                    onGenerateRoute: (RouteSettings settings) {
+                      return MaterialPageRoute<dynamic>(
+                        builder: (context) {
+                          return BlocBuilder<AuthenticationBloc,
+                              AuthenticationState>(
+                            builder: (context, state) {
+                              if (state.status ==
+                                  AuthenticationStatus.unauthenticated) {
+                                return const LoginView();
+                              }
+                              if (state.status ==
+                                  AuthenticationStatus.authenticated) {
+                                return MainScreen();
+                              }
+                              return SplashView();
+                            },
+                          );
+                        },
+                      );
+                    },
+                    localizationsDelegates: const [
+                      S.delegate,
+                      GlobalMaterialLocalizations.delegate,
+                      GlobalWidgetsLocalizations.delegate,
+                      GlobalCupertinoLocalizations.delegate,
+                    ],
+                    supportedLocales: S.delegate.supportedLocales,
+                    debugShowCheckedModeBanner: false,
+                    theme: isDark ? AppTheme.lightTheme : AppTheme.darkTheme,
+                    darkTheme: AppTheme.darkTheme,
                   );
                 },
               ),

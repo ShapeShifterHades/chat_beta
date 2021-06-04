@@ -1,5 +1,7 @@
+import 'package:firestore_repository/firestore_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:void_chat_beta/logic/bloc/authentication/authentication_bloc.dart';
 import 'package:void_chat_beta/logic/bloc/chatroom/chatroom_bloc.dart';
 import 'package:void_chat_beta/logic/bloc/contact/contact_bloc.dart';
 import 'package:void_chat_beta/logic/bloc/contact_tabs/contact_tabs_bloc.dart';
@@ -25,7 +27,13 @@ class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => MainAppBloc()..add(LoadMainApp()),
+      create: (context) => MainAppBloc(
+        authenticationBloc: BlocProvider.of<AuthenticationBloc>(context),
+        firebaseStorageRepository:
+            RepositoryProvider.of<FirebaseStorageRepository>(context),
+        firestoreHelperRepository:
+            RepositoryProvider.of<FirestoreHelperRepository>(context),
+      )..add(LoadMainApp()),
       child: Builder(builder: (context) {
         return Scaffold(
           resizeToAvoidBottomInset: false,
@@ -39,7 +47,7 @@ class _MainScreenState extends State<MainScreen> {
                   BlocProvider.of<SearchButtonBloc>(context);
                   BlocProvider.of<ContactBloc>(context)
                       .add(const LoadContacts());
-                  BlocProvider.of<MainAppBloc>(context).add(const SwitchView());
+                  // BlocProvider.of<MainAppBloc>(context).add(const SwitchView());
                   contactsView = const ContactsView();
                 }
                 if (state is MainAppDialog) {

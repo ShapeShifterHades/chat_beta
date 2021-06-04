@@ -1,14 +1,50 @@
 import 'dart:io';
-import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
-import 'package:flutter/material.dart';
+import 'dart:typed_data';
+import 'package:firebase_storage/firebase_storage.dart';
 
 class FirebaseStorageRepository {
-  firebase_storage.FirebaseStorage storage =
-      firebase_storage.FirebaseStorage.instance;
+  FirebaseStorage storage = FirebaseStorage.instance;
 
-  uploadImage(String uid, File file) async {
-    //  var storageRef = storage.ref().child(path)
+  Future<void> uploadAvatar(String uid, File file) async {
+    final String _path = '$uid/profile/avatar';
+    try {
+      await storage.ref().child(_path).putFile(file);
+    } on FirebaseException catch (e) {
+      print(e.code);
+    }
+  }
+
+  Future<File?> getAvatarById(String id) async {
+    final String _path = '$id/profile/avatar';
+    try {
+      final Uint8List? _listFile = await storage.ref().child(_path).getData();
+      return _listFile != null ? File.fromRawPath(_listFile) : null;
+    } on FirebaseException catch (e) {
+      print(e.message);
+    } finally {}
+  }
+
+  Future<String> getAvatarUrlById(String id) async {
+    final String _path = '$id/profile/avatar';
+    final String downloadURL =
+        await FirebaseStorage.instance.ref(_path).getDownloadURL();
+    return downloadURL;
+  }
+
+  Future<String> getAvatarPlaceholderUrl() async {
+    const String _path = 'default/avatar-placeholder';
+    final String downloadURL =
+        await FirebaseStorage.instance.ref(_path).getDownloadURL();
+    return downloadURL;
+  }
+
+  Future<File?> getAvatarPlaceholder() async {
+    const String _path = 'default/avatar-placeholder ';
+    try {
+      final Uint8List? _listFile = await storage.ref().child(_path).getData();
+      return _listFile != null ? File.fromRawPath(_listFile) : null;
+    } on FirebaseException catch (e) {
+      print(e.message);
+    }
   }
 }
-
-class Nigger extends ChangeNotifier {}

@@ -3,4 +3,4 @@ export 'contact.dart';
 export 'last_message.dart';
 export 'message.dart';
 export 'message_to_send.dart';
-export 'profile.dart';
+export 'user_profile.dart';
