@@ -1,9 +1,12 @@
+import 'dart:typed_data';
+
 import 'package:firestore_repository/firestore_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:void_chat_beta/core/constants/styles.dart';
 import 'package:void_chat_beta/logic/bloc/authentication/authentication_bloc.dart';
+import 'package:void_chat_beta/presentation/screens/messages_screen/widgets/profile_picture.dart';
 
 /// Card, that represents brief tile of users conversation in database.
 ///
@@ -107,35 +110,7 @@ class _Card extends StatelessWidget {
               ],
             ),
           ),
-          Container(
-            width: 60,
-            height: 60,
-            alignment: Alignment.center,
-            child: Stack(
-              children: [
-                const CircleAvatar(
-                  radius: 25,
-                  // backgroundImage: AssetImage(),
-                ),
-                if (isActive)
-                  Positioned(
-                    right: 0,
-                    bottom: 0,
-                    child: Container(
-                      height: 16,
-                      width: 16,
-                      decoration: BoxDecoration(
-                        color: Theme.of(context).primaryColor,
-                        shape: BoxShape.circle,
-                        border: Border.all(
-                            color: Theme.of(context).scaffoldBackgroundColor,
-                            width: 3),
-                      ),
-                    ),
-                  )
-              ],
-            ),
-          ),
+          ProfilePicture(chat: chat, isActive: isActive),
         ],
       ),
     );

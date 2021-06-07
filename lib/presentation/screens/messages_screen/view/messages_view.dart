@@ -15,7 +15,10 @@ class MessagesView extends StatefulWidget {
   _MessagesViewState createState() => _MessagesViewState();
 }
 
-class _MessagesViewState extends State<MessagesView> {
+class _MessagesViewState extends State<MessagesView>
+    with AutomaticKeepAliveClientMixin {
+  @override
+  bool get wantKeepAlive => true;
   final GlobalKey<RefreshIndicatorState> refreshKey =
       GlobalKey<RefreshIndicatorState>();
   Future<void> _reloadChatrooms() async {
@@ -25,6 +28,7 @@ class _MessagesViewState extends State<MessagesView> {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return BlocBuilder<ChatroomBloc, ChatroomState>(
       builder: (context, state) {
         if (state is ChatroomLoaded) {

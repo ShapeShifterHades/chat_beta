@@ -10,7 +10,7 @@ import 'package:void_chat_beta/logic/bloc/main_bloc/bloc/main_bloc.dart';
 import 'package:void_chat_beta/logic/bloc/search_button/search_button_bloc.dart';
 import 'package:void_chat_beta/presentation/screens/chat_screen/view/chat_view.dart';
 import 'package:void_chat_beta/presentation/screens/common_ui/ui.dart';
-import 'package:void_chat_beta/presentation/screens/contacts_screen/contacts.dart';
+import 'package:void_chat_beta/presentation/screens/contacts_screen/view/contacts_view.dart';
 import 'package:void_chat_beta/presentation/screens/faq_screen/view/faq_view.dart';
 import 'package:void_chat_beta/presentation/screens/messages_screen/view/messages_view.dart';
 import 'package:void_chat_beta/presentation/screens/security_screen/view/security_view.dart';
@@ -23,6 +23,15 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
+  late final MessagesView messages;
+  late final ContactsView contacts;
+  @override
+  void initState() {
+    super.initState();
+    messages = MessagesView();
+    contacts = ContactsView();
+  }
+
   late ContactsView contactsView;
 
   @override
@@ -47,18 +56,19 @@ class _MainScreenState extends State<MainScreen> {
                   BlocProvider.of<ChatroomBloc>(context).add(LoadChatrooms());
                   BlocProvider.of<FinduserBloc>(context);
                   BlocProvider.of<SearchButtonBloc>(context);
-                  BlocProvider.of<ContactBloc>(context)
-                      .add(const LoadContacts());
                 }
                 if (state is MainAppDialog) {
                   return ChatView(chat: state.chat);
                 }
                 if (state is MainAppLoaded) {
+                  BlocProvider.of<ContactBloc>(context)
+                      .add(const LoadContacts());
+
                   switch (state.currentView) {
                     case CurrentView.messages:
-                      return const MessagesView();
+                      return messages;
                     case CurrentView.contacts:
-                      return const ContactsView();
+                      return contacts;
                     case CurrentView.settings:
                       return SettingsView();
                     case CurrentView.security:

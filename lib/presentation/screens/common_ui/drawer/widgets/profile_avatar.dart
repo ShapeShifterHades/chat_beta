@@ -1,9 +1,5 @@
-import 'dart:io';
-
-import 'package:firestore_repository/firestore_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:void_chat_beta/core/constants/styles.dart';
 import 'package:void_chat_beta/logic/bloc/authentication/authentication_bloc.dart';
 import 'package:void_chat_beta/logic/bloc/main_bloc/bloc/main_bloc.dart';
@@ -64,6 +60,12 @@ class _ProfileAvatarState extends State<ProfileAvatar> {
                       child: BlocBuilder<MainAppBloc, MainAppState>(
                         builder: (context, state) {
                           if (state is MainAppLoaded) {
+                            return CircleAvatar(
+                              backgroundImage: MemoryImage(state.avatar),
+                              radius: 60,
+                            );
+                          }
+                          if (state is MainAppDialog) {
                             return CircleAvatar(
                               backgroundImage: MemoryImage(state.avatar),
                               radius: 60,

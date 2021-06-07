@@ -12,7 +12,10 @@ class ContactsView extends StatefulWidget {
   _ContactsViewState createState() => _ContactsViewState();
 }
 
-class _ContactsViewState extends State<ContactsView> {
+class _ContactsViewState extends State<ContactsView>
+    with AutomaticKeepAliveClientMixin {
+  @override
+  bool get wantKeepAlive => true;
   late PageController controller;
   @override
   void initState() {
@@ -28,6 +31,7 @@ class _ContactsViewState extends State<ContactsView> {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return GestureDetector(
       onTap: () {
         final FocusScopeNode currentFocus = FocusScope.of(context);
