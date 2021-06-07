@@ -14,11 +14,12 @@ class FirebaseStorageRepository {
     }
   }
 
-  Future<File?> getAvatarById(String id) async {
+  Future<Uint8List?> getAvatarById(String id) async {
     final String _path = '$id/profile/avatar';
     try {
-      final Uint8List? _listFile = await storage.ref().child(_path).getData();
-      return _listFile != null ? File.fromRawPath(_listFile) : null;
+      final Uint8List? _listFile =
+          await storage.ref().child(_path).getData(100000000);
+      return _listFile;
     } on FirebaseException catch (e) {
       print(e.message);
     } finally {}
@@ -38,11 +39,12 @@ class FirebaseStorageRepository {
     return downloadURL;
   }
 
-  Future<File?> getAvatarPlaceholder() async {
+  Future<Uint8List?> getAvatarPlaceholder() async {
     const String _path = 'default/avatar-placeholder ';
     try {
-      final Uint8List? _listFile = await storage.ref().child(_path).getData();
-      return _listFile != null ? File.fromRawPath(_listFile) : null;
+      final Uint8List? _listFile =
+          await storage.ref().child(_path).getData(100000000);
+      return _listFile;
     } on FirebaseException catch (e) {
       print(e.message);
     }

@@ -44,3 +44,10 @@ class UpdateNewContacts extends MainAppEvent {
   @override
   List<Object> get props => [newContacts];
 }
+
+class UpdateAvatar extends MainAppEvent {
+  const UpdateAvatar();
+
+  @override
+  List<Object> get props => [];
+}

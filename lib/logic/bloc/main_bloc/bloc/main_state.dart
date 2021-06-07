@@ -19,7 +19,7 @@ class MainAppLoading extends MainAppState {
 class MainAppLoaded extends MainAppState {
   final String uid;
   final String username;
-  final File avatar;
+  final Uint8List avatar;
   final int newMessages;
   final int newContactRequests;
   final CurrentView currentView;
@@ -52,7 +52,7 @@ class MainAppNotLoaded extends MainAppState {
 class MainAppDialog extends MainAppState {
   final String uid;
   final String username;
-  final File avatar;
+  final Uint8List avatar;
   final int newMessages;
   final int newContactRequests;
   final CurrentView currentView;

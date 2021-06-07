@@ -15,6 +15,7 @@ import 'package:void_chat_beta/presentation/screens/faq_screen/view/faq_view.dar
 import 'package:void_chat_beta/presentation/screens/messages_screen/view/messages_view.dart';
 import 'package:void_chat_beta/presentation/screens/security_screen/view/security_view.dart';
 import 'package:void_chat_beta/presentation/screens/settings_screen/view/settings_view.dart';
+import 'package:void_chat_beta/presentation/styled_widgets/styled_load_spinner.dart';
 
 class MainScreen extends StatefulWidget {
   @override
@@ -27,6 +28,7 @@ class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
+      lazy: false,
       create: (context) => MainAppBloc(
         authenticationBloc: BlocProvider.of<AuthenticationBloc>(context),
         firebaseStorageRepository:
@@ -47,8 +49,6 @@ class _MainScreenState extends State<MainScreen> {
                   BlocProvider.of<SearchButtonBloc>(context);
                   BlocProvider.of<ContactBloc>(context)
                       .add(const LoadContacts());
-                  // BlocProvider.of<MainAppBloc>(context).add(const SwitchView());
-                  contactsView = const ContactsView();
                 }
                 if (state is MainAppDialog) {
                   return ChatView(chat: state.chat);
@@ -58,7 +58,7 @@ class _MainScreenState extends State<MainScreen> {
                     case CurrentView.messages:
                       return const MessagesView();
                     case CurrentView.contacts:
-                      return contactsView;
+                      return const ContactsView();
                     case CurrentView.settings:
                       return SettingsView();
                     case CurrentView.security:
@@ -68,10 +68,7 @@ class _MainScreenState extends State<MainScreen> {
                     default:
                   }
                 }
-                return const Text(
-                  'Loading !!!',
-                  style: TextStyle(color: Colors.white),
-                );
+                return StyledLoadSpinner();
               },
             ),
           ),
