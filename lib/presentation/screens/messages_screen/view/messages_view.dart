@@ -1,6 +1,8 @@
+import 'package:firestore_repository/firestore_repository.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:provider/provider.dart';
 import 'package:void_chat_beta/logic/bloc/chatroom/chatroom_bloc.dart';
 import 'package:void_chat_beta/logic/bloc/main_bloc/bloc/main_bloc.dart';
 import 'package:void_chat_beta/presentation/screens/messages_screen/widgets/chatroom_card.dart';
@@ -15,10 +17,7 @@ class MessagesView extends StatefulWidget {
   _MessagesViewState createState() => _MessagesViewState();
 }
 
-class _MessagesViewState extends State<MessagesView>
-    with AutomaticKeepAliveClientMixin {
-  @override
-  bool get wantKeepAlive => true;
+class _MessagesViewState extends State<MessagesView> {
   final GlobalKey<RefreshIndicatorState> refreshKey =
       GlobalKey<RefreshIndicatorState>();
   Future<void> _reloadChatrooms() async {
@@ -28,37 +27,78 @@ class _MessagesViewState extends State<MessagesView>
 
   @override
   Widget build(BuildContext context) {
-    super.build(context);
-    return BlocBuilder<ChatroomBloc, ChatroomState>(
-      builder: (context, state) {
-        if (state is ChatroomLoaded) {
-          final chats = state.chatrooms;
+    final chats =
+        (context.watch<ChatroomBloc>().state as ChatroomLoaded).chatrooms;
 
-          if (chats.isNotEmpty) {
-            return Padding(
-              padding: const EdgeInsets.only(top: 50, left: 25),
-              child: RefreshIndicator(
-                key: refreshKey,
-                onRefresh: () => _reloadChatrooms(),
-                child: ListView.builder(
-                  itemCount: chats.length,
-                  itemBuilder: (context, index) {
-                    return ChatroomCard(
-                      chat: chats[index],
-                      onPress: () => BlocProvider.of<MainAppBloc>(context)
-                          .add(DialogRequested(chats[index])),
-                    );
-                  },
-                ),
-              ),
-            );
-          } else {
-            return const LoadingIndicator(
-                text: 'You have no conversations yet...');
-          }
-        }
-        return const LoadingIndicator();
-      },
+    if (chats.isNotEmpty) {
+      return Padding(
+        padding: const EdgeInsets.only(top: 40, left: 25, right: 4),
+        child: RefreshIndicator(
+          key: refreshKey,
+          onRefresh: () => _reloadChatrooms(),
+          child: ListView.builder(
+            itemCount: chats.length,
+            itemBuilder: (context, index) {
+              return AvatarBuilder(chats: chats, index: index);
+            },
+          ),
+        ),
+      );
+    } else {
+      return const LoadingIndicator(text: 'You have no conversations yet...');
+    }
+  }
+}
+
+class AvatarBuilder extends StatefulWidget {
+  final int index;
+  const AvatarBuilder({
+    Key? key,
+    required this.index,
+    required this.chats,
+  }) : super(key: key);
+
+  final List<Chatroom> chats;
+
+  @override
+  _AvatarBuilderState createState() => _AvatarBuilderState();
+}
+
+class _AvatarBuilderState extends State<AvatarBuilder> {
+  late Future<String> avatarFuture;
+
+  Future<String> getAvatarUrl(String id) async {
+    final String link =
+        await RepositoryProvider.of<FirestoreHelperRepository>(context)
+            .getAvatarLink(id);
+
+    final String result =
+        await RepositoryProvider.of<FirebaseStorageRepository>(context)
+            .getAvatarUrlByLink(link);
+
+    return result;
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    avatarFuture = getAvatarUrl(widget.chats[widget.index].id);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return FutureProvider<String>(
+      initialData:
+          'https://firebasestorage.googleapis.com/v0/b/voidchatbeta.appspot.com/o/default%2Favatar-placeholder.png?alt=media&token=c6069596-e44d-4091-a659-9f3917ddbab2',
+      lazy: false,
+      create: (_) => avatarFuture,
+      child: ChatroomCard(
+        key: Key('chatCard${widget.index}'),
+        chat: widget.chats[widget.index],
+        onPress: () => BlocProvider.of<MainAppBloc>(context)
+            .add(DialogRequested(widget.chats[widget.index])),
+      ),
     );
   }
 }

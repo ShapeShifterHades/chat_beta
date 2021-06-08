@@ -1,13 +1,11 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:firestore_repository/firestore_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:void_chat_beta/logic/bloc/authentication/authentication_bloc.dart';
 import 'package:void_chat_beta/logic/bloc/chatroom/chatroom_bloc.dart';
 import 'package:void_chat_beta/logic/bloc/contact/contact_bloc.dart';
-import 'package:void_chat_beta/logic/bloc/contact_tabs/contact_tabs_bloc.dart';
-import 'package:void_chat_beta/logic/bloc/find_user/finduser_bloc.dart';
 import 'package:void_chat_beta/logic/bloc/main_bloc/bloc/main_bloc.dart';
-import 'package:void_chat_beta/logic/bloc/search_button/search_button_bloc.dart';
 import 'package:void_chat_beta/presentation/screens/chat_screen/view/chat_view.dart';
 import 'package:void_chat_beta/presentation/screens/common_ui/ui.dart';
 import 'package:void_chat_beta/presentation/screens/contacts_screen/view/contacts_view.dart';
@@ -23,13 +21,14 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
-  late final MessagesView messages;
-  late final ContactsView contacts;
+  final FirebaseMessaging firebaseMessaging = FirebaseMessaging.instance;
+  bool isFirstRun = true; // Wether app was already loaded.
+
   @override
   void initState() {
     super.initState();
-    messages = MessagesView();
-    contacts = ContactsView();
+    BlocProvider.of<ChatroomBloc>(context).add(LoadChatrooms());
+    BlocProvider.of<ContactBloc>(context).add(const LoadContacts());
   }
 
   late ContactsView contactsView;
@@ -51,24 +50,23 @@ class _MainScreenState extends State<MainScreen> {
           body: UI(
             body: BlocBuilder<MainAppBloc, MainAppState>(
               builder: (context, state) {
-                if (state is MainAppLoading) {
-                  BlocProvider.of<ContactTabsBloc>(context);
-                  BlocProvider.of<ChatroomBloc>(context).add(LoadChatrooms());
-                  BlocProvider.of<FinduserBloc>(context);
-                  BlocProvider.of<SearchButtonBloc>(context);
-                }
+                final bool _chatroomLoaded =
+                    context.watch<ChatroomBloc>().state is ChatroomLoaded;
+                final bool _contactsLoaded =
+                    context.watch<ContactBloc>().state is ContactsLoaded;
+                if (state is MainAppLoading) {}
+
                 if (state is MainAppDialog) {
                   return ChatView(chat: state.chat);
                 }
-                if (state is MainAppLoaded) {
-                  BlocProvider.of<ContactBloc>(context)
-                      .add(const LoadContacts());
-
+                if (state is MainAppLoaded &&
+                    _chatroomLoaded &&
+                    _contactsLoaded) {
                   switch (state.currentView) {
                     case CurrentView.messages:
-                      return messages;
+                      return const MessagesView();
                     case CurrentView.contacts:
-                      return contacts;
+                      return const ContactsView();
                     case CurrentView.settings:
                       return SettingsView();
                     case CurrentView.security:
@@ -76,6 +74,7 @@ class _MainScreenState extends State<MainScreen> {
                     case CurrentView.faq:
                       return FaqView();
                     default:
+                      return MessagesView();
                   }
                 }
                 return StyledLoadSpinner();

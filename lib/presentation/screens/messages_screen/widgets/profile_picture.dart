@@ -2,6 +2,7 @@ import 'package:firestore_repository/firestore_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:provider/provider.dart';
 
 class ProfilePicture extends StatefulWidget {
   const ProfilePicture({
@@ -30,17 +31,14 @@ class _ProfilePictureState extends State<ProfilePicture>
   }
 
   Future<String> getAvatar() async {
-    String result;
-    final bool hasPic =
+    final String link =
         await RepositoryProvider.of<FirestoreHelperRepository>(context)
-            .userHasAvatar(widget.chat.id);
-    if (hasPic) {
-      result = await RepositoryProvider.of<FirebaseStorageRepository>(context)
-          .getAvatarUrlByPath(widget.chat.id);
-    } else {
-      result = await RepositoryProvider.of<FirebaseStorageRepository>(context)
-          .getAvatarPlaceholderUrl();
-    }
+            .getAvatarLink(widget.chat.id);
+
+    final String result =
+        await RepositoryProvider.of<FirebaseStorageRepository>(context)
+            .getAvatarUrlByLink(link);
+
     return result;
   }
 
@@ -50,46 +48,36 @@ class _ProfilePictureState extends State<ProfilePicture>
     return Container(
       width: 60,
       height: 60,
+      margin: const EdgeInsets.only(right: 10),
       alignment: Alignment.center,
       child: Stack(
         children: [
-          FutureBuilder<String>(
-              future: avatarUrl,
-              builder: (context, snapshot) {
-                if (snapshot.hasData) {
-                  print(snapshot.data);
-                  return Material(
-                    borderRadius: const BorderRadius.all(Radius.circular(8.0)),
-                    child: CachedNetworkImage(
-                      imageUrl: snapshot.data!,
-                      placeholder: (context, url) => Container(
-                        width: 200.0,
-                        height: 200.0,
-                        padding: const EdgeInsets.all(70.0),
-                        child: CircularProgressIndicator(
-                          valueColor: AlwaysStoppedAnimation<Color>(
-                              Theme.of(context).primaryColor),
-                        ),
-                      ),
-                      errorWidget: (context, url, error) => Material(
-                        borderRadius: const BorderRadius.all(
-                          Radius.circular(8.0),
-                        ),
-                        child: Image.asset(
-                          'images/avatar-placeholder.png',
-                          width: 200.0,
-                          height: 200.0,
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                      width: 200.0,
-                      height: 200.0,
-                      fit: BoxFit.cover,
-                    ),
-                  );
-                }
-                return const SizedBox();
-              }),
+          CachedNetworkImage(
+            imageUrl: Provider.of<String>(context),
+            placeholder: (context, url) => Container(
+              width: 200.0,
+              height: 200.0,
+              padding: const EdgeInsets.all(70.0),
+              child: CircularProgressIndicator(
+                valueColor: AlwaysStoppedAnimation<Color>(
+                    Theme.of(context).primaryColor),
+              ),
+            ),
+            errorWidget: (context, url, error) => Material(
+              borderRadius: const BorderRadius.all(
+                Radius.circular(8.0),
+              ),
+              child: Image.asset(
+                'images/avatar-placeholder.png',
+                width: 200.0,
+                height: 200.0,
+                fit: BoxFit.cover,
+              ),
+            ),
+            width: 200.0,
+            height: 200.0,
+            fit: BoxFit.cover,
+          ),
           if (widget.isActive)
             Positioned(
               right: 0,

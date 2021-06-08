@@ -35,26 +35,20 @@ class FirestoreHelperRepository {
     }
   }
 
-  Future<bool> userHasAvatar(String uid) async {
+  Future<String> getAvatarLink(String uid) async {
+    String result = 'default/avatar-placeholder.png';
     await userCollection
         .doc(uid)
-        .get(const GetOptions(source: Source.cache))
+        .get()
         .then((DocumentSnapshot documentSnapshot) {
       if (documentSnapshot.exists) {
-        // print('Document data: ${documentSnapshot.data()}');
         try {
-          documentSnapshot.get(FieldPath(const ['avatar']));
-          return true;
-        } catch (e) {
-          // print('No nested field exists!');
-          return false;
-        }
-      } else {
-        // print('Document does not exist on the database');
-        return false;
-      }
+          result = documentSnapshot.get(FieldPath(const ['avatar'])) as String;
+        } catch (e) {}
+      } else {}
     });
-    return false;
+    print('YOOOOOOOOOOOOOOOOOOOOO $result');
+    return result;
   }
 
   Future<void> setUpAvatar(UserProfile userProfile) async {

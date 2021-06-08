@@ -1,5 +1,3 @@
-import 'dart:typed_data';
-
 import 'package:firestore_repository/firestore_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -26,19 +24,25 @@ class ChatroomCard extends StatefulWidget {
   _ChatroomCardState createState() => _ChatroomCardState();
 }
 
-class _ChatroomCardState extends State<ChatroomCard> {
+class _ChatroomCardState extends State<ChatroomCard>
+    with AutomaticKeepAliveClientMixin {
+  @override
+  bool get wantKeepAlive => true;
   final bool isActive = false;
   late String myId;
 
   @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
+  void initState() {
+    // TODO: implement initState
+    super.initState();
     myId = BlocProvider.of<AuthenticationBloc>(context).state.user.id;
   }
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return _Card(
+      key: Key('card${widget.chat.id}'),
       onPress: widget.onPress,
       chat: widget.chat,
       isActive: isActive,
@@ -66,52 +70,69 @@ class _Card extends StatelessWidget {
     final String _dateBottom = (chat.lastMessageAt != null)
         ? DateFormat('kk:mm').format(chat.lastMessageAt!)
         : '';
-    return InkWell(
+    return GestureDetector(
       onTap: onPress,
-      child: Row(
-        children: [
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(right: 6.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      child: Material(
+        elevation: 6,
+        shadowColor: Theme.of(context).scaffoldBackgroundColor,
+        clipBehavior: Clip.hardEdge,
+        shape: BeveledRectangleBorder(
+            side: BorderSide(
+                color: Theme.of(context).primaryColor.withOpacity(0.4),
+                width: 0.3),
+            borderRadius: const BorderRadius.all(Radius.circular(8))),
+        child: Row(
+          children: [
+            ProfilePicture(chat: chat, isActive: isActive),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       Text(
                         chat.username!,
-                        style: TextStyles.callout1,
+                        style: TextStyles.callout1.copyWith(fontSize: 16),
                       ),
+                      const Spacer(),
                       Text(_dateBottom, style: TextStyles.callout1),
                     ],
                   ),
-                ),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    if (lastMessageFromYou)
-                      Text('You: ', style: TextStyles.body3),
-                    Expanded(
-                      child: Opacity(
-                        opacity: 0.64,
-                        child: Text(
-                          '${chat.newMessages ?? 0}  ${chat.lastMessage}'
-                          //  ??                              "Conversation is empty. ",
-                          ,
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyles.body3,
+                  Divider(
+                    height: 0.5,
+                    color: Theme.of(context).primaryColor.withOpacity(0.4),
+                  ),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      if (lastMessageFromYou)
+                        Opacity(
+                            opacity: 0.64,
+                            child: Text('You: ', style: TextStyles.body3)),
+                      Expanded(
+                        child: Opacity(
+                          opacity: 0.64,
+                          child: Text(
+                            // '${chat.newMessages ?? 0}
+                            '${chat.lastMessage}'
+                            //  ??   "Conversation is empty. ",
+                            ,
+                            maxLines: 2,
+
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyles.body3,
+                          ),
                         ),
                       ),
-                    ),
-                  ],
-                ),
-              ],
+                    ],
+                  ),
+                ],
+              ),
             ),
-          ),
-          ProfilePicture(chat: chat, isActive: isActive),
-        ],
+            const SizedBox(width: 10),
+          ],
+        ),
       ),
     );
   }

@@ -25,10 +25,9 @@ class FirebaseStorageRepository {
     } finally {}
   }
 
-  Future<String> getAvatarUrlByPath(String id) async {
-    final String _path = '$id/profile/avatar';
+  Future<String> getAvatarUrlByLink(String link) async {
     final String downloadURL =
-        await FirebaseStorage.instance.ref(_path).getDownloadURL();
+        await FirebaseStorage.instance.ref(link).getDownloadURL();
     return downloadURL;
   }
 
