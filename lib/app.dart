@@ -49,7 +49,6 @@ class App extends StatelessWidget {
         child: Builder(builder: (context) {
           return MultiBlocProvider(providers: [
             BlocProvider<AuthenticationBloc>(
-              lazy: false,
               create: (context) => AuthenticationBloc(
                 authenticationRepository:
                     RepositoryProvider.of<AuthenticationRepository>(context),
@@ -57,48 +56,9 @@ class App extends StatelessWidget {
             ),
             BlocProvider<LocaleCubit>(
               create: (context) => LocaleCubit(),
-              lazy: false,
             ),
             BlocProvider<BrightnessCubit>(
               create: (context) => BrightnessCubit(),
-              lazy: false,
-            ),
-            BlocProvider<ContactsBloc>(
-                create: (context) => ContactsBloc(
-                    RepositoryProvider.of<FirestoreContactRepository?>(context),
-                    context.read<AuthenticationBloc>())),
-            BlocProvider<DialogsBloc>(
-              create: (context) => DialogsBloc(
-                firestoreChatroomRepository:
-                    RepositoryProvider.of<FirestoreChatroomRepository?>(
-                        context),
-                authenticationBloc:
-                    BlocProvider.of<AuthenticationBloc>(context),
-              )..add(LoadDialogs()),
-            ),
-            BlocProvider<MessagesBloc>(
-              create: (context) => MessagesBloc(
-                firestoreMessageRepository:
-                    RepositoryProvider.of<FirestoreMessageRepository?>(context),
-                authenticationBloc:
-                    BlocProvider.of<AuthenticationBloc>(context),
-              ),
-            ),
-            BlocProvider<ContactsTabsBloc>(
-              create: (context) => ContactsTabsBloc(
-                context.read<ContactsBloc>(),
-              ),
-            ),
-            BlocProvider<ContactsFinduserBloc>(
-              create: (context) => ContactsFinduserBloc(
-                context.read<AuthenticationBloc>(),
-                context.read<FirestoreContactRepository?>(),
-              ),
-            ),
-            BlocProvider<SearchButtonBloc>(
-              create: (context) => SearchButtonBloc(
-                BlocProvider.of<ContactsFinduserBloc>(context),
-              ),
             ),
           ], child: const AppView());
         }));
