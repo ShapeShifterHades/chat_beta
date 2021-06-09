@@ -4,15 +4,15 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:firestore_repository/firestore_repository.dart';
 import 'package:meta/meta.dart';
-import 'package:void_chat_beta/logic/bloc/contact/contact_bloc.dart';
+import 'package:void_chat_beta/logic/bloc/contacts/contacts_bloc.dart';
 
-part 'contact_tabs_event.dart';
-part 'contact_tabs_state.dart';
+part 'contacts_tabs_event.dart';
+part 'contacts_tabs_state.dart';
 
-class ContactTabsBloc extends Bloc<ContactTabsEvent, ContactTabsState> {
-  final ContactBloc _contactsBloc;
+class ContactsTabsBloc extends Bloc<ContactsTabsEvent, ContactsTabsState> {
+  final ContactsBloc _contactsBloc;
   StreamSubscription contactsSubscription;
-  ContactTabsBloc(this._contactsBloc)
+  ContactsTabsBloc(this._contactsBloc)
       : contactsSubscription = _contactsBloc.stream.listen((state) {
           if (state is ContactsLoaded) {
             ContactsUpdated((_contactsBloc.state as ContactsLoaded).contacts);
@@ -22,7 +22,7 @@ class ContactTabsBloc extends Bloc<ContactTabsEvent, ContactTabsState> {
 
   @override
   // ignore: override_on_non_overriding_member
-  ContactTabsState get initialState {
+  ContactsTabsState get initialState {
     return _contactsBloc.state is ContactsLoaded
         ? FriendlistState(
             fullContactlist: (_contactsBloc.state as ContactsLoaded).contacts)
@@ -30,29 +30,30 @@ class ContactTabsBloc extends Bloc<ContactTabsEvent, ContactTabsState> {
   }
 
   @override
-  Stream<ContactTabsState> mapEventToState(
-    ContactTabsEvent event,
+  Stream<ContactsTabsState> mapEventToState(
+    ContactsTabsEvent event,
   ) async* {
-    if (event is FriendlistClicked) {
+    if (event is ShowContactsFriendlist) {
       yield _mapFriendlistClickedToState(event);
-    } else if (event is BlocklistClicked) {
+    } else if (event is ShowContactsBlocklist) {
       yield _mapBlocklistClickedToState(event);
-    } else if (event is PendinglistClicked) {
+    } else if (event is ShowContactsPendinglist) {
       yield _mapPendinglistClickedToState(event);
     }
   }
 
-  ContactTabsState _mapFriendlistClickedToState(FriendlistClicked event) {
+  ContactsTabsState _mapFriendlistClickedToState(ShowContactsFriendlist event) {
     return FriendlistState(
         fullContactlist: (_contactsBloc.state as ContactsLoaded).contacts);
   }
 
-  ContactTabsState _mapBlocklistClickedToState(BlocklistClicked event) {
+  ContactsTabsState _mapBlocklistClickedToState(ShowContactsBlocklist event) {
     return BlocklistState(
         blocklist: (_contactsBloc.state as ContactsLoaded).contacts);
   }
 
-  ContactTabsState _mapPendinglistClickedToState(PendinglistClicked event) {
+  ContactsTabsState _mapPendinglistClickedToState(
+      ShowContactsPendinglist event) {
     return PendinglistState(
         fullContactlist: (_contactsBloc.state as ContactsLoaded).contacts);
   }

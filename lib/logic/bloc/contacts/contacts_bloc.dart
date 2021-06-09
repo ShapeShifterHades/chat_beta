@@ -6,23 +6,23 @@ import 'package:firestore_repository/firestore_repository.dart';
 import 'package:meta/meta.dart';
 import 'package:void_chat_beta/logic/bloc/authentication/authentication_bloc.dart';
 
-part 'contact_event.dart';
-part 'contact_state.dart';
+part 'contacts_event.dart';
+part 'contacts_state.dart';
 
-class ContactBloc extends Bloc<ContactEvent, ContactsState> {
+class ContactsBloc extends Bloc<ContactsEvent, ContactsState> {
   final AuthenticationBloc? _authenticationBloc;
   final FirestoreContactRepository? _firestoreContactRepository;
   StreamSubscription? _contactSubscription;
 
-  ContactBloc(
+  ContactsBloc(
     FirestoreContactRepository? firestoreContactRepository,
     AuthenticationBloc? authenticationBloc,
   )   : _firestoreContactRepository = firestoreContactRepository,
         _authenticationBloc = authenticationBloc,
-        super(ContactsAreLoading());
+        super(ContactsLoading());
 
   @override
-  Stream<ContactsState> mapEventToState(ContactEvent event) async* {
+  Stream<ContactsState> mapEventToState(ContactsEvent event) async* {
     if (event is LoadContacts) {
       yield* _mapLoadContactsToState();
     } else if (event is SendFriendshipRequest) {

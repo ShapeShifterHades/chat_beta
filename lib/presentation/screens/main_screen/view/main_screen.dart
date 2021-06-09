@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 import 'package:void_chat_beta/logic/bloc/authentication/authentication_bloc.dart';
-import 'package:void_chat_beta/logic/bloc/chatroom/chatroom_bloc.dart';
-import 'package:void_chat_beta/logic/bloc/contact/contact_bloc.dart';
-import 'package:void_chat_beta/logic/bloc/main_bloc/bloc/main_bloc.dart';
+import 'package:void_chat_beta/logic/bloc/dialogs/dialogs_bloc.dart';
+import 'package:void_chat_beta/logic/bloc/contacts/contacts_bloc.dart';
+import 'package:void_chat_beta/logic/bloc/main_bloc/main_bloc.dart';
 import 'package:void_chat_beta/presentation/screens/chat_screen/view/chat_view.dart';
 import 'package:void_chat_beta/presentation/screens/common_ui/ui.dart';
 import 'package:void_chat_beta/presentation/screens/contacts_screen/view/contacts_view.dart';
@@ -26,80 +26,65 @@ class _MainScreenState extends State<MainScreen> {
   bool isFirstRun = true; // Wether app was already loaded.
   late List<Chatroom> chats;
   late ListView builder;
-  @override
-  void initState() {
-    super.initState();
-    BlocProvider.of<ChatroomBloc>(context).add(LoadChatrooms());
-    BlocProvider.of<ContactBloc>(context).add(const LoadContacts());
-  }
-
   late ContactsView contactsView;
 
   @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    chats = (context.watch<ChatroomBloc>().state as ChatroomLoaded).chatrooms;
-    builder = ListView.builder(
-      itemCount: chats.length,
-      itemBuilder: (context, index) {
-        return AvatarBuilder(chats: chats, index: index);
-      },
-    );
+  void initState() {
+    super.initState();
+    BlocProvider.of<DialogsBloc>(context).add(LoadDialogs());
+    BlocProvider.of<ContactsBloc>(context).add(const LoadContacts());
   }
 
   @override
   Widget build(BuildContext context) {
-    return Provider<ListView>.value(
-      value: builder,
-      child: BlocProvider(
-        lazy: false,
-        create: (context) => MainAppBloc(
-          authenticationBloc: BlocProvider.of<AuthenticationBloc>(context),
-          firebaseStorageRepository:
-              RepositoryProvider.of<FirebaseStorageRepository>(context),
-          firestoreHelperRepository:
-              RepositoryProvider.of<FirestoreHelperRepository>(context),
-        )..add(LoadMainApp()),
-        child: Builder(builder: (context) {
-          return Scaffold(
-            resizeToAvoidBottomInset: false,
-            body: UI(
-              body: BlocBuilder<MainAppBloc, MainAppState>(
-                builder: (context, state) {
-                  final bool _chatroomLoaded =
-                      context.watch<ChatroomBloc>().state is ChatroomLoaded;
-                  final bool _contactsLoaded =
-                      context.watch<ContactBloc>().state is ContactsLoaded;
-                  if (state is MainAppLoading) {}
+    return BlocProvider<MainAppBloc>(
+      lazy: false,
+      create: (context) => MainAppBloc(
+        authenticationBloc: BlocProvider.of<AuthenticationBloc>(context),
+        firebaseStorageRepository:
+            RepositoryProvider.of<FirebaseStorageRepository>(context),
+        firestoreHelperRepository:
+            RepositoryProvider.of<FirestoreHelperRepository>(context),
+      )..add(LoadMainApp()),
+      child: Builder(builder: (context) {
+        return Scaffold(
+          resizeToAvoidBottomInset: false,
+          body: UI(
+            body: BlocBuilder<MainAppBloc, MainAppState>(
+              builder: (context, state) {
+                final bool _chatroomLoaded =
+                    context.watch<DialogsBloc>().state is ChatroomLoaded;
+                final bool _contactsLoaded =
+                    context.watch<ContactsBloc>().state is ContactsLoaded;
+                if (state is MainAppLoading) {}
 
-                  if (state is MainAppDialog) {
-                    return ChatView(chat: state.chat);
+                if (state is MainAppDialog) {
+                  return ChatView(chat: state.chat);
+                }
+                if (state is MainAppLoaded &&
+                    _chatroomLoaded &&
+                    _contactsLoaded) {
+                  switch (state.currentView) {
+                    case CurrentView.messages:
+                      return const MessagesView();
+                    case CurrentView.contacts:
+                      return const ContactsView();
+                    case CurrentView.settings:
+                      return SettingsView();
+                    case CurrentView.security:
+                      return SecurityView();
+                    case CurrentView.faq:
+                      return FaqView();
+                    default:
+                      return MessagesView();
                   }
-                  if (state is MainAppLoaded &&
-                      _chatroomLoaded &&
-                      _contactsLoaded) {
-                    switch (state.currentView) {
-                      case CurrentView.messages:
-                        return const MessagesView();
-                      case CurrentView.contacts:
-                        return const ContactsView();
-                      case CurrentView.settings:
-                        return SettingsView();
-                      case CurrentView.security:
-                        return SecurityView();
-                      case CurrentView.faq:
-                        return FaqView();
-                      default:
-                        return MessagesView();
-                    }
-                  }
-                  return StyledLoadSpinner();
-                },
-              ),
+                }
+                return StyledLoadSpinner();
+              },
             ),
-          );
-        }),
-      ),
+          ),
+        );
+      }),
     );
   }
 }

@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:void_chat_beta/core/constants/styles.dart';
 import 'package:void_chat_beta/generated/l10n.dart';
-import 'package:void_chat_beta/logic/bloc/contact/contact_bloc.dart';
-import 'package:void_chat_beta/logic/bloc/find_user/finduser_bloc.dart';
+import 'package:void_chat_beta/logic/bloc/contacts/contacts_bloc.dart';
+import 'package:void_chat_beta/logic/bloc/contacts_find_user/contacts_finduser_bloc.dart';
 
 class FoundUserUi extends StatelessWidget {
   FoundUserUi({
@@ -132,13 +132,13 @@ class _BefriendForm extends StatelessWidget {
                       icon: Icon(Icons.add,
                           color: Theme.of(context).backgroundColor),
                       onPressed: () {
-                        context.read<ContactBloc>().add(
+                        context.read<ContactsBloc>().add(
                               SendFriendshipRequest(
                                 message: messageController.value.text,
                                 contactId: result?.id ?? '',
                               ),
                             );
-                        context.read<FinduserBloc>().add(ResetEvent());
+                        context.read<ContactsFinduserBloc>().add(ResetEvent());
                         usernameTextController.clear();
                         Focus.of(context).unfocus();
                       },

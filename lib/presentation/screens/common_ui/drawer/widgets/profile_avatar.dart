@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:void_chat_beta/core/constants/styles.dart';
 import 'package:void_chat_beta/logic/bloc/authentication/authentication_bloc.dart';
-import 'package:void_chat_beta/logic/bloc/main_bloc/bloc/main_bloc.dart';
+import 'package:void_chat_beta/logic/bloc/main_bloc/main_bloc.dart';
 import 'package:void_chat_beta/presentation/screens/common_ui/drawer/widgets/arctext.dart';
 
 class ProfileAvatar extends StatefulWidget {

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:void_chat_beta/core/constants/styles.dart';
 import 'package:void_chat_beta/generated/l10n.dart';
-import 'package:void_chat_beta/logic/bloc/find_user/finduser_bloc.dart';
+import 'package:void_chat_beta/logic/bloc/contacts_find_user/contacts_finduser_bloc.dart';
 import 'package:void_chat_beta/logic/bloc/search_button/search_button_bloc.dart';
 
 class SearchUsernameInput extends StatelessWidget {
@@ -23,7 +23,7 @@ class SearchUsernameInput extends StatelessWidget {
           : null,
       focusNode: focusNode,
       onEditingComplete: () {
-        BlocProvider.of<FinduserBloc>(context)
+        BlocProvider.of<ContactsFinduserBloc>(context)
             .add(QueryEvent(myController!.value.text));
       },
       style: TextStyles.body1,

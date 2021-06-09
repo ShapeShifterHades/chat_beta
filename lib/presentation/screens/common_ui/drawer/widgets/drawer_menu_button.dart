@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:void_chat_beta/core/constants/styles.dart';
-import 'package:void_chat_beta/logic/bloc/contact_tabs/contact_tabs_bloc.dart';
-import 'package:void_chat_beta/logic/bloc/main_bloc/bloc/main_bloc.dart';
+import 'package:void_chat_beta/logic/bloc/contacts_tabs/contacts_tabs_bloc.dart';
+import 'package:void_chat_beta/logic/bloc/main_bloc/main_bloc.dart';
 
 /// Represetation of an animated buttor for a drawer-side main menu.
 class DrawerMenuButton extends StatefulWidget {
@@ -58,7 +58,7 @@ class _DrawerMenuButtonState extends State<DrawerMenuButton>
         return GestureDetector(
           onTap: () {
             if (widget.view == CurrentView.contacts) {
-              context.read<ContactTabsBloc>().add(FriendlistClicked());
+              context.read<ContactsTabsBloc>().add(ShowContactsFriendlist());
             }
             BlocProvider.of<MainAppBloc>(context)
                 .add(SwitchView(view: widget.view));

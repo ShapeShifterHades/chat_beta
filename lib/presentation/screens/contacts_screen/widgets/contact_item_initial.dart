@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:void_chat_beta/core/constants/styles.dart';
 import 'package:void_chat_beta/generated/l10n.dart';
 import 'package:void_chat_beta/logic/bloc/authentication/authentication_bloc.dart';
-import 'package:void_chat_beta/logic/bloc/contact/contact_bloc.dart';
+import 'package:void_chat_beta/logic/bloc/contacts/contacts_bloc.dart';
 import 'package:void_chat_beta/presentation/screens/contacts_screen/widgets/tiles/contact_tile.dart';
 
 class ContactItem extends StatefulWidget {
@@ -90,7 +90,7 @@ class _ContactItemState extends State<ContactItem> {
                   height: isExpanded ? 50 : 0,
                   child: Center(
                       child: GestureDetector(
-                    onTap: () => context.read<ContactBloc>().add(
+                    onTap: () => context.read<ContactsBloc>().add(
                           RemoveContactRequest(
                             contactId: widget.sorted[widget.index].id,
                             uid: context

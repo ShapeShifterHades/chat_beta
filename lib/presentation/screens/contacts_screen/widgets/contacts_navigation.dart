@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:void_chat_beta/core/constants/styles.dart';
 import 'package:void_chat_beta/generated/l10n.dart';
-import 'package:void_chat_beta/logic/bloc/contact_tabs/contact_tabs_bloc.dart';
+import 'package:void_chat_beta/logic/bloc/contacts_tabs/contacts_tabs_bloc.dart';
 
 class ContactsNavigation extends StatelessWidget {
   const ContactsNavigation({
@@ -80,7 +80,7 @@ class ContactsNavigation extends StatelessWidget {
   }
 
   String _getTabName(BuildContext context) {
-    final ContactTabsState _state = context.watch<ContactTabsBloc>().state;
+    final ContactsTabsState _state = context.watch<ContactsTabsBloc>().state;
     if (_state is FriendlistState) {
       return S.of(context).contacts_friends;
     } else if (_state is PendinglistState) {

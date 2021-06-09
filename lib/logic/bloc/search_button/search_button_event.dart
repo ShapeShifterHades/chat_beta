@@ -11,9 +11,9 @@ abstract class SearchButtonEvent extends Equatable {
 class FinduserStateChanged extends SearchButtonEvent {
   const FinduserStateChanged(this.finduserState);
 
-  final FinduserState finduserState;
+  final ContactsFinduserState finduserState;
 
-  FinduserState get state => finduserState;
+  ContactsFinduserState get state => finduserState;
 
   @override
   List<Object> get props => [

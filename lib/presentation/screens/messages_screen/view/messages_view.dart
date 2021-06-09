@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
-import 'package:void_chat_beta/logic/bloc/chatroom/chatroom_bloc.dart';
-import 'package:void_chat_beta/logic/bloc/main_bloc/bloc/main_bloc.dart';
+import 'package:void_chat_beta/logic/bloc/dialogs/dialogs_bloc.dart';
+import 'package:void_chat_beta/logic/bloc/main_bloc/main_bloc.dart';
 import 'package:void_chat_beta/presentation/screens/messages_screen/widgets/chatroom_card.dart';
 import 'package:void_chat_beta/presentation/styled_widgets/loading_indicator.dart';
 
@@ -21,14 +21,14 @@ class _MessagesViewState extends State<MessagesView> {
   final GlobalKey<RefreshIndicatorState> refreshKey =
       GlobalKey<RefreshIndicatorState>();
   Future<void> _reloadChatrooms() async {
-    BlocProvider.of<ChatroomBloc>(context).add(LoadChatrooms());
+    BlocProvider.of<DialogsBloc>(context).add(LoadDialogs());
     refreshKey.currentState?.show(atTop: false);
   }
 
   @override
   Widget build(BuildContext context) {
     final chats =
-        (context.watch<ChatroomBloc>().state as ChatroomLoaded).chatrooms;
+        (context.watch<DialogsBloc>().state as ChatroomLoaded).chatrooms;
 
     if (chats.isNotEmpty) {
       return Padding(

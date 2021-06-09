@@ -1,4 +1,4 @@
-part of 'contact_bloc.dart';
+part of 'contacts_bloc.dart';
 
 abstract class ContactsState extends Equatable {
   const ContactsState();
@@ -7,7 +7,7 @@ abstract class ContactsState extends Equatable {
   List<Object> get props => [];
 }
 
-class ContactsAreLoading extends ContactsState {}
+class ContactsLoading extends ContactsState {}
 
 class ContactsLoaded extends ContactsState {
   final List<Contact> contacts;

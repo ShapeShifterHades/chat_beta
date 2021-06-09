@@ -4,7 +4,7 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
-import 'package:void_chat_beta/logic/bloc/find_user/finduser_bloc.dart';
+import 'package:void_chat_beta/logic/bloc/contacts_find_user/contacts_finduser_bloc.dart';
 
 part 'search_button_event.dart';
 part 'search_button_state.dart';
@@ -15,8 +15,8 @@ class SearchButtonBloc extends Bloc<SearchButtonEvent, SearchButtonState> {
         _finduserBloc?.stream.listen((bloc) => add(FinduserStateChanged(bloc)));
   }
 
-  final FinduserBloc? _finduserBloc;
-  StreamSubscription<FinduserState>? _finduserSubscription;
+  final ContactsFinduserBloc? _finduserBloc;
+  StreamSubscription<ContactsFinduserState>? _finduserSubscription;
 
   @override
   Future<void> close() {
@@ -36,11 +36,11 @@ class SearchButtonBloc extends Bloc<SearchButtonEvent, SearchButtonState> {
   SearchButtonState _mapFinduserStateChangedToState(
       FinduserStateChanged event) {
     SearchButtonState toReturn;
-    if (event.finduserState == FinduserState.loading()) {
+    if (event.finduserState == ContactsFinduserState.loading()) {
       toReturn = SearchButtonState.loading();
-    } else if (event.finduserState == FinduserState.initial()) {
+    } else if (event.finduserState == ContactsFinduserState.initial()) {
       toReturn = SearchButtonState.initial();
-    } else if (event.finduserState == FinduserState.error()) {
+    } else if (event.finduserState == ContactsFinduserState.error()) {
       toReturn = SearchButtonState.hasError();
     } else {
       toReturn = SearchButtonState.hasResult();

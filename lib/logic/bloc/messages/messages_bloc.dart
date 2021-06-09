@@ -5,14 +5,14 @@ import 'package:equatable/equatable.dart';
 import 'package:firestore_repository/firestore_repository.dart';
 import 'package:void_chat_beta/logic/bloc/authentication/authentication_bloc.dart';
 
-part 'message_event.dart';
-part 'message_state.dart';
+part 'messages_event.dart';
+part 'messages_state.dart';
 
-class MessageBloc extends Bloc<MessagesEvent, MessagesState> {
+class MessagesBloc extends Bloc<MessagesEvent, MessagesState> {
   final FirestoreMessageRepository _firestoreMessageRepository;
   final String authId;
   StreamSubscription? _messagesSubscription;
-  MessageBloc(
+  MessagesBloc(
       {required FirestoreMessageRepository? firestoreMessageRepository,
       required AuthenticationBloc authenticationBloc})
       : _firestoreMessageRepository = firestoreMessageRepository!,

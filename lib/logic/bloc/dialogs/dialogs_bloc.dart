@@ -6,14 +6,14 @@ import 'package:equatable/equatable.dart';
 import 'package:firestore_repository/firestore_repository.dart';
 import 'package:void_chat_beta/logic/bloc/authentication/authentication_bloc.dart';
 
-part 'chatroom_event.dart';
-part 'chatroom_state.dart';
+part 'dialogs_event.dart';
+part 'dialogs_state.dart';
 
-class ChatroomBloc extends Bloc<ChatroomEvent, ChatroomState> {
+class DialogsBloc extends Bloc<DialogsEvent, DialogsState> {
   final FirestoreChatroomRepository? _firestoreChatroomRepository;
   final String authId;
   StreamSubscription? _chatroomSubscription;
-  ChatroomBloc(
+  DialogsBloc(
       {required FirestoreChatroomRepository? firestoreChatroomRepository,
       required AuthenticationBloc? authenticationBloc})
       : _firestoreChatroomRepository = firestoreChatroomRepository,
@@ -21,44 +21,44 @@ class ChatroomBloc extends Bloc<ChatroomEvent, ChatroomState> {
         super(ChatroomLoading());
 
   @override
-  Stream<ChatroomState> mapEventToState(
-    ChatroomEvent event,
+  Stream<DialogsState> mapEventToState(
+    DialogsEvent event,
   ) async* {
-    if (event is LoadChatrooms) {
+    if (event is LoadDialogs) {
       yield* _mapLoadChatroomsToState();
-    } else if (event is AddChatroom) {
+    } else if (event is AddDialog) {
       yield* _mapAddChatroomToState(event);
-    } else if (event is UpdateChatroom) {
+    } else if (event is UpdateDialog) {
       yield* _mapUpdateChatroomToState(event);
-    } else if (event is DeleteChatroom) {
+    } else if (event is DeleteDialog) {
       yield* _mapDeleteChatroomToState(event);
-    } else if (event is ChatroomsUpdated) {
+    } else if (event is DialogsUpdated) {
       yield* _mapChatroomsUpdatedToState(event);
     }
   }
 
-  Stream<ChatroomState> _mapLoadChatroomsToState() async* {
+  Stream<DialogsState> _mapLoadChatroomsToState() async* {
     _chatroomSubscription?.cancel();
     _chatroomSubscription = _firestoreChatroomRepository
         ?.chatrooms(authId)
-        .listen((chatrooms) => add(ChatroomsUpdated(chatrooms)));
+        .listen((chatrooms) => add(DialogsUpdated(chatrooms)));
   }
 
-  Stream<ChatroomState> _mapAddChatroomToState(AddChatroom event) async* {
-    _firestoreChatroomRepository?.addChatroom(event.chatroom, authId);
+  Stream<DialogsState> _mapAddChatroomToState(AddDialog event) async* {
+    _firestoreChatroomRepository?.addChatroom(event.dialog, authId);
   }
 
-  Stream<ChatroomState> _mapUpdateChatroomToState(UpdateChatroom event) async* {
-    _firestoreChatroomRepository?.updateChatroom(event.updatedChatroom, authId);
+  Stream<DialogsState> _mapUpdateChatroomToState(UpdateDialog event) async* {
+    _firestoreChatroomRepository?.updateChatroom(event.updatedDialog, authId);
   }
 
-  Stream<ChatroomState> _mapDeleteChatroomToState(DeleteChatroom event) async* {
-    _firestoreChatroomRepository?.deleteChatroom(event.chatroom, authId);
+  Stream<DialogsState> _mapDeleteChatroomToState(DeleteDialog event) async* {
+    _firestoreChatroomRepository?.deleteChatroom(event.dialog, authId);
   }
 
-  Stream<ChatroomState> _mapChatroomsUpdatedToState(
-      ChatroomsUpdated event) async* {
-    yield ChatroomLoaded(event.chatrooms);
+  Stream<DialogsState> _mapChatroomsUpdatedToState(
+      DialogsUpdated event) async* {
+    yield ChatroomLoaded(event.dialogs);
   }
 
   @override

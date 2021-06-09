@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:void_chat_beta/logic/bloc/contact_tabs/contact_tabs_bloc.dart';
+import 'package:void_chat_beta/logic/bloc/contacts_tabs/contacts_tabs_bloc.dart';
 import 'package:void_chat_beta/presentation/screens/contacts_screen/widgets/tabs_content/blocklist_content.dart';
 import 'package:void_chat_beta/presentation/screens/contacts_screen/widgets/tabs_content/friendlist_content.dart';
 import 'package:void_chat_beta/presentation/screens/contacts_screen/widgets/tabs_content/pendinglist_content.dart';
@@ -19,13 +19,13 @@ class ContactsPageView extends StatelessWidget {
       onPageChanged: (page) {
         switch (page) {
           case 0:
-            context.read<ContactTabsBloc>().add(FriendlistClicked());
+            context.read<ContactsTabsBloc>().add(ShowContactsFriendlist());
             break;
           case 1:
-            context.read<ContactTabsBloc>().add(PendinglistClicked());
+            context.read<ContactsTabsBloc>().add(ShowContactsPendinglist());
             break;
           case 2:
-            context.read<ContactTabsBloc>().add(BlocklistClicked());
+            context.read<ContactsTabsBloc>().add(ShowContactsBlocklist());
             break;
           default:
         }

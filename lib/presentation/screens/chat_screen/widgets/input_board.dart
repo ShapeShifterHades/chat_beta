@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:keyboard_attachable/keyboard_attachable.dart';
 import 'package:void_chat_beta/core/constants/styles.dart';
 import 'package:void_chat_beta/logic/bloc/authentication/authentication_bloc.dart';
-import 'package:void_chat_beta/logic/bloc/message/message_bloc.dart';
+import 'package:void_chat_beta/logic/bloc/messages/messages_bloc.dart';
 
 class InputBoard extends StatefulWidget {
   const InputBoard({
@@ -31,7 +31,7 @@ class _InputBoardState extends State<InputBoard> {
 
       final String _authId =
           BlocProvider.of<AuthenticationBloc>(context).state.user.id;
-      BlocProvider.of<MessageBloc>(context).add(
+      BlocProvider.of<MessagesBloc>(context).add(
         AddMessage(
           MessageToSend(
             isNew: true,

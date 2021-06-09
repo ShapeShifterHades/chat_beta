@@ -8,11 +8,11 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:void_chat_beta/core/themes/app_theme.dart';
 import 'package:void_chat_beta/generated/l10n.dart';
 import 'package:void_chat_beta/logic/bloc/authentication/authentication_bloc.dart';
-import 'package:void_chat_beta/logic/bloc/chatroom/chatroom_bloc.dart';
-import 'package:void_chat_beta/logic/bloc/contact/contact_bloc.dart';
-import 'package:void_chat_beta/logic/bloc/contact_tabs/contact_tabs_bloc.dart';
-import 'package:void_chat_beta/logic/bloc/find_user/finduser_bloc.dart';
-import 'package:void_chat_beta/logic/bloc/message/message_bloc.dart';
+import 'package:void_chat_beta/logic/bloc/dialogs/dialogs_bloc.dart';
+import 'package:void_chat_beta/logic/bloc/contacts/contacts_bloc.dart';
+import 'package:void_chat_beta/logic/bloc/contacts_tabs/contacts_tabs_bloc.dart';
+import 'package:void_chat_beta/logic/bloc/contacts_find_user/contacts_finduser_bloc.dart';
+import 'package:void_chat_beta/logic/bloc/messages/messages_bloc.dart';
 import 'package:void_chat_beta/logic/bloc/search_button/search_button_bloc.dart';
 import 'package:void_chat_beta/logic/cubit/brightness/brightness.dart';
 import 'package:void_chat_beta/logic/cubit/locale/locale.dart';
@@ -63,41 +63,41 @@ class App extends StatelessWidget {
               create: (context) => BrightnessCubit(),
               lazy: false,
             ),
-            BlocProvider<ContactBloc>(
-                create: (context) => ContactBloc(
+            BlocProvider<ContactsBloc>(
+                create: (context) => ContactsBloc(
                     RepositoryProvider.of<FirestoreContactRepository?>(context),
                     context.read<AuthenticationBloc>())),
-            BlocProvider<ChatroomBloc>(
-              create: (context) => ChatroomBloc(
+            BlocProvider<DialogsBloc>(
+              create: (context) => DialogsBloc(
                 firestoreChatroomRepository:
                     RepositoryProvider.of<FirestoreChatroomRepository?>(
                         context),
                 authenticationBloc:
                     BlocProvider.of<AuthenticationBloc>(context),
-              )..add(LoadChatrooms()),
+              )..add(LoadDialogs()),
             ),
-            BlocProvider<MessageBloc>(
-              create: (context) => MessageBloc(
+            BlocProvider<MessagesBloc>(
+              create: (context) => MessagesBloc(
                 firestoreMessageRepository:
                     RepositoryProvider.of<FirestoreMessageRepository?>(context),
                 authenticationBloc:
                     BlocProvider.of<AuthenticationBloc>(context),
               ),
             ),
-            BlocProvider<ContactTabsBloc>(
-              create: (context) => ContactTabsBloc(
-                context.read<ContactBloc>(),
+            BlocProvider<ContactsTabsBloc>(
+              create: (context) => ContactsTabsBloc(
+                context.read<ContactsBloc>(),
               ),
             ),
-            BlocProvider<FinduserBloc>(
-              create: (context) => FinduserBloc(
+            BlocProvider<ContactsFinduserBloc>(
+              create: (context) => ContactsFinduserBloc(
                 context.read<AuthenticationBloc>(),
                 context.read<FirestoreContactRepository?>(),
               ),
             ),
             BlocProvider<SearchButtonBloc>(
               create: (context) => SearchButtonBloc(
-                BlocProvider.of<FinduserBloc>(context),
+                BlocProvider.of<ContactsFinduserBloc>(context),
               ),
             ),
           ], child: const AppView());

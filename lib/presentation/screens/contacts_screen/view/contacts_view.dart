@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:void_chat_beta/logic/bloc/contact_tabs/contact_tabs_bloc.dart';
+import 'package:void_chat_beta/logic/bloc/contacts_tabs/contacts_tabs_bloc.dart';
 import 'package:void_chat_beta/presentation/screens/contacts_screen/widgets/contacts_navigation.dart';
 import 'package:void_chat_beta/presentation/screens/contacts_screen/widgets/contacts_page_view.dart';
 import 'package:void_chat_beta/presentation/screens/contacts_screen/widgets/searchbar/user_search.dart';
@@ -39,7 +39,7 @@ class _ContactsViewState extends State<ContactsView>
           currentFocus.unfocus();
         }
       },
-      child: BlocBuilder<ContactTabsBloc, ContactTabsState>(
+      child: BlocBuilder<ContactsTabsBloc, ContactsTabsState>(
         builder: (context, state) {
           final bool _isFriendList = state is! FriendlistState;
           final bool _isBlockList = state is! BlocklistState;

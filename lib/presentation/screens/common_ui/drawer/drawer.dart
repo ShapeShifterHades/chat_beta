@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:void_chat_beta/core/constants/styles.dart';
 import 'package:void_chat_beta/generated/l10n.dart';
 import 'package:void_chat_beta/logic/bloc/authentication/authentication_bloc.dart';
-import 'package:void_chat_beta/logic/bloc/main_bloc/bloc/main_bloc.dart';
+import 'package:void_chat_beta/logic/bloc/main_bloc/main_bloc.dart';
 import 'package:void_chat_beta/presentation/screens/common_ui/drawer/widgets/drawer_menu_button.dart';
 import 'package:void_chat_beta/presentation/screens/common_ui/drawer/widgets/profile_avatar.dart';
 

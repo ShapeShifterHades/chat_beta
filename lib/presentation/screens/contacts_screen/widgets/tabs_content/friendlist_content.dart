@@ -6,8 +6,8 @@ import 'package:void_chat_beta/core/constants/constants.dart';
 import 'package:void_chat_beta/core/constants/styles.dart';
 import 'package:void_chat_beta/generated/l10n.dart';
 import 'package:void_chat_beta/logic/bloc/authentication/authentication_bloc.dart';
-import 'package:void_chat_beta/logic/bloc/chatroom/chatroom_bloc.dart';
-import 'package:void_chat_beta/logic/bloc/contact/contact_bloc.dart';
+import 'package:void_chat_beta/logic/bloc/dialogs/dialogs_bloc.dart';
+import 'package:void_chat_beta/logic/bloc/contacts/contacts_bloc.dart';
 import 'package:void_chat_beta/presentation/styled_widgets/loading_indicator.dart';
 import '../contact_item_initial.dart';
 
@@ -17,7 +17,7 @@ class FriendlistContent extends StatelessWidget {
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<ContactBloc, ContactsState>(
+    return BlocBuilder<ContactsBloc, ContactsState>(
       builder: (context, state) {
         if (state is ContactsLoaded) {
           final List<Contact> sorted = state.contacts
@@ -77,8 +77,8 @@ class _FriendsListViewBuilder extends StatelessWidget {
       itemBuilder: (context, index) {
         return GestureDetector(
           onTap: () async {
-            BlocProvider.of<ChatroomBloc>(context).add(
-              AddChatroom(
+            BlocProvider.of<DialogsBloc>(context).add(
+              AddDialog(
                 Chatroom(id: sorted[index].id!),
               ),
             );

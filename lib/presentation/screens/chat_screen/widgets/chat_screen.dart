@@ -2,7 +2,7 @@ import 'package:firestore_repository/firestore_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:void_chat_beta/logic/bloc/authentication/authentication_bloc.dart';
-import 'package:void_chat_beta/logic/bloc/message/message_bloc.dart';
+import 'package:void_chat_beta/logic/bloc/messages/messages_bloc.dart';
 import 'package:void_chat_beta/presentation/screens/chat_screen/widgets/message_bubble/bubble.dart';
 import 'package:void_chat_beta/presentation/styled_widgets/loading_indicator.dart';
 
@@ -29,7 +29,7 @@ class _ChatScreenState extends State<ChatScreen> {
         BlocProvider.of<AuthenticationBloc>(context).state.user.id;
     return Padding(
       padding: const EdgeInsets.only(left: 28, bottom: 5, top: 53.5, right: 8),
-      child: BlocBuilder<MessageBloc, MessagesState>(
+      child: BlocBuilder<MessagesBloc, MessagesState>(
         builder: (context, state) {
           if (state is MessagesLoaded) {
             final messages = state.messages;

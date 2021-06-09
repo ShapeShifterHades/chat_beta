@@ -6,7 +6,7 @@ import 'package:intl/intl.dart';
 import 'package:void_chat_beta/core/constants/styles.dart';
 import 'package:void_chat_beta/generated/l10n.dart';
 import 'package:void_chat_beta/logic/bloc/authentication/authentication_bloc.dart';
-import 'package:void_chat_beta/logic/bloc/contact/contact_bloc.dart';
+import 'package:void_chat_beta/logic/bloc/contacts/contacts_bloc.dart';
 import 'package:void_chat_beta/presentation/screens/contacts_screen/widgets/tiles/outcoming_pending_request_tile.dart';
 import 'package:void_chat_beta/presentation/styled_widgets/loading_indicator.dart';
 
@@ -18,7 +18,7 @@ class BlocklistContent extends StatelessWidget {
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<ContactBloc, ContactsState>(
+    return BlocBuilder<ContactsBloc, ContactsState>(
       builder: (context, state) {
         if (state is ContactsLoaded) {
           final List<Contact> sorted = state.contacts

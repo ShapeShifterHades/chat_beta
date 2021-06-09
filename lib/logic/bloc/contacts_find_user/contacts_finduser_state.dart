@@ -1,38 +1,38 @@
-part of 'finduser_bloc.dart';
+part of 'contacts_finduser_bloc.dart';
 
-class FinduserState {
+class ContactsFinduserState {
   final bool? isLoading;
   final Contact? contact;
   final bool? hasError;
 
-  const FinduserState({this.isLoading, this.contact, this.hasError});
+  const ContactsFinduserState({this.isLoading, this.contact, this.hasError});
 
-  factory FinduserState.initial() {
-    return const FinduserState(
+  factory ContactsFinduserState.initial() {
+    return const ContactsFinduserState(
       contact: Contact(),
       isLoading: false,
       hasError: false,
     );
   }
 
-  factory FinduserState.loading() {
-    return const FinduserState(
+  factory ContactsFinduserState.loading() {
+    return const ContactsFinduserState(
       contact: Contact(),
       isLoading: true,
       hasError: false,
     );
   }
 
-  factory FinduserState.success(Contact? contact) {
-    return FinduserState(
+  factory ContactsFinduserState.success(Contact? contact) {
+    return ContactsFinduserState(
       contact: contact,
       isLoading: false,
       hasError: false,
     );
   }
 
-  factory FinduserState.error() {
-    return const FinduserState(
+  factory ContactsFinduserState.error() {
+    return const ContactsFinduserState(
       contact: Contact(),
       isLoading: false,
       hasError: true,

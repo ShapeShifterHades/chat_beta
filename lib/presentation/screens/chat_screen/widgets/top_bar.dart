@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:void_chat_beta/core/constants/styles.dart';
-import 'package:void_chat_beta/logic/bloc/message/message_bloc.dart';
+import 'package:void_chat_beta/logic/bloc/messages/messages_bloc.dart';
 import 'package:void_chat_beta/presentation/screens/chat_screen/view/chat_view.dart';
 
 class TopBar extends StatefulWidget {
@@ -38,7 +38,7 @@ class _TopBarState extends State<TopBar> {
           underline: Container(),
           onChanged: (String? newValue) {
             if (newValue == 'Clear history') {
-              BlocProvider.of<MessageBloc>(context)
+              BlocProvider.of<MessagesBloc>(context)
                   .add(DeleteAllMessages(widget.widget.chat.id));
             }
             setState(() {

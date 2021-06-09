@@ -7,10 +7,10 @@ import 'package:equatable/equatable.dart';
 import 'package:firestore_repository/firestore_repository.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:void_chat_beta/logic/bloc/authentication/authentication_bloc.dart';
-import 'package:void_chat_beta/logic/bloc/chatroom/chatroom_bloc.dart';
-import 'package:void_chat_beta/logic/bloc/contact/contact_bloc.dart';
-import 'package:void_chat_beta/logic/bloc/contact_tabs/contact_tabs_bloc.dart';
-import 'package:void_chat_beta/logic/bloc/message/message_bloc.dart';
+import 'package:void_chat_beta/logic/bloc/dialogs/dialogs_bloc.dart';
+import 'package:void_chat_beta/logic/bloc/contacts/contacts_bloc.dart';
+import 'package:void_chat_beta/logic/bloc/contacts_tabs/contacts_tabs_bloc.dart';
+import 'package:void_chat_beta/logic/bloc/messages/messages_bloc.dart';
 
 part 'main_event.dart';
 part 'main_state.dart';

@@ -6,14 +6,15 @@ import 'package:firestore_repository/firestore_repository.dart';
 import 'package:meta/meta.dart';
 import 'package:void_chat_beta/logic/bloc/authentication/authentication_bloc.dart';
 
-part 'finduser_event.dart';
-part 'finduser_state.dart';
+part 'contacts_finduser_event.dart';
+part 'contacts_finduser_state.dart';
 
-class FinduserBloc extends Bloc<FinduserEvent, FinduserState> {
-  FinduserBloc(
+class ContactsFinduserBloc
+    extends Bloc<ContactsFinduserEvent, ContactsFinduserState> {
+  ContactsFinduserBloc(
     this._authenticationBloc,
     this._firestoreContactRepository,
-  ) : super(FinduserState.initial()) {
+  ) : super(ContactsFinduserState.initial()) {
     uid = _authenticationBloc.state.user.id;
   }
 
@@ -22,7 +23,7 @@ class FinduserBloc extends Bloc<FinduserEvent, FinduserState> {
   late String uid;
   Contact? contact;
 
-  FinduserState get initialState => FinduserState.initial();
+  ContactsFinduserState get initialState => ContactsFinduserState.initial();
 
   // @override
   // void onTransition(Transition<FinduserEvent, FinduserState> transition) {
@@ -30,17 +31,18 @@ class FinduserBloc extends Bloc<FinduserEvent, FinduserState> {
   // }
 
   @override
-  Stream<FinduserState> mapEventToState(FinduserEvent event) async* {
+  Stream<ContactsFinduserState> mapEventToState(
+      ContactsFinduserEvent event) async* {
     if (event is QueryEvent) {
-      yield FinduserState.loading();
+      yield ContactsFinduserState.loading();
 
       try {
         final Contact? contact = await _getSearchResults(event.query);
-        yield FinduserState.success(contact);
+        yield ContactsFinduserState.success(contact);
       } catch (_) {
-        yield FinduserState.error();
+        yield ContactsFinduserState.error();
       }
-    } else if (event is ResetEvent) yield FinduserState.initial();
+    } else if (event is ResetEvent) yield ContactsFinduserState.initial();
   }
 
   Future<Contact?> _getSearchResults(String query) async {

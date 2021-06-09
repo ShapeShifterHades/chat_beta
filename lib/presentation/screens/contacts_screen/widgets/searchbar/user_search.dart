@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:void_chat_beta/data/utils/safe_print.dart';
-import 'package:void_chat_beta/logic/bloc/find_user/finduser_bloc.dart';
+import 'package:void_chat_beta/logic/bloc/contacts_find_user/contacts_finduser_bloc.dart';
 import 'package:void_chat_beta/logic/bloc/search_button/search_button_bloc.dart';
 import 'package:void_chat_beta/presentation/screens/contacts_screen/widgets/searchbar/search_username_input.dart';
 
@@ -69,9 +69,10 @@ class _UserSearchState extends State<UserSearch> {
                   ],
                 ),
                 if (state.isExpanded!)
-                  BlocBuilder<FinduserBloc, FinduserState>(
-                    bloc: BlocProvider.of<FinduserBloc>(context),
-                    builder: (BuildContext context, FinduserState state) {
+                  BlocBuilder<ContactsFinduserBloc, ContactsFinduserState>(
+                    bloc: BlocProvider.of<ContactsFinduserBloc>(context),
+                    builder:
+                        (BuildContext context, ContactsFinduserState state) {
                       if (state.isLoading!) {
                         return const Center(
                           child: CircularProgressIndicator(),
@@ -102,7 +103,7 @@ class _UserSearchState extends State<UserSearch> {
       return IconButton(
         icon: Icon(Icons.search, color: Theme.of(context).primaryColor),
         onPressed: () async {
-          BlocProvider.of<FinduserBloc>(context)
+          BlocProvider.of<ContactsFinduserBloc>(context)
               .add(QueryEvent(finduserController.value.text));
           finduserController.clear();
           _focusNode.unfocus();

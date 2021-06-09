@@ -5,7 +5,7 @@ import 'package:void_chat_beta/core/constants/styles.dart';
 import 'package:void_chat_beta/data/utils/safe_print.dart';
 
 import 'package:void_chat_beta/generated/l10n.dart';
-import 'package:void_chat_beta/logic/bloc/contact_tabs/contact_tabs_bloc.dart';
+import 'package:void_chat_beta/logic/bloc/contacts_tabs/contacts_tabs_bloc.dart';
 
 class ContactPageTabs extends StatefulWidget {
   const ContactPageTabs({
@@ -26,11 +26,11 @@ class _ContactPageTabsState extends State<ContactPageTabs> {
 
   void sendEvent(String? newValue) {
     if (newValue == S.of(context).contacts_friends) {
-      context.read<ContactTabsBloc>().add(FriendlistClicked());
+      context.read<ContactsTabsBloc>().add(ShowContactsFriendlist());
     } else if (newValue == S.of(context).contacts_pending) {
-      context.read<ContactTabsBloc>().add(PendinglistClicked());
+      context.read<ContactsTabsBloc>().add(ShowContactsPendinglist());
     } else if (newValue == S.of(context).contacts_blocked) {
-      context.read<ContactTabsBloc>().add(BlocklistClicked());
+      context.read<ContactsTabsBloc>().add(ShowContactsBlocklist());
     }
   }
 

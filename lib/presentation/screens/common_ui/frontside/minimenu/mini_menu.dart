@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:void_chat_beta/logic/bloc/main_bloc/bloc/main_bloc.dart';
+import 'package:void_chat_beta/logic/bloc/main_bloc/main_bloc.dart';
 import 'package:void_chat_beta/presentation/screens/common_ui/frontside/minimenu/exit_minimenu_tile.dart';
 import 'package:void_chat_beta/presentation/screens/common_ui/frontside/minimenu/messages_menu_tile.dart';
 

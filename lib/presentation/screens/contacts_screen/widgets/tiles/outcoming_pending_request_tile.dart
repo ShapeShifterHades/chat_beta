@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:void_chat_beta/core/constants/styles.dart';
 import 'package:void_chat_beta/data/utils/safe_print.dart';
 import 'package:void_chat_beta/generated/l10n.dart';
-import 'package:void_chat_beta/logic/bloc/contact/contact_bloc.dart';
+import 'package:void_chat_beta/logic/bloc/contacts/contacts_bloc.dart';
 
 class OutcomingPendingRequestTile extends StatefulWidget {
   final String? username;
@@ -208,7 +208,7 @@ class StageredAnimation extends StatelessWidget {
                       Icons.cancel_outlined,
                       color: Colors.red[800],
                     ),
-                    onPressed: () => context.read<ContactBloc>().add(
+                    onPressed: () => context.read<ContactsBloc>().add(
                           RemoveContactRequest(
                             contactId: id,
                           ),
@@ -416,7 +416,7 @@ class RightSideShort extends StatelessWidget {
                   ),
                   GestureDetector(
                     onTap: () {
-                      context.read<ContactBloc>().add(
+                      context.read<ContactsBloc>().add(
                             RemoveContactRequest(contactId: id),
                           );
                     },

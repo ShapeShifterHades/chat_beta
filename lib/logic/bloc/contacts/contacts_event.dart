@@ -1,14 +1,14 @@
-part of 'contact_bloc.dart';
+part of 'contacts_bloc.dart';
 
 @immutable
-abstract class ContactEvent extends Equatable {
-  const ContactEvent();
+abstract class ContactsEvent extends Equatable {
+  const ContactsEvent();
 
   @override
   List<Object?> get props => [];
 }
 
-class FindUsernameById extends ContactEvent {
+class FindUsernameById extends ContactsEvent {
   final String contactId;
 
   const FindUsernameById(this.contactId);
@@ -20,7 +20,7 @@ class FindUsernameById extends ContactEvent {
   String toString() => 'Initiating username search query for user: $contactId}';
 }
 
-class FindIdByUsername extends ContactEvent {
+class FindIdByUsername extends ContactsEvent {
   final String username;
 
   const FindIdByUsername(this.username);
@@ -35,7 +35,7 @@ class FindIdByUsername extends ContactEvent {
 /// Sends to users [contactId] contacts collection a friend request with a
 /// greeting [message] and status: 'pending'.
 ///
-/// Usage in scope of [ContactBloc] provider:
+/// Usage in scope of [ContactsBloc] provider:
 /// ```
 /// context
 ///   .read<ContactsBloc>()
@@ -43,12 +43,12 @@ class FindIdByUsername extends ContactEvent {
 ///                             uid: context.read<AuthenticationBloc>().state.user.id));
 /// ```
 /// NOTE: usage of [uid] named parameter is temporary option and will be
-/// removed since [ContactBloc] handles passing it to [FirestoreContactRepository].
+/// removed since [ContactsBloc] handles passing it to [FirestoreContactRepository].
 /// TOIMPLEMENT: Firestore security rules has to check and allow creation
 /// of a document only if there is no document with [uid] already.
 /// TOIMPLEMENT: Atomically create a document in [uid] contact collection
 /// document [contactId] with status 'pending', if there is no doc with such [contactId].
-class SendFriendshipRequest extends ContactEvent {
+class SendFriendshipRequest extends ContactsEvent {
   final String contactId;
   final String? uid;
   final String message;
@@ -66,7 +66,7 @@ class SendFriendshipRequest extends ContactEvent {
 /// Changes status of user[contactId] in contacts collection of user [uid]
 /// to status: 'friend' from 'pending' or 'blocked'.
 ///
-/// Usage in scope of [ContactBloc] provider:
+/// Usage in scope of [ContactsBloc] provider:
 /// ```
 /// context
 ///   .read<ContactsBloc>()
@@ -74,11 +74,11 @@ class SendFriendshipRequest extends ContactEvent {
 ///                             uid: context.read<AuthenticationBloc>().state.user.id));
 /// ```
 /// NOTE: usage of [uid] named parameter is temporary option and will be
-/// removed since [ContactBloc] handles passing it to [FirestoreContactRepository].
+/// removed since [ContactsBloc] handles passing it to [FirestoreContactRepository].
 /// TO IMPLEMENT: Must send in response (atomic) creation of document [uid] with
 /// status: 'friend' with check if [uid] in his contacts collection has changed
 /// [contactId] to status: 'friend'.
-class AcceptFriendshipRequest extends ContactEvent {
+class AcceptFriendshipRequest extends ContactsEvent {
   final String? contactId;
   final String? uid;
   const AcceptFriendshipRequest({
@@ -95,7 +95,7 @@ class AcceptFriendshipRequest extends ContactEvent {
 /// users [uid], if status of a user not 'blocked'
 /// (by firestore security rules).
 ///
-/// Usage in scope of [ContactBloc] provider:
+/// Usage in scope of [ContactsBloc] provider:
 /// ```
 /// context
 ///   .read<ContactsBloc>()
@@ -103,8 +103,8 @@ class AcceptFriendshipRequest extends ContactEvent {
 ///                             uid: context.read<AuthenticationBloc>().state.user.id));
 /// ```
 /// NOTE: usage of [uid] named parameter is temporary option and will be
-/// removed since [ContactBloc] handles passing it to [FirestoreContactRepository].
-class RemoveContactRequest extends ContactEvent {
+/// removed since [ContactsBloc] handles passing it to [FirestoreContactRepository].
+class RemoveContactRequest extends ContactsEvent {
   final String? contactId;
   final String? uid;
   const RemoveContactRequest({
@@ -120,7 +120,7 @@ class RemoveContactRequest extends ContactEvent {
 /// Sets request status of user [contactId] in contacts collection of user [uid]
 /// to status:'rejected' from 'pending', 'friend' or 'blocked'.
 ///
-/// Usage in scope of [ContactBloc] provider:
+/// Usage in scope of [ContactsBloc] provider:
 /// ```
 /// context
 ///   .read<ContactsBloc>()
@@ -128,8 +128,8 @@ class RemoveContactRequest extends ContactEvent {
 ///                             uid: context.read<AuthenticationBloc>().state.user.id));
 /// ```
 /// NOTE: usage of [uid] named parameter is temporary option and will be
-/// removed since [ContactBloc] handles passing it to [FirestoreContactRepository].
-class RemoveFromBlocklist extends ContactEvent {
+/// removed since [ContactsBloc] handles passing it to [FirestoreContactRepository].
+class RemoveFromBlocklist extends ContactsEvent {
   final String contactId;
   final String uid;
   const RemoveFromBlocklist({
@@ -145,7 +145,7 @@ class RemoveFromBlocklist extends ContactEvent {
 /// Sets status of user with [contactId] in contacts collection of user [uid]
 /// to 'blocked' from status: 'rejected', 'pending' or 'friend'.
 ///
-/// Usage in scope of [ContactBloc] provider:
+/// Usage in scope of [ContactsBloc] provider:
 /// ```
 /// context
 ///   .read<ContactsBloc>()
@@ -153,8 +153,8 @@ class RemoveFromBlocklist extends ContactEvent {
 ///                             uid: context.read<AuthenticationBloc>().state.user.id));
 /// ```
 /// NOTE: usage of [uid] named parameter is temporary option and will be
-/// removed since [ContactBloc] handles passing it to [FirestoreContactRepository].
-class AddToBlocklist extends ContactEvent {
+/// removed since [ContactsBloc] handles passing it to [FirestoreContactRepository].
+class AddToBlocklist extends ContactsEvent {
   final String contactId;
   final String uid;
   const AddToBlocklist({
@@ -168,14 +168,14 @@ class AddToBlocklist extends ContactEvent {
 }
 
 // Event, that triggers loading of contact list
-class LoadContacts extends ContactEvent {
+class LoadContacts extends ContactsEvent {
   const LoadContacts();
 
   @override
   List<Object> get props => [];
 }
 
-class ContactsUpdated extends ContactEvent {
+class ContactsUpdated extends ContactsEvent {
   final List<Contact> contacts;
 
   const ContactsUpdated(this.contacts);

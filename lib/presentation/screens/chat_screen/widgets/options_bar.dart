@@ -2,7 +2,7 @@ import 'package:firestore_repository/firestore_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:void_chat_beta/core/constants/styles.dart';
-import 'package:void_chat_beta/logic/bloc/message/message_bloc.dart';
+import 'package:void_chat_beta/logic/bloc/messages/messages_bloc.dart';
 import 'package:void_chat_beta/presentation/screens/chat_screen/widgets/chat_screen.dart';
 
 class OptionsBar extends StatelessWidget {
@@ -36,7 +36,7 @@ class OptionsBar extends StatelessWidget {
         const SizedBox(width: 6),
         IconButton(
           onPressed: () {
-            BlocProvider.of<MessageBloc>(context)
+            BlocProvider.of<MessagesBloc>(context)
                 .add(DeleteSelectedMessages(selectedArray, chat.id));
             const SelectNotification().dispatch(context);
           },

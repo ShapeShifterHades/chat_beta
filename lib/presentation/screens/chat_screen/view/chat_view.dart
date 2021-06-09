@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:keyboard_attachable/keyboard_attachable.dart';
 import 'package:void_chat_beta/core/constants/styles.dart';
-import 'package:void_chat_beta/logic/bloc/main_bloc/bloc/main_bloc.dart';
-import 'package:void_chat_beta/logic/bloc/message/message_bloc.dart';
+import 'package:void_chat_beta/logic/bloc/main_bloc/main_bloc.dart';
+import 'package:void_chat_beta/logic/bloc/messages/messages_bloc.dart';
 import 'package:void_chat_beta/presentation/screens/chat_screen/widgets/chat_screen.dart';
 import 'package:void_chat_beta/presentation/screens/chat_screen/widgets/input_board.dart';
 import 'package:void_chat_beta/presentation/screens/chat_screen/widgets/options_bar.dart';
@@ -26,7 +26,7 @@ class _ChatViewState extends State<ChatView> with TickerProviderStateMixin {
 
   @override
   void initState() {
-    BlocProvider.of<MessageBloc>(context).add(LoadMessages(widget.chat.id));
+    BlocProvider.of<MessagesBloc>(context).add(LoadMessages(widget.chat.id));
     super.initState();
   }
 
