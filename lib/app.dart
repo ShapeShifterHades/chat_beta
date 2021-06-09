@@ -17,10 +17,10 @@ import 'package:void_chat_beta/logic/bloc/search_button/search_button_bloc.dart'
 import 'package:void_chat_beta/logic/cubit/brightness/brightness.dart';
 import 'package:void_chat_beta/logic/cubit/locale/locale.dart';
 
-import 'package:void_chat_beta/presentation/screens/login_screen/view/login_view.dart';
-import 'package:void_chat_beta/presentation/screens/main_screen/view/main_screen.dart';
+import 'package:void_chat_beta/presentation/screens/login_screen/login_view.dart';
+import 'package:void_chat_beta/presentation/screens/main_screen/main_screen.dart';
 
-import 'package:void_chat_beta/presentation/screens/splash_screen/splash.dart';
+import 'package:void_chat_beta/presentation/screens/splash_screen/splash_view.dart';
 
 class App extends StatelessWidget {
   const App({
