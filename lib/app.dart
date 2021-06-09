@@ -8,12 +8,6 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:void_chat_beta/core/themes/app_theme.dart';
 import 'package:void_chat_beta/generated/l10n.dart';
 import 'package:void_chat_beta/logic/bloc/authentication/authentication_bloc.dart';
-import 'package:void_chat_beta/logic/bloc/dialogs/dialogs_bloc.dart';
-import 'package:void_chat_beta/logic/bloc/contacts/contacts_bloc.dart';
-import 'package:void_chat_beta/logic/bloc/contacts_tabs/contacts_tabs_bloc.dart';
-import 'package:void_chat_beta/logic/bloc/contacts_find_user/contacts_finduser_bloc.dart';
-import 'package:void_chat_beta/logic/bloc/messages/messages_bloc.dart';
-import 'package:void_chat_beta/logic/bloc/search_button/search_button_bloc.dart';
 import 'package:void_chat_beta/logic/cubit/brightness/brightness.dart';
 import 'package:void_chat_beta/logic/cubit/locale/locale.dart';
 
@@ -37,29 +31,25 @@ class App extends StatelessWidget {
               create: (_) => FirebaseStorageRepository()),
           RepositoryProvider<AuthenticationRepository>(
               create: (_) => AuthenticationRepository()),
-          RepositoryProvider<FirestoreContactRepository?>(
+          RepositoryProvider<FirestoreContactRepository>(
               create: (_) => FirestoreContactRepository()),
           RepositoryProvider<FirestoreHelperRepository>(
               create: (_) => FirestoreHelperRepository()),
-          RepositoryProvider<FirestoreChatroomRepository?>(
-              create: (_) => FirestoreChatroomRepository()),
-          RepositoryProvider<FirestoreMessageRepository?>(
+          RepositoryProvider<FirestoreDialogsRepository>(
+              create: (_) => FirestoreDialogsRepository()),
+          RepositoryProvider<FirestoreMessageRepository>(
               create: (_) => FirestoreMessageRepository()),
         ],
         child: Builder(builder: (context) {
           return MultiBlocProvider(providers: [
             BlocProvider<AuthenticationBloc>(
-              create: (context) => AuthenticationBloc(
-                authenticationRepository:
-                    RepositoryProvider.of<AuthenticationRepository>(context),
-              ),
-            ),
-            BlocProvider<LocaleCubit>(
-              create: (context) => LocaleCubit(),
-            ),
+                create: (context) => AuthenticationBloc(
+                    authenticationRepository:
+                        RepositoryProvider.of<AuthenticationRepository>(
+                            context))),
+            BlocProvider<LocaleCubit>(create: (context) => LocaleCubit()),
             BlocProvider<BrightnessCubit>(
-              create: (context) => BrightnessCubit(),
-            ),
+                create: (context) => BrightnessCubit()),
           ], child: const AppView());
         }));
   }

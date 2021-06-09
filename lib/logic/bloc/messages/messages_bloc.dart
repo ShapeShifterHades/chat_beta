@@ -13,9 +13,9 @@ class MessagesBloc extends Bloc<MessagesEvent, MessagesState> {
   final String authId;
   StreamSubscription? _messagesSubscription;
   MessagesBloc(
-      {required FirestoreMessageRepository? firestoreMessageRepository,
+      {required FirestoreMessageRepository firestoreMessageRepository,
       required AuthenticationBloc authenticationBloc})
-      : _firestoreMessageRepository = firestoreMessageRepository!,
+      : _firestoreMessageRepository = firestoreMessageRepository,
         authId = authenticationBloc.state.user.id,
         super(MessagesLoading());
 

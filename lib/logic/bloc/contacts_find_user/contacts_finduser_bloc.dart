@@ -11,24 +11,19 @@ part 'contacts_finduser_state.dart';
 
 class ContactsFinduserBloc
     extends Bloc<ContactsFinduserEvent, ContactsFinduserState> {
-  ContactsFinduserBloc(
-    this._authenticationBloc,
-    this._firestoreContactRepository,
-  ) : super(ContactsFinduserState.initial()) {
-    uid = _authenticationBloc.state.user.id;
+  ContactsFinduserBloc({
+    required this.authenticationBloc,
+    required this.firestoreContactRepository,
+  }) : super(ContactsFinduserState.initial()) {
+    uid = authenticationBloc.state.user.id;
   }
 
-  final AuthenticationBloc _authenticationBloc;
-  final FirestoreContactRepository? _firestoreContactRepository;
+  final AuthenticationBloc authenticationBloc;
+  final FirestoreContactRepository firestoreContactRepository;
   late String uid;
   Contact? contact;
 
   ContactsFinduserState get initialState => ContactsFinduserState.initial();
-
-  // @override
-  // void onTransition(Transition<FinduserEvent, FinduserState> transition) {
-  //   print(transition.toString());
-  // }
 
   @override
   Stream<ContactsFinduserState> mapEventToState(
@@ -48,7 +43,7 @@ class ContactsFinduserBloc
   Future<Contact?> _getSearchResults(String query) async {
     try {
       return contact =
-          await _firestoreContactRepository?.findIdByUsername(query, uid);
+          await firestoreContactRepository.findIdByUsername(query, uid);
     } catch (e) {
       // ignore: avoid_print
       print(e);

@@ -28,17 +28,17 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
   bool isFirstRun = true; // Wether app was already loaded.
-  late FirestoreContactRepository? fsContactRepo;
-  late FirestoreChatroomRepository? fsChatRepo;
+  late FirestoreContactRepository fsContactRepo;
+  late FirestoreDialogsRepository fsChatRepo;
   late AuthenticationBloc authenticationBloc;
-  late FirestoreMessageRepository? fsMessageRepo;
+  late FirestoreMessageRepository fsMessageRepo;
 
   @override
   Widget build(BuildContext context) {
-    fsContactRepo = RepositoryProvider.of<FirestoreContactRepository?>(context);
+    fsContactRepo = RepositoryProvider.of<FirestoreContactRepository>(context);
     authenticationBloc = context.read<AuthenticationBloc>();
-    fsChatRepo = RepositoryProvider.of<FirestoreChatroomRepository?>(context);
-    fsMessageRepo = RepositoryProvider.of<FirestoreMessageRepository?>(context);
+    fsChatRepo = RepositoryProvider.of<FirestoreDialogsRepository>(context);
+    fsMessageRepo = RepositoryProvider.of<FirestoreMessageRepository>(context);
     return MultiBlocProvider(
       providers: [
         BlocProvider<ContactsBloc>(
@@ -60,8 +60,8 @@ class _MainScreenState extends State<MainScreen> {
                 )),
         BlocProvider<ContactsFinduserBloc>(
             create: (context) => ContactsFinduserBloc(
-                  authenticationBloc,
-                  fsContactRepo,
+                  authenticationBloc: authenticationBloc,
+                  firestoreContactRepository: fsContactRepo,
                 )),
         BlocProvider<SearchButtonBloc>(
             create: (context) => SearchButtonBloc(
@@ -84,8 +84,6 @@ class _MainScreenState extends State<MainScreen> {
           body: UI(
             body: BlocBuilder<MainAppBloc, MainAppState>(
               builder: (context, state) {
-                if (state is MainAppLoading) {}
-
                 if (state is MainAppDialog) {
                   return ChatView(chat: state.chat);
                 }
@@ -102,7 +100,7 @@ class _MainScreenState extends State<MainScreen> {
                     case CurrentView.faq:
                       return FaqView();
                     default:
-                      return MessagesView();
+                      return const MessagesView();
                   }
                 }
                 return StyledLoadSpinner();

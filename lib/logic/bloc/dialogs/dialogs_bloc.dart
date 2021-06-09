@@ -10,11 +10,11 @@ part 'dialogs_event.dart';
 part 'dialogs_state.dart';
 
 class DialogsBloc extends Bloc<DialogsEvent, DialogsState> {
-  final FirestoreChatroomRepository? _firestoreChatroomRepository;
+  final FirestoreDialogsRepository? _firestoreChatroomRepository;
   final String authId;
   StreamSubscription? _chatroomSubscription;
   DialogsBloc(
-      {required FirestoreChatroomRepository? firestoreChatroomRepository,
+      {required FirestoreDialogsRepository? firestoreChatroomRepository,
       required AuthenticationBloc? authenticationBloc})
       : _firestoreChatroomRepository = firestoreChatroomRepository,
         authId = authenticationBloc!.state.user.id,

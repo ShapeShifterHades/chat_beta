@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firestore_repository/src/entities/chatroom_entity.dart';
 import 'package:firestore_repository/src/models/chatroom.dart';
 
-class FirestoreChatroomRepository {
+class FirestoreDialogsRepository {
   final CollectionReference<Map<String, dynamic>> userCollection =
       FirebaseFirestore.instance.collection('users');
   CollectionReference<Map<String, dynamic>> _getChatroomCollection(

@@ -66,8 +66,8 @@ class _FriendsListViewBuilder extends StatelessWidget {
   }) : super(key: key);
 
   final List<Contact> sorted;
-  final FirestoreChatroomRepository firestoreChatroomRepository =
-      FirestoreChatroomRepository();
+  final FirestoreDialogsRepository firestoreChatroomRepository =
+      FirestoreDialogsRepository();
 
   @override
   Widget build(BuildContext context) {
