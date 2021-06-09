@@ -34,15 +34,9 @@ class _MessagesViewState extends State<MessagesView> {
       return Padding(
         padding: const EdgeInsets.only(top: 40, left: 25, right: 4),
         child: RefreshIndicator(
-          key: refreshKey,
-          onRefresh: () => _reloadChatrooms(),
-          child: ListView.builder(
-            itemCount: chats.length,
-            itemBuilder: (context, index) {
-              return AvatarBuilder(chats: chats, index: index);
-            },
-          ),
-        ),
+            key: refreshKey,
+            onRefresh: () => _reloadChatrooms(),
+            child: Provider.of<ListView>(context)),
       );
     } else {
       return const LoadingIndicator(text: 'You have no conversations yet...');
