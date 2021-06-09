@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:void_chat_beta/core/constants/styles.dart';
 import 'package:void_chat_beta/logic/bloc/messages/messages_bloc.dart';
-import 'package:void_chat_beta/presentation/screens/chat_screen/view/chat_view.dart';
+import 'package:void_chat_beta/presentation/screens/chat_screen/chat_view.dart';
 
 class TopBar extends StatefulWidget {
   const TopBar({

@@ -7,11 +7,11 @@ import 'package:void_chat_beta/logic/bloc/authentication/authentication_bloc.dar
 import 'package:void_chat_beta/logic/bloc/dialogs/dialogs_bloc.dart';
 import 'package:void_chat_beta/logic/bloc/contacts/contacts_bloc.dart';
 import 'package:void_chat_beta/logic/bloc/main_bloc/main_bloc.dart';
-import 'package:void_chat_beta/presentation/screens/chat_screen/view/chat_view.dart';
+import 'package:void_chat_beta/presentation/screens/chat_screen/chat_view.dart';
 import 'package:void_chat_beta/presentation/screens/common_ui/ui.dart';
-import 'package:void_chat_beta/presentation/screens/contacts_screen/view/contacts_view.dart';
-import 'package:void_chat_beta/presentation/screens/faq_screen/view/faq_view.dart';
-import 'package:void_chat_beta/presentation/screens/messages_screen/view/messages_view.dart';
+import 'package:void_chat_beta/presentation/screens/contacts_screen/contacts_view.dart';
+import 'package:void_chat_beta/presentation/screens/faq_screen/faq_view.dart';
+import 'package:void_chat_beta/presentation/screens/messages_screen/messages_view.dart';
 import 'package:void_chat_beta/presentation/screens/security_screen/view/security_view.dart';
 import 'package:void_chat_beta/presentation/screens/settings_screen/view/settings_view.dart';
 import 'package:void_chat_beta/presentation/styled_widgets/styled_load_spinner.dart';

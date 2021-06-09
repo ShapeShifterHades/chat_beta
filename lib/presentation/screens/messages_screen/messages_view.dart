@@ -36,7 +36,12 @@ class _MessagesViewState extends State<MessagesView> {
         child: RefreshIndicator(
             key: refreshKey,
             onRefresh: () => _reloadChatrooms(),
-            child: Provider.of<ListView>(context)),
+            child: ListView.builder(
+              itemCount: chats.length,
+              itemBuilder: (context, index) {
+                return AvatarBuilder(index: index, chats: chats);
+              },
+            )),
       );
     } else {
       return const LoadingIndicator(text: 'You have no conversations yet...');
@@ -46,13 +51,12 @@ class _MessagesViewState extends State<MessagesView> {
 
 class AvatarBuilder extends StatefulWidget {
   final int index;
+  final List<Chatroom> chats;
   const AvatarBuilder({
     Key? key,
     required this.index,
     required this.chats,
   }) : super(key: key);
-
-  final List<Chatroom> chats;
 
   @override
   _AvatarBuilderState createState() => _AvatarBuilderState();
