@@ -9,8 +9,8 @@ class FirebaseStorageRepository {
     final String _path = '$uid/profile/avatar';
     try {
       await storage.ref().child(_path).putFile(file);
-    } on FirebaseException catch (e) {
-      print(e.code);
+    } on FirebaseException {
+      rethrow;
     }
   }
 
@@ -20,9 +20,9 @@ class FirebaseStorageRepository {
       final Uint8List? _listFile =
           await storage.ref().child(_path).getData(100000000);
       return _listFile;
-    } on FirebaseException catch (e) {
-      print(e.message);
-    } finally {}
+    } on FirebaseException {
+      rethrow;
+    }
   }
 
   Future<String> getAvatarUrlByLink(String link) async {
@@ -44,8 +44,8 @@ class FirebaseStorageRepository {
       final Uint8List? _listFile =
           await storage.ref().child(_path).getData(100000000);
       return _listFile;
-    } on FirebaseException catch (e) {
-      print(e.message);
+    } on FirebaseException {
+      rethrow;
     }
   }
 }

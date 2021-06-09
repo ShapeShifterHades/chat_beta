@@ -9,10 +9,10 @@ abstract class DialogsState extends Equatable {
 
 class ChatroomLoading extends DialogsState {}
 
-class ChatroomLoaded extends DialogsState {
+class DialogsLoaded extends DialogsState {
   final List<Chatroom> chatrooms;
 
-  const ChatroomLoaded([this.chatrooms = const []]);
+  const DialogsLoaded([this.chatrooms = const []]);
 
   @override
   List<Object> get props => [chatrooms];

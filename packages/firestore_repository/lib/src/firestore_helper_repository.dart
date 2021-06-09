@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firestore_repository/src/models/models.dart';
 
@@ -44,10 +42,11 @@ class FirestoreHelperRepository {
       if (documentSnapshot.exists) {
         try {
           result = documentSnapshot.get(FieldPath(const ['avatar'])) as String;
-        } catch (e) {}
+        } on FirebaseException {
+          rethrow;
+        }
       } else {}
     });
-    print('YOOOOOOOOOOOOOOOOOOOOO $result');
     return result;
   }
 
@@ -55,8 +54,8 @@ class FirestoreHelperRepository {
     try {
       await userCollection.doc(userProfile.uid).set(
           userProfile.toEntity().toJson(), SetOptions(mergeFields: ['avatar']));
-    } on FirebaseException catch (e) {
-      print(e.message);
+    } on FirebaseException {
+      rethrow;
     }
   }
 
@@ -65,8 +64,8 @@ class FirestoreHelperRepository {
       final QuerySnapshot<Map<String, dynamic>> documentSnapshot =
           await usernameCollection.where("uid", isEqualTo: id).get();
       return documentSnapshot.docs[0].id;
-    } on FirebaseException catch (e) {
-      print(e.message);
+    } on FirebaseException {
+      rethrow;
     }
   }
 }

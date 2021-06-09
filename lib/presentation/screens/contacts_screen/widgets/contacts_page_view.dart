@@ -31,10 +31,10 @@ class ContactsPageView extends StatelessWidget {
         }
       },
       controller: controller,
-      children: [
-        const FriendlistContent(),
-        const PendinglistContent(),
-        const BlocklistContent(),
+      children: const [
+        FriendlistContent(),
+        PendinglistContent(),
+        BlocklistContent(),
       ],
     );
   }

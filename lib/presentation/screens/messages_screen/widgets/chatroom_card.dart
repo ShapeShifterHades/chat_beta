@@ -115,7 +115,7 @@ class _Card extends StatelessWidget {
                           opacity: 0.64,
                           child: Text(
                             // '${chat.newMessages ?? 0}
-                            '${chat.lastMessage}'
+                            chat.lastMessage ?? ''
                             //  ??   "Conversation is empty. ",
                             ,
                             maxLines: 2,

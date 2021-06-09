@@ -27,6 +27,7 @@ class DrawerMenuButton extends StatefulWidget {
 class _DrawerMenuButtonState extends State<DrawerMenuButton>
     with TickerProviderStateMixin {
   late AnimationController _controller;
+  // ignore: unused_field
   late Animation<double> _animation;
   late bool isCurrentPage;
 

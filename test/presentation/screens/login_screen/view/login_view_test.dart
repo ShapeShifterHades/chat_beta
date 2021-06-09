@@ -7,7 +7,7 @@ import 'package:void_chat_beta/core/themes/app_theme.dart';
 import 'package:void_chat_beta/logic/cubit/brightness/brightness.dart';
 import 'package:void_chat_beta/logic/cubit/login/login_cubit.dart';
 
-import 'package:void_chat_beta/presentation/screens/login_screen/view/login_view.dart';
+import 'package:void_chat_beta/presentation/screens/login_screen/login_view.dart';
 
 class MockAuthenticationRepository extends Mock
     implements AuthenticationRepository {}

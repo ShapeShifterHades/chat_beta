@@ -69,9 +69,7 @@ class _LabeledCheckboxState extends State<LabeledCheckbox> {
                     // ),
                     value: widget.value,
                     onChanged: (bool? newValue) {
-                      if (widget.activate) {
-                        print('closed');
-                      }
+                      if (widget.activate) {}
                       widget.onChanged(newValue);
                     },
                   ),

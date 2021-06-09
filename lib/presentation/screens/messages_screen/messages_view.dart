@@ -28,7 +28,7 @@ class _MessagesViewState extends State<MessagesView> {
   @override
   Widget build(BuildContext context) {
     final chats =
-        (context.watch<DialogsBloc>().state as ChatroomLoaded).chatrooms;
+        (context.watch<DialogsBloc>().state as DialogsLoaded).chatrooms;
 
     if (chats.isNotEmpty) {
       return Padding(

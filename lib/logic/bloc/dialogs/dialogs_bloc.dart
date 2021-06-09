@@ -58,7 +58,7 @@ class DialogsBloc extends Bloc<DialogsEvent, DialogsState> {
 
   Stream<DialogsState> _mapChatroomsUpdatedToState(
       DialogsUpdated event) async* {
-    yield ChatroomLoaded(event.dialogs);
+    yield DialogsLoaded(event.dialogs);
   }
 
   @override

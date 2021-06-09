@@ -10,12 +10,12 @@ part 'contacts_tabs_event.dart';
 part 'contacts_tabs_state.dart';
 
 class ContactsTabsBloc extends Bloc<ContactsTabsEvent, ContactsTabsState> {
-  final ContactsBloc _contactsBloc;
+  final ContactsBloc contactsBloc;
   StreamSubscription contactsSubscription;
-  ContactsTabsBloc(this._contactsBloc)
-      : contactsSubscription = _contactsBloc.stream.listen((state) {
+  ContactsTabsBloc({required this.contactsBloc})
+      : contactsSubscription = contactsBloc.stream.listen((state) {
           if (state is ContactsLoaded) {
-            ContactsUpdated((_contactsBloc.state as ContactsLoaded).contacts);
+            ContactsUpdated((contactsBloc.state as ContactsLoaded).contacts);
           }
         }),
         super(FriendlistState(fullContactlist: const []));
@@ -23,9 +23,9 @@ class ContactsTabsBloc extends Bloc<ContactsTabsEvent, ContactsTabsState> {
   @override
   // ignore: override_on_non_overriding_member
   ContactsTabsState get initialState {
-    return _contactsBloc.state is ContactsLoaded
+    return contactsBloc.state is ContactsLoaded
         ? FriendlistState(
-            fullContactlist: (_contactsBloc.state as ContactsLoaded).contacts)
+            fullContactlist: (contactsBloc.state as ContactsLoaded).contacts)
         : ContactlistLoading();
   }
 
@@ -44,17 +44,17 @@ class ContactsTabsBloc extends Bloc<ContactsTabsEvent, ContactsTabsState> {
 
   ContactsTabsState _mapFriendlistClickedToState(ShowContactsFriendlist event) {
     return FriendlistState(
-        fullContactlist: (_contactsBloc.state as ContactsLoaded).contacts);
+        fullContactlist: (contactsBloc.state as ContactsLoaded).contacts);
   }
 
   ContactsTabsState _mapBlocklistClickedToState(ShowContactsBlocklist event) {
     return BlocklistState(
-        blocklist: (_contactsBloc.state as ContactsLoaded).contacts);
+        blocklist: (contactsBloc.state as ContactsLoaded).contacts);
   }
 
   ContactsTabsState _mapPendinglistClickedToState(
       ShowContactsPendinglist event) {
     return PendinglistState(
-        fullContactlist: (_contactsBloc.state as ContactsLoaded).contacts);
+        fullContactlist: (contactsBloc.state as ContactsLoaded).contacts);
   }
 }

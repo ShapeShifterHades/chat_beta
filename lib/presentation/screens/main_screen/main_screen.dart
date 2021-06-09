@@ -1,5 +1,3 @@
-import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:firestore_repository/firestore_repository.dart';
 import 'package:firestore_repository/firestore_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -17,8 +15,8 @@ import 'package:void_chat_beta/presentation/screens/common_ui/ui.dart';
 import 'package:void_chat_beta/presentation/screens/contacts_screen/contacts_view.dart';
 import 'package:void_chat_beta/presentation/screens/faq_screen/faq_view.dart';
 import 'package:void_chat_beta/presentation/screens/messages_screen/messages_view.dart';
-import 'package:void_chat_beta/presentation/screens/security_screen/view/security_view.dart';
-import 'package:void_chat_beta/presentation/screens/settings_screen/view/settings_view.dart';
+import 'package:void_chat_beta/presentation/screens/security_screen/security_view.dart';
+import 'package:void_chat_beta/presentation/screens/settings_screen/settings_view.dart';
 import 'package:void_chat_beta/presentation/styled_widgets/styled_load_spinner.dart';
 
 class MainScreen extends StatefulWidget {
@@ -27,11 +25,18 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
-  bool isFirstRun = true; // Wether app was already loaded.
   late FirestoreContactRepository fsContactRepo;
   late FirestoreDialogsRepository fsChatRepo;
   late AuthenticationBloc authenticationBloc;
   late FirestoreMessageRepository fsMessageRepo;
+  late FirebaseStorageRepository fbStorageRepo;
+  late FirestoreHelperRepository fsHelperRepo;
+  bool isFirstRun = true; // Wether app was already loaded.
+  bool contactsLoaded = false;
+  bool dialogsLoaded = false;
+  bool contactsTabsLoaded = false;
+  bool contactsFindUserLoaded = false;
+  bool contactsSearchButtonLoaded = false;
 
   @override
   Widget build(BuildContext context) {
@@ -39,25 +44,23 @@ class _MainScreenState extends State<MainScreen> {
     authenticationBloc = context.read<AuthenticationBloc>();
     fsChatRepo = RepositoryProvider.of<FirestoreDialogsRepository>(context);
     fsMessageRepo = RepositoryProvider.of<FirestoreMessageRepository>(context);
+    fbStorageRepo = RepositoryProvider.of<FirebaseStorageRepository>(context);
+    fsHelperRepo = RepositoryProvider.of<FirestoreHelperRepository>(context);
     return MultiBlocProvider(
       providers: [
         BlocProvider<ContactsBloc>(
+            lazy: false,
             create: (context) => ContactsBloc(fsContactRepo, authenticationBloc)
               ..add(const LoadContacts())),
         BlocProvider<DialogsBloc>(
+            lazy: false,
             create: (context) => DialogsBloc(
                   firestoreChatroomRepository: fsChatRepo,
                   authenticationBloc: authenticationBloc,
                 )..add(LoadDialogs())),
-        BlocProvider<MessagesBloc>(
-            create: (context) => MessagesBloc(
-                  firestoreMessageRepository: fsMessageRepo,
-                  authenticationBloc: authenticationBloc,
-                )),
         BlocProvider<ContactsTabsBloc>(
-            create: (context) => ContactsTabsBloc(
-                  context.read<ContactsBloc>(),
-                )),
+            create: (context) =>
+                ContactsTabsBloc(contactsBloc: context.read<ContactsBloc>())),
         BlocProvider<ContactsFinduserBloc>(
             create: (context) => ContactsFinduserBloc(
                   authenticationBloc: authenticationBloc,
@@ -68,43 +71,85 @@ class _MainScreenState extends State<MainScreen> {
                   finduserBloc: BlocProvider.of<ContactsFinduserBloc>(context),
                 )),
         BlocProvider<MainAppBloc>(
-          lazy: false,
-          create: (context) => MainAppBloc(
-            authenticationBloc: authenticationBloc,
-            firebaseStorageRepository:
-                RepositoryProvider.of<FirebaseStorageRepository>(context),
-            firestoreHelperRepository:
-                RepositoryProvider.of<FirestoreHelperRepository>(context),
-          )..add(LoadMainApp()),
-        ),
+            lazy: false,
+            create: (context) => MainAppBloc(
+                  authenticationBloc: authenticationBloc,
+                  firebaseStorageRepository: fbStorageRepo,
+                  firestoreHelperRepository: fsHelperRepo,
+                )),
+        BlocProvider<MessagesBloc>(
+            create: (context) => MessagesBloc(
+                  firestoreMessageRepository: fsMessageRepo,
+                  authenticationBloc: authenticationBloc,
+                )),
       ],
       child: Builder(builder: (context) {
         return Scaffold(
           resizeToAvoidBottomInset: false,
           body: UI(
-            body: BlocBuilder<MainAppBloc, MainAppState>(
-              builder: (context, state) {
-                if (state is MainAppDialog) {
-                  return ChatView(chat: state.chat);
-                }
-                if (state is MainAppLoaded) {
-                  switch (state.currentView) {
-                    case CurrentView.messages:
-                      return const MessagesView();
-                    case CurrentView.contacts:
-                      return const ContactsView();
-                    case CurrentView.settings:
-                      return SettingsView();
-                    case CurrentView.security:
-                      return SecurityView();
-                    case CurrentView.faq:
-                      return FaqView();
-                    default:
-                      return const MessagesView();
+            body: BlocListener<ContactsBloc, ContactsState>(
+              listener: (context, state) {
+                if (state is ContactsLoaded) {
+                  context
+                      .read<ContactsTabsBloc>()
+                      .add(ShowContactsFriendlist());
+
+                  contactsLoaded = true;
+                  isFirstRun =
+                      contactsLoaded && dialogsLoaded && contactsTabsLoaded;
+                  if (isFirstRun) {
+                    context.read<MainAppBloc>().add(LoadMainApp());
                   }
                 }
-                return StyledLoadSpinner();
               },
+              child: BlocListener<DialogsBloc, DialogsState>(
+                listener: (context, state) {
+                  if (state is DialogsLoaded) {
+                    dialogsLoaded = true;
+                    isFirstRun =
+                        contactsLoaded && dialogsLoaded && contactsTabsLoaded;
+                    if (isFirstRun) {
+                      context.read<MainAppBloc>().add(LoadMainApp());
+                    }
+                  }
+                },
+                child: BlocListener<ContactsTabsBloc, ContactsTabsState>(
+                  listener: (context, state) {
+                    if (state is FriendlistState) {
+                      contactsTabsLoaded = true;
+                      isFirstRun =
+                          contactsLoaded && dialogsLoaded && contactsTabsLoaded;
+                      if (isFirstRun) {
+                        context.read<MainAppBloc>().add(LoadMainApp());
+                      }
+                    }
+                  },
+                  child: BlocBuilder<MainAppBloc, MainAppState>(
+                    builder: (context, state) {
+                      if (state is MainAppDialog) {
+                        return ChatView(chat: state.chat);
+                      }
+                      if (state is MainAppLoaded) {
+                        switch (state.currentView) {
+                          case CurrentView.messages:
+                            return const MessagesView();
+                          case CurrentView.contacts:
+                            return const ContactsView();
+                          case CurrentView.settings:
+                            return SettingsView();
+                          case CurrentView.security:
+                            return SecurityView();
+                          case CurrentView.faq:
+                            return FaqView();
+                          default:
+                            return const MessagesView();
+                        }
+                      }
+                      return StyledLoadSpinner();
+                    },
+                  ),
+                ),
+              ),
             ),
           ),
         );

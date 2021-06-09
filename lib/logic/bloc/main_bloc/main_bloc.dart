@@ -7,10 +7,6 @@ import 'package:equatable/equatable.dart';
 import 'package:firestore_repository/firestore_repository.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:void_chat_beta/logic/bloc/authentication/authentication_bloc.dart';
-import 'package:void_chat_beta/logic/bloc/dialogs/dialogs_bloc.dart';
-import 'package:void_chat_beta/logic/bloc/contacts/contacts_bloc.dart';
-import 'package:void_chat_beta/logic/bloc/contacts_tabs/contacts_tabs_bloc.dart';
-import 'package:void_chat_beta/logic/bloc/messages/messages_bloc.dart';
 
 part 'main_event.dart';
 part 'main_state.dart';
@@ -22,7 +18,6 @@ class MainAppBloc extends Bloc<MainAppEvent, MainAppState> {
 
   final FirestoreHelperRepository firestoreHelperRepository;
   final FirebaseStorageRepository firebaseStorageRepository;
-  StreamSubscription? contactsSubscription;
   MainAppBloc(
       {required AuthenticationBloc authenticationBloc,
       required this.firebaseStorageRepository,

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:void_chat_beta/core/constants/styles.dart';
 import 'package:void_chat_beta/generated/l10n.dart';
-import 'package:void_chat_beta/presentation/screens/licence_screen/view/licence_screen.dart';
+import 'package:void_chat_beta/presentation/screens/licence_screen/licence_screen.dart';
 
 class LicenceAgreementTile extends StatefulWidget {
   const LicenceAgreementTile({
