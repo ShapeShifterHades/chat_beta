@@ -22,3 +22,7 @@
 * Options page.
 * Sequrity page.
 * Faq page.
+
+
+## Screenshot
+<img src="https://github.com/ShapeShifterHades/void_chat_beta/blob/d7cf9630f949614485a49c3d1cfc5bd5ebaa9ea1/screenshots/chat.gif" height="50%" width="50%">
