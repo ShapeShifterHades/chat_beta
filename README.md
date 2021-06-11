@@ -4,7 +4,7 @@
 * A chat app made with Flutter and Firebase based with bloc state management.
 * Support login with email, find user by username, add, chat with any user, send.
 
-##Done
+## Done
 * Email/password registration/login.
 * Locale/theme switch mechanism.
 * Find registered user by username.
